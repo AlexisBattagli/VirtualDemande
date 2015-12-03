@@ -5,6 +5,10 @@
  *
  * @author Alexis
  */
+
+//import
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Distrib.php');
+
 class Distrib_Alias {
     /*
       ==============================
@@ -43,6 +47,37 @@ class Distrib_Alias {
     private $commentaire;
 
     /*
+      ==============================
+      ======== CONSTRUCTEUR ========
+      ==============================
+     *
+
+     /*
+     * Constructeur par défaut de Distrib_Alias
+     */
+    public function Distrib_Alias(
+                $id= -1,
+                $distrib=null,
+                $nomComplet="Aucun nom complet pour cette distrib alias",
+                $pseudo="Aucun pseudo pour cette Distrib Alias",
+                $commentaire="Cette Distrib Alias n'a pas de commentaire"
+            )
+    {
+        $this->id = $id;
+        if (is_null($distrib))
+        {
+            $distrib = DistribDAL::findDefaultDistrib();
+        }
+        else 
+        {
+            $this->distrib = $distrib;
+        }
+        $this->nomComplet = $nomComplet;
+        $this->pseudo = $pseudo;
+        $this->commentaire = $commentaire;
+    }
+
+      /*
       ==============================
       ======= GETTER/SETTER ========
       ==============================
