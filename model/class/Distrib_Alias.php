@@ -5,7 +5,6 @@
  *
  * @author Alexis
  */
-
 //import
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Distrib.php');
 
@@ -52,23 +51,20 @@ class Distrib_Alias {
       ==============================
      *
 
-     /*
+      /*
      * Constructeur par défaut de Distrib_Alias
      */
+
     public function Distrib_Alias(
-                $id= -1,
-                $distrib=null,
-                $nomComplet="Aucun nom complet pour cette distrib alias",
-                $pseudo="Aucun pseudo pour cette Distrib Alias",
-                $commentaire="Cette Distrib Alias n'a pas de commentaire"
-            )
+    $id = -1, $distrib = null, $nomComplet = "Aucun nom complet pour cette distrib alias", $pseudo = "Aucun pseudo pour cette Distrib Alias", $commentaire = "Cette Distrib Alias n'a pas de commentaire"
+    )
     {
         $this->id = $id;
         if (is_null($distrib))
         {
             $distrib = DistribDAL::findDefaultDistrib();
         }
-        else 
+        else
         {
             $this->distrib = $distrib;
         }
@@ -77,7 +73,22 @@ class Distrib_Alias {
         $this->commentaire = $commentaire;
     }
 
-      /*
+    /*
+      ==============================
+      ========== METHODES ==========
+      ==============================
+     */
+
+    protected function hydrate($dataSet)
+    {
+        $this->id = $dataSet['id'];
+        $this->distrib = $dataSet['distrib_id'];
+        $this->nomComplet = $dataSet['nom_complet'];
+        $this->pseudo = $dataSet['pseudo'];
+        $this->commentaire = $dataSet['commentaire'];
+    }
+
+    /*
       ==============================
       ======= GETTER/SETTER ========
       ==============================
