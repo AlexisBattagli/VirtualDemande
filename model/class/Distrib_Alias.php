@@ -1,16 +1,46 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  * Description of Distrib_Alias
  *
  * @author Alexis
  */
+
 class Distrib_Alias {
-    //put your code here
+    
+/* 
+   ==============================
+   ========= ATTRIBUTS ==========
+   ============================== 
+*/ 
+    /*
+     * Id d'un Distrib_Alias dans la table Distrib_Alias
+     * @var int 
+     */
+    private $id;
+    
+    /*
+     * Distrib de la distrib alias
+     * @var Distrib
+     */
+    private $distrib;
+
+    /*
+     * nom_complet d'une distrib alias
+     * @var string
+     */
+    private $nom_complet;
+    
+    /*
+     * pseudo de la distri_alias
+     * @var string
+     */
+    private $pseudo;
+    
+    /*
+     * commentaire de la distrib alias
+     * @vat string
+     */
+    private $commentaire;
 }
