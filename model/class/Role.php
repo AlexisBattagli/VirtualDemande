@@ -1,16 +1,112 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of Role
  *
  * @author Alexis
  */
 class Role {
-    //put your code here
+    /*
+      ==============================
+      ========= ATTRIBUTS ==========
+      ==============================
+     */
+    /*
+     * Id d'un Role dans la table Role
+     * @var int 
+     */
+
+    private $id;
+    
+    /*
+     * role d'un Role dans la table Role
+     * @var string
+     */
+    private $role;
+    
+    /*
+     * description d'un Role dans la table Role
+     * @var string
+     */
+    private $description;
+    
+    /*
+      ==============================
+      ======== CONSTRUCTEUR ========
+      ==============================
+     *
+
+      /*
+     * Constructeur par défaut de Distrib_Alias
+     */
+
+    public function Distrib_Alias(
+    $id = -1, $role = "Aucun role pour ce role", $description = "Ce role n'a pas de description"
+    )
+    {
+        $this->id = $id;
+        $this->role = $role;
+        $this->description = $description;
+    }
+    
+    /*
+      ==============================
+      ========== METHODES ==========
+      ==============================
+     */
+
+    protected function hydrate($dataSet)
+    {
+        $this->id = $dataSet['id'];
+        $this->role = $dataSet['role'];
+        $this->description = $dataSet['description'];
+    }
+    
+    /*
+      ==============================
+      ======= GETTER/SETTER ========
+      ==============================
+     */
+
+    //id
+    public function setId($id)
+    {
+        if (is_int($id))
+        {
+            $this->id = $id;
+        }
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+    
+    //role
+    public function setRole($role)
+    {
+        if (is_string($role))
+        {
+            $this->role = $role;
+        }
+    }
+
+    public function getRole()
+    {
+        return $this->role;
+    }
+    
+    //description
+    public function setDescription($description)
+    {
+        if (is_string($description))
+        {
+            $this->description = $description;
+        }
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
+    }
 }
