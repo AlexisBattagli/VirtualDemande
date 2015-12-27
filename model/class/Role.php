@@ -37,10 +37,10 @@ class Role {
      *
 
       /*
-     * Constructeur par défaut de Distrib_Alias
+     * Constructeur par défaut de Role
      */
 
-    public function Distrib_Alias(
+    public function Role(
     $id = -1, $role = "Aucun role pour ce role", $description = "Ce role n'a pas de description"
     )
     {

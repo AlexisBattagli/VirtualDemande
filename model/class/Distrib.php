@@ -53,7 +53,7 @@ class Distrib {
      * Constructeur par défaut de Distrib
      */
 
-    public function Distrib_Alias(
+    public function Distrib(
     $id = -1, $nom = -1, $archi = "Aucun archi pour cette Distrib", $version = "Cette Distrib n'a pas de version", $ihm = "Cette Distrib n'a pas de IHM"
     )
     {

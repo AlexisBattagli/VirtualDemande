@@ -1,16 +1,20 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of Groupe
  *
  * @author Alexis
  */
 class Groupe {
-    //put your code here
+    /*
+      ==============================
+      ========= ATTRIBUTS ==========
+      ==============================
+     */
+    /*
+     * Id d'un Groupe dans la table Groupe
+     * @var int 
+     */
+
+    private $id;
 }
