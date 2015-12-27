@@ -20,7 +20,7 @@ class Distrib {
     
     /*
      * Nom d'un Distrib dans la table Distrib
-     * @var int 
+     * @var string 
     */
 
     private $nom;
@@ -54,7 +54,7 @@ class Distrib {
      */
 
     public function Distrib(
-    $id = -1, $nom = -1, $archi = "Aucun archi pour cette Distrib", $version = "Cette Distrib n'a pas de version", $ihm = "Cette Distrib n'a pas de IHM"
+    $id = -1, $nom = "Cette Distrib n'a pas de nom", $archi = "Aucun archi pour cette Distrib", $version = "Cette Distrib n'a pas de version", $ihm = "Cette Distrib n'a pas de IHM"
     )
     {
         $this->id = $id;
@@ -102,7 +102,7 @@ class Distrib {
     //nom
     public function setNom($nom)
     {
-        if (is_int($nom))
+        if (is_string($nom))
         {
             $this->nom = $nom;
         }
