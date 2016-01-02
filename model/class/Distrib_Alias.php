@@ -1,11 +1,12 @@
 <?php
 
-/**
+/*
  * Description of Distrib_Alias
  *
  * @author Alexis
  * @author Aurelie
  */
+
 //import
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Distrib.php');
 
