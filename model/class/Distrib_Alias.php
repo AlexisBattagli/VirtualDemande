@@ -61,6 +61,7 @@ class Distrib_Alias {
         if (is_null($distrib))
         {
             $distrib = DistribDAL::findDefaultDistrib();
+            $this->distrib = $distrib;
         }
         else
         {

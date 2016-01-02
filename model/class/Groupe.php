@@ -109,7 +109,7 @@ class Groupe {
     //dateCreation
     public function setDateCreation($dateCreation)
     {
-        if (is_a($dateCreation, "DateTime"))
+        if (is_string($dateCreation))
         {
             $this->dateCreation = $dateCreation;
         }
