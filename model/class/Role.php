@@ -4,6 +4,7 @@
  * Description of Role
  *
  * @author Alexis
+ * @author Aurelie
  */
 class Role {
     /*
@@ -11,11 +12,12 @@ class Role {
       ========= ATTRIBUTS ==========
       ==============================
      */
+    
     /*
      * Id d'un Role dans la table Role
      * @var int 
      */
-
+    
     private $id;
     
     /*
@@ -34,12 +36,8 @@ class Role {
       ==============================
       ======== CONSTRUCTEUR ========
       ==============================
-     *
-
-      /*
-     * Constructeur par défaut de Role
      */
-
+    
     public function Role(
     $id = -1, $role = "Aucun role pour ce role", $description = "Ce role n'a pas de description"
     )
