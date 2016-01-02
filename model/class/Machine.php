@@ -118,7 +118,7 @@ class Machine {
       ==============================
      */
 
-    protected function hydrate($dataSet)
+    public function hydrate($dataSet)
     {
         $this->id = $dataSet['id'];
         $this->utilisateur = $dataSet['utilisateur_id'];

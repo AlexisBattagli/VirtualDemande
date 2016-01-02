@@ -70,7 +70,7 @@ class Distrib {
       ==============================
      */
 
-    protected function hydrate($dataSet)
+    public function hydrate($dataSet)
     {
         $this->id = $dataSet['id'];
         $this->nom = $dataSet['nom'];

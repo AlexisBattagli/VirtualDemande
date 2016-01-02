@@ -4,18 +4,20 @@
  * Description of Groupe
  *
  * @author Alexis
+ * @author Aurelie
  */
+
 class Groupe {
     /*
       ==============================
       ========= ATTRIBUTS ==========
       ==============================
      */
+    
     /*
      * Id d'un Groupe dans la table Groupe
      * @var int 
      */
-
     private $id;
     
     /*
@@ -26,7 +28,7 @@ class Groupe {
     
     /*
      * date_creation d'un Groupe dans la table Groupe
-     * @var datetime
+     * @var string
      */
     private $dateCreation;
     
@@ -62,7 +64,7 @@ class Groupe {
       ==============================
      */
 
-    protected function hydrate($dataSet)
+    public function hydrate($dataSet)
     {
         $this->id = $dataSet['id'];
         $this->nom = $dataSet['nom'];

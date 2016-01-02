@@ -77,7 +77,7 @@ class Distrib_Alias {
       ==============================
      */
 
-    protected function hydrate($dataSet)
+    public function hydrate($dataSet)
     {
         $this->id = $dataSet['id'];
         $this->distrib = $dataSet['Distrib_id'];
