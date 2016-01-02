@@ -4,6 +4,7 @@
  * Description of Distrib
  *
  * @author Alexis
+ * @author Aurelie
  */
 class Distrib {
     /*
@@ -11,38 +12,37 @@ class Distrib {
       ========= ATTRIBUTS ==========
       ==============================
      */
+
     /*
      * Id d'un Distrib dans la table Distrib
      * @var int 
      */
-
     private $id;
-    
+
     /*
      * Nom d'un Distrib dans la table Distrib
      * @var string 
-    */
-
+     */
     private $nom;
-    
+
     /*
      * Archi d'un Distrib dans la table Distrib
      * @var string
      */
     private $archi;
-    
+
     /*
      * Version d'un Distrib dans la table Distrib
      * @var string
      */
     private $version;
-    
+
     /*
      * IHM d'un Distrib dans la table Distrib
      * @var string
      */
     private $ihm;
-    
+
     /*
       ==============================
       ======== CONSTRUCTEUR ========
@@ -54,7 +54,7 @@ class Distrib {
      */
 
     public function Distrib(
-    $id = -1, $nom = "Cette Distrib n'a pas de nom", $archi = "Aucun archi pour cette Distrib", $version = "Cette Distrib n'a pas de version", $ihm = "Cette Distrib n'a pas de IHM"
+    $id = -1, $nom = "Cette Distrib n'a pas de nom", $archi = "Aucun archi pour cette Distrib", $version = "Cette Distrib n'a pas de version", $ihm = "Cette Distrib n'a pas d'IHM"
     )
     {
         $this->id = $id;
@@ -63,7 +63,7 @@ class Distrib {
         $this->version = $version;
         $this->ihm = $ihm;
     }
-    
+
     /*
       ==============================
       ========== METHODES ==========
@@ -78,7 +78,7 @@ class Distrib {
         $this->version = $dataSet['version'];
         $this->ihm = $dataSet['ihm'];
     }
-    
+
     /*
       ==============================
       ======= GETTER/SETTER ========
@@ -98,7 +98,7 @@ class Distrib {
     {
         return $this->id;
     }
-    
+
     //nom
     public function setNom($nom)
     {
@@ -112,7 +112,7 @@ class Distrib {
     {
         return $this->nom;
     }
-    
+
     //archi
     public function setArchi($archi)
     {
@@ -126,7 +126,7 @@ class Distrib {
     {
         return $this->archi;
     }
-    
+
     //version
     public function setVersion($version)
     {
@@ -140,7 +140,7 @@ class Distrib {
     {
         return $this->version;
     }
-    
+
     //ihm
     public function setIhm($ihm)
     {
@@ -154,4 +154,5 @@ class Distrib {
     {
         return $this->ihm;
     }
+
 }
