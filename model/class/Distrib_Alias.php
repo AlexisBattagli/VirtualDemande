@@ -4,6 +4,7 @@
  * Description of Distrib_Alias
  *
  * @author Alexis
+ * @author Aurelie
  */
 //import
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Distrib.php');
@@ -14,6 +15,7 @@ class Distrib_Alias {
       ========= ATTRIBUTS ==========
       ==============================
      */
+
     /*
      * Id d'un Distrib_Alias dans la table Distrib_Alias
      * @var int 
@@ -49,10 +51,6 @@ class Distrib_Alias {
       ==============================
       ======== CONSTRUCTEUR ========
       ==============================
-     *
-
-      /*
-     * Constructeur par défaut de Distrib_Alias
      */
 
     public function Distrib_Alias(
@@ -82,7 +80,7 @@ class Distrib_Alias {
     protected function hydrate($dataSet)
     {
         $this->id = $dataSet['id'];
-        $this->distrib = $dataSet['distrib_id'];
+        $this->distrib = $dataSet['Distrib_id'];
         $this->nomComplet = $dataSet['nom_complet'];
         $this->pseudo = $dataSet['pseudo'];
         $this->commentaire = $dataSet['commentaire'];
