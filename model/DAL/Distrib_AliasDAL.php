@@ -93,4 +93,61 @@ class Distrib_AliasDAL {
         }
         return $distribAlias;
     }
+    
+    /*
+     * Insère ou met à jour la Distrib_Alias donnée en paramètre.
+     * Pour cela on vérifie si l'id de la Distrib_Alias transmis est sup ou inf à 0.
+     * Si l'id est inf à 0 alors il faut insèrer, sinon update à l'id transmis.
+     * 
+     * @param Distri_Alias distribAlias
+     * @return int id
+     * L'id de l'objet inséré en base. False si ça a planté
+     */
+
+    public static function insertOnDuplicate($distribAlias)
+    {
+
+        //Récupère les valeurs de l'objet distrib_alias passé en para de la méthode
+        $distribId = $distribAlias->getDistrib()->getId(); //int
+        $nomComplet = $distribAlias->getNomComplet(); //string
+        $pseudo = $distribAlias->getPseudo(); //string
+        $commentaire = $distribAlias->getCommentaire(); //string
+        $id = $distribAlias->getId(); //int
+        if ($id < 0)
+        {
+            $sql = 'INSERT INTO distrib_alias (Distrib_id, nom_complet, pseudo, commentaire) '
+                    . ' VALUES (?,?,?,?) ';
+
+            //Prépare les info concernant les type de champs
+            $params = array('isss',
+                &$distribId,
+                &$nomComplet,
+                &$pseudo,
+                &$commentaire
+            );
+        }
+        else
+        {
+            $sql = 'UPDATE distrib_alias '
+                    . 'SET Distrib_id = ?, '
+                    . 'nom_complet = ?, '
+                    . 'pseudo = ?, '
+                    . 'commentaire = ? '
+                    . 'WHERE id = ? ';
+
+            //Prépare les info concernant les type de champs
+            $params = array('isssi',
+                &$distribId,
+                &$nomComplet,
+                &$pseudo,
+                &$commentaire,
+                &$id
+            );
+        }
+
+        //Exec la requête
+        $idInsert = BaseSingleton::insertOrEdit($sql, $params);
+
+        return $idInsert;
+    }
 }
