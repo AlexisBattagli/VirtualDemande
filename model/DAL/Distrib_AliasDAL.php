@@ -150,4 +150,19 @@ class Distrib_AliasDAL {
 
         return $idInsert;
     }
+    
+    /*
+     * Supprime la Distrib_Alias correspondant à l'id donné en paramètre
+     * 
+     * @param int $id
+     * @return bool
+     * True si la ligne a bien été supprimée, False sinon
+     */
+
+    public static function delete($id)
+    {
+        $deleted = BaseSingleton::delete('DELETE FROM distrib_alias WHERE id = ?', array('i', &$id));
+        return $deleted;
+    }
+
 }
