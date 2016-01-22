@@ -76,10 +76,25 @@ class GroupeDAL
      * @param string nom
      * @return Groupe | null
      */
-    
-    //TO DO
-    
-    
+    public static function findByNom($nom)
+    {
+        $data = BaseSingleton::select('SELECT groupe.id as id, '
+                        . 'groupe.nom as nom, '
+                        . 'groupe.date_creation as date_creation, '
+                        . 'groupe.description as description '
+                        . ' FROM groupe'
+                        . ' WHERE groupe.nom = ?', array('s', &$nom));
+        $groupe = new Groupe();
+        if (sizeof($data) > 0)
+        {
+            $groupe->hydrate($data[0]);
+        }
+        else
+        {
+            $groupe = null;
+        }
+        return $groupe;
+    }
     
     /*
      * Insère ou met à jour le Groupe donné en paramètre.
