@@ -10,6 +10,7 @@
  * Description of MachineDAL
  *
  * @author Alexis
+ * @author Aurelie
  */
 
 require_once('BaseSingleton.php');

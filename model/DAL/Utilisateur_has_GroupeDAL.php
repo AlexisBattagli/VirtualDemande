@@ -10,6 +10,7 @@
  * Description of Utilisateur_has_GroupeDAL
  *
  * @author Alexis
+ * @author Aurelie
  */
 
 require_once('BaseSingleton.php');

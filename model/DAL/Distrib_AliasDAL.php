@@ -4,6 +4,7 @@
  * Description of Distrib_AliasDAL
  *
  * @author Alexis
+ * @author Aurelie
  */
 
 /*

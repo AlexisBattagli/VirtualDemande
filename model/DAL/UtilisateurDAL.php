@@ -10,6 +10,7 @@
  * Description of UtilisateurDAL
  *
  * @author Alexis
+ * @author 
  */
 
 require_once('BaseSingleton.php');

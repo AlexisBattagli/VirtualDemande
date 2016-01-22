@@ -10,6 +10,7 @@
  * Description of RoleDAL
  *
  * @author Alexis
+ * @author Aurelie 
  */
 
 /*

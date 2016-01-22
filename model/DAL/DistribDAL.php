@@ -1,8 +1,9 @@
 <?php
 /*
- * Description of Distrib_AliasDAL
+ * Description of DistribDAL
  *
  * @author Alexis
+ * @author Aurelie
  */
 
 /*
@@ -84,6 +85,7 @@ class DistribDAL
         $nom = $distrib->getNom(); //string
         $archi = $distrib->getArchi(); //string
         $version = $distrib->getVersion(); //string
+        $ihm = $distrib->getIhm(); //string
         $id = $distrib->getId(); //int
         if ($id < 0)
         {

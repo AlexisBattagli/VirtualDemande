@@ -10,6 +10,7 @@
  * Description of GroupeDAL
  *
  * @author Alexis
+ * @author Aurelie
  */
 
 /*
