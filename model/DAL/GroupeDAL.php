@@ -1,11 +1,5 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of GroupeDAL
  *
@@ -31,7 +25,7 @@ class GroupeDAL
     {
         $data = BaseSingleton::select('SELECT groupe.id as id, '
                         . 'groupe.nom as nom, '
-                        . 'groupe.date_creation as dateCreation, '
+                        . 'groupe.date_creation as date_creation, '
                         . 'groupe.description  as description  '
                         . ' FROM groupe'
                         . ' WHERE groupe.id = ?', array('i', &$id));
@@ -59,7 +53,7 @@ class GroupeDAL
 
         $data = BaseSingleton::select('SELECT groupe.id as id, '
                         . 'groupe.nom as nom, '
-                        . 'groupe.date_creation as dateCreation, '
+                        . 'groupe.date_creation as date_creation, '
                         . 'groupe.description  as description  '
                         . ' FROM groupe'
                 . ' ORDER BY groupe.nom ASC');
@@ -74,6 +68,19 @@ class GroupeDAL
         return $mesGroupes;
     }
 
+    /* 
+     * Retourne le Groupe correspondant à l'attribut nom
+     * Cet ensemble étant unique, il n'y qu'une seule ligne retournée.
+     * Il est recherché sans tenir compte de la casse sur nom
+     * 
+     * @param string nom
+     * @return Groupe | null
+     */
+    
+    //TO DO
+    
+    
+    
     /*
      * Insère ou met à jour le Groupe donné en paramètre.
      * Pour cela on vérifie si l'id du Groupe transmis est sup ou inf à 0.
@@ -93,11 +100,11 @@ class GroupeDAL
         $id = $groupe->getId(); //int
         if ($id < 0)
         {
-            $sql = 'INSERT INTO groupe (nom, dateCreation, description) '
+            $sql = 'INSERT INTO groupe (nom, date_creation, description) '
                     . ' VALUES (?,?,?) ';
 
             //Prépare les info concernant les type de champs
-            $params = array('isss',
+            $params = array('sss',
                 &$nom,
                 &$dateCreation,
                 &$description
@@ -112,7 +119,7 @@ class GroupeDAL
                     . 'WHERE id = ? ';
 
             //Prépare les info concernant les type de champs
-            $params = array('isssi',
+            $params = array('sssi',
                 &$nom,
                 &$dateCreation,
                 &$description,
