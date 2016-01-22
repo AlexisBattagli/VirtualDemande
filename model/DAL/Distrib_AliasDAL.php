@@ -92,7 +92,11 @@ class Distrib_AliasDAL {
         {
             $distribAlias->hydrate($data[0]);
         }
-        return $distribAlias;
+        else 
+        {
+            $distribAlias=null;
+        }
+         return $distribAlias;
     }
     
     /*

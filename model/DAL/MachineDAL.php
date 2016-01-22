@@ -1,11 +1,5 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of MachineDAL
  *
@@ -28,14 +22,14 @@ class MachineDAL
     public static function findById($id)
     {
         $data = BaseSingleton::select('SELECT machine.id as id, '
-                        . 'machine.Utilisateur_id as utilisateur, '
-                        . 'machine.Distrib_Alias_id as distribAlias, '
+                        . 'machine.Utilisateur_id as Utilisateur_id, '
+                        . 'machine.Distrib_Alias_id as Distrib_Alias_id, '
                         . 'machine.nom as nom, '
                         . 'machine.ram as ram, '
                         . 'machine.coeur as coeur, '
                         . 'machine.stockage as stockage, '
                         . 'machine.description as description, '
-                        . 'machine.date_creation as dateCreation '
+                        . 'machine.date_creation as date_creation '
                         . ' FROM machine'
                         . ' WHERE machine.id = ?', array('i', &$id));
         $machine = new Machine();
