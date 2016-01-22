@@ -136,7 +136,7 @@ class Utilisateur_has_GroupeDAL
         $groupeId = $utilisateurhasGroupe->getGroupe()->getId(); //int
 	$utilisateurId = $utilisateurhasGroupe->getUtilisateur()->getId(); //int
         $roleGroupe = $utilisateurhasGroupe->getRoleGroupe(); //string
-        if ($id < 0)
+        if (is_null(findByGU($groupeId,$utilisateurId)))
         {
             $sql = 'INSERT INTO Utilisateur_has_Groupe (Groupe_id, Utilisateur_id, role_groupe) '
                     . ' VALUES (?,?,?) ';
