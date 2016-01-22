@@ -54,16 +54,16 @@ class MachineDAL
         $mesMachines = array();
 
         $data = BaseSingleton::select('SELECT machine.id as id, '
-                        . 'machine.Utilisateur_id as utilisateur, '
-                        . 'machine.Distrib_Alias_id as distribAlias, '
+                        . 'machine.Utilisateur_id as Utilisateur_id, '
+                        . 'machine.Distrib_Alias_id as Distrib_Alias_id, '
                         . 'machine.nom as nom, '
                         . 'machine.ram as ram, '
                         . 'machine.coeur as coeur, '
                         . 'machine.stockage as stockage, '
                         . 'machine.description as description, '
-                        . 'machine.date_creation as dateCreation '
+                        . 'machine.date_creation as date_creation '
                         . ' FROM machine'
-                . ' ORDER BY machine.Utilisateur_id ASC, machine.Distrib_id ASC');
+                . ' ORDER BY machine.Utilisateur_id ASC, machine.Distrib_Alias_id ASC');
 
         foreach ($data as $row)
         {
@@ -76,31 +76,35 @@ class MachineDAL
     }
     
     /*
-     * Retourne la Machine correspondant au couple Distrib_id/Utilisateur_id/nom
+     * Retourne la Machine correspondant au couple Utilisateur_id/nom
      * Ce couple étant unique, il n'y qu'une seul ligne retourner.
      * Il est recherché sans tenir compte de la casse sur nom
      * 
-     * @param int distribId, int userId, string nomComplet
+     * @param int userId, string nom
      * @return Machine | null
      */
-    public static function findByDN($distribAliasId, $userId, $nomComplet)
+    public static function findByDN($userId, $nom)
     {
         $data = BaseSingleton::select('SELECT machine.id as id, '
-                        . 'machine.Utilisateur_id as utilisateur, '
-                        . 'machine.Distrib_Alias_id as distribAlias, '
+                        . 'machine.Utilisateur_id as Utilisateur_id, '
+                        . 'machine.Distrib_Alias_id as Distrib_Alias_id, '
                         . 'machine.nom as nom, '
                         . 'machine.ram as ram, '
                         . 'machine.coeur as coeur, '
                         . 'machine.stockage as stockage, '
                         . 'machine.description as description, '
-                        . 'machine.date_creation as dateCreation '
+                        . 'machine.date_creation as date_creation '
                         . ' FROM machine'
-                        . ' WHERE machine.Distrib_Alias_id = ? AND machine.Utilisateur_id AND LOWER(machine.nom) = LOWER(?)', array('is', &$distribAliasId, &$userId, &$nomComplet));
+                        . ' WHERE machine.Utilisateur_id = ? AND LOWER(machine.nom) = LOWER(?)', array('is', &$userId, &$nom));
         $machine = new Machine();
 
         if (sizeof($data) > 0)
         {
             $machine->hydrate($data[0]);
+        }
+        else
+        {
+            $machine=null;
         }
         return $machine;
     }
@@ -134,7 +138,7 @@ class MachineDAL
                     . ' VALUES (?,?,?,?,?,?,?,?) ';
 
             //Prépare les info concernant les type de champs
-            $params = array('isss',
+            $params = array('iisdidss',
                 &$userId,
                 &$distribaliasId,
                 &$nom,
@@ -147,19 +151,19 @@ class MachineDAL
         }
         else
         {
-            $sql = 'UPDATE distrib_alias '
+            $sql = 'UPDATE machine '
                     . 'SET Utilisateur_id = ?, '
                     . 'Distrib_Alias_id = ?, '
                     . 'nom = ?, '
-                    . 'ram = ? '
-                    . 'coeur = ? '
-                    . 'stockage = ? '
-                    . 'description = ? '
+                    . 'ram = ?, '
+                    . 'coeur = ?, '
+                    . 'stockage = ?, '
+                    . 'description = ?, '
                     . 'date_creation = ? '
                     . 'WHERE id = ? ';
 
             //Prépare les info concernant les type de champs
-            $params = array('isssi',
+            $params = array('iisdidssi',
                 &$userId,
                 &$distribaliasId,
                 &$nom,
@@ -179,7 +183,7 @@ class MachineDAL
     }
     
     /*
-     * Supprime la Distrib_Machine correspondant à l'id donné en paramètre
+     * Supprime la Machine correspondant à l'id donné en paramètre
      * 
      * @param int $id
      * @return bool
