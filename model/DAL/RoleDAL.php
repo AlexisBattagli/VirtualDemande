@@ -1,11 +1,5 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of RoleDAL
  *
@@ -32,7 +26,7 @@ class RoleDAL
     {
         $data = BaseSingleton::select('SELECT role.id as id, '
                         . 'role.role as role, '
-                        . 'role.description as description, '
+                        . 'role.description as description '
                         . ' FROM role'
                         . ' WHERE role.id = ?', array('i', &$id));
         $role = new Role();
@@ -58,7 +52,7 @@ class RoleDAL
 
         $data = BaseSingleton::select('SELECT role.id as id, '
                         . 'role.role as role, '
-                        . 'role.description as description, '
+                        . 'role.description as description '
                         . ' FROM role'
                 . ' ORDER BY role.role ASC');
 
@@ -71,6 +65,8 @@ class RoleDAL
 
         return $mesRoles;
     }
+    
+    //TO DO findByRole
     
     /*
      * Insère ou met à jour le Role donné en paramètre.
@@ -86,7 +82,7 @@ class RoleDAL
     {
 
         //Récupère les valeurs de l'objet role passé en para de la méthode
-        $Role = $role->getRole(); //string
+        $role_nom = $role->getRole(); //string
         $description = $role->getDescription(); //string
         $id = $role->getId(); //int
         if ($id < 0)
@@ -95,8 +91,8 @@ class RoleDAL
                     . ' VALUES (?,?) ';
 
             //Prépare les info concernant les type de champs
-            $params = array('isss',
-                &$Role,
+            $params = array('ss',
+                &$role_nom,
                 &$description
             );
         }
@@ -104,12 +100,12 @@ class RoleDAL
         {
             $sql = 'UPDATE role '
                     . 'SET role = ?, '
-                    . 'description = ?, '
+                    . 'description = ? '
                     . 'WHERE id = ? ';
 
             //Prépare les info concernant les type de champs
-            $params = array('isssi',
-                &$Role,
+            $params = array('ssi',
+                &$role_nom,
                 &$description,
                 &$id
             );
