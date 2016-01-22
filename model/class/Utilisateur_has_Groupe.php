@@ -9,7 +9,7 @@
 
 //import
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Utilisateur.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Role.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Groupe.php');
 
 class Utilisateur_has_Groupe {
     /*
@@ -19,23 +19,16 @@ class Utilisateur_has_Groupe {
      */
 
     /*
-     * Id d'un Utilisateur_has_Groupe dans la table Utilisateur_has_Groupe
-     * @var int 
+     * Groupe de la classe Groupe
+     * @var Groupe
      */
-
-    private $id;
-
-    /*
-     * Role de la classe Role
-     * @var Role
-     */
-    private $role;
+    private $groupe;
 
     /*
      * Utilisateur de la classe Utilisateur 
      * @var Utilisateur
      */
-    private $utilisateur ;
+    private $utilisateur;
 
     /*
      * role_groupe d'un Utilisateur_has_Groupe
@@ -50,18 +43,17 @@ class Utilisateur_has_Groupe {
      */
 
     public function Utilisateur_has_Groupe(
-    $id = -1, $role = null, $utilisateur= null, $roleGroupe = "Aucun nom role pour cet Utilisateur_has_Groupe"
+    $groupe = null, $utilisateur= null, $roleGroupe = "Aucun nom de role pour cet Utilisateur_has_Groupe"
     )
     {
-        $this->id = $id;
-        if (is_null($role))
+        if (is_null($groupe))
         {
-            $role = RoleDAL::findDefaultRole();
-            $this->role = $role;
+            $groupe = GroupeDAL::findDefaultGroupe();
+            $this->groupe = $groupe;
         }
         else
         {
-            $this->role = $role;
+            $this->groupe = $groupe;
         }
 	if (is_null($utilisateur))
         {
@@ -83,8 +75,7 @@ class Utilisateur_has_Groupe {
 
     public function hydrate($dataSet)
     {
-        $this->id = $dataSet['id'];
-        $this->role = $dataSet['Role_id'];
+        $this->groupe = $dataSet['Groupe_id'];
 	$this->utilisateur = $dataSet['Utilisateur_id'];
         $this->roleGroupe= $dataSet['role_groupe'];
     }
@@ -95,51 +86,37 @@ class Utilisateur_has_Groupe {
       ==============================
      */
 
-    //id
-    public function setId($id)
+    //Groupe
+    public function setGroupe($groupe)
     {
-        if (is_int($id))
+        if (is_string($groupe))
         {
-            $this->id = $id;
+            $groupe = (int) $groupe;
+            $this->groupe = GroupeDAL::findById($groupe);
+        }
+        else if (is_int($groupe))
+        {
+            $this->groupe = GroupeDAL::findById($groupe);
+        }
+        else if (is_a($groupe, "Groupe"))
+        {
+            $this->groupe = $groupe;
         }
     }
 
-    public function getId()
+    public function getGroupe()
     {
-        return $this->id;
-    }
-
-    //Role
-    public function setRole($role)
-    {
-        if (is_string($role))
+        $groupe = null;
+        if (is_int($this->groupe))
         {
-            $role = (int) $role;
-            $this->role = RoleDAL::findById($role);
+            $groupe = GroupeDAL::findById($this->groupe);
+            $this->groupe = $groupe;
         }
-        else if (is_int($role))
+        else if (is_a($this->groupe, "Groupe"))
         {
-            $this->role = RoleDAL::findById($role);
+            $groupe = $this->groupe;
         }
-        else if (is_a($role, "Role"))
-        {
-            $this->role = $role;
-        }
-    }
-
-    public function getRole()
-    {
-        $role = null;
-        if (is_int($this->role))
-        {
-            $role = RoleDAL::findById($this->role);
-            $this->role = $role;
-        }
-        else if (is_a($this->role, "Role"))
-        {
-            $role = $this->role;
-        }
-        return $role;
+        return $groupe;
     }
 
     //Utilisateur
