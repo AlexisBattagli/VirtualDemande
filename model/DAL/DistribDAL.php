@@ -69,6 +69,17 @@ class DistribDAL
     }
     
     /*
+     * Retourne la Distrib correspondant à l'ensemble d'attributs nom/archi/version/ihm
+     * Cet ensemble étant unique, il n'y qu'une seule ligne retournée.
+     * Il est recherché sans tenir compte de la casse sur nom/archi/version/ihm
+     * 
+     * @param string nom, string archi, string version, string ihm
+     * @return Distrib | null
+     */
+    
+    //TO DO
+    
+    /*
      * Insère ou met à jour la Distrib donnée en paramètre.
      * Pour cela on vérifie si l'id de la Distrib transmis est sup ou inf à 0.
      * Si l'id est inf à 0 alors il faut insérer, sinon update à l'id transmis.
