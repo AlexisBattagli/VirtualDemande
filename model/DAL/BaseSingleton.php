@@ -10,6 +10,7 @@
  * Description of BaseSingleton
  *
  * @author Alexis
+ * 
  */
 class BaseSingleton {
 
