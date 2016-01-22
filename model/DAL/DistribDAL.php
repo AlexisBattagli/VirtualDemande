@@ -25,7 +25,7 @@ class DistribDAL
         $data = BaseSingleton::select('SELECT distrib.id as id, '
                         . 'distrib.nom as nom, '
                         . 'distrib.archi as archi, '
-                        . 'distrib.version as version '
+                        . 'distrib.version as version, '
                         . 'distrib.ihm as ihm '
                         . ' FROM distrib'
                         . ' WHERE distrib.id = ?', array('i', &$id));
@@ -53,7 +53,7 @@ class DistribDAL
         $data = BaseSingleton::select('SELECT distrib.id as id, '
                         . 'distrib.nom as nom, '
                         . 'distrib.archi as archi, '
-                        . 'distrib.version as version '
+                        . 'distrib.version as version, '
                         . 'distrib.ihm as ihm '
                         . ' FROM distrib'
                 . ' ORDER BY distrib.nom ASC');
@@ -93,7 +93,7 @@ class DistribDAL
                     . ' VALUES (?,?,?,?) ';
 
             //Prépare les info concernant les types de champs
-            $params = array('isss',
+            $params = array('ssss',
                 &$nom,
                 &$archi,
                 &$version,
@@ -110,7 +110,7 @@ class DistribDAL
                     . 'WHERE id = ? ';
 
             //Prépare les info concernant les type de champs
-            $params = array('isssi',
+            $params = array('ssssi',
                 &$nom,
                 &$archi,
                 &$version,
