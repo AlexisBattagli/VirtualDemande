@@ -76,8 +76,27 @@ class DistribDAL
      * @param string nom, string archi, string version, string ihm
      * @return Distrib | null
      */
-    
-    //TO DO
+     public static function findByNAVI($nom, $archi, $version, $ihm)
+    {
+        $data = BaseSingleton::select('SELECT distrib.id as id, '
+                        . 'distrib.Distrib_id as nom, '
+                        . 'distrib.nom_complet as archi, '
+                        . 'distrib.pseudo as version, '
+                        . 'distrib.commentaire as ihm'
+                        . ' FROM distrib'
+                        . ' WHERE LOWER(distrib.nom) = LOWER(?)AND LOWER(distrib.archi) = LOWER(?) AND LOWER(distrib.version) = LOWER(?) AND LOWER(distrib.ihm) = LOWER(?)', array('ssss', &$nom, &$archi, &$version, &$ihm));
+        $distrib = new Distrib();
+
+        if (sizeof($data) > 0)
+        {
+            $distrib->hydrate($data[0]);
+        }
+        else 
+        {
+            $distrib=null;
+        }
+         return $distrib;
+    }
     
     /*
      * Insère ou met à jour la Distrib donnée en paramètre.
