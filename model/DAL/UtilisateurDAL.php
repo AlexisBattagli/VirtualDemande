@@ -1,16 +1,10 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of UtilisateurDAL
  *
  * @author Alexis
- * @author 
+ * @author Aurelie
  */
 
 require_once('BaseSingleton.php');
@@ -27,14 +21,14 @@ class UtilisateurDAL
     public static function findById($id)
     {
         $data = BaseSingleton::select('SELECT utilisateur.id as id, '
-                        . 'utilisateur.Role_id as role, '
+                        . 'utilisateur.Role_id as Role_id, '
                         . 'utilisateur.nom as nom, '
                         . 'utilisateur.prenom as prenom, '
-                        . 'utilisateur.login as login '
-                        . 'utilisateur.password as password '
-                        . 'utilisateur.mail as mail '
-                        . 'utilisateur.date_creation as dateCreation '
-                        . 'utilisateur.date_naissance as dateNaissance '
+                        . 'utilisateur.login as login, '
+                        . 'utilisateur.password as password, '
+                        . 'utilisateur.mail as mail, '
+                        . 'utilisateur.date_creation as date_creation, '
+                        . 'utilisateur.date_naissance as date_naissance '
                         . ' FROM utilisateur'
                         . ' WHERE utilisateur.id = ?', array('i', &$id));
         $utilisateur = new Utilisateur();
@@ -59,14 +53,14 @@ class UtilisateurDAL
         $mesUtilisateurs = array();
 
         $data = BaseSingleton::select('SELECT utilisateur.id as id, '
-                        . 'utilisateur.Role_id as role, '
+                        . 'utilisateur.Role_id as Role_id, '
                         . 'utilisateur.nom as nom, '
                         . 'utilisateur.prenom as prenom, '
-                        . 'utilisateur.login as login '
-                        . 'utilisateur.password as password '
-                        . 'utilisateur.mail as mail '
-                        . 'utilisateur.date_creation as dateCreation '
-                        . 'utilisateur.date_naissance as dateNaissance '
+                        . 'utilisateur.login as login, '
+                        . 'utilisateur.password as password, '
+                        . 'utilisateur.mail as mail, '
+                        . 'utilisateur.date_creation as date_creation, '
+                        . 'utilisateur.date_naissance as date_naissance '
                         . ' FROM utilisateur'
                 . ' ORDER BY utilisateur.Role_id ASC, utilisateur.nom ASC, utilisateur.prenom ASC, utilisateur.login ASC');
 
@@ -80,31 +74,35 @@ class UtilisateurDAL
     }
     
     /*
-     * Retourne l'Utilisateur correspondant au couple Role_id/login
+     * Retourne l'Utilisateur correspondant au couple login
      * Ce couple étant unique, il n'y qu'une seul ligne retourner.
      * Il est rechercher sans tenir compte de la casse sur login
      * 
-     * @param int roleId, string login
+     * @param string login
      * @return Utilisateur | null
      */
-    public static function findByDN($roleId, $login)
+    public static function findByLogin($login)
     {
         $data = BaseSingleton::select('SELECT utilisateur.id as id, '
-                        . 'utilisateur.Role_id as roleId, '
+                        . 'utilisateur.Role_id as Role_Id, '
                         . 'utilisateur.nom as nom, '
                         . 'utilisateur.prenom as prenom, '
                         . 'utilisateur.login as login, '
                         . 'utilisateur.password as password, '
                         . 'utilisateur.mail as mail, '
-                        . 'utilisateur.dateCreation as dateCreation, '
-                        . 'utilisateur.date_naissance as dateNaissance'
+                        . 'utilisateur.dateCreation as date_creation, '
+                        . 'utilisateur.date_naissance as date_naissance'
                         . ' FROM utilisateur'
-                        . ' WHERE utilisateur.Role_id = ? AND LOWER(utilisateur.login) = LOWER(?)', array('is', &$roleId, &$login));
+                        . ' WHERE LOWER(utilisateur.login) = LOWER(?)', array('s', &$login));
         $utilisateur = new Utilisateur();
 
         if (sizeof($data) > 0)
         {
             $utilisateur->hydrate($data[0]);
+        }
+        else
+        {
+            $utilisateur=null;
         }
         return $utilisateur;
     }
@@ -138,7 +136,7 @@ class UtilisateurDAL
                     . ' VALUES (?,?,?,?,?,?,?,?) ';
 
             //Prépare les info concernant les type de champs
-            $params = array('isss',
+            $params = array('isssssss',
                 &$role,
                 &$nom,
                 &$prenom,
@@ -156,14 +154,14 @@ class UtilisateurDAL
                     . 'nom = ?, '
                     . 'prenom = ?, '
                     . 'login = ?, '
-                    . 'password = ? '
+                    . 'password = ?, '
                     . 'mail = ?, '
                     . 'date_creation = ?, '
-                    . 'date_naissance = ?, '
+                    . 'date_naissance = ? '
                     . 'WHERE id = ? ';
 
             //Prépare les info concernant les type de champs
-            $params = array('isssi',
+            $params = array('isssssssi',
                 &$role,
                 &$nom,
                 &$prenom,
