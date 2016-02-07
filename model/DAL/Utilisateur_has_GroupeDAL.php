@@ -1,91 +1,67 @@
 <?php
 
-
 /**
- * Description of Utilisateur_has_GroupeDAL hériete de la class Utilisateur_has_Groupe
+ * Description of Utilisateur_has_GroupeDAL utilise la class Utilisateur_has_Groupe
  *
  * @author Alexis
  * @author Aurelie
- * @version 0.1
+ * @version 0.2
+ * Histo:
+ *     0.2 - Correction de ce que retourne findByGroupe et findByUtilisateur (liste de Utilisateur_hasGroupe)
  * 
  * Cette class permet de faire,
  * recherche, ajout, modification et suppression de Groupe et Utilisateur Lié
  * Permet de savoir quel sont les utilisateur d'un groupe.
  * quel sont les groupe uaxquels appartient un utilisateur
  */
-
 require_once('BaseSingleton.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Utilisateur_has_Groupe.php');
 
-class Utilisateur_has_GroupeDAL 
-{
+class Utilisateur_has_GroupeDAL {
     /*
      * Retourne l'ensemble des Utilisateurs et leur rôle pour un Groupe_id passé en param
      * 
      * @param int $GroupeId
      * @return  Utilisateur_has_Groupe
      */
-    public static function findByGroupe($groupeId)
-    {
-        $data = BaseSingleton::select('SELECT '
-                        . ' Utilisateur_has_Groupe.Groupe_id as Groupe_id, '
-                        . ' Utilisateur_has_Groupe.Utilisateur_id as Utilisateur_id, '
-                        . ' Utilisateur_has_Groupe.role_groupe as role_groupe '
-                        . ' FROM Utilisateur_has_Groupe'
-                        . ' WHERE Utilisateur_has_Groupe.Groupe_id = ?', array('i', &$groupeId));
-        $UtilisateurhasGroupe = new Utilisateur_has_Groupe();
-        if (sizeof($data) > 0)
-        {
-            $UtilisateurhasGroupe->hydrate($data[0]);
-        }
-        else
-        {
-            $UtilisateurhasGroupe = null;
-        }
-        return $UtilisateurhasGroupe;
-    }
-    
-        /*
-     * Retourne l'ensemble des Groupes et le rôle pour un Utilisateur_id passé en param
-     * 
-     * @param int $UtilisateurId
-     * @return  Utilisateur_has_Groupe
-     */
-    public static function findByUtilisateur($utilisateurId)
-    {
-        $data = BaseSingleton::select('SELECT '
-                        . ' Utilisateur_has_Groupe.Groupe_id as Groupe_id, '
-                        . ' Utilisateur_has_Groupe.Utilisateur_id as Utilisateur_id, '
-                        . ' Utilisateur_has_Groupe.role_groupe as role_groupe '
-                        . ' FROM Utilisateur_has_Groupe'
-                        . ' WHERE Utilisateur_has_Groupe.Utilisateur_id = ?', array('i', &$utilisateurId));
-        $UtilisateurhasGroupe = new Utilisateur_has_Groupe();
-        if (sizeof($data) > 0)
-        {
-            $UtilisateurhasGroupe->hydrate($data[0]);
-        }
-        else
-        {
-            $UtilisateurhasGroupe = null;
-        }
-        return $UtilisateurhasGroupe;
-    }
 
-    /*
-     * Retourne l'ensemble des Utilisateur_has_Groupe qui sont en base
-     * 
-     * @return array[Utilisateur_has_Groupe] Toutes les Utilisateur_has_Groupe sont placées dans un Tableau
-     */
-    public static function findAll()
+    public static function findByGroupe($groupeId)
     {
         $mesUtilisateur_has_Groupes = array();
 
         $data = BaseSingleton::select('SELECT '
                         . ' Utilisateur_has_Groupe.Groupe_id as Groupe_id, '
                         . ' Utilisateur_has_Groupe.Utilisateur_id as Utilisateur_id, '
-                        . ' Utilisateur_has_Groupe.role_groupe as role_groupe, '
+                        . ' Utilisateur_has_Groupe.role_groupe as role_groupe '
                         . ' FROM Utilisateur_has_Groupe'
-                . ' ORDER BY Utilisateur_has_Groupe.Groupe_id ASC, Utilisateur_has_Groupe.role_groupe ASC');
+                        . ' WHERE Utilisateur_has_Groupe.Groupe_id = ?', array('i', &$groupeId));
+        foreach ($data as $row)
+        {
+            $utilisateurhasGroupe = new Utilisateur_has_Groupe();
+            $utilisateurhasGroupe->hydrate($row);
+            $mesUtilisateur_has_Groupes[] = $utilisateurhasGroupe;
+        }
+
+        return $mesUtilisateur_has_Groupes;
+    }
+
+    /*
+     * Retourne l'ensemble des Groupes et le rôle pour un Utilisateur_id passé en param
+     * 
+     * @param int $UtilisateurId
+     * @return  Utilisateur_has_Groupe
+     */
+
+    public static function findByUtilisateur($utilisateurId)
+    {
+        $mesUtilisateur_has_Groupes = array();
+
+        $data = BaseSingleton::select('SELECT '
+                        . ' Utilisateur_has_Groupe.Groupe_id as Groupe_id, '
+                        . ' Utilisateur_has_Groupe.Utilisateur_id as Utilisateur_id, '
+                        . ' Utilisateur_has_Groupe.role_groupe as role_groupe '
+                        . ' FROM Utilisateur_has_Groupe'
+                        . ' WHERE Utilisateur_has_Groupe.Utilisateur_id = ?', array('i', &$utilisateurId));
 
         foreach ($data as $row)
         {
@@ -96,7 +72,34 @@ class Utilisateur_has_GroupeDAL
 
         return $mesUtilisateur_has_Groupes;
     }
-    
+
+    /*
+     * Retourne l'ensemble des Utilisateur_has_Groupe qui sont en base
+     * 
+     * @return array[Utilisateur_has_Groupe] Toutes les Utilisateur_has_Groupe sont placées dans un Tableau
+     */
+
+    public static function findAll()
+    {
+        $mesUtilisateur_has_Groupes = array();
+
+        $data = BaseSingleton::select('SELECT '
+                        . ' Utilisateur_has_Groupe.Groupe_id as Groupe_id, '
+                        . ' Utilisateur_has_Groupe.Utilisateur_id as Utilisateur_id, '
+                        . ' Utilisateur_has_Groupe.role_groupe as role_groupe, '
+                        . ' FROM Utilisateur_has_Groupe'
+                        . ' ORDER BY Utilisateur_has_Groupe.Groupe_id ASC, Utilisateur_has_Groupe.role_groupe ASC');
+
+        foreach ($data as $row)
+        {
+            $utilisateurhasGroupe = new Utilisateur_has_Groupe();
+            $utilisateurhasGroupe->hydrate($row);
+            $mesUtilisateur_has_Groupes[] = $utilisateurhasGroupe;
+        }
+
+        return $mesUtilisateur_has_Groupes;
+    }
+
     /*
      * Retourne le Utilisateur_has_Groupe correspondant au couple groupe/utilisateur
      * Ce couple étant unique, il n'y qu'une seul ligne retourner.
@@ -104,6 +107,7 @@ class Utilisateur_has_GroupeDAL
      * @param int groupeId, string utilisateurId
      * @return Utilisateur_has_Groupe | null
      */
+
     public static function findByGU($groupeId, $utilisateurId)
     {
         $data = BaseSingleton::select('SELECT '
@@ -120,11 +124,11 @@ class Utilisateur_has_GroupeDAL
         }
         else
         {
-            $utilisateurhasGroupe=null;
+            $utilisateurhasGroupe = null;
         }
         return $utilisateurhasGroupe;
     }
-    
+
     /*
      * Insère ou met à jour la Utilisateur_has_Groupe donnée en paramètre.
      * Pour cela on vérifie si l'id de la Utilisateur_has_Groupe transmis est sup ou inf à 0.
@@ -140,9 +144,9 @@ class Utilisateur_has_GroupeDAL
 
         //Récupère les valeurs de l'objet Utilisateur_has_Groupe passé en para de la méthode
         $groupeId = $utilisateurhasGroupe->getGroupe()->getId(); //int
-	$utilisateurId = $utilisateurhasGroupe->getUtilisateur()->getId(); //int
+        $utilisateurId = $utilisateurhasGroupe->getUtilisateur()->getId(); //int
         $roleGroupe = $utilisateurhasGroupe->getRoleGroupe(); //string
-        if (is_null(findByGU($groupeId,$utilisateurId)))
+        if (is_null(findByGU($groupeId, $utilisateurId)))
         {
             $sql = 'INSERT INTO Utilisateur_has_Groupe (Groupe_id, Utilisateur_id, role_groupe) '
                     . ' VALUES (?,?,?) ';
@@ -177,7 +181,7 @@ class Utilisateur_has_GroupeDAL
 
         return $idInsert;
     }
-    
+
     /*
      * Supprime la Utilisateur_has_Groupe correspondant à le couple d'id de Groupe/Utilisateur donné en paramètre
      * 
@@ -191,4 +195,5 @@ class Utilisateur_has_GroupeDAL
         $deleted = BaseSingleton::delete('DELETE FROM Utilisateur_has_Groupe WHERE Groupe_id = ? AND Utilisateur_id = ?', array('ii', &$groupeId, &$utilisateurId));
         return $deleted;
     }
+
 }
