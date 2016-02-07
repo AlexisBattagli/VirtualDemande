@@ -124,4 +124,67 @@ class Groupe_has_MachineDAL {
         return $groupeHasMachine;
     }
 
+    /*
+     * Insère ou met à jour la Groupe_has_Machine donnée en paramètre.
+     * Pour cela on vérifie si le couple d'id de la Machine et du Groupe transmis sont unique.
+     * Si le couple return null alors il faut insèrer, sinon update aux id transmis.
+     * 
+     * @param Utilisateur_has_Groupe utilisateurhasGroupe
+     * @return int id
+     * L'id de l'objet inséré en base. False si ça a planté
+     */
+
+    public static function insertOnDuplicate($groupeHasMachine)
+    {
+
+        //Récupère les valeurs de l'objet Groupe_has_Machine passé en para de la méthode
+        $groupeId = $groupeHasMachine->getGroupe()->getId(); //int
+        $machineId = $groupeHasMachine->getMachine()->getId(); //int
+        if (is_null(findByGM($groupeId, $machineId)))
+        {
+            $sql = 'INSERT INTO Groupe_has_Machine (Groupe_id, Machine_id) '
+                    . ' VALUES (?,?) ';
+
+            //Prépare les info concernant les types de champs
+            $params = array('ii',
+                &$groupeId,
+                &$machineId
+            );
+        }
+        else
+        {
+            $sql = 'UPDATE Groupe_has_Machine '
+                    . 'SET Groupe_id = ?, '
+                    . 'Machine_id = ? '
+                    . 'WHERE Groupe_id = ? AND Machine_id = ?';
+
+            //Prépare les info concernant les type de champs
+            $params = array('iiii',
+                &$groupeId,
+                &$machineId,
+                &$groupeId,
+                &$machineId
+            );
+        }
+
+        //Exec la requête
+        $idInsert = BaseSingleton::insertOrEdit($sql, $params);
+
+        return $idInsert;
+    }
+
+    /*
+     * Supprime la Groupe_has_Machine correspondant au couple d'id de Groupe/Machine donné en paramètre
+     * 
+     * @param int $groupeId, int machineId
+     * @return bool
+     * True si la ligne a bien été supprimée, False sinon
+     */
+
+    public static function delete($groupeId, $machineId)
+    {
+        $deleted = BaseSingleton::delete('DELETE FROM Groupe_has_Machine WHERE Groupe_id = ? AND machine_id = ?', array('ii', &$groupeId, &$machineId));
+        return $deleted;
+    }
+
 }
