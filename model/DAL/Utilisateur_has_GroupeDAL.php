@@ -2,10 +2,16 @@
 
 
 /**
- * Description of Utilisateur_has_GroupeDAL
+ * Description of Utilisateur_has_GroupeDAL hériete de la class Utilisateur_has_Groupe
  *
  * @author Alexis
  * @author Aurelie
+ * @version 0.1
+ * 
+ * Cette class permet de faire,
+ * recherche, ajout, modification et suppression de Groupe et Utilisateur Lié
+ * Permet de savoir quel sont les utilisateur d'un groupe.
+ * quel sont les groupe uaxquels appartient un utilisateur
  */
 
 require_once('BaseSingleton.php');
