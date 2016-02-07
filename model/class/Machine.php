@@ -5,6 +5,9 @@
  *
  * @author Alexis
  * @author Aurelie
+ * 
+ * @version 0.1
+ * @history 
  */
 //import
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Distrib_Alias.php');
@@ -73,13 +76,19 @@ class Machine {
     private $dateCreation;
 
     /*
+     * date_expiration d'une Machine dans la table Machine
+     * @var string
+     */
+    private $dateExpiration;
+    
+    /*
       ==============================
       ======== CONSTRUCTEUR ========
       ==============================
      */
 
     public function Machine(
-    $id = -1, $distribAlias = null, $utilisateur = null, $nom = "Aucun nom pour cette machine", $ram = -1, $coeur = -1, $stockage = -1, $description = "Cette Machine n'a pas de description", $dateCreation = "0000-00-00"
+    $id = -1, $distribAlias = null, $utilisateur = null, $nom = "Aucun nom pour cette machine", $ram = -1, $coeur = -1, $stockage = -1, $description = "Cette Machine n'a pas de description", $dateCreation = "0000-00-00", $dateExpiration = "0000-00-00"
     )
     {
         $this->id = $id;
@@ -107,6 +116,7 @@ class Machine {
         $this->stockage = $stockage;
         $this->description = $description;
         $this->dateCreation = $dateCreation;
+        $this->dateExpiration = $dateExpiration;
     }
 
     /*
@@ -126,6 +136,7 @@ class Machine {
         $this->stockage = $dataSet['stockage'];
         $this->description = $dataSet['description'];
         $this->dateCreation = $dataSet['date_creation'];
+        $this->dateExpiration = $dataSet['date_expiration'];
     }
 
     /*
@@ -297,5 +308,18 @@ class Machine {
     {
         return $this->dateCreation;
     }
+    
+    //dateExpiration
+    public function setDateExpiration($dateExpiration)
+    {
+        if (is_string($dateExpiration))
+        {
+            $this->dateExpiration = $dateExpiration;
+        }
+    }
 
+    public function getDateExpiration()
+    {
+        return $this->dateExpiration;
+    }
 }
