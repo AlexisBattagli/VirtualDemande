@@ -29,7 +29,8 @@ class MachineDAL
                         . 'machine.coeur as coeur, '
                         . 'machine.stockage as stockage, '
                         . 'machine.description as description, '
-                        . 'machine.date_creation as date_creation '
+                        . 'machine.date_creation as date_creation, '
+                        . 'machine.date_expiration as date_expiration '
                         . ' FROM machine'
                         . ' WHERE machine.id = ?', array('i', &$id));
         $machine = new Machine();
@@ -61,7 +62,8 @@ class MachineDAL
                         . 'machine.coeur as coeur, '
                         . 'machine.stockage as stockage, '
                         . 'machine.description as description, '
-                        . 'machine.date_creation as date_creation '
+                        . 'machine.date_creation as date_creation, '
+                        . 'machine.date_expiration as date_expiration '
                         . ' FROM machine'
                 . ' ORDER BY machine.Utilisateur_id ASC, machine.Distrib_Alias_id ASC');
 
@@ -93,7 +95,8 @@ class MachineDAL
                         . 'machine.coeur as coeur, '
                         . 'machine.stockage as stockage, '
                         . 'machine.description as description, '
-                        . 'machine.date_creation as date_creation '
+                        . 'machine.date_creation as date_creation, '
+                        . 'machine.date_expiration as date_expiration '
                         . ' FROM machine'
                         . ' WHERE machine.Utilisateur_id = ? AND LOWER(machine.nom) = LOWER(?)', array('is', &$userId, &$nom));
         $machine = new Machine();
@@ -131,14 +134,15 @@ class MachineDAL
         $stockage = $machine->getStockage(); //float
         $description = $machine->getDescription(); //string
         $dateCreation = $machine->getDateCreation(); //string
+        $dateExpiration = $machine->getDateExpiration(); //string
         $id = $machine->getId(); //int
         if ($id < 0)
         {
-            $sql = 'INSERT INTO machine (Utilisateur_id, Distrib_Alias_id, nom, ram, coeur, stockage, description, date_creation) '
-                    . ' VALUES (?,?,?,?,?,?,?,?) ';
+            $sql = 'INSERT INTO machine (Utilisateur_id, Distrib_Alias_id, nom, ram, coeur, stockage, description, date_creation, date_expiration) '
+                    . ' VALUES (?,?,?,?,?,?,?,?,?) ';
 
             //Prépare les info concernant les type de champs
-            $params = array('iisdidss',
+            $params = array('iisdidsss',
                 &$userId,
                 &$distribaliasId,
                 &$nom,
@@ -146,7 +150,8 @@ class MachineDAL
                 &$coeur,
                 &$stockage,
                 &$description,
-                &$dateCreation
+                &$dateCreation,
+                &$dateExpiration
             );
         }
         else
@@ -159,11 +164,12 @@ class MachineDAL
                     . 'coeur = ?, '
                     . 'stockage = ?, '
                     . 'description = ?, '
-                    . 'date_creation = ? '
+                    . 'date_creation = ?, '
+                    . 'date_expiration = ? '
                     . 'WHERE id = ? ';
 
             //Prépare les info concernant les type de champs
-            $params = array('iisdidssi',
+            $params = array('iisdidsssi',
                 &$userId,
                 &$distribaliasId,
                 &$nom,
@@ -172,6 +178,7 @@ class MachineDAL
                 &$stockage,
                 &$description,
                 &$dateCreation,
+                &$dateExpiration,
                 &$id
             );
         }
