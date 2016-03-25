@@ -66,6 +66,35 @@ class StockageDAL {
     }
     
     /*
+     * Retourne le stockage correspondant au couple valeur
+     * Ce couple étant unique, il n'y qu'une seul ligne retourner.
+     * Il est rechercher sans tenir compte de la casse sur valeur
+     * 
+     * @param int valeur
+     * @return Stockage | null
+     */
+    
+    public static function findByValeur($valeur)
+    {
+        $data = BaseSingleton::select('SELECT stockage.id as id, '
+                        . 'stockage.valeur as valeur, '
+                        . 'stockage.visible as visible '
+                        . ' FROM stockage'
+                        . ' WHERE LOWER(stockage.valeur) = LOWER(?)', array('i', &$valeur));
+        $stockages = new Stockage();
+
+        if (sizeof($data) > 0)
+        {
+            $stockages->hydrate($data[0]);
+        }
+        else
+        {
+            $stockages=null;
+        }
+        return $stockages;
+    }
+    
+    /*
      * Insère ou met à jour le Stockage donné en paramètre.
      * Pour cela on vérifie si l'id du Stockage transmis est sup ou inf à 0.
      * Si l'id est inf à 0 alors il faut insèrer, sinon update à l'id transmis.

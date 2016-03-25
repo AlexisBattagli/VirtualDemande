@@ -66,6 +66,35 @@ class CoeurDAL {
     }
     
     /*
+     * Retourne le coeur correspondant au couple valeur
+     * Ce couple étant unique, il n'y qu'une seul ligne retourner.
+     * Il est rechercher sans tenir compte de la casse sur valeur
+     * 
+     * @param int valeur
+     * @return Coeur | null
+     */
+    
+    public static function findByValeur($valeur)
+    {
+        $data = BaseSingleton::select('SELECT coeur.id as id, '
+                        . 'coeur.valeur as valeur, '
+                        . 'coeur.visible as visible '
+                        . ' FROM coeur'
+                        . ' WHERE LOWER(coeur.valeur) = LOWER(?)', array('i', &$valeur));
+        $coeurs = new Coeur();
+
+        if (sizeof($data) > 0)
+        {
+            $coeurs->hydrate($data[0]);
+        }
+        else
+        {
+            $coeurs=null;
+        }
+        return $coeurs;
+    }
+    
+    /*
      * Insère ou met à jour le Coeur donné en paramètre.
      * Pour cela on vérifie si l'id du Coeur transmis est sup ou inf à 0.
      * Si l'id est inf à 0 alors il faut insèrer, sinon update à l'id transmis.

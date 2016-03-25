@@ -66,6 +66,35 @@ class RamDAL {
     }
     
     /*
+     * Retourne le ram correspondant au couple valeur
+     * Ce couple étant unique, il n'y qu'une seul ligne retourner.
+     * Il est rechercher sans tenir compte de la casse sur valeur
+     * 
+     * @param int valeur
+     * @return Ram | null
+     */
+    
+    public static function findByValeur($valeur)
+    {
+        $data = BaseSingleton::select('SELECT ram.id as id, '
+                        . 'ram.valeur as valeur, '
+                        . 'ram.visible as visible '
+                        . ' FROM ram'
+                        . ' WHERE LOWER(ram.valeur) = LOWER(?)', array('i', &$valeur));
+        $rams = new Ram();
+
+        if (sizeof($data) > 0)
+        {
+            $rams->hydrate($data[0]);
+        }
+        else
+        {
+            $rams=null;
+        }
+        return $rams;
+    }
+    
+    /*
      * Insère ou met à jour le Ram donné en paramètre.
      * Pour cela on vérifie si l'id du Ram transmis est sup ou inf à 0.
      * Si l'id est inf à 0 alors il faut insèrer, sinon update à l'id transmis.
