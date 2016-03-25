@@ -28,7 +28,8 @@ class Groupe_has_MachineDAL {
 
         $data = BaseSingleton::select('SELECT '
                         . ' Groupe_has_Machine.Groupe_id as Groupe_id, '
-                        . ' Groupe_has_Machine.Machine_id as Machine_id '
+                        . ' Groupe_has_Machine.Machine_id as Machine_id, '
+                        . ' Groupe_has_Machine.commentaire as commentaire '
                         . ' FROM Groupe_has_Machine'
                         . ' ORDER BY Groupe_has_Machine.Groupe_id ASC, Groupe_has_Machine.machine ASC');
 
@@ -55,7 +56,8 @@ class Groupe_has_MachineDAL {
 
         $data = BaseSingleton::select('SELECT '
                         . ' Groupe_has_Machine.Groupe_id as Groupe_id, '
-                        . ' Groupe_has_Machine.Machine_id as Machine_id '
+                        . ' Groupe_has_Machine.Machine_id as Machine_id, '
+                        . ' Groupe_has_Machine.commentaire as commentaire '
                         . ' FROM Groupe_has_Machine'
                         . ' WHERE Groupe_has_Machine.Groupe_id = ?', array('i', &$groupeId));
 
@@ -82,7 +84,8 @@ class Groupe_has_MachineDAL {
 
         $data = BaseSingleton::select('SELECT '
                         . ' Groupe_has_Machine.Groupe_id as Groupe_id, '
-                        . ' Groupe_has_Machine.Machine_id as Machine_id '
+                        . ' Groupe_has_Machine.Machine_id as Machine_id, '
+                        . ' Groupe_has_Machine.commentaire as commentaire '
                         . ' FROM Groupe_has_Machine'
                         . ' WHERE Groupe_has_Machine.Machine_id = ?', array('i', &$machineId));
 
@@ -108,7 +111,8 @@ class Groupe_has_MachineDAL {
     {
         $data = BaseSingleton::select('SELECT '
                         . ' Groupe_has_Machine.Groupe_id as Groupe_id, '
-                        . ' Groupe_has_Machine.Machine_id as Machine_id '
+                        . ' Groupe_has_Machine.Machine_id as Machine_id, '
+                        . ' Groupe_has_Machine.commentaire as commentaire '
                         . ' FROM Groupe_has_Machine'
                         . ' WHERE Groupe_has_Machine.Groupe_id = ? AND Groupe_has_Machine.machine_id = ?', array('ii', &$groupeId, &$machineId));
         $groupeHasMachine = new Groupe_has_Machine();
@@ -140,15 +144,17 @@ class Groupe_has_MachineDAL {
         //Récupère les valeurs de l'objet Groupe_has_Machine passé en para de la méthode
         $groupeId = $groupeHasMachine->getGroupe()->getId(); //int
         $machineId = $groupeHasMachine->getMachine()->getId(); //int
+        $commentaire = $groupeHasMachine->getCommentaire();
         if (is_null(findByGM($groupeId, $machineId)))
         {
-            $sql = 'INSERT INTO Groupe_has_Machine (Groupe_id, Machine_id) '
-                    . ' VALUES (?,?) ';
+            $sql = 'INSERT INTO Groupe_has_Machine (Groupe_id, Machine_id, commentaire) '
+                    . ' VALUES (?,?,?) ';
 
             //Prépare les info concernant les types de champs
-            $params = array('ii',
+            $params = array('iis',
                 &$groupeId,
-                &$machineId
+                &$machineId,
+                &$commentaire
             );
         }
         else
@@ -159,10 +165,11 @@ class Groupe_has_MachineDAL {
                     . 'WHERE Groupe_id = ? AND Machine_id = ?';
 
             //Prépare les info concernant les type de champs
-            $params = array('iiii',
+            $params = array('iiisi',
                 &$groupeId,
                 &$machineId,
                 &$groupeId,
+                &$commentaire,
                 &$machineId
             );
         }
