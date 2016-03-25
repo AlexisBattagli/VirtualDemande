@@ -46,20 +46,26 @@ class Machine {
     private $nom;
 
     /*
+     * cpu d'une Machine dans la table Machine
+     * @var Cpu
+     */
+    private $cpu;
+    
+    /*
      * ram d'une Machine dans la table Machine
-     * @var float
+     * @var Ram
      */
     private $ram;
 
     /*
      * coeur d'une Machine dans la table Machine
-     * @var int
+     * @var Coeur
      */
     private $coeur;
 
     /*
      * stockage d'une Machine dans la table Machine
-     * @var float
+     * @var Stockage
      */
     private $stockage;
 
@@ -88,7 +94,7 @@ class Machine {
      */
 
     public function Machine(
-    $id = -1, $distribAlias = null, $utilisateur = null, $nom = "Aucun nom pour cette machine", $ram = -1, $coeur = -1, $stockage = -1, $description = "Cette Machine n'a pas de description", $dateCreation = "0000-00-00", $dateExpiration = "0000-00-00"
+    $id = -1, $distribAlias = null, $utilisateur = null, $nom = "Aucun nom pour cette machine", $cpu = null, $ram = null, $coeur = null, $stockage = null, $description = "Cette Machine n'a pas de description", $dateCreation = "0000-00-00", $dateExpiration = "0000-00-00"
     )
     {
         $this->id = $id;
@@ -111,9 +117,42 @@ class Machine {
             $this->distribAlias = $distribAlias;
         }
         $this->nom = $nom;
-        $this->ram = $ram;
-        $this->coeur = $coeur;
-        $this->stockage = $stockage;
+        if (is_null($cpu))
+        {
+            $cpu = CpuDAL::findDefaultCpu();
+            $this->cpu = $cpu;
+        }
+        else
+        {
+            $this->cpu = $cpu;
+        }
+        if (is_null($ram))
+        {
+            $ram = RamDAL::findDefaultRam();
+            $this->ram = $ram;
+        }
+        else
+        {
+            $this->ram = $ram;
+        }
+        if (is_null($coeur))
+        {
+            $coeur = CoeurDAL::findDefaultCoeur();
+            $this->coeur = $coeur;
+        }
+        else
+        {
+            $this->coeur = $coeur;
+        }
+        if (is_null($stockage))
+        {
+            $stockage = StockageDAL::findDefaultStockage();
+            $this->stockage = $stockage;
+        }
+        else
+        {
+            $this->stockage = $stockage;
+        }
         $this->description = $description;
         $this->dateCreation = $dateCreation;
         $this->dateExpiration = $dateExpiration;
@@ -131,9 +170,10 @@ class Machine {
         $this->utilisateur = $dataSet['Utilisateur_id'];
         $this->distribAlias = $dataSet['Distrib_Alias_id'];
         $this->nom = $dataSet['nom'];
-        $this->ram = $dataSet['ram'];
-        $this->coeur = $dataSet['coeur'];
-        $this->stockage = $dataSet['stockage'];
+        $this->cpu = $dataSet['Cpu_id'];
+        $this->ram = $dataSet['Ram_id'];
+        $this->coeur = $dataSet['Coeur_id'];
+        $this->stockage = $dataSet['Stockage_id'];
         $this->description = $dataSet['description'];
         $this->dateCreation = $dataSet['date_creation'];
         $this->dateExpiration = $dataSet['date_expiration'];
@@ -238,11 +278,20 @@ class Machine {
     {
         return $this->nom;
     }
-
+    
     //ram
     public function setRam($ram)
     {
-        if (is_float($ram))
+        if (is_string($ram))
+        {
+            $ram = (int) $ram;
+            $this->ram = RamDAL::findById($ram);
+        }
+        else if (is_int($ram))
+        {
+            $this->ram = RamDAL::findById($ram);
+        }
+        else if (is_a($ram, "Ram"))
         {
             $this->ram = $ram;
         }
@@ -250,13 +299,65 @@ class Machine {
 
     public function getRam()
     {
-        return $this->ram;
+        $ram = null;
+        if (is_int($this->ram))
+        {
+            $ram = RamDAL::findById($this->ram);
+            $this->ram = $ram;
+        }
+        else if (is_a($this->ram, "Ram"))
+        {
+            $ram = $this->ram;
+        }
+        return $ram;
+    }
+
+    //cpu
+    public function setCpu($cpu)
+    {
+        if (is_string($cpu))
+        {
+            $cpu = (int) $cpu;
+            $this->cpu = CpuDAL::findById($cpu);
+        }
+        else if (is_int($cpu))
+        {
+            $this->cpu = CpuDAL::findById($cpu);
+        }
+        else if (is_a($cpu, "Cpu"))
+        {
+            $this->cpu = $cpu;
+        }
+    }
+
+    public function getCpu()
+    {
+        $cpu = null;
+        if (is_int($this->cpu))
+        {
+            $cpu = CpuDAL::findById($this->cpu);
+            $this->cpu = $cpu;
+        }
+        else if (is_a($this->cpu, "Cpu"))
+        {
+            $cpu = $this->cpu;
+        }
+        return $cpu;
     }
 
     //coeur
     public function setCoeur($coeur)
     {
-        if (is_int($coeur))
+        if (is_string($coeur))
+        {
+            $coeur = (int) $coeur;
+            $this->coeur = CoeurDAL::findById($coeur);
+        }
+        else if (is_int($coeur))
+        {
+            $this->coeur = CoeurDAL::findById($coeur);
+        }
+        else if (is_a($coeur, "Coeur"))
         {
             $this->coeur = $coeur;
         }
@@ -264,13 +365,32 @@ class Machine {
 
     public function getCoeur()
     {
-        return $this->coeur;
+        $coeur = null;
+        if (is_int($this->coeur))
+        {
+            $coeur = CoeurDAL::findById($this->coeur);
+            $this->coeur = $coeur;
+        }
+        else if (is_a($this->coeur, "Coeur"))
+        {
+            $coeur = $this->coeur;
+        }
+        return $coeur;
     }
 
     //stockage
     public function setStockage($stockage)
     {
-        if (is_float($stockage))
+        if (is_string($stockage))
+        {
+            $stockage = (int) $stockage;
+            $this->stockage = StockageDAL::findById($stockage);
+        }
+        else if (is_int($stockage))
+        {
+            $this->stockage = StockageDAL::findById($stockage);
+        }
+        else if (is_a($stockage, "Stockage"))
         {
             $this->stockage = $stockage;
         }
@@ -278,7 +398,17 @@ class Machine {
 
     public function getStockage()
     {
-        return $this->stockage;
+        $stockage = null;
+        if (is_int($this->stockage))
+        {
+            $stockage = StockageDAL::findById($this->stockage);
+            $this->stockage = $stockage;
+        }
+        else if (is_a($this->stockage, "Stockage"))
+        {
+            $stockage = $this->stockage;
+        }
+        return $stockage;
     }
 
     //description
