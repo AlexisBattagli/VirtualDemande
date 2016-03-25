@@ -27,7 +27,8 @@ class Distrib_AliasDAL {
                         . 'distrib_alias.Distrib_id as Distrib_id, '
                         . 'distrib_alias.nom_complet as nom_complet, '
                         . 'distrib_alias.pseudo as pseudo, '
-                        . 'distrib_alias.commentaire as commentaire '
+                        . 'distrib_alias.commentaire as commentaire, '
+                        . 'distrib_alias.visible as visible '
                         . ' FROM distrib_alias'
                         . ' WHERE distrib_alias.id = ?', array('i', &$id));
         $distribAlias = new Distrib_Alias();
@@ -55,7 +56,8 @@ class Distrib_AliasDAL {
                         . 'distrib_alias.Distrib_id as Distrib_id, '
                         . 'distrib_alias.nom_complet as nom_complet, '
                         . 'distrib_alias.pseudo as pseudo, '
-                        . 'distrib_alias.commentaire as commentaire'
+                        . 'distrib_alias.commentaire as commentaire, '
+                        . 'distrib_alias.visible as visible '
                         . ' FROM distrib_alias '
                 . ' ORDER BY distrib_alias.Distrib_id ASC, distrib_alias.nom_complet ASC');
 
@@ -83,7 +85,8 @@ class Distrib_AliasDAL {
                         . 'distrib_alias.Distrib_id as Distrib_id, '
                         . 'distrib_alias.nom_complet as nom_complet, '
                         . 'distrib_alias.pseudo as pseudo, '
-                        . 'distrib_alias.commentaire as commentaire'
+                        . 'distrib_alias.commentaire as commentaire, '
+                        . 'distrib_alias.visible as visible '
                         . ' FROM distrib_alias'
                         . ' WHERE distrib_alias.Distrib_id = ? AND LOWER(distrib_alias.nom_complet) = LOWER(?)', array('is', &$distribId, &$nomComplet));
         $distribAlias = new Distrib_Alias();
@@ -117,17 +120,19 @@ class Distrib_AliasDAL {
         $nomComplet = $distribAlias->getNomComplet(); //string
         $pseudo = $distribAlias->getPseudo(); //string
         $commentaire = $distribAlias->getCommentaire(); //string
+        $visible = $visible->getVisible();
         $id = $distribAlias->getId(); //int
         if ($id < 0)
         {
-            $sql = 'INSERT INTO distrib_alias (Distrib_id, nom_complet, pseudo, commentaire) '
-                    . ' VALUES (?,?,?,?) ';
+            $sql = 'INSERT INTO distrib_alias (Distrib_id, nom_complet, pseudo, commentaire, visible) '
+                    . ' VALUES (?,?,?,?,?) ';
 
             //Prépare les info concernant les type de champs
-            $params = array('isss',
+            $params = array('isssb',
                 &$distribId,
                 &$nomComplet,
                 &$pseudo,
+                $visible,
                 &$commentaire
             );
         }
@@ -137,15 +142,17 @@ class Distrib_AliasDAL {
                     . 'SET Distrib_id = ?, '
                     . 'nom_complet = ?, '
                     . 'pseudo = ?, '
-                    . 'commentaire = ? '
+                    . 'commentaire = ?, '
+                    . 'visible = ? '
                     . 'WHERE id = ? ';
 
             //Prépare les info concernant les type de champs
-            $params = array('isssi',
+            $params = array('isssbi',
                 &$distribId,
                 &$nomComplet,
                 &$pseudo,
                 &$commentaire,
+                &$visible,
                 &$id
             );
         }
