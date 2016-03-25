@@ -47,6 +47,12 @@ class Distrib_Alias {
      * @vat string
      */
     private $commentaire;
+    
+    /*
+     * Visible de la distrib alias
+     * @vat bool
+     */
+    private $visible;
 
     /*
       ==============================
@@ -55,7 +61,7 @@ class Distrib_Alias {
      */
 
     public function Distrib_Alias(
-    $id = -1, $distrib = null, $nomComplet = "Aucun nom complet pour cette distrib alias", $pseudo = "Aucun pseudo pour cette Distrib Alias", $commentaire = "Cette Distrib Alias n'a pas de commentaire"
+    $id = -1, $distrib = null, $nomComplet = "Aucun nom complet pour cette distrib alias", $pseudo = "Aucun pseudo pour cette Distrib Alias", $commentaire = "Cette Distrib Alias n'a pas de commentaire", $visible=True
     )
     {
         $this->id = $id;
@@ -71,6 +77,7 @@ class Distrib_Alias {
         $this->nomComplet = $nomComplet;
         $this->pseudo = $pseudo;
         $this->commentaire = $commentaire;
+        $this->visible = $visible;
     }
 
     /*
@@ -86,6 +93,7 @@ class Distrib_Alias {
         $this->nomComplet = $dataSet['nom_complet'];
         $this->pseudo = $dataSet['pseudo'];
         $this->commentaire = $dataSet['commentaire'];
+        $this->visible = $dataSet['visible'];
     }
 
     /*
@@ -181,6 +189,20 @@ class Distrib_Alias {
     public function getCommentaire()
     {
         $this->commentaire;
+    }
+    
+    //visible
+    public function setVisible($visible)
+    {
+        if (is_bool($visible))
+        {
+            $this->visible = $visible;
+        }
+    }
+
+    public function getVisible()
+    {
+        return $this->visible;
     }
 
 }
