@@ -26,7 +26,8 @@ class DistribDAL
                         . 'distrib.nom as nom, '
                         . 'distrib.archi as archi, '
                         . 'distrib.version as version, '
-                        . 'distrib.ihm as ihm '
+                        . 'distrib.ihm as ihm, '
+                        . 'distrib.visible as visible '
                         . ' FROM distrib'
                         . ' WHERE distrib.id = ?', array('i', &$id));
         $distrib = new Distrib();
@@ -54,7 +55,8 @@ class DistribDAL
                         . 'distrib.nom as nom, '
                         . 'distrib.archi as archi, '
                         . 'distrib.version as version, '
-                        . 'distrib.ihm as ihm '
+                        . 'distrib.ihm as ihm, '
+                        . 'distrib.visible as visible '
                         . ' FROM distrib'
                 . ' ORDER BY distrib.nom ASC');
 
@@ -69,22 +71,24 @@ class DistribDAL
     }
     
     /*
-     * Retourne la Distrib correspondant à l'ensemble d'attributs nom/archi/version/ihm
+     * Retourne la Distrib correspondant à l'ensemble d'attributs nom/archi/version/ihm/visible
      * Cet ensemble étant unique, il n'y qu'une seule ligne retournée.
-     * Il est recherché sans tenir compte de la casse sur nom/archi/version/ihm
+     * Il est recherché sans tenir compte de la casse sur nom/archi/version/ihm/visible
      * 
      * @param string nom, string archi, string version, string ihm
      * @return Distrib | null
      */
-     public static function findByNAVI($nom, $archi, $version, $ihm)
+     public static function findByNAVI($nom, $archi, $version, $ihm, $visible)
     {
         $data = BaseSingleton::select('SELECT distrib.id as id, '
                         . 'distrib.Distrib_id as nom, '
-                        . 'distrib.nom_complet as archi, '
-                        . 'distrib.pseudo as version, '
-                        . 'distrib.commentaire as ihm'
+                        . 'distrib.nom as nom, '
+                        . 'distrib.archi as archi, '
+                        . 'distrib.version as version, '
+                        . 'distrib.ihm as ihm, '
+                        . 'distrib.visible as visible'
                         . ' FROM distrib'
-                        . ' WHERE LOWER(distrib.nom) = LOWER(?)AND LOWER(distrib.archi) = LOWER(?) AND LOWER(distrib.version) = LOWER(?) AND LOWER(distrib.ihm) = LOWER(?)', array('ssss', &$nom, &$archi, &$version, &$ihm));
+                        . ' WHERE LOWER(distrib.nom) = LOWER(?)AND LOWER(distrib.archi) = LOWER(?) AND LOWER(distrib.version) = LOWER(?) AND LOWER(distrib.ihm) = LOWER(?) AND LOWER(distrib.visible) = LOWER(?)', array('ssssb', &$nom, &$archi, &$version, &$ihm, $visible));
         $distrib = new Distrib();
 
         if (sizeof($data) > 0)
@@ -116,18 +120,20 @@ class DistribDAL
         $archi = $distrib->getArchi(); //string
         $version = $distrib->getVersion(); //string
         $ihm = $distrib->getIhm(); //string
+        $visible = $visible->getVisible(); //bool
         $id = $distrib->getId(); //int
         if ($id < 0)
         {
-            $sql = 'INSERT INTO distrib (nom, archi, version, ihm) '
-                    . ' VALUES (?,?,?,?) ';
+            $sql = 'INSERT INTO distrib (nom, archi, version, ihm, visible) '
+                    . ' VALUES (?,?,?,?,?) ';
 
             //Prépare les info concernant les types de champs
-            $params = array('ssss',
+            $params = array('ssssb',
                 &$nom,
                 &$archi,
                 &$version,
-                &$ihm
+                &$ihm,
+                $visible
             );
         }
         else
@@ -136,15 +142,17 @@ class DistribDAL
                     . 'SET nom = ?, '
                     . 'archi = ?, '
                     . 'version = ?, '
-                    . 'ihm = ? '
+                    . 'ihm = ?, '
+                    . 'visible = ? '
                     . 'WHERE id = ? ';
 
             //Prépare les info concernant les type de champs
-            $params = array('ssssi',
+            $params = array('ssssbi',
                 &$nom,
                 &$archi,
                 &$version,
                 &$ihm,
+                $visible,
                 &$id
             );
         }
