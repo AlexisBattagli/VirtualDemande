@@ -25,9 +25,10 @@ class MachineDAL
                         . 'machine.Utilisateur_id as Utilisateur_id, '
                         . 'machine.Distrib_Alias_id as Distrib_Alias_id, '
                         . 'machine.nom as nom, '
-                        . 'machine.ram as ram, '
-                        . 'machine.coeur as coeur, '
-                        . 'machine.stockage as stockage, '
+                        . 'machine.Cpu_id as Cpu_id, '
+                        . 'machine.Ram_id as Ram_id, '
+                        . 'machine.Coeur_id as Coeur_id, '
+                        . 'machine.Stockage_id as Stockage_id, '
                         . 'machine.description as description, '
                         . 'machine.date_creation as date_creation, '
                         . 'machine.date_expiration as date_expiration '
@@ -58,9 +59,10 @@ class MachineDAL
                         . 'machine.Utilisateur_id as Utilisateur_id, '
                         . 'machine.Distrib_Alias_id as Distrib_Alias_id, '
                         . 'machine.nom as nom, '
-                        . 'machine.ram as ram, '
-                        . 'machine.coeur as coeur, '
-                        . 'machine.stockage as stockage, '
+                        . 'machine.Cpu_id as Cpu_id, '
+                        . 'machine.Ram_id as Ram_id, '
+                        . 'machine.Coeur_id as Coeur_id, '
+                        . 'machine.Stockage_id as Stockage_id, '
                         . 'machine.description as description, '
                         . 'machine.date_creation as date_creation, '
                         . 'machine.date_expiration as date_expiration '
@@ -91,9 +93,10 @@ class MachineDAL
                         . 'machine.Utilisateur_id as Utilisateur_id, '
                         . 'machine.Distrib_Alias_id as Distrib_Alias_id, '
                         . 'machine.nom as nom, '
-                        . 'machine.ram as ram, '
-                        . 'machine.coeur as coeur, '
-                        . 'machine.stockage as stockage, '
+                        . 'machine.Cpu_id as Cpu_id, '
+                        . 'machine.Ram_id as Ram_id, '
+                        . 'machine.Coeur_id as Coeur_id, '
+                        . 'machine.Stockage_id as Stockage_id, '
                         . 'machine.description as description, '
                         . 'machine.date_creation as date_creation, '
                         . 'machine.date_expiration as date_expiration '
@@ -129,23 +132,25 @@ class MachineDAL
         $userId = $machine->getUtilisateur()->getId(); //int
         $distribaliasId = $machine->getDistribAlias()->getId(); //int
         $nom = $machine->getNom(); //string
-        $ram = $machine->getRam(); //float
-        $coeur = $machine->getCoeur(); //int
-        $stockage = $machine->getStockage(); //float
+        $cpu = $machine->getCpu()->getID(); //int
+        $ram = $machine->getRam()->getID(); //int
+        $coeur = $machine->getCoeur()->getID(); //int
+        $stockage = $machine->getStockage()->getID(); //int
         $description = $machine->getDescription(); //string
         $dateCreation = $machine->getDateCreation(); //string
         $dateExpiration = $machine->getDateExpiration(); //string
         $id = $machine->getId(); //int
         if ($id < 0)
         {
-            $sql = 'INSERT INTO machine (Utilisateur_id, Distrib_Alias_id, nom, ram, coeur, stockage, description, date_creation, date_expiration) '
-                    . ' VALUES (?,?,?,?,?,?,?,?,?) ';
+            $sql = 'INSERT INTO machine (Utilisateur_id, Distrib_Alias_id, nom, Cpu_id, Ram_id, Coeur_id, Stockage_id, description, date_creation, date_expiration) '
+                    . ' VALUES (?,?,?,?,?,?,?,?,?,?) ';
 
             //Prépare les info concernant les type de champs
-            $params = array('iisdidsss',
+            $params = array('iisiiiiss',
                 &$userId,
                 &$distribaliasId,
                 &$nom,
+                &$cpu,
                 &$ram,
                 &$coeur,
                 &$stockage,
@@ -160,6 +165,7 @@ class MachineDAL
                     . 'SET Utilisateur_id = ?, '
                     . 'Distrib_Alias_id = ?, '
                     . 'nom = ?, '
+                    . 'cpu = ?, '
                     . 'ram = ?, '
                     . 'coeur = ?, '
                     . 'stockage = ?, '
@@ -169,10 +175,11 @@ class MachineDAL
                     . 'WHERE id = ? ';
 
             //Prépare les info concernant les type de champs
-            $params = array('iisdidsssi',
+            $params = array('iisiiiissi',
                 &$userId,
                 &$distribaliasId,
                 &$nom,
+                &$cpu,
                 &$ram,
                 &$coeur,
                 &$stockage,
