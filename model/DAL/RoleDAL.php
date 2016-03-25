@@ -66,7 +66,34 @@ class RoleDAL
         return $mesRoles;
     }
     
-    //TO DO findByRole
+    /*
+     * Retourne le role correspondant au couple role
+     * Ce couple étant unique, il n'y qu'une seul ligne retourner.
+     * Il est rechercher sans tenir compte de la casse sur login
+     * 
+     * @param string role
+     * @return Role | null
+     */
+    
+    public static function findByRole($role)
+    {
+        $data = BaseSingleton::select('SELECT role.id as id, '
+                        . 'role.role as role, '
+                        . 'role.description as description '
+                        . ' FROM role'
+                        . ' WHERE LOWER(role.nom_role) = LOWER(?)', array('s', &$role));
+        $roles = new Role();
+
+        if (sizeof($data) > 0)
+        {
+            $roles->hydrate($data[0]);
+        }
+        else
+        {
+            $roles=null;
+        }
+        return $roles;
+    }
     
     /*
      * Insère ou met à jour le Role donné en paramètre.
