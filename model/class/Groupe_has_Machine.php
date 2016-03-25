@@ -31,12 +31,18 @@ class Groupe_has_Machine {
     private $machine;
     
     /*
+     * commentaire de la Machine
+     * @vat string
+     */
+    private $commentaire;
+    
+    /*
       ==============================
       ======== CONSTRUCTEUR ========
       ==============================
      */
 
-    public function Groupe_has_Machine($groupe = null, $machine= null)
+    public function Groupe_has_Machine($groupe = null, $machine= null, $commentaire = "Cette Distrib Alias n'a pas de commentaire")
     {
         if (is_null($groupe))
         {
@@ -56,6 +62,7 @@ class Groupe_has_Machine {
         {
             $this->machine = $machine;
         }
+        $this->commentaire = $commentaire;
     }
     
     /*
@@ -68,6 +75,7 @@ class Groupe_has_Machine {
     {
         $this->groupe = $dataSet['Groupe_id'];
 	$this->machine = $dataSet['Machine_id'];
+        $this->commentaire = $dataSet['commentaire'];
     }
 
     /*
@@ -140,5 +148,19 @@ class Groupe_has_Machine {
             $machine = $this->machine;
         }
         return $machine;
+    }
+    
+    //commentaire
+    public function setCommentaire($commentaire)
+    {
+        if (is_string($commentaire))
+        {
+            $this->commentaire = $commentaire;
+        }
+    }
+
+    public function getCommentaire()
+    {
+        $this->commentaire;
     }
 }
