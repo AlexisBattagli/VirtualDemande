@@ -152,7 +152,7 @@ class DistribDAL
                 &$archi,
                 &$version,
                 &$ihm,
-                $visible,
+                &$visible,
                 &$id
             );
         }

@@ -78,7 +78,7 @@ class Utilisateur {
      * @var int 
      */
 
-    private $nb_vm;
+    private $nbVm;
     
     /*
       ==============================
@@ -87,7 +87,7 @@ class Utilisateur {
      */
 
     public function Utilisateur(
-    $id = -1, $role = null, $nom = "Aucun Nom pour cet Utilisateur", $prenom = "Aucun Prenom pour cet Utilisateur", $login = "Aucun Login pour cet Utilisateur", $description = "Ce Groupe n'a pas de description", $password = "Aucun Password pour cet Utilisateur", $mail = "Aucun Mail pour cet Utilisateur", $dateCreation = "0000-00-00", $dateNaissance = "0000-00-00", $nb_vm=0
+    $id = -1, $role = null, $nom = "Aucun Nom pour cet Utilisateur", $prenom = "Aucun Prenom pour cet Utilisateur", $login = "Aucun Login pour cet Utilisateur", $description = "Ce Groupe n'a pas de description", $password = "Aucun Password pour cet Utilisateur", $mail = "Aucun Mail pour cet Utilisateur", $dateCreation = "0000-00-00", $dateNaissance = "0000-00-00", $nbVm=0
     )
     {
         $this->id = $id;
@@ -108,7 +108,7 @@ class Utilisateur {
         $this->description = $description;
         $this->dateCreation = $dateCreation;
         $this->dateNaissance = $dateNaissance;
-        $this->nb_vm = $nb_vm;
+        $this->nbVm = $nbVm;
     }
 
     /*
@@ -127,7 +127,7 @@ class Utilisateur {
         $this->mail = $dataSet['mail'];
         $this->dateCreation = $dataSet['date_creation'];
         $this->dateNaissance = $dataSet['date_naissance'];
-        $this->nb_vm = $dataSet['nb_vm'];
+        $this->nbVm = $dataSet['nb_vm'];
     }
 
     /*
@@ -282,16 +282,16 @@ class Utilisateur {
     }
     
     //nb_vm
-    public function setNbVm($nb_vm)
+    public function setNbVm($nbVm)
     {
-        if (is_string($nb_vm))
+        if (is_string($nbVm))
         {
-            $this->nb_vm = $nb_vm;
+            $this->nbVm = $nbVm;
         }
     }
 
     public function getNbVm()
     {
-        return $this->nb_vm;
+        return $this->nbVm;
     }
 }

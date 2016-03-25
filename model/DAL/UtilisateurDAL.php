@@ -28,7 +28,8 @@ class UtilisateurDAL
                         . 'utilisateur.password as password, '
                         . 'utilisateur.mail as mail, '
                         . 'utilisateur.date_creation as date_creation, '
-                        . 'utilisateur.date_naissance as date_naissance '
+                        . 'utilisateur.date_naissance as date_naissance, '
+                        . 'utilisateur.nb_vm as nb_vm '
                         . ' FROM utilisateur'
                         . ' WHERE utilisateur.id = ?', array('i', &$id));
         $utilisateur = new Utilisateur();
@@ -60,7 +61,8 @@ class UtilisateurDAL
                         . 'utilisateur.password as password, '
                         . 'utilisateur.mail as mail, '
                         . 'utilisateur.date_creation as date_creation, '
-                        . 'utilisateur.date_naissance as date_naissance '
+                        . 'utilisateur.date_naissance as date_naissance, '
+                        . 'utilisateur.nb_vm as nb_vm '
                         . ' FROM utilisateur'
                 . ' ORDER BY utilisateur.Role_id ASC, utilisateur.nom ASC, utilisateur.prenom ASC, utilisateur.login ASC');
 
@@ -91,7 +93,8 @@ class UtilisateurDAL
                         . 'utilisateur.password as password, '
                         . 'utilisateur.mail as mail, '
                         . 'utilisateur.dateCreation as date_creation, '
-                        . 'utilisateur.date_naissance as date_naissance'
+                        . 'utilisateur.date_naissance as date_naissance, '
+                        . 'utilisateur.nb_vm as nb_vm '
                         . ' FROM utilisateur'
                         . ' WHERE LOWER(utilisateur.login) = LOWER(?)', array('s', &$login));
         $utilisateur = new Utilisateur();
@@ -129,14 +132,15 @@ class UtilisateurDAL
         $mail = $utilisateur->getMail(); //string
         $dateCreation = $utilisateur->getDateCreation(); //string
         $dateNaissance = $utilisateur->getDateNaissance(); //string
+        $nbVM = $nbVM->getNbVm();
         $id = $utilisateur->getId(); //int
         if ($id < 0)
         {
-            $sql = 'INSERT INTO utilisateur (Role_id, nom, prenom, login, password, mail, date_creation, date_naissance) '
-                    . ' VALUES (?,?,?,?,?,?,?,?) ';
+            $sql = 'INSERT INTO utilisateur (Role_id, nom, prenom, login, password, mail, date_creation, date_naissance, nb_vm) '
+                    . ' VALUES (?,?,?,?,?,?,?,?,?) ';
 
             //Prépare les info concernant les type de champs
-            $params = array('isssssss',
+            $params = array('isssssssi',
                 &$role,
                 &$nom,
                 &$prenom,
@@ -144,7 +148,8 @@ class UtilisateurDAL
                 &$password,
                 &$mail,
                 &$dateCreation,
-                &$dateNaissance
+                &$dateNaissance,
+                &$nbVM
             );
         }
         else
@@ -157,11 +162,12 @@ class UtilisateurDAL
                     . 'password = ?, '
                     . 'mail = ?, '
                     . 'date_creation = ?, '
-                    . 'date_naissance = ? '
+                    . 'date_naissance = ?, '
+                    . 'nb_vm = ? '
                     . 'WHERE id = ? ';
 
             //Prépare les info concernant les type de champs
-            $params = array('isssssssi',
+            $params = array('isssssssii',
                 &$role,
                 &$nom,
                 &$prenom,
@@ -170,6 +176,7 @@ class UtilisateurDAL
                 &$mail,
                 &$dateCreation,
                 &$dateNaissance,
+                &$nb_vm,
                 &$id
             );
         }

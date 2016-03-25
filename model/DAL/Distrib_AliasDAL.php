@@ -132,7 +132,7 @@ class Distrib_AliasDAL {
                 &$distribId,
                 &$nomComplet,
                 &$pseudo,
-                $visible,
+                &$visible,
                 &$commentaire
             );
         }
