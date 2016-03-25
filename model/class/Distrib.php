@@ -42,6 +42,12 @@ class Distrib {
      * @var string
      */
     private $ihm;
+    
+    /*
+     * Visible d'un Distrib dans la table Distrib
+     * @var bool
+     */
+    private $visible;
 
     /*
       ==============================
@@ -54,7 +60,7 @@ class Distrib {
      */
 
     public function Distrib(
-    $id = -1, $nom = "Cette Distrib n'a pas de nom", $archi = "Aucun archi pour cette Distrib", $version = "Cette Distrib n'a pas de version", $ihm = "Cette Distrib n'a pas d'IHM"
+    $id = -1, $nom = "Cette Distrib n'a pas de nom", $archi = "Aucun archi pour cette Distrib", $version = "Cette Distrib n'a pas de version", $ihm = "Cette Distrib n'a pas d'IHM", $visible=True
     )
     {
         $this->id = $id;
@@ -62,6 +68,7 @@ class Distrib {
         $this->archi = $archi;
         $this->version = $version;
         $this->ihm = $ihm;
+        $this->visible=$visible;
     }
 
     /*
@@ -77,6 +84,7 @@ class Distrib {
         $this->archi = $dataSet['archi'];
         $this->version = $dataSet['version'];
         $this->ihm = $dataSet['ihm'];
+        $this->visible = $dataSet['visible'];
     }
 
     /*
@@ -153,6 +161,20 @@ class Distrib {
     public function getIhm()
     {
         return $this->ihm;
+    }
+    
+    //visible
+    public function setVisible($visible)
+    {
+        if (is_bool($visible))
+        {
+            $this->visible = $visible;
+        }
+    }
+
+    public function getVisible()
+    {
+        return $this->visible;
     }
 
 }
