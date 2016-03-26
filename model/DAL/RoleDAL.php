@@ -25,7 +25,7 @@ class RoleDAL
     public static function findById($id)
     {
         $data = BaseSingleton::select('SELECT role.id as id, '
-                        . 'role.role as role, '
+                        . 'role.nom_role as nom_role, '
                         . 'role.description as description '
                         . ' FROM role'
                         . ' WHERE role.id = ?', array('i', &$id));
@@ -51,7 +51,7 @@ class RoleDAL
         $mesRoles = array();
 
         $data = BaseSingleton::select('SELECT role.id as id, '
-                        . 'role.role as role, '
+                        . 'role.nom_role as nom_role, '
                         . 'role.description as description '
                         . ' FROM role'
                 . ' ORDER BY role.role ASC');
@@ -78,7 +78,7 @@ class RoleDAL
     public static function findByRole($role)
     {
         $data = BaseSingleton::select('SELECT role.id as id, '
-                        . 'role.role as role, '
+                        . 'role.nom_role as nom_role, '
                         . 'role.description as description '
                         . ' FROM role'
                         . ' WHERE LOWER(role.nom_role) = LOWER(?)', array('s', &$role));
@@ -109,30 +109,30 @@ class RoleDAL
     {
 
         //Récupère les valeurs de l'objet role passé en para de la méthode
-        $role_nom = $role->getRole(); //string
+        $nomRole = $role->getNomRole(); //string
         $description = $role->getDescription(); //string
         $id = $role->getId(); //int
         if ($id < 0)
         {
-            $sql = 'INSERT INTO role (role, description) '
+            $sql = 'INSERT INTO role (nom_role, description) '
                     . ' VALUES (?,?) ';
 
             //Prépare les info concernant les type de champs
             $params = array('ss',
-                &$role_nom,
+                &$nomRole,
                 &$description
             );
         }
         else
         {
             $sql = 'UPDATE role '
-                    . 'SET role = ?, '
+                    . 'SET nom_role = ?, '
                     . 'description = ? '
                     . 'WHERE id = ? ';
 
             //Prépare les info concernant les type de champs
             $params = array('ssi',
-                &$role_nom,
+                &$nomRole,
                 &$description,
                 &$id
             );
