@@ -66,15 +66,14 @@ class CpuDAL {
     }
     
     /*
-     * Retourne le cpu correspondant au couple valeur
-     * Ce couple étant unique, il n'y qu'une seul ligne retourner.
-     * Il est rechercher sans tenir compte de la casse sur valeur
+     * Retourne le cpu correspondant au cpu avec un nb de coeur voulu
+     * Cette valeur étant unique, il n'y qu'une seul ligne retourner.
      * 
-     * @param int valeur
+     * @param int nbCoeur
      * @return Cpu | null
      */
     
-    public static function findByValeur($valeur)
+    public static function findByNbCoeur($nbCoeur)
     {
         $data = BaseSingleton::select('SELECT cpu.id as id, '
                         . 'cpu.nb_coeur as nb_coeur, '
