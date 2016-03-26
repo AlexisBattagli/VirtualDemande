@@ -23,8 +23,8 @@ class Table_logDAL {
     public static function findById($id)
     {
         $data = BaseSingleton::select('SELECT table_log.id as id, '
-                        . 'table_log.Machine_id as Machine_id, '
-                        . 'table_log.Utilisateur as Utilisateur_id, '
+                        . 'table_log.machine as machine, '
+                        . 'table_log.utilisateur as utilisateur, '
                         . 'table_log.date_heure as date_heure, '
                         . 'table_log.action as action, '
                         . 'table_log.code_retour as code_retour '
@@ -52,13 +52,13 @@ class Table_logDAL {
         $mestableLogs = array();
 
         $data = BaseSingleton::select('SELECT table_log.id as id, '
-                        . 'table_log.Machine_id as Machine_id, '
-                        . 'table_log.Utilisateur as Utilisateur_id, '
+                        . 'table_log.machine as machine, '
+                        . 'table_log.utilisateur as utilisateur, '
                         . 'table_log.date_heure as date_heure, '
                         . 'table_log.action as action, '
                         . 'table_log.code_retour as code_retour '
                         . ' FROM table_log'
-                . ' ORDER BY table_log.Machine_id ASC, table_log.Utilisateur_id ASC, table_log.action ASC');
+                . ' ORDER BY table_log.machine ASC, table_log.utilisateur ASC, table_log.action ASC');
 
         foreach ($data as $row)
         {
@@ -71,23 +71,23 @@ class Table_logDAL {
     }
     
     /*
-     * Retourne la Table_log correspondant au couple Machine_id/Utilisateur_id/date_heure/action/code_retour
+     * Retourne la Table_log correspondant au couple machine/utilisateur/date_heure/action/code_retour
      * Ce couple étant unique, il n'y qu'une seul ligne retourner.
      * Il est rechercher sans tenir compte de la casse sur nom_complet
      * 
-     * @param int machineID, int utilisateurID, string date_heure, string action, string code_retour
+     * @param int machine, int utilisateur, string date_heure, string action, string code_retour
      * @return Table_log | null
      */
-    public static function findByDN($machineID, $utilisateurID, $date_heure, $action, $code_retour)
+    public static function findByDN($machine, $utilisateur, $date_heure, $action, $code_retour)
     {
         $data = BaseSingleton::select('SELECT table_log.id as id, '
-                        . 'table_log.Machine_id as Machine_id, '
-                        . 'table_log.Utilisateur as Utilisateur_id, '
+                        . 'table_log.machine as machine, '
+                        . 'table_log.utilisateur as utilisateur, '
                         . 'table_log.date_heure as date_heure, '
                         . 'table_log.action as action, '
                         . 'table_log.code_retour as code_retour '
                         . ' FROM table_log'
-                        . ' WHERE table_log.Machine_id = ? AND table_log.Utilisateur_id = ? AND LOWER(table_log.date_heure) = LOWER(?)AND LOWER(table_log.action) = LOWER(?) AND LOWER(table_log.code_retour) = LOWER(?)', array('iisss', &$machineID, &$utilisateurID, &$date_heure, &$action, &$code_retour));
+                        . ' WHERE table_log.machine = ? AND table_log.utilisateur = ? AND LOWER(table_log.date_heure) = LOWER(?)AND LOWER(table_log.action) = LOWER(?) AND LOWER(table_log.code_retour) = LOWER(?)', array('sssss', &$machine, &$utilisateur, &$date_heure, &$action, &$code_retour));
         $tableLog = new Table_log();
 
         if (sizeof($data) > 0)
@@ -115,43 +115,43 @@ class Table_logDAL {
     {
 
         //Récupère les valeurs de l'objet table_log passé en para de la méthode
-        $machineId = $tableLog->getMachine()->getId(); //int
-        $utilisateurId = $tableLog->getUtilisateur()->getId(); //int
+        $machine = $tableLog->getMachine(); //string
+        $utilisateur = $tableLog->getUtilisateur(); //string
         $dateHeure = $tableLog->getDateHeure(); //string
         $action = $tableLog->getAction(); //string
         $codeRetour = $tableLog->getCodeRetour(); //string
         $id = $tableLog->getId(); //int
         if ($id < 0)
         {
-            $sql = 'INSERT INTO table_log (Utilisaeur_id, Machine_id, date_heure, action, codeRetour) '
+            $sql = 'INSERT INTO table_log (utilisateur, machine, date_heure, action, code_retour) '
                     . ' VALUES (?,?,?,?,?) ';
 
             //Prépare les info concernant les type de champs
-            $params = array('iisss',
-                &$distribId,
-                &$nomComplet,
-                &$pseudo,
-                &$visible,
-                &$commentaire
+            $params = array('sssss',
+                &$machine,
+                &$utilisateur,
+                &$dateHeure,
+                &$action,
+                &$codeRetour
             );
         }
         else
         {
             $sql = 'UPDATE table_log '
-                    . 'SET Distrib_id = ?, '
-                    . 'nom_complet = ?, '
-                    . 'pseudo = ?, '
-                    . 'commentaire = ?, '
-                    . 'visible = ? '
+                    . 'SET machine = ?, '
+                    . 'utilisateur = ?, '
+                    . 'date_heure = ?, '
+                    . 'action = ?, '
+                    . 'code_retour = ? '
                     . 'WHERE id = ? ';
 
             //Prépare les info concernant les type de champs
-            $params = array('isssbi',
-                &$distribId,
-                &$nomComplet,
-                &$pseudo,
-                &$commentaire,
-                &$visible,
+            $params = array('sssssi',
+                &$machine,
+                &$utilisateur,
+                &$dateHeure,
+                &$action,
+                &$codeRetour,
                 &$id
             );
         }
