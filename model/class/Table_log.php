@@ -22,14 +22,14 @@ class Table_log {
     
     /*
      * Machine d'un Table_log dans la table Table_log
-     * @var Machine 
+     * @var string 
      */
 
     private $machine;
     
     /*
      * Utilisateur d'un Table_log dans la table Table_log
-     * @var Machine 
+     * @var string 
      */
 
     private $utilisateur;
@@ -62,28 +62,12 @@ class Table_log {
      */
 
     public function Table_log(
-    $id = -1, $machine = null, $utilisateur = null, $dateHeure = "0000-00-00 00:00:00", $action = "Aucune action", $codeRetour = "Aucune code retour"
+    $id = -1, $machine = "Aucune Machine", $utilisateur = "Aucun utilisateur", $dateHeure = "0000-00-00 00:00:00", $action = "Aucune action", $codeRetour = "Aucune code retour"
     )
     {
         $this->id = $id;
-        if (is_null($machine))
-        {
-            $machine = MachineDAL::findDefaultMachine();
-            $this->machine = $machine;
-        }
-        else
-        {
-            $this->machine = $machine;
-        }
-        if (is_null($utilisateur))
-        {
-            $utilisateur = UtilisateurDAL::findDefaultUtilisateur();
-            $this->utilisateur = $utilisateur;
-        }
-        else
-        {
-            $this->utilisateur = $utilisateur;
-        }
+        $this->machine = $machine;
+        $this->utilisateur = $utilisateur;
         $this->dateHeure = $dateHeure;
         $this->action = $action;
         $this->codeRetour = $codeRetour;
@@ -98,8 +82,8 @@ class Table_log {
     public function hydrate($dataSet)
     {
         $this->id = $dataSet['id'];
-        $this->machine = $dataSet['Machine_id'];
-        $this->utilisateur = $dataSet['Utilisateur_id'];
+        $this->machine = $dataSet['machine'];
+        $this->utilisateur = $dataSet['utilisateur'];
         $this->dateHeure = $dataSet['date_heure'];
         $this->action = $dataSet['action'];
         $this->codeRetour = $dataSet['code_retour'];
@@ -130,32 +114,13 @@ class Table_log {
     {
         if (is_string($machine))
         {
-            $machine = (int) $machine;
-            $this->machine = MachineDAL::findById($machine);
-        }
-        else if (is_int($machine))
-        {
-            $this->machine = MachineDAL::findById($machine);
-        }
-        else if (is_a($machine, "Machine"))
-        {
             $this->machine = $machine;
         }
     }
 
     public function getMachine()
     {
-        $machine = null;
-        if (is_int($this->machine))
-        {
-            $machine = MachineDAL::findById($this->machine);
-            $this->machine = $machine;
-        }
-        else if (is_a($this->machine, "Machine"))
-        {
-            $machine = $this->machine;
-        }
-        return $machine;
+        return $this->machine;
     }
     
     //Utilisateur
@@ -163,32 +128,13 @@ class Table_log {
     {
         if (is_string($utilisateur))
         {
-            $utilisateur = (int) $utilisateur;
-            $this->utilisateur = UtilisateurDAL::findById($utilisateur);
-        }
-        else if (is_int($utilisateur))
-        {
-            $this->utilisateur = UtilisateurDAL::findById($utilisateur);
-        }
-        else if (is_a($utilisateur, "Utilisateur"))
-        {
             $this->utilisateur = $utilisateur;
         }
     }
 
     public function getUtilisateur()
     {
-        $utilisateur = null;
-        if (is_int($this->utilisateur))
-        {
-            $utilisateur = UtilisateurDAL::findById($this->utilisateur);
-            $this->utilisateur = $utilisateur;
-        }
-        else if (is_a($this->utilisateur, "Utilisateur"))
-        {
-            $utilisateur = $this->utilisateur;
-        }
-        return $utilisateur;
+        return $this->utilisateur;
     }
     
     //dateHeure
