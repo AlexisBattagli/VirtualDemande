@@ -129,9 +129,9 @@ class MachineDAL
         $userId = $machine->getUtilisateur()->getId(); //int
         $distribaliasId = $machine->getDistribAlias()->getId(); //int
         $nom = $machine->getNom(); //string
-        $cpu = $machine->getCpu()->getID(); //int
-        $ram = $machine->getRam()->getID(); //int
-        $stockage = $machine->getStockage()->getID(); //int
+        $cpu = $machine->getCpu()->getId(); //int
+        $ram = $machine->getRam()->getId(); //int
+        $stockage = $machine->getStockage()->getId(); //int
         $description = $machine->getDescription(); //string
         $dateCreation = $machine->getDateCreation(); //string
         $dateExpiration = $machine->getDateExpiration(); //string
@@ -142,7 +142,7 @@ class MachineDAL
                     . ' VALUES (?,?,?,?,?,?,?,?,?) ';
 
             //Prépare les info concernant les type de champs
-            $params = array('iisiiiss',
+            $params = array('iisiiisss',
                 &$userId,
                 &$distribaliasId,
                 &$nom,
@@ -169,7 +169,7 @@ class MachineDAL
                     . 'WHERE id = ? ';
 
             //Prépare les info concernant les type de champs
-            $params = array('iisiiissi',
+            $params = array('iisiiisssi',
                 &$userId,
                 &$distribaliasId,
                 &$nom,
