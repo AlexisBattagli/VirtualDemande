@@ -26,7 +26,7 @@ class Cpu {
      * @var int 
      */
     
-    private $valeur;
+    private $nbCoeur;
     
     /*
      * Visible d'un Cpu dans la table Cpu
@@ -41,11 +41,11 @@ class Cpu {
      */
     
     public function Cpu(
-    $id = -1, $valeur = -1, $visible=True
+    $id = -1, $nbCoeur = -1, $visible=True
     )
     {
         $this->id = $id;
-        $this->valeur = $valeur;
+        $this->nbCoeur = $nbCoeur;
         $this->visible = $visible;
     }
     
@@ -58,7 +58,7 @@ class Cpu {
     public function hydrate($dataSet)
     {
         $this->id = $dataSet['id'];
-        $this->valeur = $dataSet['valeur'];
+        $this->nbCoeur = $dataSet['nb_coeur'];
         $this->visible = $dataSet['visible'];
     }
     
@@ -82,18 +82,18 @@ class Cpu {
         return $this->id;
     }
     
-    //valeur
-    public function setValeur($valeur)
+    //nb_coeur
+    public function setNbCoeur($nbCoeur)
     {
-        if (is_int($valeur))
+        if (is_int($nbCoeur))
         {
-            $this->valeur = $valeur;
+            $this->nbCoeur = $nbCoeur;
         }
     }
 
-    public function getValeur()
+    public function getNbCoeur()
     {
-        return $this->valeur;
+        return $this->nbCoeur;
     }
     
     //visible
