@@ -21,10 +21,10 @@ class Role {
     private $id;
     
     /*
-     * role d'un Role dans la table Role
+     * nom_role d'un Role dans la table Role
      * @var string
      */
-    private $role;
+    private $nomRole;
     
     /*
      * description d'un Role dans la table Role
@@ -39,11 +39,11 @@ class Role {
      */
     
     public function Role(
-    $id = -1, $role = "Aucun role pour ce role", $description = "Ce role n'a pas de description"
+    $id = -1, $nomRole = "Aucun role pour ce role", $description = "Ce role n'a pas de description"
     )
     {
         $this->id = $id;
-        $this->role = $role;
+        $this->nomRole = $nomRole;
         $this->description = $description;
     }
     
@@ -56,7 +56,7 @@ class Role {
     public function hydrate($dataSet)
     {
         $this->id = $dataSet['id'];
-        $this->role = $dataSet['role'];
+        $this->nomRole = $dataSet['nom_role'];
         $this->description = $dataSet['description'];
     }
     
@@ -81,17 +81,17 @@ class Role {
     }
     
     //role
-    public function setRole($role)
+    public function setNomRole($nomRole)
     {
-        if (is_string($role))
+        if (is_string($nomRole))
         {
-            $this->role = $role;
+            $this->nomRole = $nomRole;
         }
     }
 
-    public function getRole()
+    public function getNomRole()
     {
-        return $this->role;
+        return $this->nomRole;
     }
     
     //description
