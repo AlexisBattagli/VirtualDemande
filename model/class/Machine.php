@@ -58,12 +58,6 @@ class Machine {
     private $ram;
 
     /*
-     * coeur d'une Machine dans la table Machine
-     * @var Coeur
-     */
-    private $coeur;
-
-    /*
      * stockage d'une Machine dans la table Machine
      * @var Stockage
      */
@@ -94,7 +88,7 @@ class Machine {
      */
 
     public function Machine(
-    $id = -1, $distribAlias = null, $utilisateur = null, $nom = "Aucun nom pour cette machine", $cpu = null, $ram = null, $coeur = null, $stockage = null, $description = "Cette Machine n'a pas de description", $dateCreation = "0000-00-00", $dateExpiration = "0000-00-00"
+    $id = -1, $distribAlias = null, $utilisateur = null, $nom = "Aucun nom pour cette machine", $cpu = null, $ram = null, $stockage = null, $description = "Cette Machine n'a pas de description", $dateCreation = "0000-00-00", $dateExpiration = "0000-00-00"
     )
     {
         $this->id = $id;
@@ -135,15 +129,6 @@ class Machine {
         {
             $this->ram = $ram;
         }
-        if (is_null($coeur))
-        {
-            $coeur = CoeurDAL::findDefaultCoeur();
-            $this->coeur = $coeur;
-        }
-        else
-        {
-            $this->coeur = $coeur;
-        }
         if (is_null($stockage))
         {
             $stockage = StockageDAL::findDefaultStockage();
@@ -172,7 +157,6 @@ class Machine {
         $this->nom = $dataSet['nom'];
         $this->cpu = $dataSet['Cpu_id'];
         $this->ram = $dataSet['Ram_id'];
-        $this->coeur = $dataSet['Coeur_id'];
         $this->stockage = $dataSet['Stockage_id'];
         $this->description = $dataSet['description'];
         $this->dateCreation = $dataSet['date_creation'];
@@ -343,39 +327,6 @@ class Machine {
             $cpu = $this->cpu;
         }
         return $cpu;
-    }
-
-    //coeur
-    public function setCoeur($coeur)
-    {
-        if (is_string($coeur))
-        {
-            $coeur = (int) $coeur;
-            $this->coeur = CoeurDAL::findById($coeur);
-        }
-        else if (is_int($coeur))
-        {
-            $this->coeur = CoeurDAL::findById($coeur);
-        }
-        else if (is_a($coeur, "Coeur"))
-        {
-            $this->coeur = $coeur;
-        }
-    }
-
-    public function getCoeur()
-    {
-        $coeur = null;
-        if (is_int($this->coeur))
-        {
-            $coeur = CoeurDAL::findById($this->coeur);
-            $this->coeur = $coeur;
-        }
-        else if (is_a($this->coeur, "Coeur"))
-        {
-            $coeur = $this->coeur;
-        }
-        return $coeur;
     }
 
     //stockage

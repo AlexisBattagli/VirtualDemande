@@ -120,7 +120,7 @@ class Distrib_AliasDAL {
         $nomComplet = $distribAlias->getNomComplet(); //string
         $pseudo = $distribAlias->getPseudo(); //string
         $commentaire = $distribAlias->getCommentaire(); //string
-        $visible = $visible->getVisible();
+        $visible = $distribAlias->getVisible();
         $id = $distribAlias->getId(); //int
         if ($id < 0)
         {

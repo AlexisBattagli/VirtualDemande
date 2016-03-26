@@ -120,7 +120,7 @@ class DistribDAL
         $archi = $distrib->getArchi(); //string
         $version = $distrib->getVersion(); //string
         $ihm = $distrib->getIhm(); //string
-        $visible = $visible->getVisible(); //bool
+        $visible = $distrib->getVisible(); //bool
         $id = $distrib->getId(); //int
         if ($id < 0)
         {
