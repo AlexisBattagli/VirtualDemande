@@ -24,7 +24,7 @@ class CpuDAL {
     public static function findById($id)
     {
         $data = BaseSingleton::select('SELECT cpu.id as id, '
-                        . 'cpu.valeur as valeur, '
+                        . 'cpu.nb_coeur as nb_coeur, '
                         . 'cpu.visible as visible '
                         . ' FROM cpu'
                         . ' WHERE cpu.id = ?', array('i', &$id));
@@ -50,10 +50,10 @@ class CpuDAL {
         $mesCpus = array();
 
         $data = BaseSingleton::select('SELECT cpu.id as id, '
-                        . 'cpu.valeur as valeur, '
+                        . 'cpu.nb_coeur as nb_coeur, '
                         . 'cpu.visible as visible '
                         . ' FROM cpu'
-                . ' ORDER BY cpu.valeur ASC');
+                . ' ORDER BY cpu.nb_coeur ASC');
 
         foreach ($data as $row)
         {
@@ -77,10 +77,9 @@ class CpuDAL {
     public static function findByValeur($valeur)
     {
         $data = BaseSingleton::select('SELECT cpu.id as id, '
-                        . 'cpu.valeur as valeur, '
+                        . 'cpu.nb_coeur as nb_coeur, '
                         . 'cpu.visible as visible '
-                        . ' FROM cpu'
-                        . ' WHERE LOWER(cpu.valeur) = LOWER(?)', array('i', &$valeur));
+                        . ' FROM cpu');
         $cpus = new Cpu();
 
         if (sizeof($data) > 0)
@@ -108,30 +107,30 @@ class CpuDAL {
     {
 
         //Récupère les valeurs de l'objet cpu passé en para de la méthode
-        $valeur = $cpu->getValeur(); //int
+        $nbCoeur = $cpu->getNbCoeur(); //int
         $visible = $cpu->getVisible(); //bool
         $id = $cpu->getId(); //int
         if ($id < 0)
         {
-            $sql = 'INSERT INTO cpu (valeur, visible) '
+            $sql = 'INSERT INTO cpu (nb_coeur, visible) '
                     . ' VALUES (?,?) ';
 
             //Prépare les info concernant les type de champs
             $params = array('ib',
-                &$valeur,
+                &$nbCoeur,
                 &$visible
             );
         }
         else
         {
             $sql = 'UPDATE cpu '
-                    . 'SET valeur = ?, '
+                    . 'SET nb_coeur = ?, '
                     . 'visible = ? '
                     . 'WHERE id = ? ';
 
             //Prépare les info concernant les type de champs
             $params = array('ibi',
-                &$valeur,
+                &$nbCoeur,
                 &$visible,
                 &$id
             );
