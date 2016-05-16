@@ -9,6 +9,7 @@
 
 //import
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Distrib.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/DistribDALphp');
 
 class Distrib_Alias {
     /*
