@@ -16,6 +16,32 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Role.php')
 class RoleDAL 
 {
     /*
+     * Retourne le role par défaut
+     * 
+     * @return Role
+     */
+    
+    public static function findByDefault()
+    {
+        $id=1;
+        $data = BaseSingleton::select('SELECT role.id as id, '
+                        . 'role.nom_role as nom_role, '
+                        . 'role.description as description '
+                        . ' FROM role'
+                        . ' WHERE role.id = ?', array('i', &$id));
+        $role = new Role();
+        if (sizeof($data) > 0)
+        {
+            $role->hydrate($data[0]);
+        }
+        else
+        {
+            $role = null;
+        }
+        return $role;
+    }
+    
+    /*
      * Retourne le role correspondant à l'id donné
      * 
      * @param int $id

@@ -13,8 +13,40 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Machine.ph
 
 class MachineDAL 
 {
+    /*
+     * Retourne la machine par défaut
+     * 
+     * @return Machine
+     */
+    public static function findByDefault()
+    {
+        $id=1;
+        $data = BaseSingleton::select('SELECT machine.id as id, '
+                        . 'machine.Utilisateur_id as Utilisateur_id, '
+                        . 'machine.Distrib_Alias_id as Distrib_Alias_id, '
+                        . 'machine.nom as nom, '
+                        . 'machine.Cpu_id as Cpu_id, '
+                        . 'machine.Ram_id as Ram_id, '
+                        . 'machine.Stockage_id as Stockage_id, '
+                        . 'machine.description as description, '
+                        . 'machine.date_creation as date_creation, '
+                        . 'machine.date_expiration as date_expiration '
+                        . ' FROM machine'
+                        . ' WHERE machine.id = ?', array('i', &$id));
+        $machine = new Machine();
+        if (sizeof($data) > 0)
+        {
+            $machine->hydrate($data[0]);
+        }
+        else
+        {
+            $machine = null;
+        }
+        return $machine;
+    }
+    
 /*
-     * Retourne l'alias d'une distrib correspondant à l'id donnée
+     * Retourne la machine correspondant à l'id donnée
      * 
      * @param int $id
      * @return Machine

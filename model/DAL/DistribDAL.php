@@ -15,6 +15,34 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Distrib.ph
 class DistribDAL 
 {
     /*
+     * Retourne la distrib par défaut
+     * 
+     * @return Distrib
+     */
+    public static function findByDefault()
+    {
+        $id=1;
+        $data = BaseSingleton::select('SELECT distrib.id as id, '
+                        . 'distrib.nom as nom, '
+                        . 'distrib.archi as archi, '
+                        . 'distrib.version as version, '
+                        . 'distrib.ihm as ihm, '
+                        . 'distrib.visible as visible '
+                        . ' FROM distrib'
+                        . ' WHERE distrib.id = ?', array('i', &$id));
+        $distrib = new Distrib();
+        if (sizeof($data) > 0)
+        {
+            $distrib->hydrate($data[0]);
+        }
+        else
+        {
+            $distrib = null;
+        }
+        return $distrib;
+    }
+    
+    /*
      * Retourne la distrib correspondant à l'id donné
      * 
      * @param int $id

@@ -15,6 +15,32 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Cpu.php');
 
 class CpuDAL {
     /*
+     * Retourne le cpu par défaut
+     * 
+     * @return Cpu
+     */
+    
+    public static function findByDefault()
+    {
+        $id=1;
+        $data = BaseSingleton::select('SELECT cpu.id as id, '
+                        . 'cpu.nb_coeur as nb_coeur, '
+                        . 'cpu.visible as visible '
+                        . ' FROM cpu'
+                        . ' WHERE cpu.id = ?', array('i', &$id));
+        $cpu = new Cpu();
+        if (sizeof($data) > 0)
+        {
+            $cpu->hydrate($data[0]);
+        }
+        else
+        {
+            $cpu = null;
+        }
+        return $cpu;
+    }
+    
+    /*
      * Retourne le cpu correspondant à l'id donné
      * 
      * @param int $id

@@ -15,6 +15,32 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Limitant.p
 
 class LimitantDAL {
     /*
+     * Retourne le limitant par défaut
+     * 
+     * @return Limitant
+     */
+    
+    public static function findByDefault()
+    {
+        $id=1;
+        $data = BaseSingleton::select('SELECT limitant.id as id, '
+                        . 'limitant.nb_user_max as nb_user_max, '
+                        . 'limitant.nb_vm_user as nb_vm_user '
+                        . ' FROM limitant'
+                        . ' WHERE limitant.id = ?', array('i', &$id));
+        $limitant = new Limitant();
+        if (sizeof($data) > 0)
+        {
+            $limitant->hydrate($data[0]);
+        }
+        else
+        {
+            $limitant = null;
+        }
+        return $limitant;
+    }
+    
+    /*
      * Retourne le limitant correspondant à l'id donné
      * 
      * @param int $id
