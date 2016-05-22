@@ -6,6 +6,10 @@
  * @author Alexis
  * @author Aurelie
  */
+
+//import
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Guacamole_ConnectionDAL.php');
+
 class Guacamole_Connection 
 {
     /*
