@@ -104,7 +104,9 @@ class CpuDAL {
         $data = BaseSingleton::select('SELECT cpu.id as id, '
                         . 'cpu.nb_coeur as nb_coeur, '
                         . 'cpu.visible as visible '
-                        . ' FROM cpu');
+                        . ' FROM cpu'
+                        . ' WHERE LOWER(cpu.nb_coeur) = LOWER(?)', array('i', &$nbCoeur));
+        
         $cpus = new Cpu();
 
         if (sizeof($data) > 0)

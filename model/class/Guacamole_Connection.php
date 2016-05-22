@@ -95,8 +95,8 @@ class Guacamole_Connection
         $this->connectionName = $dataSet['connection_name'];
         $this->parent = $dataSet['Parent_id'];
         $this->protocol = $dataSet['protocol'];
-        $this->maxConnections = $dataSet['maxConnections'];
-        $this->maxConnectionsPerUser = $dataSet['maxConnectionsPerUser'];
+        $this->maxConnections = $dataSet['max_connections'];
+        $this->maxConnectionsPerUser = $dataSet['max_connections_per_user'];
     }
     
     /*
