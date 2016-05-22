@@ -106,7 +106,7 @@ class Machine {
         }
         if (is_null($distribAlias))
         {
-            $distribAlias = Distrib_AliasDAL::findByDefaultDistribAlias();
+            $distribAlias = Distrib_AliasDAL::findByDefault();
             $this->distribAlias = $distribAlias;
         }
         else
@@ -116,7 +116,7 @@ class Machine {
         $this->nom = $nom;
         if (is_null($cpu))
         {
-            $cpu = CpuDAL::findByDefaultCpu();
+            $cpu = CpuDAL::findByDefault();
             $this->cpu = $cpu;
         }
         else
@@ -125,7 +125,7 @@ class Machine {
         }
         if (is_null($ram))
         {
-            $ram = RamDAL::findByDefaultRam();
+            $ram = RamDAL::findByDefault();
             $this->ram = $ram;
         }
         else
@@ -134,7 +134,7 @@ class Machine {
         }
         if (is_null($stockage))
         {
-            $stockage = StockageDAL::findByDefaultStockage();
+            $stockage = StockageDAL::findByDefault();
             $this->stockage = $stockage;
         }
         else
