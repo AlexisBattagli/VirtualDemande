@@ -29,13 +29,13 @@ class Guacamole_User
     private $username;
     
     /*
-     * password_hash de l'utilisateur
+     * passwordHash de l'utilisateur
      * @var string
      */
     private $passwordHash;
     
     /*
-     * password_salt de l'utilisateur
+     * passwordSalt de l'utilisateur
      * @var string
      */
     private $passwordSalt;
