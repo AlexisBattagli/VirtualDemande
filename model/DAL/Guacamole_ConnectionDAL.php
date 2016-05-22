@@ -8,7 +8,8 @@
  */
 
 //import
-
+require_once('BaseSingletonGuacamole.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Guacamole_Connection.php');
 
 class Guacamole_ConnectionDAL {
     /*
@@ -89,7 +90,7 @@ class Guacamole_ConnectionDAL {
 
         foreach ($data as $row)
         {
-            $guacamoleConnection = new Cpu();
+            $guacamoleConnection = new Guacamole_Connection();
             $guacamoleConnection->hydrate($row);
             $mesGuacamoleConnections[] = $guacamoleConnection;
         }
@@ -97,7 +98,36 @@ class Guacamole_ConnectionDAL {
         return $mesGuacamoleConnections;
     }
     
-    //Voir ligne renvoyant un seule ligne
+    /*
+     * Retourne la Guacamole_Connection correspondant à l'ensemble d'attributs connectionName/parentId/protocol/maxConnections/maxConnectionsPerUser
+     * Cet ensemble étant unique, il n'y qu'une seule ligne retournée.
+     * Il est recherché sans tenir compte de la casse sur connectionName/parentId/protocol/maxConnections/maxConnectionsPerUser
+     * 
+     * @param string connectionName, int parentId, string protocol, int maxConnections, int maxConnectionsPerUser
+     * @return Guacamole_Connection | null
+     */
+     public static function findByCPPMM($connectionName, $parentId, $protocol, $maxConnections, $maxConnectionsPerUser)
+    {
+        $data = BaseSingleton::select('SELECT guacamole_connection.connection_id as connection_id, '
+                        . 'guacamole_connection.connection_name as connection_name, '
+                        . 'guacamole_connection.parent_id as parent_id, '
+                        . 'guacamole_connection.protocol as protocol, '
+                        . 'guacamole_connection.max_connections as max_connections, '
+                        . 'guacamole_connection.max_connections_per_user as max_connections_per_user '
+                        . ' FROM guacamole_connection'
+                        . ' WHERE LOWER(guacamole_connection.connection_name) = LOWER(?)AND LOWER(guacamole_connection.parent_id) = LOWER(?) AND LOWER(guacamole_connection.protocol) = LOWER(?) AND LOWER(guacamole_connection.max_connections) = LOWER(?) AND LOWER(guacamole_connection.max_connections_per_user) = LOWER(?)', array('sisii', &$connectionName, &$parentId, &$protocol, &$maxConnections, $maxConnectionsPerUser));
+        $guacamoleConnection = new Guacamole_Connection();
+
+        if (sizeof($data) > 0)
+        {
+            $guacamoleConnection->hydrate($data[0]);
+        }
+        else 
+        {
+            $guacamoleConnection=null;
+        }
+         return $guacamoleConnection;
+    }
     
     /*
      * Insère ou met à jour le Guacamole_Connection donné en paramètre.
@@ -111,40 +141,65 @@ class Guacamole_ConnectionDAL {
 
     public static function insertOnDuplicate($guacamoleConnection)
     {
-
-        //Récupère les valeurs de l'objet cpu passé en para de la méthode
-        $nbCoeur = $cpu->getNbCoeur(); //int
-        $visible = $cpu->getVisible(); //bool
-        $id = $cpu->getId(); //int
-        if ($id < 0)
+        //Récupère les valeurs de l'objet guacamoleConnection passé en para de la méthode
+        $connectionName=$guacamoleConnection->getConnectionName(); //string
+        $parent=$guacamoleConnection->getParent(); //int
+        $protocol=$guacamoleConnection->getProtocol(); //string
+        $maxConnections=$guacamoleConnection->getMaxConnections(); //int
+        $maxConnectionsPerUser=$guacamoleConnection->getMaxConnectionsPerUser(); //int
+        $connectionId=$guacamoleConnection->getConnectionId(); //int
+        if ($connectionId < 0)
         {
-            $sql = 'INSERT INTO cpu (nb_coeur, visible) '
-                    . ' VALUES (?,?) ';
+            $sql = 'INSERT INTO guacamole_connection (connection_name, parent_id, protocol, max_connections, max_connections_per_user) '
+                    . ' VALUES (?,?,?,?,?) ';
 
             //Prépare les info concernant les type de champs
-            $params = array('ib',
-                &$nbCoeur,
-                &$visible
+            $params = array('sisii',
+                &$connectionName,
+                &$parent,
+                &$protocol,
+                &$maxConnections,
+                &$maxConnectionsPerUser
             );
         }
         else
         {
-            $sql = 'UPDATE cpu '
-                    . 'SET nb_coeur = ?, '
-                    . 'visible = ? '
-                    . 'WHERE id = ? ';
+            $sql = 'UPDATE guacamole_connection '
+                    . 'SET connection_name = ?, '
+                    . 'parent_id = ?, '
+                    . 'protocol = ?, '
+                    . 'max_connections = ?, '
+                    . 'max_connections_per_user = ? '
+                    . 'WHERE connection_id = ? ';
 
             //Prépare les info concernant les type de champs
-            $params = array('ibi',
-                &$nbCoeur,
-                &$visible,
-                &$id
+            $params = array('sisiii',
+                &$connectionName,
+                &$parent,
+                &$protocol,
+                &$maxConnections,
+                &$maxConnectionsPerUser,
+                &$connectionId
             );
         }
 
         //Exec la requête
-        $idInsert = BaseSingleton::insertOrEdit($sql, $params);
+        $idInsert = BaseSingletonGuacamole::insertOrEdit($sql, $params);
 
         return $idInsert;
+    }
+    
+    /*
+     * Supprime le  Guacamole_Connection correspondant à l'id donné en paramètre
+     * 
+     * @param int $id
+     * @return bool
+     * True si la ligne a bien été supprimée, False sinon
+     */
+
+    public static function delete($id)
+    {
+        $deleted = BaseSingletonGuacamole::delete('DELETE FROM guacamole_connection WHERE connection_id = ?', array('i', &$id));
+        return $deleted;
     }
 }

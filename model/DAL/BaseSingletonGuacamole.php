@@ -6,7 +6,7 @@
  * @author Alexis
  * @author Aurelie
  */
-class BaseSingleton {
+class BaseSingletonGuacamole {
 
     private static $instance;
     private $mysqli;
@@ -22,7 +22,7 @@ class BaseSingleton {
     {
         if (is_null(self::$instance))
         {
-            self::$instance = new BaseSingleton();
+            self::$instance = new BaseSingletonGuacamole();
         }
 
         self::$instance->mysqli = new mysqli('localhost', 'root', '-+', 'guacamole_db');
