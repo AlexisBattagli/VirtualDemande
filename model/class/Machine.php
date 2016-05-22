@@ -376,7 +376,7 @@ class Machine {
 
     public function getDescription()
     {
-        $this->description;
+       return $this->description;
     }
 
     //dateCreation
