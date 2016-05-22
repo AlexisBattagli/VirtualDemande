@@ -171,10 +171,10 @@ class MachineDAL
         if ($id < 0)
         {
             $sql = 'INSERT INTO machine (Utilisateur_id, Distrib_Alias_id, nom, Cpu_id, Ram_id, Stockage_id, description, date_creation, date_expiration) '
-                    . ' VALUES (?,?,?,?,?,?,?,?,?) ';
+                    . ' VALUES (?,?,?,?,?,?,?,DATE_FORMAT(NOW(),\'%Y-%m-%d\'),DATE_FORMAT(?,\'%Y-%m-%d\')) ';
 
             //Prépare les info concernant les type de champs
-            $params = array('iisiiisss',
+            $params = array('iisiiiss',
                 &$userId,
                 &$distribaliasId,
                 &$nom,
@@ -182,7 +182,6 @@ class MachineDAL
                 &$ram,
                 &$stockage,
                 &$description,
-                &$dateCreation,
                 &$dateExpiration
             );
         }
@@ -196,12 +195,11 @@ class MachineDAL
                     . 'ram = ?, '
                     . 'stockage = ?, '
                     . 'description = ?, '
-                    . 'date_creation = ?, '
                     . 'date_expiration = ? '
                     . 'WHERE id = ? ';
 
             //Prépare les info concernant les type de champs
-            $params = array('iisiiisssi',
+            $params = array('iisiiissi',
                 &$userId,
                 &$distribaliasId,
                 &$nom,
