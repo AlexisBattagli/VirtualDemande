@@ -67,7 +67,7 @@ class Guacamole_Connection
         $this->connectionName = $connectionName;
         if (is_null($parent))
         {
-            $parent = Guacamole_ConnectionDAL::findDefaultGuacamoleConnection();
+            $parent = Guacamole_ConnectionDAL::findDefault();
             $this->parent = $parent;
         }
         else

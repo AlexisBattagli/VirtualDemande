@@ -46,7 +46,7 @@ class Groupe_has_Machine {
     {
         if (is_null($groupe))
         {
-            $groupe = GroupeDAL::findDefaultGroupe();
+            $groupe = GroupeDAL::findByDefault();
             $this->groupe = $groupe;
         }
         else
@@ -55,7 +55,7 @@ class Groupe_has_Machine {
         }
 	if (is_null($machine))
         {
-            $machine = MachineDAL::findDefaultMachine();
+            $machine = MachineDAL::findByDefault();
             $this->machine = $machine;
         }
         else

@@ -93,7 +93,7 @@ class Utilisateur {
         $this->id = $id;
         if (is_null($role))
         {
-            $role = RoleDAL::findDefaultRole();
+            $role = RoleDAL::findByDefault();
             $this->role = $role;
         }
         else
