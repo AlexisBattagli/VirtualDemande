@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Description of Guacamole_User_Permission
+ * Description of Guacamole_Connection_Permission
  *
  * @author Alexis
  * @author Aurelie
@@ -10,9 +10,11 @@
 //import
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Guacamole_User.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Guacamole_UserDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Guacamole_Connection.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Guacamole_ConnectionDAL.php');
 
-class Guacamole_User_Permission {
-    /*
+class Guacamole_Connection_Permission {
+   /*
       ==============================
       ========= ATTRIBUTS ==========
       ==============================
@@ -25,10 +27,10 @@ class Guacamole_User_Permission {
     private $user;
     
     /*
-     * Utilisateur impacté par l'utilisateur
-     * @var Guacamole_User
+     * Connexion à paramétrer
+     * @var Guacamole_Connection 
      */
-    private $affectedUser;
+    private $connection;
     
     /*
      * Permissions de l'utilisateur
@@ -42,11 +44,11 @@ class Guacamole_User_Permission {
       ==============================
      */
     
-    public function Guacamole_User_Permission(
-    $user = null, $affectedUser = null, $permission="Il n'y a pas de permission"
+    public function Guacamole_Connection_Permission(
+    $user = null, $connection = null, $permission="Il n'y a pas de permission"
     )
     {
-       if (is_null($user))
+        if (is_null($user))
         {
             $user = Guacamole_UserDAL::findByDefault();
             $this->user = $user;
@@ -55,14 +57,14 @@ class Guacamole_User_Permission {
         {
             $this->user = $user;
         } 
-        if (is_null($affectedUser))
+        if (is_null($connection))
         {
-            $affectedUser = Guacamole_UserDAL::findByDefault();
-            $this->affectedUser = $affectedUser;
+            $connection = Guacamole_ConnectionDAL::findByDefault();
+            $this->connection = $connection;
         }
         else
         {
-            $this->affectedUser = $affectedUser;
+            $this->connection = $connection;
         } 
         $this->permission = $permission;
     }
@@ -76,7 +78,7 @@ class Guacamole_User_Permission {
     public function hydrate($dataSet)
     {
         $this->user = $dataSet['user_id'];
-        $this->affectedUser = $dataSet['affected_user_id'];
+        $this->connection = $dataSet['connection_id'];
         $this->permission = $dataSet['permission'];
     }
     
@@ -119,37 +121,37 @@ class Guacamole_User_Permission {
         return $user;
     }
     
-    //affectedUser
-    public function setAffectedUser($affectedUser)
+    //connection
+    public function setConnection($connection)
     {
-        if (is_string($affectedUser))
+        if (is_string($connection))
         {
-            $affectedUser = (int) $affectedUser;
-            $this->affectedUser = Guacamole_UserDAL::findById($affectedUser);
+            $connection = (int) $connection;
+            $this->connection = Guacamole_ConnectionDAL::findById($connection);
         }
-        else if (is_int($affectedUser))
+        else if (is_int($connection))
         {
-            $this->affectedUser = Guacamole_UserDAL::findById($affectedUser);
+            $this->connection = Guacamole_ConnectionDAL::findById($connection);
         }
-        else if (is_a($affectedUser, "AffectedUser"))
+        else if (is_a($connection, "Connection"))
         {
-            $this->affectedUser = $affectedUser;
+            $this->connection = $connection;
         }
     }
 
-    public function getAffectedUser()
+    public function getConnection()
     {
-        $affectedUser = null;
-        if (is_int($this->affectedUser))
+        $connection = null;
+        if (is_int($this->connection))
         {
-            $affectedUser = Guacamole_UserDAL::findById($this->affectedUser);
-            $this->affectedUser = $affectedUser;
+            $connection = Guacamole_ConnectionDAL::findById($this->connection);
+            $this->connection = $connection;
         }
-        else if (is_a($this->affectedUser, "User"))
+        else if (is_a($this->connection, "Connection"))
         {
-            $affectedUser = $this->affectedUser;
+            $connection = $this->connection;
         }
-        return $affectedUser;
+        return $connection;
     }
     
     //permission
