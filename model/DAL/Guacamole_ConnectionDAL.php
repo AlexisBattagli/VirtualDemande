@@ -143,7 +143,7 @@ class Guacamole_ConnectionDAL {
     {
         //Récupère les valeurs de l'objet guacamoleConnection passé en para de la méthode
         $connectionName=$guacamoleConnection->getConnectionName(); //string
-        $parent=$guacamoleConnection->getParent(); //int
+        $parent=$guacamoleConnection->getParent()->getConnectionId(); //int
         $protocol=$guacamoleConnection->getProtocol(); //string
         $maxConnections=$guacamoleConnection->getMaxConnections(); //int
         $maxConnectionsPerUser=$guacamoleConnection->getMaxConnectionsPerUser(); //int

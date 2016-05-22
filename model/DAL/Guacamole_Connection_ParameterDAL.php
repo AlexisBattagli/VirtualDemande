@@ -10,6 +10,7 @@
 //import
 require_once('BaseSingletonGuacamole.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Guacamole_Connection.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Guacamole_Connection_Parameter.php');
 
 class Guacamole_Connection_ParameterDAL {
     /*
@@ -108,7 +109,7 @@ class Guacamole_Connection_ParameterDAL {
     {
 
         //Récupère les valeurs de l'objet Guacamole_Connection_Parameter passé en para de la méthode
-        $connectionId=$guacamoleConnectionParameter->getConnectionId(); //int
+        $connectionId=$guacamoleConnectionParameter->getConnection()->getConnectionId(); //int
         $parameterName=$guacamoleConnectionParameter->getParameterName(); //string
         $parameterValue=$guacamoleConnectionParameter->getParameterValue(); //string
 
