@@ -25,7 +25,7 @@ class UtilisateurDAL
                         . 'utilisateur.nom as nom, '
                         . 'utilisateur.prenom as prenom, '
                         . 'utilisateur.login as login, '
-                        . 'utilisateur.password as password, '
+                        . 'utilisateur.passwd as passwd, '
                         . 'utilisateur.mail as mail, '
                         . 'utilisateur.date_creation as date_creation, '
                         . 'utilisateur.date_naissance as date_naissance, '
@@ -57,7 +57,7 @@ class UtilisateurDAL
                         . 'utilisateur.nom as nom, '
                         . 'utilisateur.prenom as prenom, '
                         . 'utilisateur.login as login, '
-                        . 'utilisateur.password as password, '
+                        . 'utilisateur.passwd as passwd, '
                         . 'utilisateur.mail as mail, '
                         . 'utilisateur.date_creation as date_creation, '
                         . 'utilisateur.date_naissance as date_naissance, '
@@ -90,7 +90,7 @@ class UtilisateurDAL
                         . 'utilisateur.nom as nom, '
                         . 'utilisateur.prenom as prenom, '
                         . 'utilisateur.login as login, '
-                        . 'utilisateur.password as password, '
+                        . 'utilisateur.passwd as passwd, '
                         . 'utilisateur.mail as mail, '
                         . 'utilisateur.date_creation as date_creation, '
                         . 'utilisateur.date_naissance as date_naissance, '
@@ -122,7 +122,7 @@ class UtilisateurDAL
                         . 'utilisateur.nom as nom, '
                         . 'utilisateur.prenom as prenom, '
                         . 'utilisateur.login as login, '
-                        . 'utilisateur.password as password, '
+                        . 'utilisateur.passwd as passwd, '
                         . 'utilisateur.mail as mail, '
                         . 'utilisateur.dateCreation as date_creation, '
                         . 'utilisateur.date_naissance as date_naissance, '
@@ -168,7 +168,7 @@ class UtilisateurDAL
         $id = $utilisateur->getId(); //int
         if ($id < 0)
         {
-            $sql = 'INSERT INTO utilisateur (Role_id, nom, prenom, login, password, mail, date_creation, date_naissance, nb_vm) '
+            $sql = 'INSERT INTO utilisateur (Role_id, nom, prenom, login, passwd, mail, date_creation, date_naissance, nb_vm) '
                     . ' VALUES (?,?,?,?,?,?,?,?,?) ';
 
             //Prépare les info concernant les type de champs
@@ -191,7 +191,7 @@ class UtilisateurDAL
                     . 'nom = ?, '
                     . 'prenom = ?, '
                     . 'login = ?, '
-                    . 'password = ?, '
+                    . 'passwd = ?, '
                     . 'mail = ?, '
                     . 'date_creation = ?, '
                     . 'date_naissance = ?, '
