@@ -13,6 +13,38 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Utilisateu
 class UtilisateurDAL 
 {
     /*
+     * Retourne l'utilisateur par défaut
+     * 
+     * @return Utilisateur
+     */
+    public static function findByDefault()
+    {
+        $id=1;
+        $data = BaseSingleton::select('SELECT utilisateur.id as id, '
+                        . 'utilisateur.Role_id as Role_id, '
+                        . 'utilisateur.nom as nom, '
+                        . 'utilisateur.prenom as prenom, '
+                        . 'utilisateur.login as login, '
+                        . 'utilisateur.passwd as passwd, '
+                        . 'utilisateur.mail as mail, '
+                        . 'utilisateur.date_creation as date_creation, '
+                        . 'utilisateur.date_naissance as date_naissance, '
+                        . 'utilisateur.nb_vm as nb_vm '
+                        . ' FROM utilisateur'
+                        . ' WHERE utilisateur.id = ?', array('i', &$id));
+        $utilisateur = new Utilisateur();
+        if (sizeof($data) > 0)
+        {
+            $utilisateur->hydrate($data[0]);
+        }
+        else
+        {
+            $utilisateur = null;
+        }
+        return $utilisateur;
+    }
+    
+    /*
      * Retourne l'utilisateur correspondant à l'id donné
      * 
      * @param int $id
@@ -25,7 +57,7 @@ class UtilisateurDAL
                         . 'utilisateur.nom as nom, '
                         . 'utilisateur.prenom as prenom, '
                         . 'utilisateur.login as login, '
-                        . 'utilisateur.password as password, '
+                        . 'utilisateur.passwd as passwd, '
                         . 'utilisateur.mail as mail, '
                         . 'utilisateur.date_creation as date_creation, '
                         . 'utilisateur.date_naissance as date_naissance, '
@@ -58,7 +90,7 @@ class UtilisateurDAL
                         . 'utilisateur.nom as nom, '
                         . 'utilisateur.prenom as prenom, '
                         . 'utilisateur.login as login, '
-                        . 'utilisateur.password as password, '
+                        . 'utilisateur.passwd as passwd, '
                         . 'utilisateur.mail as mail, '
                         . 'utilisateur.date_creation as date_creation, '
                         . 'utilisateur.date_naissance as date_naissance, '
@@ -90,7 +122,7 @@ class UtilisateurDAL
                         . 'utilisateur.nom as nom, '
                         . 'utilisateur.prenom as prenom, '
                         . 'utilisateur.login as login, '
-                        . 'utilisateur.password as password, '
+                        . 'utilisateur.passwd as passwd, '
                         . 'utilisateur.mail as mail, '
                         . 'utilisateur.dateCreation as date_creation, '
                         . 'utilisateur.date_naissance as date_naissance, '
@@ -136,7 +168,7 @@ class UtilisateurDAL
         $id = $utilisateur->getId(); //int
         if ($id < 0)
         {
-            $sql = 'INSERT INTO utilisateur (Role_id, nom, prenom, login, password, mail, date_creation, date_naissance, nb_vm) '
+            $sql = 'INSERT INTO utilisateur (Role_id, nom, prenom, login, passwd, mail, date_creation, date_naissance, nb_vm) '
                     . ' VALUES (?,?,?,?,?,?,?,?,?) ';
 
             //Prépare les info concernant les type de champs
@@ -159,7 +191,7 @@ class UtilisateurDAL
                     . 'nom = ?, '
                     . 'prenom = ?, '
                     . 'login = ?, '
-                    . 'password = ?, '
+                    . 'passwd = ?, '
                     . 'mail = ?, '
                     . 'date_creation = ?, '
                     . 'date_naissance = ?, '

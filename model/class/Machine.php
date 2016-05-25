@@ -97,7 +97,7 @@ class Machine {
         $this->id = $id;
         if (is_null($utilisateur))
         {
-            $utilisateur = UtilisateurDAL::findDefaultUtilisateur();
+            $utilisateur = UtilisateurDAL::findByDefault();
             $this->utilisateur = $utilisateur;
         }
         else
@@ -106,7 +106,7 @@ class Machine {
         }
         if (is_null($distribAlias))
         {
-            $distribAlias = Distrib_AliasDAL::findDefaultDistribAlias();
+            $distribAlias = Distrib_AliasDAL::findByDefault();
             $this->distribAlias = $distribAlias;
         }
         else
@@ -116,7 +116,7 @@ class Machine {
         $this->nom = $nom;
         if (is_null($cpu))
         {
-            $cpu = CpuDAL::findDefaultCpu();
+            $cpu = CpuDAL::findByDefault();
             $this->cpu = $cpu;
         }
         else
@@ -125,7 +125,7 @@ class Machine {
         }
         if (is_null($ram))
         {
-            $ram = RamDAL::findDefaultRam();
+            $ram = RamDAL::findByDefault();
             $this->ram = $ram;
         }
         else
@@ -134,7 +134,7 @@ class Machine {
         }
         if (is_null($stockage))
         {
-            $stockage = StockageDAL::findDefaultStockage();
+            $stockage = StockageDAL::findByDefault();
             $this->stockage = $stockage;
         }
         else
@@ -376,7 +376,7 @@ class Machine {
 
     public function getDescription()
     {
-        $this->description;
+       return $this->description;
     }
 
     //dateCreation

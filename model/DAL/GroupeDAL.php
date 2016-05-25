@@ -16,6 +16,33 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Groupe.php
 class GroupeDAL 
 {
     /*
+     * Retourne le groupe par défaut
+     * 
+     * @return Groupe
+     */
+    public static function findByDefault()
+    {
+        $id=1;
+        $data = BaseSingleton::select('SELECT groupe.id as id, '
+                        . 'groupe.nom as nom, '
+                        . 'groupe.date_creation as date_creation, '
+                        . 'groupe.description  as description  '
+                        . ' FROM groupe'
+                        . ' WHERE groupe.id = ?', array('i', &$id));
+        $groupe= new Groupe();
+        
+        if (sizeof($data) > 0)            
+        {
+            $groupe->hydrate($data[0]);
+        }
+        else
+        {
+            $groupe = null;
+        }
+        return $groupe;
+    }
+    
+    /*
      * Retourne le groupe correspondant à l'id donné
      * 
      * @param int $id

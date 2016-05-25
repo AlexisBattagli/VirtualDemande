@@ -93,7 +93,7 @@ class Utilisateur {
         $this->id = $id;
         if (is_null($role))
         {
-            $role = RoleDAL::findDefaultRole();
+            $role = RoleDAL::findByDefault();
             $this->role = $role;
         }
         else
@@ -120,10 +120,11 @@ class Utilisateur {
     public function hydrate($dataSet)
     {
         $this->id = $dataSet['id'];
+        $this->role = $dataSet['Role_id'];
         $this->nom = $dataSet['nom'];
         $this->prenom = $dataSet['prenom'];
         $this->login = $dataSet['login'];
-        $this->password = $dataSet['password'];
+        $this->password = $dataSet['passwd'];
         $this->mail = $dataSet['mail'];
         $this->dateCreation = $dataSet['date_creation'];
         $this->dateNaissance = $dataSet['date_naissance'];

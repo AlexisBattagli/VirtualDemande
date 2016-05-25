@@ -15,6 +15,32 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Stockage.p
 
 class StockageDAL {
     /*
+     * Retourne le stockage par défaut
+     * 
+     * @return Stockage
+     */
+    
+    public static function findByDefault()
+    {
+        $id=1;
+        $data = BaseSingleton::select('SELECT stockage.id as id, '
+                        . 'stockage.valeur as valeur, '
+                        . 'stockage.visible as visible '
+                        . ' FROM stockage'
+                        . ' WHERE stockage.id = ?', array('i', &$id));
+        $stockage = new Stockage();
+        if (sizeof($data) > 0)
+        {
+            $stockage->hydrate($data[0]);
+        }
+        else
+        {
+            $stockage = null;
+        }
+        return $stockage;
+    }
+    
+    /*
      * Retourne le stockage correspondant à l'id donné
      * 
      * @param int $id

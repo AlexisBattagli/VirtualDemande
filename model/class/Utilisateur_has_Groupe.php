@@ -48,7 +48,7 @@ class Utilisateur_has_Groupe {
     {
         if (is_null($groupe))
         {
-            $groupe = GroupeDAL::findDefaultGroupe();
+            $groupe = GroupeDAL::findByDefault();
             $this->groupe = $groupe;
         }
         else
@@ -57,7 +57,7 @@ class Utilisateur_has_Groupe {
         }
 	if (is_null($utilisateur))
         {
-            $utilisateur = UtilisateurDAL::findDefaultUtilisateur();
+            $utilisateur = UtilisateurDAL::findByDefault();
             $this->utilisateur = $utilisateur;
         }
         else

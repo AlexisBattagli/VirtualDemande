@@ -16,6 +16,34 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Distrib_Al
 class Distrib_AliasDAL {
     
     /*
+     * Retourne l'alias d'une distrib par défaut
+     * 
+     * @return Distrib_Alias
+     */
+    public static function findByDefault()
+    {
+        $id=1;
+        $data = BaseSingleton::select('SELECT distrib_alias.id as id, '
+                        . 'distrib_alias.Distrib_id as Distrib_id, '
+                        . 'distrib_alias.nom_complet as nom_complet, '
+                        . 'distrib_alias.pseudo as pseudo, '
+                        . 'distrib_alias.commentaire as commentaire, '
+                        . 'distrib_alias.visible as visible '
+                        . ' FROM distrib_alias'
+                        . ' WHERE distrib_alias.id = ?', array('i', &$id));
+        $distribAlias = new Distrib_Alias();
+        if (sizeof($data) > 0)
+        {
+            $distribAlias->hydrate($data[0]);
+        }
+        else
+        {
+            $distribAlias = null;
+        }
+        return $distribAlias;
+    }
+    
+    /*
      * Retourne l'alias d'une distrib correspondant à l'id donnée
      * 
      * @param int $id

@@ -15,6 +15,32 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Ram.php');
 
 class RamDAL {
     /*
+     * Retourne le ram par défaut
+     * 
+     * @return Ram
+     */
+    
+    public static function findByDefault()
+    {
+        $id=1;
+        $data = BaseSingleton::select('SELECT ram.id as id, '
+                        . 'ram.valeur as valeur, '
+                        . 'ram.visible as visible '
+                        . ' FROM ram'
+                        . ' WHERE ram.id = ?', array('i', &$id));
+        $ram = new Ram();
+        if (sizeof($data) > 0)
+        {
+            $ram->hydrate($data[0]);
+        }
+        else
+        {
+            $ram = null;
+        }
+        return $ram;
+    }
+    
+    /*
      * Retourne le ram correspondant à l'id donné
      * 
      * @param int $id

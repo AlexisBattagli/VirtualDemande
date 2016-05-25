@@ -13,7 +13,34 @@ require_once('BaseSingleton.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Table_log.php');
 
 class Table_logDAL {
-    
+        /*
+     * Retourne la ligne de Table_log par défaut
+     * 
+     * @return Table_log
+     */
+    public static function findByDefault()
+    {
+        $id=1;
+        $data = BaseSingleton::select('SELECT table_log.id as id, '
+                        . 'table_log.machine as machine, '
+                        . 'table_log.utilisateur as utilisateur, '
+                        . 'table_log.date_heure as date_heure, '
+                        . 'table_log.action as action, '
+                        . 'table_log.code_retour as code_retour '
+                        . ' FROM table_log'
+                        . ' WHERE table_log.id = ?', array('i', &$id));
+        $tableLog = new Table_log();
+        if (sizeof($data) > 0)
+        {
+            $tableLog->hydrate($data[0]);
+        }
+        else
+        {
+            $tableLog = null;
+        }
+        return $tableLog;
+    }
+
     /*
      * Retourne la ligne de Table_log correspondant à l'id donnée
      * 
