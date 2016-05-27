@@ -15,7 +15,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Guacamole_
 class Guacamole_Connection_ParameterDAL {
     /*
      * Retourne l'ensemble des Guacamole_Connection_Parameter qui sont en base
-     * Lister par Groupe ASC puis Machine ASC
+     * Lister par Connection_id ASC puis parameter_name ASC puis parameter_value ASC
      * 
      * @return array[Guacamole_Connection_Parameter] Tous les Guacamole_Connection_Parameter sont placés dans un Tableau
      */
