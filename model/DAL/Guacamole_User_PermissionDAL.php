@@ -108,7 +108,7 @@ class Guacamole_User_PermissionDAL {
                         . 'guacamole_user_permission.affected_user_id as affected_user_id, '
                         . 'guacamole_user_permission.permission as permission '
                         . ' FROM guacamole_user_permission'
-                        . ' WHERE guacamole_user_permission.user_id = ? AND guacamole_user_permission.affected_user_id = ?', array('iss', &$userId, &$affectedUserId));
+                        . ' WHERE guacamole_user_permission.user_id = ? AND guacamole_user_permission.affected_user_id = ?', array('ii', &$userId, &$affectedUserId));
         $guacamoleUserPermission = new Guacamole_User_Permission();
 
         if (sizeof($data) > 0)
@@ -140,7 +140,7 @@ class Guacamole_User_PermissionDAL {
         $affectedUserId=$guacamoleUserPermission->getAffectedUser()->getUserId(); //int
         $permission=$guacamoleUserPermission->getPermission(); //string
 
-        if (is_null(findByCPP($userId, $affectedUserId, $permission)))
+        if (is_null(findByUA($userId, $affectedUserId)))
         {
             $sql = 'INSERT INTO guacamole_user_permission (user_id, affected_user_id, permission) '
                     . ' VALUES (?,?,?) ';

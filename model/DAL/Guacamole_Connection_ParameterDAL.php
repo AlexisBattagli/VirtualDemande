@@ -67,7 +67,7 @@ class Guacamole_Connection_ParameterDAL {
         return $mesGuacamoleConnectionParameters;
     }
     
-        /*
+    /*
      * Retourne le Guacamole_Connection_Parameter correspondant au couple connectionId/parameterName
      * Ce couple étant unique, il n'y qu'une seul ligne retourner.
      * 
@@ -75,13 +75,13 @@ class Guacamole_Connection_ParameterDAL {
      * @return Guacamole_Connection_Parameter | null
      */
 
-    public static function findByCPP($connectionId, $parameterName)
+    public static function findByCP($connectionId, $parameterName)
     {
         $data = BaseSingleton::select('SELECT guacamole_connection_parameter.connection_id as connection_id, '
                         . 'guacamole_connection_parameter.parameter_name as parameter_name, '
                         . 'guacamole_connection_parameter.parameter_value as parameter_value '
                         . ' FROM guacamole_connection_parameter'
-                        . ' WHERE guacamole_connection_parameter.connection_id = ? AND guacamole_connection_parameter.parameter_name = ?', array('iss', &$connectionId, &$parameterName));
+                        . ' WHERE guacamole_connection_parameter.connection_id = ? AND guacamole_connection_parameter.parameter_name = ?', array('ii', &$connectionId, &$parameterName));
         $guacamoleConnectionParameter = new Guacamole_Connection_Parameter();
 
         if (sizeof($data) > 0)
@@ -97,7 +97,7 @@ class Guacamole_Connection_ParameterDAL {
     
     /*
      * Insère ou met à jour la Guacamole_Connection_Parameter donnée en paramètre.
-     * Pour cela on vérifie si l'id de connection_id, parameter_name et parameter_value transmis sont uniques.
+     * Pour cela on vérifie si l'id de connection_id, parameter_name transmis sont uniques.
      * Si le couple return null alors il faut insèrer, sinon update aux id transmis.
      * 
      * @param Guacamole_Connection_Parameter $guacamoleConnectionParameter
@@ -113,7 +113,7 @@ class Guacamole_Connection_ParameterDAL {
         $parameterName=$guacamoleConnectionParameter->getParameterName(); //string
         $parameterValue=$guacamoleConnectionParameter->getParameterValue(); //string
 
-        if (is_null(findByCPP($connectionId, $parameterName, $parameterValue)))
+        if (is_null(findByCP($connectionId, $parameterName)))
         {
             $sql = 'INSERT INTO guacamole_connection_parameter (connection_id, parameter_name, parameter_value) '
                     . ' VALUES (?,?,?) ';
