@@ -6,15 +6,18 @@
         <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        ​
         <!-- Optional theme -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-        ​
+
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-        ​
+
+        <!--Javascript file for all pages-->
+        <script src="./view/javascript/main.js"></script>
+
+        <!--Stylesheet for all pages-->
         <link rel="stylesheet" href="./view/css/main.css">
-        ​
+
         <!-- <link rel="icon" type="image/png" href="./view/document/picture/favicon.png" />   -->
     </head>
     <body>
@@ -36,10 +39,10 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="?page=what_is_it">What is it ? <span class="sr-only">(current)</span></a></li>
-                        <li><a href="?page=how_does_it_work">How does it work ?</a></li>
-                        <li><a href="?page=server_disponibility">Server disponibility</a></li>
-                        <li><a href="?page=register">Register</a></li>
+                        <li id="what_is_it"><a href="?page=what_is_it">What is it ? <span class="sr-only">(current)</span></a></li>
+                        <li id="how_does_it_work"><a href="?page=how_does_it_work">How does it work ?</a></li>
+                        <li id="server_disponibility"><a href="?page=server_disponibility">Server disponibility</a></li>
+                        <li id="register"><a href="?page=register">Register</a></li>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
@@ -74,8 +77,10 @@
                 require_once './view/phtml/home.php';
             }
             ?>
+            <span id="called_page" class="hidden"><?= $page_to_require ?></span>
         </div>
         <div id="right-column" class="col-lg-2"></div>
     </body>
 </html>
+
 
