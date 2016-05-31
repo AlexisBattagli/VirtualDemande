@@ -26,7 +26,7 @@ class Guacamole_Connection_PermissionDAL {
     {
         $mesGuacamoleConnectionPermissions = array();
 
-        $data = BaseSingleton::select('SELECT guacamole_connection_permission.user_id as connection_id, '
+        $data = BaseSingleton::select('SELECT guacamole_connection_permission.user_id as user_id, '
                         . 'guacamole_connection_permission.connection_id as connection_id, '
                         . 'guacamole_connection_permission.permission as permission '
                         . ' FROM guacamole_connection_permission'
@@ -53,7 +53,7 @@ class Guacamole_Connection_PermissionDAL {
     {
         $mesGuacamoleConnectionPermissions = array();
 
-        $data = BaseSingleton::select('SELECT guacamole_connection_permission.user_id as connection_id, '
+        $data = BaseSingleton::select('SELECT guacamole_connection_permission.user_id as user_id, '
                         . 'guacamole_connection_permission.connection_id as connection_id, '
                         . 'guacamole_connection_permission.permission as permission '
                         . ' FROM guacamole_connection_permission'
@@ -80,7 +80,7 @@ class Guacamole_Connection_PermissionDAL {
     {
         $mesGuacamoleConnectionPermissions = array();
 
-        $data = BaseSingleton::select('SELECT guacamole_connection_permission.user_id as connection_id, '
+        $data = BaseSingleton::select('SELECT guacamole_connection_permission.user_id as user_id, '
                         . 'guacamole_connection_permission.connection_id as connection_id, '
                         . 'guacamole_connection_permission.permission as permission '
                         . ' FROM guacamole_connection_permission'
@@ -106,7 +106,7 @@ class Guacamole_Connection_PermissionDAL {
 
     public static function findByUC($userId, $connectionId)
     {
-        $data = BaseSingleton::select('SELECT guacamole_connection_permission.user_id as connection_id, '
+        $data = BaseSingleton::select('SELECT guacamole_connection_permission.user_id as user_id, '
                         . 'guacamole_connection_permission.connection_id as connection_id, '
                         . 'guacamole_connection_permission.permission as permission '
                         . ' FROM guacamole_connection_permission'
