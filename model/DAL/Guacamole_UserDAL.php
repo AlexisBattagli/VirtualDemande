@@ -165,8 +165,8 @@ class Guacamole_UserDAL {
         $username = $guacamoleUser->getUsername(); //string
         $passwordHash = $guacamoleUser->getPasswordHash(); //string
         $passwordSalt = $guacamoleUser->getPasswordSalt(); //string
-        $disabled = $guacamoleUser->getDisabled(); //string
-        $expired = $guacamoleUser->getExpired(); //string
+        $disabled = $guacamoleUser->getDisabled(); //int
+        $expired = $guacamoleUser->getExpired(); //int
         $accessWindowStart = $guacamoleUser->getAccessWindowStart(); //string
         $accessWindowEnd = $guacamoleUser->getAccessWindowEnd(); //string
         $validFrom = $guacamoleUser->getValidFrom(); //string
@@ -176,18 +176,12 @@ class Guacamole_UserDAL {
       
         if (userId < 0)
         {
-            /*Requete initial :
-                SET @salt = UNHEX(SHA2(UUID(), 256));
-                INSERT INTO guacamole_user (username, password_salt, password_hash)
-                VALUES ('myuser', @salt, UNHEX(SHA2(CONCAT('mypassword',
-                HEX(@salt)), 256)));
-             */
             $sql = 'SET @salt = UNHEX(SHA2(UUID(), 256));'
                     . 'INSERT INTO guacamole_user (username, password_hash, password_salt, disabled, expired, access_window_start, access_window_end, valid_from, valid_until, timezone) '
                     . ' VALUES (?,?,?,?,?,?,?,?,?,?) ';
 
             //Prépare les info concernant les type de champs
-            $params = array('ssssssssss',
+            $params = array('sssiisssss',
                 &$username,
                 &$passwordHash,
                 &$passwordSalt,
@@ -217,7 +211,7 @@ class Guacamole_UserDAL {
                     . 'WHERE user_id = ? ';
 
             //Prépare les info concernant les type de champs
-            $params = array('ssssssssssi',
+            $params = array('sssiisssssi',
                 &$username,
                 &$passwordHash,
                 &$passwordSalt,

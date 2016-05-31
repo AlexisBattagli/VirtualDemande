@@ -42,13 +42,13 @@ class Guacamole_User
     
     /*
      * disabled de l'utilisateur
-     * @var string
+     * @var int
      */
     private $disabled;
     
     /*
      * expired de l'utilisateur
-     * @var string
+     * @var int
      */
     private $expired;
     
@@ -90,7 +90,7 @@ class Guacamole_User
     
     public function Guacamole_Connection_Parameter(
     $userId = -1, $username ="Il n'y a pas de nom d'utilisateur", $passwordHash="Il n'y a pas de passwordHash", 
-            $passwordSalt="Il n'y a pas de passwordSalt", $disabled="Rien", $expired="Rien",
+            $passwordSalt="Il n'y a pas de passwordSalt", $disabled=-1, $expired=-1,
             $accessWindowStart="00:00:00", $accessWindowEnd="00:00:00",
             $validFrom="0000-00-00", $validUntil="0000-00-00",
             $timezone="Il n'y a pas de timezone"
@@ -195,7 +195,7 @@ class Guacamole_User
     //disabled
     public function setDisabled($disabled)
     {
-        if (is_string($disabled))
+        if (is_int($disabled))
         {
             $this->disabled = $disabled;
         }
@@ -209,7 +209,7 @@ class Guacamole_User
     //expired
     public function setExpired($expired)
     {
-        if (is_string($expired))
+        if (is_int($expired))
         {
             $this->expired = $expired;
         }
