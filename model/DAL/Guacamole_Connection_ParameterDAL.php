@@ -81,7 +81,7 @@ class Guacamole_Connection_ParameterDAL {
                         . 'guacamole_connection_parameter.parameter_name as parameter_name, '
                         . 'guacamole_connection_parameter.parameter_value as parameter_value '
                         . ' FROM guacamole_connection_parameter'
-                        . ' WHERE guacamole_connection_parameter.connection_id = ? AND guacamole_connection_parameter.parameter_name = ?', array('ii', &$connectionId, &$parameterName));
+                        . ' WHERE guacamole_connection_parameter.connection_id = ? AND LOWER(guacamole_connection_parameter.parameter_name) = LOWER(?)', array('is', &$connectionId, &$parameterName));
         $guacamoleConnectionParameter = new Guacamole_Connection_Parameter();
 
         if (sizeof($data) > 0)
