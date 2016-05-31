@@ -191,4 +191,32 @@ class Guacamole_Connection_PermissionDAL {
         $deleted = BaseSingletonGuacamole::delete('DELETE FROM guacamole_connection_permission WHERE user_id = ? AND connection_id = ?', array('ii', &$userId, &$connectionId));
         return $deleted;
     }
+    
+    /*
+     * Supprime la Guacamole_Connection_Permission correspondant au couple d'id de userId donné en paramètre
+     * 
+     * @param int userId
+     * @return bool
+     * True si la ligne a bien été supprimée, False sinon
+     */
+
+    public static function deleteUser($userId)
+    {
+        $deleted = BaseSingletonGuacamole::delete('DELETE FROM guacamole_connection_permission WHERE user_id = ?', array('i', &$userId));
+        return $deleted;
+    }
+    
+    /*
+     * Supprime la Guacamole_Connection_Permission correspondant à connectionId donné en paramètre
+     * 
+     * @param int connectionId
+     * @return bool
+     * True si la ligne a bien été supprimée, False sinon
+     */
+
+    public static function deleteConnection($connectionId)
+    {
+        $deleted = BaseSingletonGuacamole::delete('DELETE FROM guacamole_connection_permission WHERE connection_id = ?', array('i', &$connectionId));
+        return $deleted;
+    }
 }
