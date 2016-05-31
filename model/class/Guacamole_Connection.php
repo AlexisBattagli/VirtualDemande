@@ -93,7 +93,7 @@ class Guacamole_Connection
     {
         $this->connectionId = $dataSet['connection_id'];
         $this->connectionName = $dataSet['connection_name'];
-        $this->parent = $dataSet['Parent_id'];
+        $this->parent = $dataSet['parent_id'];
         $this->protocol = $dataSet['protocol'];
         $this->maxConnections = $dataSet['max_connections'];
         $this->maxConnectionsPerUser = $dataSet['max_connections_per_user'];
@@ -145,7 +145,7 @@ class Guacamole_Connection
         {
             $this->parent = Guacamole_ConnectionDAL::findById($parent);
         }
-        else if (is_a($parent, "Parent"))
+        else if (is_a($parent, "Guacamole_User"))
         {
             $this->parent = $parent;
         }
@@ -159,7 +159,7 @@ class Guacamole_Connection
             $parent = Guacamole_ConnectionDAL::findById($this->parent);
             $this->parent = $parent;
         }
-        else if (is_a($this->parent, "Parent"))
+        else if (is_a($this->parent, "Guacamole_User"))
         {
             $parent = $this->parent;
         }
