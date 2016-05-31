@@ -162,4 +162,18 @@ class Guacamole_Connection_ParameterDAL {
         $deleted = BaseSingletonGuacamole::delete('DELETE FROM guacamole_connection_parameter WHERE connection_id = ? AND parameter_name = ?', array('is', &$connectionId, &$parameterName));
         return $deleted;
     }
+    
+        /*
+     * Supprime la Guacamole_Connection_Parameter correspondant à connectionId donné en paramètre
+     * 
+     * @param int connectionId
+     * @return bool
+     * True si la ligne a bien été supprimée, False sinon
+     */
+
+    public static function deleteConnection($connectionId)
+    {
+        $deleted = BaseSingletonGuacamole::delete('DELETE FROM guacamole_connection_parameter WHERE connection_id = ?', array('i', &$connectionId));
+        return $deleted;
+    }
 }
