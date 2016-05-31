@@ -98,7 +98,7 @@ class Guacamole_User_Permission {
         {
             $this->user = Guacamole_UserDAL::findById($user);
         }
-        else if (is_a($user, "User"))
+        else if (is_a($user, "Guacamole_User"))
         {
             $this->user = $user;
         }
@@ -112,7 +112,7 @@ class Guacamole_User_Permission {
             $user = Guacamole_UserDAL::findById($this->user);
             $this->user = $user;
         }
-        else if (is_a($this->user, "User"))
+        else if (is_a($this->user, "Guacamole_User"))
         {
             $user = $this->user;
         }
@@ -131,7 +131,7 @@ class Guacamole_User_Permission {
         {
             $this->affectedUser = Guacamole_UserDAL::findById($affectedUser);
         }
-        else if (is_a($affectedUser, "AffectedUser"))
+        else if (is_a($affectedUser, "Guacamole_User"))
         {
             $this->affectedUser = $affectedUser;
         }
@@ -145,7 +145,7 @@ class Guacamole_User_Permission {
             $affectedUser = Guacamole_UserDAL::findById($this->affectedUser);
             $this->affectedUser = $affectedUser;
         }
-        else if (is_a($this->affectedUser, "User"))
+        else if (is_a($this->affectedUser, "Guacamole_User"))
         {
             $affectedUser = $this->affectedUser;
         }
