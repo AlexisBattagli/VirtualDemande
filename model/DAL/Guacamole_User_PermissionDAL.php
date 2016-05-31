@@ -102,13 +102,13 @@ class Guacamole_User_PermissionDAL {
      * @return Guacamole_User_Permission | null
      */
 
-    public static function findByUA($userId, $affectedUserId)
+    public static function findByUAP($userId, $affectedUserId, $permission)
     {
         $data = BaseSingleton::select('SELECT guacamole_user_permission.user_id as user_id, '
                         . 'guacamole_user_permission.affected_user_id as affected_user_id, '
                         . 'guacamole_user_permission.permission as permission '
                         . ' FROM guacamole_user_permission'
-                        . ' WHERE guacamole_user_permission.user_id = ? AND guacamole_user_permission.affected_user_id = ?', array('ii', &$userId, &$affectedUserId));
+                        . ' WHERE guacamole_user_permission.user_id = ? AND guacamole_user_permission.affected_user_id = ? AND LOWER(guacamole_user_permission.permission) = LOWER(?)', array('iis', &$userId, &$affectedUserId,&$permission));
         $guacamoleUserPermission = new Guacamole_User_Permission();
 
         if (sizeof($data) > 0)
@@ -140,7 +140,7 @@ class Guacamole_User_PermissionDAL {
         $affectedUserId=$guacamoleUserPermission->getAffectedUser()->getUserId(); //int
         $permission=$guacamoleUserPermission->getPermission(); //string
 
-        if (is_null(findByUA($userId, $affectedUserId)))
+        if (is_null(findByUAP($userId, $affectedUserId,$permission)))
         {
             $sql = 'INSERT INTO guacamole_user_permission (user_id, affected_user_id, permission) '
                     . ' VALUES (?,?,?) ';
@@ -186,7 +186,35 @@ class Guacamole_User_PermissionDAL {
 
     public static function delete($userId, $affectedUserId)
     {
-        $deleted = BaseSingletonGuacamole::delete('DELETE FROM guacamole_user_permission WHERE user_id = ? AND affected_user_id = ? AND parameter_value = ?', array('ii', &$userId, &$affectedUserId));
+        $deleted = BaseSingletonGuacamole::delete('DELETE FROM guacamole_user_permission WHERE user_id = ? AND affected_user_id = ?', array('ii', &$userId, &$affectedUserId));
+        return $deleted;
+    }
+    
+    /*
+     * Supprime la Guacamole_User_Permission correspondant à de userIddonné en paramètre
+     * 
+     * @param int userId
+     * @return bool
+     * True si la ligne a bien été supprimée, False sinon
+     */
+
+    public static function deleteUser($userId)
+    {
+        $deleted = BaseSingletonGuacamole::delete('DELETE FROM guacamole_user_permission WHERE user_id = ?', array('i', &$userId));
+        return $deleted;
+    }
+    
+    /*
+     * Supprime la Guacamole_User_Permission correspondant au couple d'id de userId/affectedUserId donné en paramètre
+     * 
+     * @param int affectedUserId
+     * @return bool
+     * True si la ligne a bien été supprimée, False sinon
+     */
+
+    public static function deleteAffectedUser($affectedUserId)
+    {
+        $deleted = BaseSingletonGuacamole::delete('DELETE FROM guacamole_user_permission WHERE affected_user_id = ?', array('i', &$affectedUserId));
         return $deleted;
     }
 }
