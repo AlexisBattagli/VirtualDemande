@@ -100,7 +100,7 @@ class Guacamole_Connection_Permission {
         {
             $this->user = Guacamole_UserDAL::findById($user);
         }
-        else if (is_a($user, "User"))
+        else if (is_a($user, "Guacamole_User"))
         {
             $this->user = $user;
         }
@@ -114,7 +114,7 @@ class Guacamole_Connection_Permission {
             $user = Guacamole_UserDAL::findById($this->user);
             $this->user = $user;
         }
-        else if (is_a($this->user, "User"))
+        else if (is_a($this->user, "Guacamole_User"))
         {
             $user = $this->user;
         }
@@ -133,7 +133,7 @@ class Guacamole_Connection_Permission {
         {
             $this->connection = Guacamole_ConnectionDAL::findById($connection);
         }
-        else if (is_a($connection, "Connection"))
+        else if (is_a($connection, "Guacamole_Connection"))
         {
             $this->connection = $connection;
         }
@@ -147,7 +147,7 @@ class Guacamole_Connection_Permission {
             $connection = Guacamole_ConnectionDAL::findById($this->connection);
             $this->connection = $connection;
         }
-        else if (is_a($this->connection, "Connection"))
+        else if (is_a($this->connection, "Guacamole_Connection"))
         {
             $connection = $this->connection;
         }
