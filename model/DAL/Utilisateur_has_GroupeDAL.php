@@ -31,8 +31,7 @@ class Utilisateur_has_GroupeDAL {
 
         $data = BaseSingleton::select('SELECT '
                         . ' Utilisateur_has_Groupe.Groupe_id as Groupe_id, '
-                        . ' Utilisateur_has_Groupe.Utilisateur_id as Utilisateur_id, '
-                        . ' Utilisateur_has_Groupe.role_groupe as role_groupe '
+                        . ' Utilisateur_has_Groupe.Utilisateur_id as Utilisateur_id '
                         . ' FROM Utilisateur_has_Groupe'
                         . ' WHERE Utilisateur_has_Groupe.Groupe_id = ?', array('i', &$groupeId));
         foreach ($data as $row)
@@ -58,8 +57,7 @@ class Utilisateur_has_GroupeDAL {
 
         $data = BaseSingleton::select('SELECT '
                         . ' Utilisateur_has_Groupe.Groupe_id as Groupe_id, '
-                        . ' Utilisateur_has_Groupe.Utilisateur_id as Utilisateur_id, '
-                        . ' Utilisateur_has_Groupe.role_groupe as role_groupe '
+                        . ' Utilisateur_has_Groupe.Utilisateur_id as Utilisateur_id '
                         . ' FROM Utilisateur_has_Groupe'
                         . ' WHERE Utilisateur_has_Groupe.Utilisateur_id = ?', array('i', &$utilisateurId));
 
@@ -85,10 +83,9 @@ class Utilisateur_has_GroupeDAL {
 
         $data = BaseSingleton::select('SELECT '
                         . ' Utilisateur_has_Groupe.Groupe_id as Groupe_id, '
-                        . ' Utilisateur_has_Groupe.Utilisateur_id as Utilisateur_id, '
-                        . ' Utilisateur_has_Groupe.role_groupe as role_groupe, '
+                        . ' Utilisateur_has_Groupe.Utilisateur_id as Utilisateur_id '
                         . ' FROM Utilisateur_has_Groupe'
-                        . ' ORDER BY Utilisateur_has_Groupe.Groupe_id ASC, Utilisateur_has_Groupe.role_groupe ASC');
+                        . ' ORDER BY Utilisateur_has_Groupe.Groupe_id ASC, Utilisateur_has_Groupe.Utilisateur_id');
 
         foreach ($data as $row)
         {
@@ -112,8 +109,7 @@ class Utilisateur_has_GroupeDAL {
     {
         $data = BaseSingleton::select('SELECT '
                         . ' Utilisateur_has_Groupe.Groupe_id as Groupe_id, '
-                        . ' Utilisateur_has_Groupe.Utilisateur_id as Utilisateur_id, '
-                        . ' Utilisateur_has_Groupe.role_groupe as role_groupe '
+                        . ' Utilisateur_has_Groupe.Utilisateur_id as Utilisateur_id '
                         . ' FROM Utilisateur_has_Groupe'
                         . ' WHERE Utilisateur_has_Groupe.Groupe_id = ? AND Utilisateur_has_Groupe.Utilisateur_id = ?', array('ii', &$groupeId, &$utilisateurId));
         $utilisateurhasGroupe = new Utilisateur_has_Groupe();
@@ -145,32 +141,28 @@ class Utilisateur_has_GroupeDAL {
         //Récupère les valeurs de l'objet Utilisateur_has_Groupe passé en para de la méthode
         $groupeId = $utilisateurhasGroupe->getGroupe()->getId(); //int
         $utilisateurId = $utilisateurhasGroupe->getUtilisateur()->getId(); //int
-        $roleGroupe = $utilisateurhasGroupe->getRoleGroupe(); //string
         if (is_null(findByGU($groupeId, $utilisateurId)))
         {
-            $sql = 'INSERT INTO Utilisateur_has_Groupe (Groupe_id, Utilisateur_id, role_groupe) '
-                    . ' VALUES (?,?,?) ';
+            $sql = 'INSERT INTO Utilisateur_has_Groupe (Groupe_id, Utilisateur_id) '
+                    . ' VALUES (?,?) ';
 
             //Prépare les info concernant les types de champs
-            $params = array('iis',
+            $params = array('ii',
                 &$groupeId,
-                &$utilisateurId,
-                &$roleGroupe
+                &$utilisateurId
             );
         }
         else
         {
             $sql = 'UPDATE Utilisateur_has_Groupe '
                     . 'SET Groupe_id = ?, '
-                    . 'Utilisateur_id = ?, '
-                    . 'role_groupe = ? '
+                    . 'Utilisateur_id = ? '
                     . 'WHERE Groupe_id = ? AND Utilisateur_id = ?';
 
             //Prépare les info concernant les type de champs
-            $params = array('iisii',
+            $params = array('iiii',
                 &$groupeId,
                 &$utilisateurId,
-                &$roleGroupe,
                 &$groupeId,
                 &$utilisateurId
             );

@@ -31,19 +31,13 @@ class Utilisateur_has_Groupe {
     private $utilisateur;
 
     /*
-     * role_groupe d'un Utilisateur_has_Groupe
-     * @var string
-     */
-    private $roleGroupe;
-
-    /*
       ==============================
       ======== CONSTRUCTEUR ========
       ==============================
      */
 
     public function Utilisateur_has_Groupe(
-    $groupe = null, $utilisateur= null, $roleGroupe = "Aucun nom de role pour cet Utilisateur_has_Groupe"
+    $groupe = null, $utilisateur= null
     )
     {
         if (is_null($groupe))
@@ -64,7 +58,6 @@ class Utilisateur_has_Groupe {
         {
             $this->utilisateur = $utilisateur;
         }
-        $this->roleGroupe = $roleGroupe;
     }
 
 	/*
@@ -77,7 +70,6 @@ class Utilisateur_has_Groupe {
     {
         $this->groupe = $dataSet['Groupe_id'];
 	$this->utilisateur = $dataSet['Utilisateur_id'];
-        $this->roleGroupe= $dataSet['role_groupe'];
     }
 
     /*
@@ -150,19 +142,5 @@ class Utilisateur_has_Groupe {
             $utilisateur = $this->utilisateur;
         }
         return $utilisateur;
-    }
-
-    //role_groupe
-    public function setRoleGroupe($roleGroupe)
-    {
-        if (is_string($roleGroupe))
-        {
-            $this->roleGroupe = $roleGroupe;
-        }
-    }
-
-    public function getRoleGroupe()
-    {
-        return $this->roleGroupe;
     }
 }
