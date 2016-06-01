@@ -90,7 +90,7 @@ class Guacamole_Connection_Parameter {
         {
             $this->connection = Guacamole_ConnectionDAL::findById($connection);
         }
-        else if (is_a($connection, "Connection"))
+        else if (is_a($connection, "Guacamole_Connection"))
         {
             $this->connection = $connection;
         }
@@ -104,7 +104,7 @@ class Guacamole_Connection_Parameter {
             $connection = Guacamole_ConnectionDAL::findById($this->connection);
             $this->connection = $connection;
         }
-        else if (is_a($this->connection, "Connection"))
+        else if (is_a($this->connection, "Guacamole_Connection"))
         {
             $connection = $this->connection;
         }

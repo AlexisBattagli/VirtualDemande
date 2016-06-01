@@ -10,11 +10,12 @@
 //import
 require_once('BaseSingletonGuacamole.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Guacamole_Connection.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Guacamole_Connection_Parameter.php');
 
 class Guacamole_Connection_ParameterDAL {
     /*
      * Retourne l'ensemble des Guacamole_Connection_Parameter qui sont en base
-     * Lister par Groupe ASC puis Machine ASC
+     * Lister par Connection_id ASC puis parameter_name ASC puis parameter_value ASC
      * 
      * @return array[Guacamole_Connection_Parameter] Tous les Guacamole_Connection_Parameter sont placés dans un Tableau
      */
@@ -66,21 +67,21 @@ class Guacamole_Connection_ParameterDAL {
         return $mesGuacamoleConnectionParameters;
     }
     
-        /*
-     * Retourne le Guacamole_Connection_Parameter correspondant au couple connectionId/parameterName/parameterValue
+    /*
+     * Retourne le Guacamole_Connection_Parameter correspondant au couple connectionId/parameterName
      * Ce couple étant unique, il n'y qu'une seul ligne retourner.
      * 
-     * @param int connectionId, string parameterName, string parameterValue
+     * @param int connectionId, string parameterName
      * @return Guacamole_Connection_Parameter | null
      */
 
-    public static function findByCPP($connectionId, $parameterName, $parameterValue)
+    public static function findByCP($connectionId, $parameterName)
     {
         $data = BaseSingleton::select('SELECT guacamole_connection_parameter.connection_id as connection_id, '
                         . 'guacamole_connection_parameter.parameter_name as parameter_name, '
                         . 'guacamole_connection_parameter.parameter_value as parameter_value '
                         . ' FROM guacamole_connection_parameter'
-                        . ' WHERE guacamole_connection_parameter.connection_id = ? AND guacamole_connection_parameter.parameter_name = ? AND guacamole_connection_parameter.parameter_value = ?', array('iss', &$connectionId, &$parameterName, &$parameterValue));
+                        . ' WHERE guacamole_connection_parameter.connection_id = ? AND LOWER(guacamole_connection_parameter.parameter_name) = LOWER(?)', array('is', &$connectionId, &$parameterName));
         $guacamoleConnectionParameter = new Guacamole_Connection_Parameter();
 
         if (sizeof($data) > 0)
@@ -96,7 +97,7 @@ class Guacamole_Connection_ParameterDAL {
     
     /*
      * Insère ou met à jour la Guacamole_Connection_Parameter donnée en paramètre.
-     * Pour cela on vérifie si l'id de connection_id, parameter_name et parameter_value transmis sont uniques.
+     * Pour cela on vérifie si l'id de connection_id, parameter_name transmis sont uniques.
      * Si le couple return null alors il faut insèrer, sinon update aux id transmis.
      * 
      * @param Guacamole_Connection_Parameter $guacamoleConnectionParameter
@@ -108,13 +109,13 @@ class Guacamole_Connection_ParameterDAL {
     {
 
         //Récupère les valeurs de l'objet Guacamole_Connection_Parameter passé en para de la méthode
-        $connectionId=$guacamoleConnectionParameter->getConnectionId(); //int
+        $connectionId=$guacamoleConnectionParameter->getConnection()->getConnectionId(); //int
         $parameterName=$guacamoleConnectionParameter->getParameterName(); //string
         $parameterValue=$guacamoleConnectionParameter->getParameterValue(); //string
 
-        if (is_null(findByCPP($connectionId, $parameterName, $parameterValue)))
+        if (is_null(findByCP($connectionId, $parameterName)))
         {
-            $sql = 'INSERT INTO Guacamole_Connection_Parameter (connection_id, parameter_name, parameter_value) '
+            $sql = 'INSERT INTO guacamole_connection_parameter (connection_id, parameter_name, parameter_value) '
                     . ' VALUES (?,?,?) ';
 
             //Prépare les info concernant les types de champs
@@ -126,7 +127,7 @@ class Guacamole_Connection_ParameterDAL {
         }
         else
         {
-            $sql = 'UPDATE Guacamole_Connection_Parameter '
+            $sql = 'UPDATE guacamole_connection_parameter '
                     . 'SET connection_id = ?, '
                     . 'parameter_name = ?, '
                     . 'parameter_value = ? '
@@ -149,16 +150,30 @@ class Guacamole_Connection_ParameterDAL {
     }
 
     /*
-     * Supprime la Guacamole_Connection_Parameter correspondant au couple d'id de connectionId/parameterName/parameterValue donné en paramètre
+     * Supprime la Guacamole_Connection_Parameter correspondant au couple d'id de connectionId/parameterName donné en paramètre
      * 
-     * @param int connectionId, string parameterName, string parameterValue
+     * @param int connectionId, string parameterName
      * @return bool
      * True si la ligne a bien été supprimée, False sinon
      */
 
-    public static function delete($connectionId, $parameterName, $parameterValue)
+    public static function delete($connectionId, $parameterName)
     {
-        $deleted = BaseSingletonGuacamole::delete('DELETE FROM Guacamole_Connection_Parameter WHERE connection_id = ? AND parameter_name = ? AND parameter_value = ?', array('iss', &$connectionId, &$parameterName, &$parameterValue));
+        $deleted = BaseSingletonGuacamole::delete('DELETE FROM guacamole_connection_parameter WHERE connection_id = ? AND parameter_name = ?', array('is', &$connectionId, &$parameterName));
+        return $deleted;
+    }
+    
+        /*
+     * Supprime la Guacamole_Connection_Parameter correspondant à connectionId donné en paramètre
+     * 
+     * @param int connectionId
+     * @return bool
+     * True si la ligne a bien été supprimée, False sinon
+     */
+
+    public static function deleteConnection($connectionId)
+    {
+        $deleted = BaseSingletonGuacamole::delete('DELETE FROM guacamole_connection_parameter WHERE connection_id = ?', array('i', &$connectionId));
         return $deleted;
     }
 }

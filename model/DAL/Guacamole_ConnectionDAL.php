@@ -106,7 +106,7 @@ class Guacamole_ConnectionDAL {
      * @param string connectionName, int parentId, string protocol, int maxConnections, int maxConnectionsPerUser
      * @return Guacamole_Connection | null
      */
-     public static function findByCPPMM($connectionName, $parentId, $protocol, $maxConnections, $maxConnectionsPerUser)
+     public static function findByCPP($connectionName, $parentId, $protocol)
     {
         $data = BaseSingleton::select('SELECT guacamole_connection.connection_id as connection_id, '
                         . 'guacamole_connection.connection_name as connection_name, '
@@ -115,7 +115,7 @@ class Guacamole_ConnectionDAL {
                         . 'guacamole_connection.max_connections as max_connections, '
                         . 'guacamole_connection.max_connections_per_user as max_connections_per_user '
                         . ' FROM guacamole_connection'
-                        . ' WHERE LOWER(guacamole_connection.connection_name) = LOWER(?)AND LOWER(guacamole_connection.parent_id) = LOWER(?) AND LOWER(guacamole_connection.protocol) = LOWER(?) AND LOWER(guacamole_connection.max_connections) = LOWER(?) AND LOWER(guacamole_connection.max_connections_per_user) = LOWER(?)', array('sisii', &$connectionName, &$parentId, &$protocol, &$maxConnections, $maxConnectionsPerUser));
+                        . ' WHERE LOWER(guacamole_connection.connection_name) = LOWER(?)AND guacamole_connection.parent_id = ? AND LOWER(guacamole_connection.protocol) = LOWER(?)', array('sis', &$connectionName, &$parentId, &$protocol));
         $guacamoleConnection = new Guacamole_Connection();
 
         if (sizeof($data) > 0)
@@ -143,7 +143,7 @@ class Guacamole_ConnectionDAL {
     {
         //Récupère les valeurs de l'objet guacamoleConnection passé en para de la méthode
         $connectionName=$guacamoleConnection->getConnectionName(); //string
-        $parent=$guacamoleConnection->getParent(); //int
+        $parent=$guacamoleConnection->getParent()->getConnectionId(); //int
         $protocol=$guacamoleConnection->getProtocol(); //string
         $maxConnections=$guacamoleConnection->getMaxConnections(); //int
         $maxConnectionsPerUser=$guacamoleConnection->getMaxConnectionsPerUser(); //int
