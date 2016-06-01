@@ -27,8 +27,8 @@ INSERT INTO role (id, nom_role, description)
 VALUE (1, 'default_role', 'un role');
 
 -- Default value of the table ‘machine’
-INSERT INTO machine (id, distrib_alias_id, utilisateur_id, cpu_id, ram_id, stockage_id, nom, description, date_creation, date_expiration)
-VALUE (1, 1, 1, 1, 1, 1, 'default_name_machine', 'default_desc_machine', '0000-00-00', '0000-00-00 00:00:00' );
+INSERT INTO machine (id, distrib_alias_id, utilisateur_id, cpu_id, ram_id, stockage_id, nom, description, date_creation, date_expiration,etat)
+VALUE (1, 1, 1, 1, 1, 1, 'default_name_machine', 'default_desc_machine', '0000-00-00', '0000-00-00 00:00:00',2);
 
 -- Default value of the table ‘utilisateur’
 INSERT INTO utilisateur (id, role_id, nom, prenom, login, passwd, mail, date_creation, date_naissance, nb_vm)
@@ -37,4 +37,3 @@ VALUE (1, 1, 'default_firstname', 'default_lastname', 'default_login', 'default_
 -- Default value of the table ‘groupe’
 INSERT INTO groupe (id, nom, date_creation, description)
 VALUE (1, 'default_group_name', '0000-00-00', 'default_desc');
-

@@ -22,8 +22,7 @@ CREATE TABLE distrib_alias (
   pseudo VARCHAR(255) NULL,
   commentaire VARCHAR(255) NULL,
   visible BOOLEAN NULL,
-  PRIMARY KEY(id),
-  INDEX distrib_alias_FKIndex1(distrib_id)
+  PRIMARY KEY(id)
 );
 
 CREATE TABLE groupe (
@@ -37,9 +36,7 @@ CREATE TABLE groupe (
 CREATE TABLE groupe_has_machine (
   groupe_id INTEGER UNSIGNED NOT NULL,
   machine_id INTEGER UNSIGNED NOT NULL,
-  commentaire VARCHAR(255) NULL,
-  INDEX groupe_has_machine_FKIndex1(machine_id),
-  INDEX groupe_has_machine_FKIndex2(groupe_id)
+  commentaire VARCHAR(255) NULL
 );
 
 CREATE TABLE limitant (
@@ -60,12 +57,8 @@ CREATE TABLE machine (
   description VARCHAR(255) NULL,
   date_creation DATE NULL,
   date_expiration DATETIME NULL,
-  PRIMARY KEY(id),
-  INDEX machine_FKIndex3(stockage_id),
-  INDEX machine_FKIndex4(ram_id),
-  INDEX machine_FKIndex5(cpu_id),
-  INDEX machine_FKIndex6(utilisateur_id),
-  INDEX machine_FKIndex7(distrib_alias_id)
+  etat INTEGER UNSIGNED NULL,
+  PRIMARY KEY(id)
 );
 
 CREATE TABLE ram (
@@ -110,14 +103,12 @@ CREATE TABLE utilisateur (
   date_creation DATE NULL,
   date_naissance DATE NULL,
   nb_vm INTEGER UNSIGNED NULL,
-  PRIMARY KEY(id),
-  INDEX utilisateur_FKIndex1(role_id)
+  PRIMARY KEY(id)
 );
 
 CREATE TABLE utilisateur_has_groupe (
   utilisateur_id INTEGER UNSIGNED NOT NULL,
-  role_groupe VARCHAR(255) NULL,
-  INDEX utilisateur_has_groupe_FKIndex1(utilisateur_id)
+  role_groupe VARCHAR(255) NULL
 );
 
 
