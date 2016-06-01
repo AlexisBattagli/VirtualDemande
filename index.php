@@ -1,4 +1,26 @@
 <!DOCTYPE html>
+<?php
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/UtilisateurDAL.php');
+session_start();
+$pseudo = filter_input(INPUT_POST, 'login', FILTER_SANITIZE_STRING);
+$password = filter_input(INPUT_POST, 'passwd', FILTER_SANITIZE_STRING);
+if ($pseudo !== null && $password !== null)
+{
+    $user = UserDAL::connection($pseudo, $password);
+    if ($user)
+    {
+        $_SESSION['user'] = $user->getId();
+        $_SESSION['role'] = $user->getRole();
+        setcookie("user_id", $_SESSION['user']);
+        setcookie("user_role", $_SESSION['role']);
+    }
+    else
+    {
+        $_SESSION['user'] = false;
+    }
+}
+?>
+
 <html>
     <head>
         <meta charset="UTF-8">
@@ -38,6 +60,8 @@
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    
+                    
                     <ul class="nav navbar-nav">
                         <li id="what_is_it"><a href="?page=what_is_it">What is it ? <span class="sr-only">(current)</span></a></li>
                         <li id="how_does_it_work"><a href="?page=how_does_it_work">How does it work ?</a></li>
