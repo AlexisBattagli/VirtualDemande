@@ -30,7 +30,8 @@ class MachineDAL
                         . 'machine.Stockage_id as Stockage_id, '
                         . 'machine.description as description, '
                         . 'machine.date_creation as date_creation, '
-                        . 'machine.date_expiration as date_expiration '
+                        . 'machine.date_expiration as date_expiration, '
+                        . 'machine.etat as etat '
                         . ' FROM machine'
                         . ' WHERE machine.id = ?', array('i', &$id));
         $machine = new Machine();
@@ -62,7 +63,8 @@ class MachineDAL
                         . 'machine.Stockage_id as Stockage_id, '
                         . 'machine.description as description, '
                         . 'machine.date_creation as date_creation, '
-                        . 'machine.date_expiration as date_expiration '
+                        . 'machine.date_expiration as date_expiration, '
+                        . 'machine.etat as etat '
                         . ' FROM machine'
                         . ' WHERE machine.id = ?', array('i', &$id));
         $machine = new Machine();
@@ -95,7 +97,8 @@ class MachineDAL
                         . 'machine.Stockage_id as Stockage_id, '
                         . 'machine.description as description, '
                         . 'machine.date_creation as date_creation, '
-                        . 'machine.date_expiration as date_expiration '
+                        . 'machine.date_expiration as date_expiration, '
+                        . 'machine.etat as etat '
                         . ' FROM machine'
                 . ' ORDER BY machine.Utilisateur_id ASC, machine.Distrib_Alias_id ASC');
 
@@ -128,7 +131,8 @@ class MachineDAL
                         . 'machine.Stockage_id as Stockage_id, '
                         . 'machine.description as description, '
                         . 'machine.date_creation as date_creation, '
-                        . 'machine.date_expiration as date_expiration '
+                        . 'machine.date_expiration as date_expiration, '
+                        . 'machine.etat as etat '
                         . ' FROM machine'
                         . ' WHERE machine.Utilisateur_id = ? AND LOWER(machine.nom) = LOWER(?)', array('is', &$userId, &$nom));
         $machine = new Machine();
@@ -167,14 +171,15 @@ class MachineDAL
         $description = $machine->getDescription(); //string
         $dateCreation = $machine->getDateCreation(); //string
         $dateExpiration = $machine->getDateExpiration(); //string
+        $etat=$machine->getEtat();//int
         $id = $machine->getId(); //int
         if ($id < 0)
         {
-            $sql = 'INSERT INTO machine (Utilisateur_id, Distrib_Alias_id, nom, Cpu_id, Ram_id, Stockage_id, description, date_creation, date_expiration) '
-                    . ' VALUES (?,?,?,?,?,?,?,DATE_FORMAT(NOW(),\'%Y-%m-%d\'),DATE_FORMAT(?,\'%Y-%m-%d\')) ';
+            $sql = 'INSERT INTO machine (Utilisateur_id, Distrib_Alias_id, nom, Cpu_id, Ram_id, Stockage_id, description, date_creation, date_expiration,etat) '
+                    . ' VALUES (?,?,?,?,?,?,?,DATE_FORMAT(NOW(),\'%Y-%m-%d\'),DATE_FORMAT(?,\'%Y-%m-%d\'),?) ';
 
             //Prépare les info concernant les type de champs
-            $params = array('iisiiiss',
+            $params = array('iisiiissi',
                 &$userId,
                 &$distribaliasId,
                 &$nom,
@@ -182,7 +187,8 @@ class MachineDAL
                 &$ram,
                 &$stockage,
                 &$description,
-                &$dateExpiration
+                &$dateExpiration,
+                &$etat
             );
         }
         else
@@ -195,11 +201,12 @@ class MachineDAL
                     . 'ram = ?, '
                     . 'stockage = ?, '
                     . 'description = ?, '
-                    . 'date_expiration = ? '
+                    . 'date_expiration = ?, '
+                    . 'etat = ? '
                     . 'WHERE id = ? ';
 
             //Prépare les info concernant les type de champs
-            $params = array('iisiiissi',
+            $params = array('iisiiissii',
                 &$userId,
                 &$distribaliasId,
                 &$nom,
@@ -209,6 +216,7 @@ class MachineDAL
                 &$description,
                 &$dateCreation,
                 &$dateExpiration,
+                &$etat,
                 &$id
             );
         }

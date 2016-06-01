@@ -85,13 +85,19 @@ class Machine {
     private $dateExpiration;
     
     /*
+     * etat d'une Machine dans la table Machine
+     * @var int
+     */
+    private $etat;
+    
+    /*
       ==============================
       ======== CONSTRUCTEUR ========
       ==============================
      */
 
     public function Machine(
-    $id = -1, $distribAlias = null, $utilisateur = null, $nom = "Aucun nom pour cette machine", $cpu = null, $ram = null, $stockage = null, $description = "Cette Machine n'a pas de description", $dateCreation = "0000-00-00", $dateExpiration = "0000-00-00"
+    $id = -1, $distribAlias = null, $utilisateur = null, $nom = "Aucun nom pour cette machine", $cpu = null, $ram = null, $stockage = null, $description = "Cette Machine n'a pas de description", $dateCreation = "0000-00-00", $dateExpiration = "0000-00-00", $etat=-1
     )
     {
         $this->id = $id;
@@ -144,6 +150,7 @@ class Machine {
         $this->description = $description;
         $this->dateCreation = $dateCreation;
         $this->dateExpiration = $dateExpiration;
+        $this->etat = $etat;
     }
 
     /*
@@ -164,6 +171,7 @@ class Machine {
         $this->description = $dataSet['description'];
         $this->dateCreation = $dataSet['date_creation'];
         $this->dateExpiration = $dataSet['date_expiration'];
+        $this->etat = $dataSet['etat'];
     }
 
     /*
@@ -405,5 +413,19 @@ class Machine {
     public function getDateExpiration()
     {
         return $this->dateExpiration;
+    }
+    
+    //etat
+    public function setEtat($etat)
+    {
+        if (is_int($etat))
+        {
+            $this->etat = $etat;
+        }
+    }
+
+    public function getEtat()
+    {
+        return $this->etat;
     }
 }
