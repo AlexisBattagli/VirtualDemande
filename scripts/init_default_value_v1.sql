@@ -1,6 +1,6 @@
 -- Default value of the table ‘distrib’
 INSERT INTO distrib (id, nom, archi, version, ihm, visible)
-VALUE (1, 'default_distrib', '64bits', 'laptop', 'cacahuète', true);  -- Valeur de 'ihm' à changer, j'en ai mis une au pif pour que le sript marche.
+VALUE (1, 'default_distrib', '64bits', 'laptop', 'desktop', true); 
 
 -- Default value of the table ‘distrib_alias’
 INSERT INTO distrib_alias (id, distrib_id, nom_complet, pseudo, commentaire, visible)
@@ -23,7 +23,7 @@ INSERT INTO stockage (id, valeur, visible)
 VALUE (1, 0, true);
 
 -- Default value of the table ‘role’
-INSERT INTO role (id, nom_role, description)  -- Ici j'ai changé 'visible' par 'description conformement au script de creation'
+INSERT INTO role (id, nom_role, description)
 VALUE (1, 'default_role', 'un role');
 
 -- Default value of the table ‘machine’
