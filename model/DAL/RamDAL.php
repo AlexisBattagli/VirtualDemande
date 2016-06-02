@@ -92,6 +92,31 @@ class RamDAL {
     }
     
     /*
+     * Retourne l'ensemble des ram qui sont visibles
+     * 
+     * @return array[Ram] Tous les Ram sont placées dans un Tableau
+     */
+    public static function findByVisible()
+    {
+        $mesRams = array();
+
+        $data = BaseSingleton::select('SELECT ram.id as id, '
+                        . 'ram.valeur as valeur, '
+                        . 'ram.visible as visible '
+                        . ' FROM ram'
+                . ' WHERE ram.visible = 0');
+
+        foreach ($data as $row)
+        {
+            $ram = new Ram();
+            $ram->hydrate($row);
+            $mesRams[] = $ram;
+        }
+
+        return $mesRams;
+    }
+    
+    /*
      * Retourne le ram correspondant au couple valeur
      * Ce couple étant unique, il n'y qu'une seul ligne retourner.
      * Il est rechercher sans tenir compte de la casse sur valeur

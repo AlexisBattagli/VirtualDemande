@@ -92,6 +92,31 @@ class CpuDAL {
     }
     
     /*
+     * Retourne l'ensemble des cpu qui sont visibles
+     * 
+     * @return array[Cpu] Tous les Cpu sont placées dans un Tableau
+     */
+    public static function findByVisible()
+    {
+        $mesCpus = array();
+
+        $data = BaseSingleton::select('SELECT cpu.id as id, '
+                        . 'cpu.nb_coeur as nb_coeur, '
+                        . 'cpu.visible as visible '
+                        . ' FROM cpu'
+                . ' WHERE cpu.visible = 0');
+
+        foreach ($data as $row)
+        {
+            $cpu = new Cpu();
+            $cpu->hydrate($row);
+            $mesCpus[] = $cpu;
+        }
+
+        return $mesCpus;
+    }
+    
+    /*
      * Retourne le cpu correspondant au cpu avec un nb de coeur voulu
      * Cette valeur étant unique, il n'y qu'une seul ligne retourner.
      * 

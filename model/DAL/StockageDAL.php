@@ -92,6 +92,31 @@ class StockageDAL {
     }
     
     /*
+     * Retourne l'ensemble des stockage qui sont visibles
+     * 
+     * @return array[Stockage] Tous les Stockage sont placées dans un Tableau
+     */
+    public static function findAll()
+    {
+        $mesStockages = array();
+
+        $data = BaseSingleton::select('SELECT stockage.id as id, '
+                        . 'stockage.valeur as valeur, '
+                        . 'stockage.visible as visible '
+                        . ' FROM stockage'
+                . ' WHERE stockage.visible = 0');
+
+        foreach ($data as $row)
+        {
+            $stockage = new Stockage();
+            $stockage->hydrate($row);
+            $mesStockages[] = $stockage;
+        }
+
+        return $mesStockages;
+    }
+    
+    /*
      * Retourne le stockage correspondant au couple valeur
      * Ce couple étant unique, il n'y qu'une seul ligne retourner.
      * Il est rechercher sans tenir compte de la casse sur valeur

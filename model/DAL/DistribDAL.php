@@ -131,6 +131,34 @@ class DistribDAL
     }
     
     /*
+     * Retourne l'ensemble des Distrib qui sont visibles
+     * 
+     * @return array[Distrib] Toutes les Distrib sont placées dans un Tableau
+     */
+    public static function findByVisible()
+    {
+        $mesDistrib = array();
+
+        $data = BaseSingleton::select('SELECT distrib.id as id, '
+                        . 'distrib.nom as nom, '
+                        . 'distrib.archi as archi, '
+                        . 'distrib.version as version, '
+                        . 'distrib.ihm as ihm, '
+                        . 'distrib.visible as visible '
+                        . ' FROM distrib'
+                . ' WHERE distrib.visible = 0');
+
+        foreach ($data as $row)
+        {
+            $distrib = new Distrib();
+            $distrib->hydrate($row);
+            $mesDistrib[] = $distrib;
+        }
+
+        return $mesDistrib;
+    }
+    
+    /*
      * Insère ou met à jour la Distrib donnée en paramètre.
      * Pour cela on vérifie si l'id de la Distrib transmis est sup ou inf à 0.
      * Si l'id est inf à 0 alors il faut insérer, sinon update à l'id transmis.
