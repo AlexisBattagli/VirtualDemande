@@ -143,6 +143,21 @@ class UtilisateurDAL
     }
     
     /*
+     * Renvoie le nb d’utilisateurs restant 
+     *
+     * @return int
+     */
+    
+    public static function GetNumberAvailableUsers()
+    {
+        $nbreMax = BaseSingleton::select('SELECT nb_user_max FROM limitant');
+        $nbreActuel = BaseSingleton::select('SELECT COUNT(*) FROM utilisateur');
+        $nbreDispo=$nbreMax-$nbreActuel;
+        return $nbreDispo;
+    }
+
+
+    /*
      * Insère ou met à jour l'Utilisateur donné en paramètre.
      * Pour cela on vérifie si l'id de la Distrib_Alias transmis est sup ou inf à 0.
      * Si l'id est inf à 0 alors il faut insèrer, sinon update à l'id transmis.

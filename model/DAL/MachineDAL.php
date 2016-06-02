@@ -80,6 +80,109 @@ class MachineDAL
     }
 
     /*
+     * Retourne l'ensemble des Machines d'un utilisateur passé en paramètre
+     * 
+     * @param int userId
+     * @return array[Machine] Toutes les Machines sont placées dans un Tableau
+     */
+    public static function findByUser($userId)
+    {
+        $mesMachines = array();
+
+        $data = BaseSingleton::select('SELECT machine.id as id, '
+                        . 'machine.Utilisateur_id as Utilisateur_id, '
+                        . 'machine.Distrib_Alias_id as Distrib_Alias_id, '
+                        . 'machine.nom as nom, '
+                        . 'machine.Cpu_id as Cpu_id, '
+                        . 'machine.Ram_id as Ram_id, '
+                        . 'machine.Stockage_id as Stockage_id, '
+                        . 'machine.description as description, '
+                        . 'machine.date_creation as date_creation, '
+                        . 'machine.date_expiration as date_expiration, '
+                        . 'machine.etat as etat '
+                        . ' FROM machine'
+                        . ' WHERE machine.utilisateur_id = ?', array('i', &$userId));
+
+        foreach ($data as $row)
+        {
+            $machine = new Machine();
+            $machine->hydrate($row);
+            $mesMachines[] = $machine;
+        }
+
+        return $mesMachines;
+    }
+    
+    
+    /*
+     * Retourne l'ensemble des Machines d'un utilisateur passé en paramètre qui sont créées
+     * 
+     * @param int userID
+     * @return array[Machine] Toutes les Machines sont placées dans un Tableau
+     */
+    public static function findSuccessByUser($userId)
+    {
+        $mesMachines = array();
+
+        $data = BaseSingleton::select('SELECT machine.id as id, '
+                        . 'machine.Utilisateur_id as Utilisateur_id, '
+                        . 'machine.Distrib_Alias_id as Distrib_Alias_id, '
+                        . 'machine.nom as nom, '
+                        . 'machine.Cpu_id as Cpu_id, '
+                        . 'machine.Ram_id as Ram_id, '
+                        . 'machine.Stockage_id as Stockage_id, '
+                        . 'machine.description as description, '
+                        . 'machine.date_creation as date_creation, '
+                        . 'machine.date_expiration as date_expiration, '
+                        . 'machine.etat as etat '
+                        . ' FROM machine'
+                        . ' WHERE machine.utilisateur_id = ? AND machine.etat = 0', array('i', &$userId));
+
+        foreach ($data as $row)
+        {
+            $machine = new Machine();
+            $machine->hydrate($row);
+            $mesMachines[] = $machine;
+        }
+
+        return $mesMachines;
+    }
+
+    /*
+     * Retourne l'ensemble des Machines d'un utilisateur passé en paramètre qui sont en cours de création ou dont l création à échouer
+     * 
+     * @param int userID
+     * @return array[Machine] Toutes les Machines sont placées dans un Tableau
+     */
+    public static function findNotCreatByUser($userId)
+    {
+        $mesMachines = array();
+
+        $data = BaseSingleton::select('SELECT machine.id as id, '
+                        . 'machine.Utilisateur_id as Utilisateur_id, '
+                        . 'machine.Distrib_Alias_id as Distrib_Alias_id, '
+                        . 'machine.nom as nom, '
+                        . 'machine.Cpu_id as Cpu_id, '
+                        . 'machine.Ram_id as Ram_id, '
+                        . 'machine.Stockage_id as Stockage_id, '
+                        . 'machine.description as description, '
+                        . 'machine.date_creation as date_creation, '
+                        . 'machine.date_expiration as date_expiration, '
+                        . 'machine.etat as etat '
+                        . ' FROM machine'
+                        . ' WHERE machine.utilisateur_id = ? AND machine.etat != 0', array('i', &$userId));
+
+        foreach ($data as $row)
+        {
+            $machine = new Machine();
+            $machine->hydrate($row);
+            $mesMachines[] = $machine;
+        }
+
+        return $mesMachines;
+    }
+    
+    /*
      * Retourne l'ensemble des Machines qui sont en base
      * 
      * @return array[Machine] Toutes les Machines sont placées dans un Tableau
