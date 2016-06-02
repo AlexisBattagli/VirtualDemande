@@ -152,10 +152,15 @@ class UtilisateurDAL
     {
         $nbreMax = BaseSingleton::select('SELECT nb_user_max FROM limitant');
         $nbreActuel = BaseSingleton::select('SELECT COUNT(*) FROM utilisateur');
-        $nbreDispo=$nbreMax-$nbreActuel;
+        $nbreDispo=-1;
+        
+        if(is_int($nbreMax)&&(is_int($nbreDispo)))
+        {
+            $nbreDispo=$nbreMax-$nbreActuel;
+        }
+        
         return $nbreDispo;
     }
-
 
     /*
      * Insère ou met à jour l'Utilisateur donné en paramètre.
@@ -166,10 +171,36 @@ class UtilisateurDAL
      * @return int id
      * L'id de l'objet inséré en base. False si ça a planté
      */
+    
+    /*
+     * Retourne pour un utilisateur s'il a la posibilité de créer une nouvelle machine
+     * 
+     * @param int userId
+     * @return bool
+     */
+    
+    public static function isFull($userId)
+    {
+        $nbreMax = BaseSingleton::select('SELECT `nb_vm_user` FROM `limitant`');
+        $nbreActuel = BaseSingleton::select('SELECT `nb_vm` FROM `utilisateur` WHERE utilisateur_id = ?', array('i', &$userId));
+        $statut=false;
+        
+        if(is_int($nbreActuel)&&(is_int($nbreMax)))
+        {
+            $nbreRestant=$nbreMax-$nbreActuel;
+            
+            if($nbreRestant>=1)
+            {
+                $statut=true;
+            }
+        }
+        
+        return $statut;
+    }
+
 
     public static function insertOnDuplicate($utilisateur)
     {
-
         //Récupère les valeurs de l'objet utilisateur passé en para de la méthode
         $role = $utilisateur->getRole()->getId(); //int
         $nom = $utilisateur->getNom(); //string
@@ -223,7 +254,7 @@ class UtilisateurDAL
                 &$mail,
                 &$dateCreation,
                 &$dateNaissance,
-                &$nb_vm,
+                &$nbVM,
                 &$id
             );
         }

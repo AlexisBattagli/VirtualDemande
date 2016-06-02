@@ -112,8 +112,7 @@ class MachineDAL
 
         return $mesMachines;
     }
-    
-    
+   
     /*
      * Retourne l'ensemble des Machines d'un utilisateur passé en paramètre qui sont créées
      * 
