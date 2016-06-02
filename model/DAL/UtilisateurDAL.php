@@ -19,6 +19,7 @@ class UtilisateurDAL
      */
     public static function findByDefault()
     {
+        echo "OK+";
         $id=1;
         $data = BaseSingleton::select('SELECT utilisateur.id as id, '
                         . 'utilisateur.Role_id as Role_id, '
@@ -32,6 +33,7 @@ class UtilisateurDAL
                         . 'utilisateur.nb_vm as nb_vm '
                         . ' FROM utilisateur'
                         . ' WHERE utilisateur.id = ?', array('i', &$id));
+        
         $utilisateur = new Utilisateur();
         if (sizeof($data) > 0)
         {
@@ -150,7 +152,7 @@ class UtilisateurDAL
     
     public static function GetNumberAvailableUsers()
     {
-        $nbreMax = BaseSingleton::select('SELECT nb_user_max FROM limitant');
+        $nbreMax = BaseSingleton::select('SELECT nb_user_max FROM limitant WHERE limitant.id = 1');
         $nbreActuel = BaseSingleton::select('SELECT COUNT(*) FROM utilisateur');
         $nbreDispo=-1;
         
@@ -181,13 +183,15 @@ class UtilisateurDAL
     
     public static function isFull($userId)
     {
-        $nbreMax = BaseSingleton::select('SELECT `nb_vm_user` FROM `limitant`');
+        $dataNbMax = BaseSingleton::select('SELECT nb_vm_user FROM limitant WHERE limitant.id = 1');
+        $nbMax = $dataNbMax['nb_vm_user'];
+        echo "Nombre d'utilisateur max".$nbMax;
         $nbreActuel = BaseSingleton::select('SELECT `nb_vm` FROM `utilisateur` WHERE utilisateur_id = ?', array('i', &$userId));
         $statut=false;
         
-        if(is_int($nbreActuel)&&(is_int($nbreMax)))
+        if(is_int($nbreActuel)&&(is_int($nbMax)))
         {
-            $nbreRestant=$nbreMax-$nbreActuel;
+            $nbreRestant=$nbMax-$nbreActuel;
             
             if($nbreRestant>=1)
             {

@@ -10,7 +10,7 @@
 
 //import
 //require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Role.php');
-require_once('/var/www/VirtualDemande/model/class/Role.php');
+require_once('/var/www/VirtualDemande/model/DAL/RoleDAL.php');
 
 class Utilisateur {
     /*
@@ -90,17 +90,18 @@ class Utilisateur {
     public function Utilisateur(
     $id = -1, $role = null, $nom = "Aucun Nom pour cet Utilisateur", $prenom = "Aucun Prenom pour cet Utilisateur", $login = "Aucun Login pour cet Utilisateur", $description = "Ce Groupe n'a pas de description", $password = "Aucun Password pour cet Utilisateur", $mail = "Aucun Mail pour cet Utilisateur", $dateCreation = "0000-00-00", $dateNaissance = "0000-00-00", $nbVm=0
     )
-    {
-        $this->id = $id;
+    {   $this->id = $id;
         if (is_null($role))
         {
             $role = RoleDAL::findByDefault();
+            
             $this->role = $role;
         }
         else
         {
             $this->role = $role;
         }
+        
         $this->nom = $nom;
         $this->prenom = $prenom;
         $this->login = $login;
