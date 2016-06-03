@@ -10,6 +10,8 @@
 require_once('BaseSingleton.php');
 //require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Utilisateur.php');
 require_once('/var/www/VirtualDemande/model/class/Utilisateur.php');
+require_once('/var/www/VirtualDemande/model/class/Limitant.php');
+
 class UtilisateurDAL 
 {
     /*
@@ -19,7 +21,6 @@ class UtilisateurDAL
      */
     public static function findByDefault()
     {
-        echo "OK+";
         $id=1;
         $data = BaseSingleton::select('SELECT utilisateur.id as id, '
                         . 'utilisateur.Role_id as Role_id, '
@@ -152,8 +153,23 @@ class UtilisateurDAL
     
     public static function GetNumberAvailableUsers()
     {
-        $nbreMax = BaseSingleton::select('SELECT nb_user_max FROM limitant WHERE limitant.id = 1');
-        $nbreActuel = BaseSingleton::select('SELECT COUNT(*) FROM utilisateur');
+        $datanbreMax = BaseSingleton::select('SELECT * FROM limitant WHERE limitant.id = 1');
+        $limitant=new Limitant();
+        if (sizeof($datanbreMax) > 0)
+        {
+            $limitant->hydrate($datanbreMax[0]);
+        }
+        $nbreMax=$limitant->getNbUserMax();
+        
+        $datanbreActuel = BaseSingleton::select('SELECT * FROM utilisateur');
+        echo "OK";
+        $nbreActuel=0;
+        foreach ($datanbreActuel as $row)
+        {
+            $utilisateur = new Utilisateur();
+            $utilisateur->hydrate($row);
+            $nbreActuel=$nbreActuel+1;
+        }
         $nbreDispo=-1;
         
         if(is_int($nbreMax)&&(is_int($nbreDispo)))
@@ -183,16 +199,26 @@ class UtilisateurDAL
     
     public static function isFull($userId)
     {
-        $dataNbMax = BaseSingleton::select('SELECT nb_vm_user FROM limitant WHERE limitant.id = 1');
-        $nbMax = $dataNbMax['nb_vm_user'];
-        echo "Nombre d'utilisateur max".$nbMax;
-        $nbreActuel = BaseSingleton::select('SELECT `nb_vm` FROM `utilisateur` WHERE utilisateur_id = ?', array('i', &$userId));
+        $datanbreMax = BaseSingleton::select('SELECT * FROM limitant WHERE limitant.id = 1');
+        $limitant=new Limitant();
+        if (sizeof($datanbreMax) > 0)
+        {
+            $limitant->hydrate($datanbreMax[0]);
+        }
+        $nbreMax=$limitant->getNbVMUser();
+        
+        $datanbreActuel = BaseSingleton::select('SELECT * FROM utilisateur WHERE id = ?', array('i', &$userId));
+        $utilisateur=new Utilisateur();
+        if (sizeof($datanbreActuel) > 0)
+        {
+            $utilisateur->hydrate($datanbreActuel[0]);
+        }
+        $nbreActuel=$utilisateur->getNbVm();
         $statut=false;
         
-        if(is_int($nbreActuel)&&(is_int($nbMax)))
+        if(is_int($nbreActuel)&&(is_int($nbreMax)))
         {
-            $nbreRestant=$nbMax-$nbreActuel;
-            
+            $nbreRestant=$nbreMax-$nbreActuel;
             if($nbreRestant>=1)
             {
                 $statut=true;
@@ -214,8 +240,9 @@ class UtilisateurDAL
         $mail = $utilisateur->getMail(); //string
         $dateCreation = $utilisateur->getDateCreation(); //string
         $dateNaissance = $utilisateur->getDateNaissance(); //string
-        $nbVM = $nbVM->getNbVm();
+        $nbVM = $utilisateur->getNbVm();
         $id = $utilisateur->getId(); //int
+        
         if ($id < 0)
         {
             $sql = 'INSERT INTO utilisateur (Role_id, nom, prenom, login, passwd, mail, date_creation, date_naissance, nb_vm) '

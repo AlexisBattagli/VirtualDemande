@@ -70,6 +70,34 @@ class Distrib_AliasDAL {
         }
         return $distribAlias;
     }
+    
+    /*
+     * Retourne l'ensemble des Distrib_Alias qui sont visible
+     * 
+     * @return array[Distrib_Alias] Toutes les Distrib_Alias sont placées dans un Tableau
+     */
+    public static function findByVisible()
+    {
+        $mesDistribAlias = array();
+
+        $data = BaseSingleton::select('SELECT distrib_alias.id as id, '
+                        . 'distrib_alias.Distrib_id as Distrib_id, '
+                        . 'distrib_alias.nom_complet as nom_complet, '
+                        . 'distrib_alias.pseudo as pseudo, '
+                        . 'distrib_alias.commentaire as commentaire, '
+                        . 'distrib_alias.visible as visible '
+                        . ' FROM distrib_alias '
+                . ' WHERE distrib_alias.visible = 0');
+
+        foreach ($data as $row)
+        {
+            $distribAlias = new Distrib_Alias();
+            $distribAlias->hydrate($row);
+            $mesDistribAlias[] = $distribAlias;
+        }
+
+        return $mesDistribAlias;
+    }
 
     /*
      * Retourne l'ensemble des Distrib_Alias qui sont en base
