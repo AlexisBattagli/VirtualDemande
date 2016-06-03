@@ -175,17 +175,16 @@ class Guacamole_UserDAL {
         $timezone = $guacamoleUser->getTimezone(); //string
         $userId = $guacamoleUser->getUserId(); //int
       
-        if (userId < 0)
+        if ($userId < 0)
         {
-            $sql = 'SET @salt = UNHEX(SHA2(UUID(), 256));'
-                    . 'INSERT INTO guacamole_user (username, password_hash, password_salt, disabled, expired, access_window_start, access_window_end, valid_from, valid_until, timezone) '
-                    . ' VALUES (?,?,?,?,?,?,?,?,?,?) ';
+            $sql = 'SET @salt = UNHEX(SHA2(UUID(), 256));'
+                    . ' INSERT INTO guacamole_user (username, password_hash, password_salt, disabled, expired, access_window_start, access_window_end, valid_from, valid_until, timezone) '
+                    . ' VALUES (?,UNHEX(SHA2(CONCAT(?, HEX(@salt)), 256)), HEX(@salt)), 256)),@salt,?,?,?,?,?,?,?) ';
 
             //Prépare les info concernant les type de champs
-            $params = array('sssiisssss',
+            $params = array('ssiisssss',
                 &$username,
                 &$passwordHash,
-                &$passwordSalt,
                 &$disabled,
                 &$expired,
                 &$accessWindowStart,
@@ -197,11 +196,29 @@ class Guacamole_UserDAL {
         }
         else
         {
-            $sql = 'SET @salt = UNHEX(SHA2(UUID(), 256));'
-                    . 'UPDATE guacamole_user '
+            /*
+             SET @salt = UNHEX(SHA2(UUID(), 256));
+UPDATE guacamole_user 
+                    SET username = "a",
+                    password_hash = UNHEX(SHA2(CONCAT("mypass", HEX(@salt)), 256)),
+                    password_salt = @salt,
+                    disabled = 0, 
+                    expired = 0, 
+                    access_window_start = 0000/00/00, 
+                    access_window_end = 0000/00/00, 
+                    valid_from = NULL, 
+                    valid_until = NULL,
+                    timezone = "OK"
+                    WHERE user_id = 10;
+             */
+            
+            
+            
+            $sql = 'SET @salt = UNHEX(SHA2(UUID(), 256));'
+                    . ' UPDATE guacamole_user '
                     . 'SET username = ?, '
-                    . 'password_hash = ?, '
-                    . 'password_salt = ?, '
+                    . 'password_hash = UNHEX(SHA2(CONCAT(?, HEX(@salt)), 256)), '
+                    . 'password_salt = @salt, '
                     . 'disabled = ?, '
                     . 'expired = ?, '
                     . 'access_window_start = ?, '
@@ -212,10 +229,9 @@ class Guacamole_UserDAL {
                     . 'WHERE user_id = ? ';
 
             //Prépare les info concernant les type de champs
-            $params = array('sssiisssssi',
+            $params = array('ssiisssssi',
                 &$username,
                 &$passwordHash,
-                &$passwordSalt,
                 &$disabled,
                 &$expired,
                 &$accessWindowStart,
