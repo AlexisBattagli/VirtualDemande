@@ -65,9 +65,9 @@ if ($pseudo !== null && $password !== null)
                     <ul class="nav navbar-nav">
                         <li id="what_is_it"><a href="?page=what_is_it">What is it ? <span class="sr-only">(current)</span></a></li>
                         <li id="how_does_it_work"><a href="?page=how_does_it_work">How does it work ?</a></li>
-                        <li id="server_disponibility"><a href="?page=server_disponibility">Server disponibility</a></li>
                         <li id="register"><a href="?page=register">Register</a></li>
                     </ul>
+                    <p class="navbar-text">Il reste X comptes disponibles</p>
 
                     <ul class="nav navbar-nav navbar-right">
                         <li>
