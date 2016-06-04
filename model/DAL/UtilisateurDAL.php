@@ -54,7 +54,7 @@ class UtilisateurDAL
      * @return Utilisateur
      */
     public static function findById($id)
-    {
+    {echo "ok";
         $data = BaseSingleton::select('SELECT utilisateur.id as id, '
                         . 'utilisateur.Role_id as Role_id, '
                         . 'utilisateur.nom as nom, '
@@ -76,7 +76,7 @@ class UtilisateurDAL
         {
             $utilisateur = null;
         }
-        return $utilisateur;
+        return $utilisateur;echo "ok Final";
     }
 
     /*
@@ -146,7 +146,7 @@ class UtilisateurDAL
         return $utilisateur;
     }
     
-    /* OK
+    /* 
      * Retourne l'Utilisateur correspondant au couple $mail
      * Il est rechercher sans tenir compte de la casse sur mail
      * 
