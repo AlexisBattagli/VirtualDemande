@@ -198,7 +198,7 @@ class Guacamole_UserDAL {
         $sql ='UPDATE guacamole_user '
                     .'SET username = ?, '
                     .'password_salt = UNHEX(SHA2(UUID(), 256)), '
-                    .'password_hash = UNHEX(SHA2(CONCAT(?, HEX(password_salt)), '
+                    .'password_hash = UNHEX(SHA2(CONCAT(?, HEX(password_salt)), 256)), '
                     .'disabled = ?, '
                     .'expired = ?, '
                     .'access_window_start = ?, '
