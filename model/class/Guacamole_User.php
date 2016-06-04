@@ -91,8 +91,8 @@ class Guacamole_User
     public function Guacamole_User(
     $userId = -1, $username ="Il n'y a pas de nom d'utilisateur", $passwordHash="Il n'y a pas de passwordHash", 
             $passwordSalt="Il n'y a pas de passwordSalt", $disabled=-1, $expired=-1,
-            $accessWindowStart="00:00:00", $accessWindowEnd="00:00:00",
-            $validFrom="0000-00-00", $validUntil="0000-00-00",
+            $accessWindowStart=null, $accessWindowEnd=null,
+            $validFrom=null, $validUntil=null,
             $timezone="Il n'y a pas de timezone"
     )
     {
