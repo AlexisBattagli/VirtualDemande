@@ -87,7 +87,7 @@ class MachineDAL
      */
     public static function findByUser($userId)
     {
-        $mesMachines = array();
+        $rows = array();
 
         $data = BaseSingleton::select('SELECT machine.nom as nom, '
                 .'distrib_alias.nom_complet as os, '
@@ -97,12 +97,10 @@ class MachineDAL
 
         foreach ($data as $row)
         {
-            $machine = new Machine();
-            $machine->hydrate($row);
-            $mesMachines[] = $machine;
+            $rows[]=$row;
         }
 
-        return $mesMachines;
+        return $rows;
     }
    
     /*

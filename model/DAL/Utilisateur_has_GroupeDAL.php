@@ -30,10 +30,10 @@ class Utilisateur_has_GroupeDAL {
         $mesUtilisateur_has_Groupes = array();
 
         $data = BaseSingleton::select('SELECT '
-                        . ' Utilisateur_has_Groupe.Groupe_id as Groupe_id, '
-                        . ' Utilisateur_has_Groupe.Utilisateur_id as Utilisateur_id '
-                        . ' FROM Utilisateur_has_Groupe'
-                        . ' WHERE Utilisateur_has_Groupe.Groupe_id = ?', array('i', &$groupeId));
+                        . ' utilisateur_has_groupe.groupe_id as groupe_id, '
+                        . ' utilisateur_has_groupe.utilisateur_id as utilisateur_id '
+                        . ' FROM utilisateur_has_groupe'
+                        . ' WHERE utilisateur_has_groupe.groupe_id = ?', array('i', &$groupeId));
         foreach ($data as $row)
         {
             $utilisateurhasGroupe = new Utilisateur_has_Groupe();
@@ -56,10 +56,10 @@ class Utilisateur_has_GroupeDAL {
         $mesUtilisateur_has_Groupes = array();
 
         $data = BaseSingleton::select('SELECT '
-                        . ' Utilisateur_has_Groupe.Groupe_id as Groupe_id, '
-                        . ' Utilisateur_has_Groupe.Utilisateur_id as Utilisateur_id '
-                        . ' FROM Utilisateur_has_Groupe'
-                        . ' WHERE Utilisateur_has_Groupe.Utilisateur_id = ?', array('i', &$utilisateurId));
+                        . ' utilisateur_has_groupe.groupe_id as groupe_id, '
+                        . ' utilisateur_has_groupe.utilisateur_id as utilisateur_id '
+                        . ' FROM utilisateur_has_groupe'
+                        . ' WHERE utilisateur_has_groupe.Utilisateur_id = ?', array('i', &$utilisateurId));
 
         foreach ($data as $row)
         {
@@ -69,6 +69,30 @@ class Utilisateur_has_GroupeDAL {
         }
 
         return $mesUtilisateur_has_Groupes;
+    }
+    
+    /*
+     * Retourne l'ensemble des Groupes avec le nom et la description de ce dernier pour un Utilisateur_id passé en param
+     * 
+     * @param int $UtilisateurId
+     * @return  Utilisateur_has_Groupe
+     */
+
+    public static function findByUser($utilisateurId)
+    {
+        $rows = array();
+
+        $data = BaseSingleton::select('SELECT groupe.nom as nom, '
+                .'groupe.description as description '
+                .'FROM utilisateur_has_groupe, groupe '
+                .'WHERE utilisateur_has_groupe.groupe_id = groupe.id AND utilisateur_has_groupe.utilisateur_id = ?', array('i', &$utilisateurId));
+        
+        foreach ($data as $row)
+        {
+            $rows[]=$row;
+        }
+
+        return $rows;
     }
 
     /*
@@ -82,10 +106,10 @@ class Utilisateur_has_GroupeDAL {
         $mesUtilisateur_has_Groupes = array();
 
         $data = BaseSingleton::select('SELECT '
-                        . ' Utilisateur_has_Groupe.Groupe_id as Groupe_id, '
-                        . ' Utilisateur_has_Groupe.Utilisateur_id as Utilisateur_id '
-                        . ' FROM Utilisateur_has_Groupe'
-                        . ' ORDER BY Utilisateur_has_Groupe.Groupe_id ASC, Utilisateur_has_Groupe.Utilisateur_id');
+                        . ' utilisateur_has_groupe.groupe_id as groupe_id, '
+                        . ' utilisateur_has_groupe.utilisateur_id as utilisateur_id '
+                        . ' FROM utilisateur_has_groupe'
+                        . ' ORDER BY utilisateur_has_groupe.groupe_id ASC, utilisateur_has_groupe.utilisateur_id');
 
         foreach ($data as $row)
         {
@@ -108,10 +132,10 @@ class Utilisateur_has_GroupeDAL {
     public static function findByGU($groupeId, $utilisateurId)
     {
         $data = BaseSingleton::select('SELECT '
-                        . ' Utilisateur_has_Groupe.Groupe_id as Groupe_id, '
-                        . ' Utilisateur_has_Groupe.Utilisateur_id as Utilisateur_id '
-                        . ' FROM Utilisateur_has_Groupe'
-                        . ' WHERE Utilisateur_has_Groupe.Groupe_id = ? AND Utilisateur_has_Groupe.Utilisateur_id = ?', array('ii', &$groupeId, &$utilisateurId));
+                        . ' utilisateur_has_groupe.groupe_id as groupe_id, '
+                        . ' utilisateur_has_groupe.utilisateur_id as utilisateur_id '
+                        . ' FROM utilisateur_has_groupe'
+                        . ' WHERE utilisateur_has_groupe.groupe_id = ? AND utilisateur_has_groupe.utilisateur_id = ?', array('ii', &$groupeId, &$utilisateurId));
         $utilisateurhasGroupe = new Utilisateur_has_Groupe();
 
         if (sizeof($data) > 0)
@@ -143,7 +167,7 @@ class Utilisateur_has_GroupeDAL {
         $utilisateurId = $utilisateurhasGroupe->getUtilisateur()->getId(); //int
         if (is_null(findByGU($groupeId, $utilisateurId)))
         {
-            $sql = 'INSERT INTO Utilisateur_has_Groupe (Groupe_id, Utilisateur_id) '
+            $sql = 'INSERT INTO utilisateur_has_groupe (groupe_id, utilisateur_id) '
                     . ' VALUES (?,?) ';
 
             //Prépare les info concernant les types de champs
@@ -154,10 +178,10 @@ class Utilisateur_has_GroupeDAL {
         }
         else
         {
-            $sql = 'UPDATE Utilisateur_has_Groupe '
-                    . 'SET Groupe_id = ?, '
-                    . 'Utilisateur_id = ? '
-                    . 'WHERE Groupe_id = ? AND Utilisateur_id = ?';
+            $sql = 'UPDATE utilisateur_has_groupe '
+                    . 'SET groupe_id = ?, '
+                    . 'utilisateur_id = ? '
+                    . 'WHERE groupe_id = ? AND utilisateur_id = ?';
 
             //Prépare les info concernant les type de champs
             $params = array('iiii',
@@ -184,7 +208,7 @@ class Utilisateur_has_GroupeDAL {
 
     public static function delete($groupeId, $utilisateurId)
     {
-        $deleted = BaseSingleton::delete('DELETE FROM Utilisateur_has_Groupe WHERE Groupe_id = ? AND Utilisateur_id = ?', array('ii', &$groupeId, &$utilisateurId));
+        $deleted = BaseSingleton::delete('DELETE FROM utilisateur_has_groupe WHERE Groupe_id = ? AND utilisateur_id = ?', array('ii', &$groupeId, &$utilisateurId));
         return $deleted;
     }
 
