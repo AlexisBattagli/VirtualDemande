@@ -92,6 +92,62 @@ if (UtilisateurDAL::isUnique($validLogin,$validEmail) == null)
     if ($validInsertUtilisateur != null)
     {
         echo "Ajout de l'utilisateur reussi dans la base DBVirtDemande ! (id:" . $validInsertUtilisateur . ")";
+        //Création d'un guacamole_user
+
+        $newUserGuacamole=new Guacamole_User();
+
+        //=====Vérification de ce qui est renvoyé par le formulaire
+        $validUserName = filter_input(INPUT_POST, 'pseudo', FILTER_SANITIZE_STRING);
+        if ($validUserName != null)
+        {
+            $newUserGuacamole->setUserName($validUserName);
+            //echo "OK pour Username : ".$newUserGuacamole->getUsername();
+        }
+
+        $validPassword = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+
+        if ($validPassword != null)
+        {
+            $newUserGuacamole->setPasswordHash($validPassword);
+            //echo "OK pour PasswdHash:".$newUserGuacamole->getPasswordHash();
+        }
+
+        //A rajouter : expired et disabled : mettre à 0
+
+            $newUserGuacamole->setDisabled(0);
+            //echo "OK pour Disabled:".$newUserGuacamole->getDisabled();
+
+            $newUserGuacamole->setExpired(0);
+            //echo "OK pour Expired:".$newUserGuacamole->getExpired();
+
+            //Les $accessWindowStart, $accessWindowEnd doivent être à null sinon ils ne pourront pas accéder à n'importe quelle heure sur leurs machines
+            //$validFrom=null, $validUntil=null, pareils
+
+        echo "Valider";
+
+        //====Vérification de doublons====
+        if (Guacamole_UserDAL::findByUsername($validUserName) == null)
+        {
+        //=====Insertion=====/ - OK
+
+            $validInsertUser = Guacamole_UserDAL::insertOnDuplicate($newUserGuacamole);
+
+            if ($validInsertUser != null)
+            {
+                echo "Ajout de l'utilisateur reussi dans la base guacamole_db! (id:" . $validInsertUser . ")";
+            }
+            else
+            {
+                echo "insert echec...";
+            }
+
+            //Renvoie à la page précédante
+            //echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"]. "' />";
+        }
+        else
+        {
+            echo "Erreur, l'utilisateur que vous voulez ajouter existe déjà...";
+        }    
     }
     else
     {
@@ -135,6 +191,8 @@ else
             //echo "OK";
         //}
 
+    //INSERT - OK
+
     //Suppression - OK
         //$validInsertUtilisateur = UtilisateurDAL::delete("2");
 
@@ -142,86 +200,32 @@ else
         //$newUtilisateur->setId(12);
         //$validInsertUtilisateur = UtilisateurDAL::insertOnDuplicate($newUtilisateur);
 
-//Création d'un guacamole_user
-
-$newUserGuacamole=new Guacamole_User();
-
-//=====Vérification de ce qui est renvoyé par le formulaire
-$validUserName = filter_input(INPUT_POST, 'pseudo', FILTER_SANITIZE_STRING);
-if ($validUserName != null)
-{
-    $newUserGuacamole->setUserName($validUserName);
-    //echo "OK pour Username : ".$newUserGuacamole->getUsername();
-}
-
-$validPassword = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
-
-if ($validPassword != null)
-{
-    $newUserGuacamole->setPasswordHash($validPassword);
-    //echo "OK pour PasswdHash:".$newUserGuacamole->getPasswordHash();
-}
-
-//A rajouter : expired et disabled : mettre à 0
-
-    $newUserGuacamole->setDisabled(0);
-    //echo "OK pour Disabled:".$newUserGuacamole->getDisabled();
-
-    $newUserGuacamole->setExpired(0);
-    //echo "OK pour Expired:".$newUserGuacamole->getExpired();
-    
-    //Les $accessWindowStart, $accessWindowEnd doivent être à null sinon ils ne pourront pas accéder à n'importe quelle heure sur leurs machines
-    //$validFrom=null, $validUntil=null, pareils
-    
-echo "Valider";
-
-//====Vérification de doublons====
-if (Guacamole_UserDAL::findByUsername($validUserName) == null)
-{
-//=====Insertion=====/ - OK
-    
-    $validInsertUser = Guacamole_UserDAL::insertOnDuplicate($newUserGuacamole);
-
-    if ($validInsertUser != null)
-    {
-        echo "Ajout de l'utilisateur reussi dans la base guacamole_db! (id:" . $validInsertUser . ")";
-    }
-    else
-    {
-        echo "insert echec...";
-    }
-    
-    //Renvoie à la page précédante
-    //echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"]. "' />";
-}
-else
-{
-    echo "Erreur, l'utilisateur que vous voulez ajouter existe déjà...";
-}
-
 //Vérification des méthodes de Guacamole_UserDAL : 
-    //Pour test update :
-        //$newUserGuacamole->setUserId(158);
-        //$validInsertUser = Guacamole_UserDAL::insertOnDuplicate($newUserGuacamole);
-    
-    //Pour test suppression
-        //$validSupprUser = Guacamole_UserDAL::delete(158);
 
-    //Vérification de findByUsername($username) - OK
+        //INSERT - OK
+        
+        //Pour test update : OK
+            //$newUserGuacamole->setUserId(158);
+            //$validInsertUser = Guacamole_UserDAL::insertOnDuplicate($newUserGuacamole);
 
-    //Vérification de findByDefault - OK
-        //$defautUtilisateur=Guacamole_UserDAL::findByDefault();
-        //echo 'Utilisateur par défaut a pour ID:'.$defautUtilisateur->getUserId();
-        //echo 'Utilisateur par défaut a pour Login:'.$defautUtilisateur->getUsername();
+        //Pour test suppression - OK
+            //$validSupprUser = Guacamole_UserDAL::delete(158);
 
-    //Vérification de findById - OK
-        //$defautUtilisateur=Guacamole_UserDAL::findById(3);
-        //echo 'Utilisateur par défaut a pour ID:'.$defautUtilisateur->getUserId();
-        //echo 'Utilisateur par défaut a pour Login:'.$defautUtilisateur->getUsername();
-    
-    //Vérification de findAll - 
-        //$lesUsers=Guacamole_UserDAL::findAll();
-        //$taille=count($lesUsers);
-        //echo 'Nombre utilisateur :'.$taille;
+        //Vérification de findByUsername($username) - OK
+
+        //Vérification de findByDefault - OK
+            //$defautUtilisateur=Guacamole_UserDAL::findByDefault();
+            //echo 'Utilisateur par défaut a pour ID:'.$defautUtilisateur->getUserId();
+            //echo 'Utilisateur par défaut a pour Login:'.$defautUtilisateur->getUsername();
+
+        //Vérification de findById - OK
+            //$defautUtilisateur=Guacamole_UserDAL::findById(3);
+            //echo 'Utilisateur par défaut a pour ID:'.$defautUtilisateur->getUserId();
+            //echo 'Utilisateur par défaut a pour Login:'.$defautUtilisateur->getUsername();
+
+        //Vérification de findAll - 
+            //$lesUsers=Guacamole_UserDAL::findAll();
+            //$taille=count($lesUsers);
+            //echo 'Nombre utilisateur :'.$taille;
 
 //Création des connexions avec les paramètres
