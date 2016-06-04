@@ -110,7 +110,7 @@ class UtilisateurDAL
         return $mesUtilisateurs;
     }
     
-    /*
+    /* OK
      * Retourne l'Utilisateur correspondant au couple login
      * Ce couple étant unique, il n'y qu'une seul ligne retourner.
      * Il est rechercher sans tenir compte de la casse sur login
@@ -127,7 +127,7 @@ class UtilisateurDAL
                         . 'utilisateur.login as login, '
                         . 'utilisateur.passwd as passwd, '
                         . 'utilisateur.mail as mail, '
-                        . 'utilisateur.dateCreation as date_creation, '
+                        . 'utilisateur.date_creation as date_creation, '
                         . 'utilisateur.date_naissance as date_naissance, '
                         . 'utilisateur.nb_vm as nb_vm '
                         . ' FROM utilisateur'
@@ -142,10 +142,46 @@ class UtilisateurDAL
         {
             $utilisateur=null;
         }
+        
         return $utilisateur;
     }
     
-    /*
+    /* OK
+     * Retourne l'Utilisateur correspondant au couple $mail
+     * Il est rechercher sans tenir compte de la casse sur mail
+     * 
+     * @param string mail
+     * @return Utilisateur | null
+     */
+    public static function findByMail($mail)
+    {
+        $data = BaseSingleton::select('SELECT utilisateur.id as id, '
+                        . 'utilisateur.Role_id as Role_Id, '
+                        . 'utilisateur.nom as nom, '
+                        . 'utilisateur.prenom as prenom, '
+                        . 'utilisateur.login as login, '
+                        . 'utilisateur.passwd as passwd, '
+                        . 'utilisateur.mail as mail, '
+                        . 'utilisateur.date_creation as date_creation, '
+                        . 'utilisateur.date_naissance as date_naissance, '
+                        . 'utilisateur.nb_vm as nb_vm '
+                        . ' FROM utilisateur'
+                        . ' WHERE LOWER(utilisateur.mail) = LOWER(?)', array('s',&$mail));
+        $utilisateur = new Utilisateur();
+
+        if (sizeof($data) > 0)
+        {
+            $utilisateur->hydrate($data[0]);
+        }
+        else
+        {
+            $utilisateur=null;
+        }
+        
+        return $utilisateur;
+    }
+    
+    /* OK
      * Renvoie le nb d’utilisateurs restant 
      *
      * @return int
@@ -179,18 +215,29 @@ class UtilisateurDAL
         
         return $nbreDispo;
     }
-
-    /*
-     * Insère ou met à jour l'Utilisateur donné en paramètre.
-     * Pour cela on vérifie si l'id de la Distrib_Alias transmis est sup ou inf à 0.
-     * Si l'id est inf à 0 alors il faut insèrer, sinon update à l'id transmis.
-     * 
-     * @param Utilisateur utilisateur
-     * @return int id
-     * L'id de l'objet inséré en base. False si ça a planté
-     */
     
     /*
+     * Vérifie que l'utilisateur créé n'a pas le même login ou la même adresse mail que quelqu'un d'autre
+     * 
+     * @param sting login, string mail
+     * return 0 | 1
+     */
+    
+    public static function isUnique($login,$mail)
+    {
+        $findUserLogin = self::findByLogin($login);
+        $findUserMail = self::findByMail($mail);
+        $statut = 1;
+        
+        if(($findUserLogin==null)&&($findUserMail==null))
+        {
+            $statut=0;
+        }
+        
+        return $statut;
+    }
+    
+    /* OK
      * Retourne pour un utilisateur s'il a la posibilité de créer une nouvelle machine
      * 
      * @param int userId
@@ -228,6 +275,15 @@ class UtilisateurDAL
         return $statut;
     }
 
+    /*
+     * Insère ou met à jour l'Utilisateur donné en paramètre.
+     * Pour cela on vérifie si l'id de la Distrib_Alias transmis est sup ou inf à 0.
+     * Si l'id est inf à 0 alors il faut insèrer, sinon update à l'id transmis.
+     * 
+     * @param Utilisateur utilisateur
+     * @return int id
+     * L'id de l'objet inséré en base. False si ça a planté
+     */
 
     public static function insertOnDuplicate($utilisateur)
     {
