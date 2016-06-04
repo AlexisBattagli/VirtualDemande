@@ -89,19 +89,11 @@ class MachineDAL
     {
         $mesMachines = array();
 
-        $data = BaseSingleton::select('SELECT machine.id as id, '
-                        . 'machine.Utilisateur_id as Utilisateur_id, '
-                        . 'machine.Distrib_Alias_id as Distrib_Alias_id, '
-                        . 'machine.nom as nom, '
-                        . 'machine.Cpu_id as Cpu_id, '
-                        . 'machine.Ram_id as Ram_id, '
-                        . 'machine.Stockage_id as Stockage_id, '
-                        . 'machine.description as description, '
-                        . 'machine.date_creation as date_creation, '
-                        . 'machine.date_expiration as date_expiration, '
-                        . 'machine.etat as etat '
-                        . ' FROM machine'
-                        . ' WHERE machine.utilisateur_id = ?', array('i', &$userId));
+        $data = BaseSingleton::select('SELECT machine.nom as nom, '
+                .'distrib_alias.nom_complet as os, '
+                .'machine.description as description '
+                .'FROM machine, distrib_alias '
+                .'WHERE machine.distrib_alias_id = distrib_alias.id AND machine.utilisateur_id = ?', array('i', &$userId));
 
         foreach ($data as $row)
         {
