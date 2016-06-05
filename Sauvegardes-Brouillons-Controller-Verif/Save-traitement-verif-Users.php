@@ -25,7 +25,7 @@ require_once('/var/www/VirtualDemande/model/class/Guacamole_User.php');
 require_once('/var/www/VirtualDemande/model/DAL/Guacamole_UserDAL.php');
 require_once('/var/www/VirtualDemande/model/class/Guacamole_User_Permission.php');
 require_once('/var/www/VirtualDemande/model/DAL/Guacamole_User_PermissionDAL.php');
-/*
+
 //Création d'un Utilisateur par défaut
 $newUtilisateur=new Utilisateur();
 
@@ -212,6 +212,11 @@ else
     //Test update - OK
         //$newUtilisateur->setId(12);
         //$validInsertUtilisateur = UtilisateurDAL::insertOnDuplicate($newUtilisateur);
+ 
+    //Test findShareContener - OK
+        //$lesUtilisateurs=UtilisateurDAL::findShareContener(1);
+        //$taille=count($lesUtilisateurs);
+        //echo 'Nombre utilisateur :'.$taille;
 
 //Vérification des méthodes de Guacamole_UserDAL : 
 
@@ -240,7 +245,7 @@ else
             //$lesUsers=Guacamole_UserDAL::findAll();
             //$taille=count($lesUsers);
             //echo 'Nombre utilisateur :'.$taille;
-*/
+
 //Vérification des méthodes de Guacamole_User_PermissionDAL : 
     //Vérification de Insert - OK
 
