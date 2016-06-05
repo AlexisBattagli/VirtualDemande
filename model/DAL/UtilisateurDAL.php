@@ -54,7 +54,7 @@ class UtilisateurDAL
      * @return Utilisateur
      */
     public static function findById($id)
-    {echo "ok";
+    {
         $data = BaseSingleton::select('SELECT utilisateur.id as id, '
                         . 'utilisateur.Role_id as Role_id, '
                         . 'utilisateur.nom as nom, '
@@ -76,7 +76,7 @@ class UtilisateurDAL
         {
             $utilisateur = null;
         }
-        return $utilisateur;echo "ok Final";
+        return $utilisateur;
     }
 
     /*
@@ -110,7 +110,7 @@ class UtilisateurDAL
         return $mesUtilisateurs;
     }
     
-    /* OK
+    /* 
      * Retourne l'Utilisateur correspondant au couple login
      * Ce couple étant unique, il n'y qu'une seul ligne retourner.
      * Il est rechercher sans tenir compte de la casse sur login
@@ -181,7 +181,37 @@ class UtilisateurDAL
         return $utilisateur;
     }
     
-    /* OK
+    /*
+     * Renvoie la liste de SES vm partagé (nom de la vm, desc, groupe dans lequel elle est partagé)
+     * 
+     * @param userId
+     * return Object
+     */
+    
+    public static function findShareContener($userId)
+    {
+        $rows = array();
+        $data = BaseSingleton::select('SELECT machine.nom as nom, '
+                .'distrib_alias.nom_complet as os, '
+                .'machine.description as description, '
+		.'groupe.nom as groupe '
+                .'FROM machine, distrib_alias,groupe, groupe_has_machine, utilisateur  '
+                .'WHERE machine.distrib_alias_id = distrib_alias.id '
+                .'AND groupe_has_machine.machine_id=machine.id '
+                .'AND groupe_has_machine.groupe_id=groupe.id '
+                .'AND machine.utilisateur_id=utilisateur.id '
+                .'AND utilisateur.id = ?', array('i', &$userId));
+        
+        foreach ($data as $row)
+        {
+            $rows[]=$row;
+        }
+
+        return $rows;
+    }
+    
+    
+    /* 
      * Renvoie le nb d’utilisateurs restant 
      *
      * @return int
@@ -198,7 +228,6 @@ class UtilisateurDAL
         $nbreMax=$limitant->getNbUserMax();
         
         $datanbreActuel = BaseSingleton::select('SELECT * FROM utilisateur');
-        echo "OK";
         $nbreActuel=0;
         foreach ($datanbreActuel as $row)
         {
@@ -237,7 +266,7 @@ class UtilisateurDAL
         return $statut;
     }
     
-    /* OK
+    /* 
      * Retourne pour un utilisateur s'il a la posibilité de créer une nouvelle machine
      * 
      * @param int userId
