@@ -9,8 +9,10 @@
 
 //import
 require_once('BaseSingletonGuacamole.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Guacamole_User.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Guacamole_User_Permission.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Guacamole_User.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Guacamole_User_Permission.php');
+require_once('/var/www/VirtualDemande/model/class/Guacamole_User.php');
+require_once('/var/www/VirtualDemande/model/class/Guacamole_User_Permission.php');
 
 class Guacamole_User_PermissionDAL {
     /*
@@ -24,7 +26,7 @@ class Guacamole_User_PermissionDAL {
     {
         $mesguacamoleUserPermissions = array();
 
-        $data = BaseSingleton::select('SELECT guacamole_user_permission.user_id as user_id, '
+        $data = BaseSingletonGuacamole::select('SELECT guacamole_user_permission.user_id as user_id, '
                         . 'guacamole_user_permission.affected_user_id as affected_user_id, '
                         . 'guacamole_user_permission.permission as permission '
                         . ' FROM guacamole_user_permission'
@@ -51,7 +53,7 @@ class Guacamole_User_PermissionDAL {
     {
         $mesguacamoleUserPermissions = array();
 
-        $data = BaseSingleton::select('SELECT guacamole_user_permission.user_id as user_id, '
+        $data = BaseSingletonGuacamole::select('SELECT guacamole_user_permission.user_id as user_id, '
                         . 'guacamole_user_permission.affected_user_id as affected_user_id, '
                         . 'guacamole_user_permission.permission as permission '
                         . ' FROM guacamole_user_permission'
@@ -78,7 +80,7 @@ class Guacamole_User_PermissionDAL {
     {
         $mesguacamoleUserPermissions = array();
 
-        $data = BaseSingleton::select('SELECT guacamole_user_permission.user_id as user_id, '
+        $data = BaseSingletonGuacamole::select('SELECT guacamole_user_permission.user_id as user_id, '
                         . 'guacamole_user_permission.affected_user_id as affected_user_id, '
                         . 'guacamole_user_permission.permission as permission '
                         . ' FROM guacamole_user_permission'
@@ -104,7 +106,7 @@ class Guacamole_User_PermissionDAL {
 
     public static function findByUAP($userId, $affectedUserId, $permission)
     {
-        $data = BaseSingleton::select('SELECT guacamole_user_permission.user_id as user_id, '
+        $data = BaseSingletonGuacamole::select('SELECT guacamole_user_permission.user_id as user_id, '
                         . 'guacamole_user_permission.affected_user_id as affected_user_id, '
                         . 'guacamole_user_permission.permission as permission '
                         . ' FROM guacamole_user_permission'
@@ -140,7 +142,7 @@ class Guacamole_User_PermissionDAL {
         $affectedUserId=$guacamoleUserPermission->getAffectedUser()->getUserId(); //int
         $permission=$guacamoleUserPermission->getPermission(); //string
 
-        if (is_null(findByUAP($userId, $affectedUserId,$permission)))
+        if (is_null(self::findByUAP($userId, $affectedUserId,$permission)))
         {
             $sql = 'INSERT INTO guacamole_user_permission (user_id, affected_user_id, permission) '
                     . ' VALUES (?,?,?) ';

@@ -23,8 +23,9 @@ require_once('/var/www/VirtualDemande/model/class/Utilisateur.php');
 require_once('/var/www/VirtualDemande/model/DAL/UtilisateurDAL.php');
 require_once('/var/www/VirtualDemande/model/class/Guacamole_User.php');
 require_once('/var/www/VirtualDemande/model/DAL/Guacamole_UserDAL.php');
-require_once('/var/www/VirtualDemande/model/DAL/BaseSingleton.php');
-
+require_once('/var/www/VirtualDemande/model/class/Guacamole_User_Permission.php');
+require_once('/var/www/VirtualDemande/model/DAL/Guacamole_User_PermissionDAL.php');
+/*
 //Création d'un Utilisateur par défaut
 $newUtilisateur=new Utilisateur();
 
@@ -135,6 +136,18 @@ if (UtilisateurDAL::isUnique($validLogin,$validEmail) == null)
             if ($validInsertUser != null)
             {
                 echo "Ajout de l'utilisateur reussi dans la base guacamole_db! (id:" . $validInsertUser . ")";
+                //Paramètres des permissions de l'utilisateur
+                $guacamoleUserPermission=new Guacamole_User_Permission();
+                $guacamoleUserPermission->setUser($validInsertUser);
+                $guacamoleUserPermission->setAffectedUser($validInsertUser);
+                $guacamoleUserPermission->setPermission("READ");
+                $valid=Guacamole_User_PermissionDAL::insertOnDuplicate($guacamoleUserPermission);
+                $guacamoleUserPermission->setPermission("UPDATE");
+                $valid=Guacamole_User_PermissionDAL::insertOnDuplicate($guacamoleUserPermission);
+                $guacamoleUserPermission->setPermission("DELETE");
+                $valid=Guacamole_User_PermissionDAL::insertOnDuplicate($guacamoleUserPermission);
+                $guacamoleUserPermission->setPermission("ADMINISTER");
+                $valid=Guacamole_User_PermissionDAL::insertOnDuplicate($guacamoleUserPermission);
             }
             else
             {
@@ -227,5 +240,32 @@ else
             //$lesUsers=Guacamole_UserDAL::findAll();
             //$taille=count($lesUsers);
             //echo 'Nombre utilisateur :'.$taille;
+*/
+//Vérification des méthodes de Guacamole_User_PermissionDAL : 
+    //Vérification de Insert - OK
 
-//Création des connexions avec les paramètres
+    //Vérification de Update - OK
+
+    //Vérification de deleteAffectedUser - OK
+        //$valid=Guacamole_User_PermissionDAL::deleteAffectedUser(14);
+
+    //Vérification de deleteUser - OK
+        //$valid=Guacamole_User_PermissionDAL::deleteUser(15);
+        
+    //Vérification de delete - OK
+        //$valid=Guacamole_User_PermissionDAL::delete(14,15);
+
+    //Vérification de findAll - OK
+        //$lesUsers=Guacamole_User_PermissionDAL::findAll();
+        //$taille=count($lesUsers);
+        //echo 'Nombre de permission de utilisateur :'.$taille;
+    
+    //Vérification de findByUser - OK
+        //$lesUsers=Guacamole_User_PermissionDAL::findByUser(1);
+        //$taille=count($lesUsers);
+        //echo 'Nombre de permission de utilisateur :'.$taille;
+
+    //Vérification de findByAffectedUserId - OK
+        //$lesUsers=Guacamole_User_PermissionDAL::findByAffectedUserId(3);
+        //$taille=count($lesUsers);
+        //echo 'Nombre de permission de utilisateur :'.$taille;
