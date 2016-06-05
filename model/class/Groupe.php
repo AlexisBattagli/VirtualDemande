@@ -131,7 +131,7 @@ class Groupe {
 
     public function getDescription()
     {
-        $this->description;
+        return $this->description;
     }
 
 }

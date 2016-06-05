@@ -25,6 +25,8 @@ require_once('/var/www/VirtualDemande/model/class/Guacamole_User.php');
 require_once('/var/www/VirtualDemande/model/DAL/Guacamole_UserDAL.php');
 require_once('/var/www/VirtualDemande/model/class/Guacamole_User_Permission.php');
 require_once('/var/www/VirtualDemande/model/DAL/Guacamole_User_PermissionDAL.php');
+require_once('/var/www/VirtualDemande/model/class/Groupe.php');
+require_once('/var/www/VirtualDemande/model/DAL/GroupeDAL.php');
 /*
 //Création d'un Utilisateur par défaut
 $newUtilisateur=new Utilisateur();
@@ -312,3 +314,44 @@ else
 
     //Vérification de delete - OK
         //$validRole = RoleDAL::delete(4);
+
+//Vérification des méthodes de GroupeDAL : 
+    //Vérification de findByDefault - OK 
+        //$defautGroupe=GroupeDAL::findByDefault();
+        //echo 'Groupe par défaut a pour ID:'.$defautGroupe->getId();
+        //echo 'Groupe par défaut a pour Nom:'.$defautGroupe->getNom();
+
+    //Vérification de findById - OK
+        //$defautGroupe=GroupeDAL::findById(2);
+        //echo 'Groupe par défaut a pour ID:'.$defautGroupe->getId();
+        //echo 'Groupe par défaut a pour Nom:'.$defautGroupe->getNom();
+    
+    //Vérification de findAll - OK
+        //$lesGroupes=GroupeDAL::findAll();
+        //$taille=count($lesGroupes);
+        //echo 'Nombre role :'.$taille;
+
+    //Vérification de findByNom - OK
+        //$defautGroupe=GroupeDAL::findByNom("Group1");
+        //echo 'Groupe par défaut a pour ID:'.$defautGroupe->getId();
+        //echo 'Groupe par défaut a pour Nom:'.$defautGroupe->getNom();
+
+    //Vérification d'insertion - OK
+        //$newGroupe=new Groupe();
+        //$newGroupe->setNom("Taratoto");
+        //$newGroupe->setDateCreation("2010/05/02");
+        //$newGroupe->setDescription("Taratoo");
+        //$validGroupe = GroupeDAL::insertOnDuplicate($newGroupe);
+        
+    //Vérification de update - OK
+        //$newGroupe=new Groupe();
+        //$newGroupe->setId(14);
+        //$newGroupe->setNom("Nom1oto");
+        //$newGroupe->setDateCreation("0010/00/02");
+        //$newGroupe->setDescription("DescripTaratoo");
+        //$validGroupe = GroupeDAL::insertOnDuplicate($newGroupe);
+
+    //Vérification de delete - OK
+        //$validGroupe = GroupeDAL::delete(14);
+
+
