@@ -81,7 +81,7 @@ class RoleDAL
                         . 'role.nom_role as nom_role, '
                         . 'role.description as description '
                         . ' FROM role'
-                . ' ORDER BY role.role ASC');
+                . ' ORDER BY role.nom_role ASC');
 
         foreach ($data as $row)
         {
@@ -94,9 +94,9 @@ class RoleDAL
     }
     
     /*
-     * Retourne le role correspondant au couple role
+     * Retourne le role correspondant au role
      * Ce couple étant unique, il n'y qu'une seul ligne retourner.
-     * Il est rechercher sans tenir compte de la casse sur login
+     * Il est rechercher sans tenir compte de la casse sur role
      * 
      * @param string role
      * @return Role | null

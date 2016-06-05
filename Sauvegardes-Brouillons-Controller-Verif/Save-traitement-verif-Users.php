@@ -25,7 +25,7 @@ require_once('/var/www/VirtualDemande/model/class/Guacamole_User.php');
 require_once('/var/www/VirtualDemande/model/DAL/Guacamole_UserDAL.php');
 require_once('/var/www/VirtualDemande/model/class/Guacamole_User_Permission.php');
 require_once('/var/www/VirtualDemande/model/DAL/Guacamole_User_PermissionDAL.php');
-
+/*
 //Création d'un Utilisateur par défaut
 $newUtilisateur=new Utilisateur();
 
@@ -274,3 +274,41 @@ else
         //$lesUsers=Guacamole_User_PermissionDAL::findByAffectedUserId(3);
         //$taille=count($lesUsers);
         //echo 'Nombre de permission de utilisateur :'.$taille;
+ */
+
+//Vérification des méthodes de RoleAL : 
+    //Vérification de findByDefault - OK 
+        //$defautRole=RoleDAL::findByDefault();
+        //echo 'Role par défaut a pour ID:'.$defautRole->getId();
+        //echo 'Role par défaut a pour Login:'.$defautRole->getNomRole();
+
+    //Vérification de findById - OK
+        //$defautRole=RoleDAL::findById(2);
+        //echo 'Role par défaut a pour ID:'.$defautRole->getId();
+        //echo 'Role par défaut a pour Login:'.$defautRole->getNomRole();
+    
+    //Vérification de findAll - OK
+        //$lesRoles=RoleDAL::findAll();
+        //$taille=count($lesRoles);
+        //echo 'Nombre role :'.$taille;
+
+    //Vérification de findByRole - OK
+        //$defautRole=RoleDAL::findByRole("titi");
+        //echo 'Role par défaut a pour ID:'.$defautRole->getId();
+        //echo 'Role par défaut a pour Login:'.$defautRole->getNomRole();
+
+    //Vérification d'insertion - OK
+        //$newRole=new Role();
+        //$newRole->setNomRole("Taratoto");
+        //$newRole->setDescription("Taratoto");
+        //$validRole = RoleDAL::insertOnDuplicate($newRole);
+        
+    //Vérification de update - OK
+        //$newRole=new Role();
+        //$newRole->setId(4);
+        //$newRole->setNomRole("Tara");
+        //$newRole->setDescription("Taratto");
+        //$validRole = RoleDAL::insertOnDuplicate($newRole);
+
+    //Vérification de delete - OK
+        //$validRole = RoleDAL::delete(4);
