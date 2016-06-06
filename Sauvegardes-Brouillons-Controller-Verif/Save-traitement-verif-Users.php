@@ -198,6 +198,7 @@ else
         //$defautUtilisateur=UtilisateurDAL::findByDefault();
         //echo 'Utilisateur par défaut a pour ID:'.$defautUtilisateur->getId();
         //echo 'Utilisateur par défaut a pour Login:'.$defautUtilisateur->getLogin();
+        //echo 'Utilisateur par défaut a pour role:'.$defautUtilisateur->getRole()->getId();
 
     //Vérification de findById - OK
         //$defautUtilisateur=UtilisateurDAL::findById(1);
@@ -229,6 +230,12 @@ else
         //$lesUtilisateurs=UtilisateurDAL::findShareContener(1);
         //$taille=count($lesUtilisateurs);
         //echo 'Nombre utilisateur :'.$taille;
+
+    //Vérification de connection($login,$password) 
+        //if(UtilisateurDAL::connection("pseudoca","pass")==true)
+        //{
+            //echo "Connection oK";
+        //}
 
 //Vérification des méthodes de Guacamole_UserDAL : 
 
@@ -393,7 +400,7 @@ else
         
     //Vérification de findByGU - OK
         //$UtilisateurHasGroupe=Utilisateur_has_GroupeDAL::findByGU(1,1);
-        //echo 'Groupe a pour ID:'.$UtilisateurHasGroupe->getGroupe();
+        //echo 'Groupe a pour ID:'.$UtilisateurHasGroupe->getGroupe()->getId();
         //echo 'Utilisateur a pour Nom:'.$UtilisateurHasGroupe->getUtilisateur()->getId();
         
     //Vérification de insertion - OK

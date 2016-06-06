@@ -10,7 +10,8 @@
  * IMPORT
  */
 require_once('BaseSingleton.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Table_log.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Table_log.php');
+require_once('/var/www/VirtualDemande/model/class/Table_log.php');
 
 class Table_logDAL {
         /*
@@ -21,14 +22,14 @@ class Table_logDAL {
     public static function findByDefault()
     {
         $id=1;
-        $data = BaseSingleton::select('SELECT table_log.id as id, '
+        $data = BaseSingleton::select('SELECT table_log.table_log_id as id, '
                         . 'table_log.machine as machine, '
                         . 'table_log.utilisateur as utilisateur, '
                         . 'table_log.date_heure as date_heure, '
                         . 'table_log.action as action, '
                         . 'table_log.code_retour as code_retour '
                         . ' FROM table_log'
-                        . ' WHERE table_log.id = ?', array('i', &$id));
+                        . ' WHERE table_log.table_log_id = ?', array('i', &$id));
         $tableLog = new Table_log();
         if (sizeof($data) > 0)
         {
@@ -49,14 +50,14 @@ class Table_logDAL {
      */
     public static function findById($id)
     {
-        $data = BaseSingleton::select('SELECT table_log.id as id, '
+        $data = BaseSingleton::select('SELECT table_log.table_log_id as id, '
                         . 'table_log.machine as machine, '
                         . 'table_log.utilisateur as utilisateur, '
                         . 'table_log.date_heure as date_heure, '
                         . 'table_log.action as action, '
                         . 'table_log.code_retour as code_retour '
                         . ' FROM table_log'
-                        . ' WHERE table_log.id = ?', array('i', &$id));
+                        . ' WHERE table_log.table_log_id = ?', array('i', &$id));
         $tableLog = new Table_log();
         if (sizeof($data) > 0)
         {
@@ -78,7 +79,7 @@ class Table_logDAL {
     {
         $mestableLogs = array();
 
-        $data = BaseSingleton::select('SELECT table_log.id as id, '
+        $data = BaseSingleton::select('SELECT table_log.table_log_id as id, '
                         . 'table_log.machine as machine, '
                         . 'table_log.utilisateur as utilisateur, '
                         . 'table_log.date_heure as date_heure, '
@@ -105,20 +106,20 @@ class Table_logDAL {
      * @param int machine, int utilisateur, string date_heure, string action, string code_retour
      * @return Table_log | null
      */
-    public static function findByDN($machine, $utilisateur, $date_heure, $action, $code_retour)
+    public static function findByMUDAC($machine, $utilisateur, $dateHeure, $action, $codeRetour)
     {
-        $data = BaseSingleton::select('SELECT table_log.id as id, '
+        $data = BaseSingleton::select('SELECT table_log.table_log_id as id, '
                         . 'table_log.machine as machine, '
                         . 'table_log.utilisateur as utilisateur, '
                         . 'table_log.date_heure as date_heure, '
                         . 'table_log.action as action, '
                         . 'table_log.code_retour as code_retour '
                         . ' FROM table_log'
-                        . ' WHERE table_log.machine = ? AND table_log.utilisateur = ? AND LOWER(table_log.date_heure) = LOWER(?)AND LOWER(table_log.action) = LOWER(?) AND LOWER(table_log.code_retour) = LOWER(?)', array('sssss', &$machine, &$utilisateur, &$date_heure, &$action, &$code_retour));
+                        . ' WHERE table_log.machine = ? AND table_log.utilisateur = ? AND table_log.date_heure = ? AND LOWER(table_log.action) = LOWER(?) AND LOWER(table_log.code_retour) = LOWER(?)', array('sssss', &$machine, &$utilisateur, &$dateHeure, &$action, &$codeRetour));
         $tableLog = new Table_log();
 
         if (sizeof($data) > 0)
-        {
+        { echo "ok";
             $tableLog->hydrate($data[0]);
         }
         else 
@@ -170,7 +171,7 @@ class Table_logDAL {
                     . 'date_heure = ?, '
                     . 'action = ?, '
                     . 'code_retour = ? '
-                    . 'WHERE id = ? ';
+                    . 'WHERE table_log_id = ? ';
 
             //Prépare les info concernant les type de champs
             $params = array('sssssi',
@@ -199,7 +200,7 @@ class Table_logDAL {
 
     public static function delete($id)
     {
-        $deleted = BaseSingleton::delete('DELETE FROM table_log WHERE id = ?', array('i', &$id));
+        $deleted = BaseSingleton::delete('DELETE FROM table_log WHERE table_log_id = ?', array('i', &$id));
         return $deleted;
     }
 

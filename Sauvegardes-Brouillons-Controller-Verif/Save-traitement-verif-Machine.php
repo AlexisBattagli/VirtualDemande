@@ -18,6 +18,12 @@ require_once('/var/www/VirtualDemande/model/DAL/Distrib_AliasDAL.php');
 require_once('/var/www/VirtualDemande/model/class/Machine.php');
 require_once('/var/www/VirtualDemande/model/DAL/MachineDAL.php');
 
+require_once('/var/www/VirtualDemande/model/class/Groupe_has_Machine.php');
+require_once('/var/www/VirtualDemande/model/DAL/Groupe_has_MachineDAL.php');
+
+require_once('/var/www/VirtualDemande/model/class/Table_log.php');
+require_once('/var/www/VirtualDemande/model/DAL/Table_logDAL.php');
+
 //Test de tout ce qui touche la table machine
 
 //Vérification des méthodes de CpuDAL : 
@@ -217,14 +223,14 @@ require_once('/var/www/VirtualDemande/model/DAL/MachineDAL.php');
 
 //Vérification des méthodes Distrib_AliasDAL : 
     //Vérification de findByDefault - OK
-            //$defautDistribAlias=Distrib_AliasDAL::findByDefault();
-            //echo 'Distrib Alias par défaut a pour ID:'.$defautDistribAlias->getId();
-            //echo 'Distrib par défaut a pour ID:'.$defautDistribAlias->getDistrib();
-            //echo 'Nom Complet par défaut :'.$defautDistribAlias->getNomComplet();
-            //echo 'Pseudo par défaut :'.$defautDistribAlias->getPseudo();
-            //echo 'Commentaire par défaut :'.$defautDistribAlias->getCommentaire();
-            //echo 'Visible par défaut :'.$defautDistribAlias->getVisible();
-
+/*            $defautDistribAlias=Distrib_AliasDAL::findByDefault();
+            echo 'Distrib Alias par défaut a pour ID:'.$defautDistribAlias->getId();
+            echo 'Distrib par défaut a pour ID:'.$defautDistribAlias->getDistrib();
+            echo 'Nom Complet par défaut :'.$defautDistribAlias->getNomComplet();
+            echo 'Pseudo par défaut :'.$defautDistribAlias->getPseudo();
+            echo 'Commentaire par défaut :'.$defautDistribAlias->getCommentaire();
+            echo 'Visible par défaut :'.$defautDistribAlias->getVisible();
+*/
     //Vérification de findById - OK
             //$defautDistribAlias=Distrib_AliasDAL::findById(2);
             //echo 'Distrib Alias par défaut a pour ID:'.$defautDistribAlias->getId();
@@ -370,3 +376,106 @@ require_once('/var/www/VirtualDemande/model/DAL/MachineDAL.php');
         
     //Vérification de delete - OK
             //$validMachine = MachineDAL::delete(7);
+
+//Vérification des méthodes de Groupe_has_MachineDAL :
+    //Vérification de findAll - OK
+            //$lesGroupeHasMachines=Groupe_has_MachineDAL::findAll();
+            //$taille=count($lesGroupeHasMachines);
+            //echo 'Nombre groupe has machine :'.$taille;
+
+    //Vérification de findByGroupe($groupeId) - OK
+            //$lesGroupeHasMachines=Groupe_has_MachineDAL::findByGroupe(1);
+            //$taille=count($lesGroupeHasMachines);
+            //echo 'Nombre groupe has machine :'.$taille;
+            
+    //Vérification de findByMachine($machineId) - OK
+            //$lesGroupeHasMachines=Groupe_has_MachineDAL::findByMachine(5);
+            //$taille=count($lesGroupeHasMachines);
+            //echo 'Nombre groupe has machine :'.$taille;
+
+    //Vérification de findByGM($groupeId, $machineId) - OK
+            //$lesGroupeHasMachines=Groupe_has_MachineDAL::findByGM(1,5);
+            //$taille=count($lesGroupeHasMachines);
+            //echo 'Nombre groupe has machine :'.$taille;
+            //echo 'Machine :'.$lesGroupeHasMachines->getMachine()->getId();
+            //echo 'Groupe :'.$lesGroupeHasMachines->getGroupe()->getId();
+            //echo 'Commentaire :'.$lesGroupeHasMachines->getCommentaire();
+            
+    //Vérification d'insertion - OK
+        //$GroupeHasMachine=new Groupe_has_Machine();
+        //$GroupeHasMachine->setGroupe(5);
+        //$GroupeHasMachine->setMachine(5);
+        //$GroupeHasMachine->setCommentaire("CommentaireTest");     
+        //$validGroupeHasMachine = Groupe_has_MachineDAL::insertOnDuplicate($GroupeHasMachine);
+        
+    //Vérification de update - OK
+        //$GroupeHasMachine=new Groupe_has_Machine();
+        //$GroupeHasMachine->setGroupe(5);
+        //$GroupeHasMachine->setMachine(5);
+        //$GroupeHasMachine->setCommentaire("Test++");     
+        //$validGroupeHasMachine = Groupe_has_MachineDAL::insertOnDuplicate($GroupeHasMachine);
+        
+    //Vérification de delete($groupeId, $machineId) - OK
+        //$validGroupeHasMachine = Groupe_has_MachineDAL::delete(1,6);
+
+    //Vérification de deleteGroupe($groupeId) - OK
+        //$validGroupeHasMachine = Groupe_has_MachineDAL::deleteGroupe(1);
+        
+    //Vérification de deleteMachine($machineId) - OK
+        //$validGroupeHasMachine = Groupe_has_MachineDAL::deleteMachine(5);
+
+//Vérification des méthodes de Table_logDAL :
+    //INSERT INTO table_log (date_heure, action, code_retour, utilisateur, machine) VALUES ("23::15:02","CREATE",0,1,6)
+    //Vérification de findByDefault - OK
+            //$defautTableLog=Table_logDAL::findByDefault();
+            //echo 'Table log par défaut a pour ID:'.$defautTableLog->getId();
+            //echo 'Date_heure par défaut :'.$defautTableLog->getDateHeure();
+            //echo 'Action par défaut :'.$defautTableLog->getAction();
+            //echo 'Code_retour par défaut :'.$defautTableLog->getCodeRetour();
+            //echo 'Utilisateur par défaut :'.$defautTableLog->getUtilisateur();
+            //echo 'Machine par défaut :'.$defautTableLog->getMachine();
+
+    //Vérification de findById - OK
+            //$defautTableLog=Table_logDAL::findById(2);
+            //echo 'Table log par défaut a pour ID:'.$defautTableLog->getId();
+            //echo 'Date_heure par défaut :'.$defautTableLog->getDateHeure();
+            //echo 'Action par défaut :'.$defautTableLog->getAction();
+            //echo 'Code_retour par défaut :'.$defautTableLog->getCodeRetour();
+            //echo 'Utilisateur par défaut :'.$defautTableLog->getUtilisateur();
+            //echo 'Machine par défaut :'.$defautTableLog->getMachine();
+
+    //Vérification de findAll - OK
+            //$lesTableLogs=Table_logDAL::findAll();
+            //$taille=count($lesTableLogs);
+            //echo 'Nombre Table_log :'.$taille;
+
+    //Vérification de findByMUDAC($machine, $utilisateur, $dateHeure, $action, $codeRetour) - OK
+            //$defautTableLog=Table_logDAL::findByMUDAC(6,1,"2021-12-17 00:00:00","CREATE",1);
+            //echo 'Table log par défaut a pour ID:'.$defautTableLog->getId();
+            //echo 'Date_heure par défaut :'.$defautTableLog->getDateHeure();
+            //echo 'Action par défaut :'.$defautTableLog->getAction();
+            //echo 'Code_retour par défaut :'.$defautTableLog->getCodeRetour();
+            //echo 'Utilisateur par défaut :'.$defautTableLog->getUtilisateur();
+            //echo 'Machine par défaut :'.$defautTableLog->getMachine();
+            
+    //Vérification d'insertion - OK
+            //$defautTableLog=new Table_log();
+            //$defautTableLog->setDateHeure("2222/12/02 12:00:01");
+            //$defautTableLog->setAction("DELETE");
+            //$defautTableLog->setCodeRetour("2");
+            //$defautTableLog->setUtilisateur("4");
+            //$defautTableLog->setMachine("9");
+            //$validTableLog = Table_logDAL::insertOnDuplicate($defautTableLog);
+        
+    //Vérification de update - OK
+            //$defautTableLog=new Table_log();
+            //$defautTableLog->setId(3);
+            //$defautTableLog->setDateHeure("1500/12/02 12:25:01");
+            //$defautTableLog->setAction("UPDATE");
+            //$defautTableLog->setCodeRetour("0");//
+            //$defautTableLog->setUtilisateur("2");//
+            //$defautTableLog->setMachine("5");//
+            //$validTableLog = Table_logDAL::insertOnDuplicate($defautTableLog);
+        
+    //Vérification de delete - OK
+        //$validTableLog = Table_logDAL::delete(5);
