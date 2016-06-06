@@ -8,8 +8,10 @@
  */
 
 //import
-require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Distrib.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/DistribDAL.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Distrib.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/DistribDAL.php');
+require_once('/var/www/VirtualDemande/model/class/Distrib.php');
+require_once('/var/www/VirtualDemande/model/DAL/DistribDAL.php');
 
 class Distrib_Alias {
     /*
@@ -90,7 +92,7 @@ class Distrib_Alias {
     public function hydrate($dataSet)
     {
         $this->id = $dataSet['id'];
-        $this->distrib = $dataSet['Distrib_id'];
+        $this->distrib = $dataSet['distrib_id'];
         $this->nomComplet = $dataSet['nom_complet'];
         $this->pseudo = $dataSet['pseudo'];
         $this->commentaire = $dataSet['commentaire'];
@@ -175,7 +177,7 @@ class Distrib_Alias {
 
     public function getPseudo()
     {
-        $this->pseudo;
+        return $this->pseudo;
     }
 
     //commentaire
@@ -189,7 +191,7 @@ class Distrib_Alias {
 
     public function getCommentaire()
     {
-        $this->commentaire;
+        return $this->commentaire;
     }
     
     //visible

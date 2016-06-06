@@ -11,7 +11,8 @@
  * IMPORT
  */
 require_once('BaseSingleton.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Distrib_Alias.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Distrib_Alias.php');
+require_once('/var/www/VirtualDemande/model/class/Distrib_Alias.php');
 
 class Distrib_AliasDAL {
     
@@ -24,7 +25,7 @@ class Distrib_AliasDAL {
     {
         $id=1;
         $data = BaseSingleton::select('SELECT distrib_alias.id as id, '
-                        . 'distrib_alias.Distrib_id as Distrib_id, '
+                        . 'distrib_alias.distrib_id as distrib_id, '
                         . 'distrib_alias.nom_complet as nom_complet, '
                         . 'distrib_alias.pseudo as pseudo, '
                         . 'distrib_alias.commentaire as commentaire, '
@@ -52,7 +53,7 @@ class Distrib_AliasDAL {
     public static function findById($id)
     {
         $data = BaseSingleton::select('SELECT distrib_alias.id as id, '
-                        . 'distrib_alias.Distrib_id as Distrib_id, '
+                        . 'distrib_alias.distrib_id as distrib_id, '
                         . 'distrib_alias.nom_complet as nom_complet, '
                         . 'distrib_alias.pseudo as pseudo, '
                         . 'distrib_alias.commentaire as commentaire, '
@@ -81,7 +82,7 @@ class Distrib_AliasDAL {
         $mesDistribAlias = array();
 
         $data = BaseSingleton::select('SELECT distrib_alias.id as id, '
-                        . 'distrib_alias.Distrib_id as Distrib_id, '
+                        . 'distrib_alias.distrib_id as distrib_id, '
                         . 'distrib_alias.nom_complet as nom_complet, '
                         . 'distrib_alias.pseudo as pseudo, '
                         . 'distrib_alias.commentaire as commentaire, '
@@ -109,7 +110,7 @@ class Distrib_AliasDAL {
         $mesDistribAlias = array();
 
         $data = BaseSingleton::select('SELECT distrib_alias.id as id, '
-                        . 'distrib_alias.Distrib_id as Distrib_id, '
+                        . 'distrib_alias.distrib_id as distrib_id, '
                         . 'distrib_alias.nom_complet as nom_complet, '
                         . 'distrib_alias.pseudo as pseudo, '
                         . 'distrib_alias.commentaire as commentaire, '
@@ -138,13 +139,13 @@ class Distrib_AliasDAL {
     public static function findByDN($distribId, $nomComplet)
     {
         $data = BaseSingleton::select('SELECT distrib_alias.id as id, '
-                        . 'distrib_alias.Distrib_id as Distrib_id, '
+                        . 'distrib_alias.distrib_id as distrib_id, '
                         . 'distrib_alias.nom_complet as nom_complet, '
                         . 'distrib_alias.pseudo as pseudo, '
                         . 'distrib_alias.commentaire as commentaire, '
                         . 'distrib_alias.visible as visible '
                         . ' FROM distrib_alias'
-                        . ' WHERE distrib_alias.Distrib_id = ? AND LOWER(distrib_alias.nom_complet) = LOWER(?)', array('is', &$distribId, &$nomComplet));
+                        . ' WHERE distrib_alias.distrib_id = ? AND LOWER(distrib_alias.nom_complet) = LOWER(?)', array('is', &$distribId, &$nomComplet));
         $distribAlias = new Distrib_Alias();
 
         if (sizeof($data) > 0)
@@ -176,26 +177,27 @@ class Distrib_AliasDAL {
         $nomComplet = $distribAlias->getNomComplet(); //string
         $pseudo = $distribAlias->getPseudo(); //string
         $commentaire = $distribAlias->getCommentaire(); //string
-        $visible = $distribAlias->getVisible();
+        $visible = $distribAlias->getVisible();//int
         $id = $distribAlias->getId(); //int
+        
         if ($id < 0)
         {
-            $sql = 'INSERT INTO distrib_alias (Distrib_id, nom_complet, pseudo, commentaire, visible) '
+            $sql = 'INSERT INTO distrib_alias (distrib_id, nom_complet, pseudo, commentaire, visible) '
                     . ' VALUES (?,?,?,?,?) ';
 
             //Prépare les info concernant les type de champs
-            $params = array('isssb',
+            $params = array('isssi',
                 &$distribId,
                 &$nomComplet,
                 &$pseudo,
+                &$commentaire,
                 &$visible,
-                &$commentaire
             );
         }
         else
         {
             $sql = 'UPDATE distrib_alias '
-                    . 'SET Distrib_id = ?, '
+                    . 'SET distrib_id = ?, '
                     . 'nom_complet = ?, '
                     . 'pseudo = ?, '
                     . 'commentaire = ?, '
@@ -203,7 +205,7 @@ class Distrib_AliasDAL {
                     . 'WHERE id = ? ';
 
             //Prépare les info concernant les type de champs
-            $params = array('isssbi',
+            $params = array('isssii',
                 &$distribId,
                 &$nomComplet,
                 &$pseudo,
