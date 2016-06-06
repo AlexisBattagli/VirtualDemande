@@ -13,6 +13,7 @@
 require_once('BaseSingleton.php');
 //require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Groupe.php');
 require_once('/var/www/VirtualDemande/model/class/Groupe.php');
+require_once('/var/www/VirtualDemande/model/DAL/Utilisateur_has_GroupeDAL.php');
 
 class GroupeDAL 
 {
@@ -70,6 +71,52 @@ class GroupeDAL
         return $groupe;
     }
 
+    /*
+     * Retourne l'ensemble des groupes où un utilisateur donné en paramètre est
+     * 
+     * @param userId
+     * return array[Groupe] Tous les Groupes sont placés dans un Tableau
+     */
+    /*
+    public static function findByUser($utilisateurId)
+    {
+        $mesGroupes = array();
+        $mesgroupehasutilisateurs=Utilisateur_has_GroupeDAL::findByUtilisateur($utilisateurId);
+        
+        //Retourne le bon nombre d'enregistrements...
+        
+        $newgroupe=new Groupe();
+        $newgroupe=$mesgroupehasutilisateurs[]->getGroupe();
+        echo "+".$newgroupe->getId();
+        
+        /*$taille=count($mesgroupehasutilisateurs);
+        //echo 'Nombre groupe_has_utilisateur :'.$taille;
+        $i=0;
+        
+        while($i<$taille)
+        {echo "Id";
+            $GroupeId=$mesgroupehasutilisateurs[$i]->getGroupe();
+            echo $GroupeId;
+            $newgroupe=  GroupeDAL::findById($GroupeId);
+            //echo "Nom du groupe:".$newgroupe->getNom();
+            $mesGroupes[] = $newgroupe;
+            $i=$i+1;
+        }
+        
+        foreach ($mesgroupehasutilisateurs as $row)
+        {
+            echo "ok";
+            //echo $mesgroupehasutilisateurs;
+            $GroupeId=$row[0]->getGroupe();
+            echo "Id du groupe".$GroupeId;
+            /*$groupe = new Groupe();
+            $groupe->hydrate($row);
+            $mesGroupes[] = $groupe;
+        }
+        return $mesgroupes;
+        
+    }*/
+    
     /*
      * Retourne l'ensemble des Groupes qui sont en base
      * 

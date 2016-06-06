@@ -15,7 +15,8 @@
  * quel sont les groupe uaxquels appartient un utilisateur
  */
 require_once('BaseSingleton.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Utilisateur_has_Groupe.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Utilisateur_has_Groupe.php');
+require_once('/var/www/VirtualDemande/model/class/Utilisateur_has_Groupe.php');
 
 class Utilisateur_has_GroupeDAL {
     /*
@@ -161,11 +162,12 @@ class Utilisateur_has_GroupeDAL {
 
     public static function insertOnDuplicate($utilisateurhasGroupe)
     {
-
+        
         //Récupère les valeurs de l'objet Utilisateur_has_Groupe passé en para de la méthode
         $groupeId = $utilisateurhasGroupe->getGroupe()->getId(); //int
         $utilisateurId = $utilisateurhasGroupe->getUtilisateur()->getId(); //int
-        if (is_null(findByGU($groupeId, $utilisateurId)))
+        
+        if (is_null(self::findByGU($groupeId, $utilisateurId)))
         {
             $sql = 'INSERT INTO utilisateur_has_groupe (groupe_id, utilisateur_id) '
                     . ' VALUES (?,?) ';
@@ -194,7 +196,7 @@ class Utilisateur_has_GroupeDAL {
 
         //Exec la requête
         $idInsert = BaseSingleton::insertOrEdit($sql, $params);
-
+        echo "ok";
         return $idInsert;
     }
 
@@ -209,6 +211,34 @@ class Utilisateur_has_GroupeDAL {
     public static function delete($groupeId, $utilisateurId)
     {
         $deleted = BaseSingleton::delete('DELETE FROM utilisateur_has_groupe WHERE Groupe_id = ? AND utilisateur_id = ?', array('ii', &$groupeId, &$utilisateurId));
+        return $deleted;
+    }
+    
+    /*
+     * Supprime la Utilisateur_has_Groupe correspondant à l'id de Groupe donné en paramètre
+     * 
+     * @param int $groupeId
+     * @return bool
+     * True si la ligne a bien été supprimée, False sinon
+     */
+
+    public static function deleteGroupe($groupeId)
+    {
+        $deleted = BaseSingleton::delete('DELETE FROM utilisateur_has_groupe WHERE Groupe_id = ?', array('i', &$groupeId));
+        return $deleted;
+    }
+    
+    /*
+     * Supprime la Utilisateur_has_Groupe correspondant à l'id de Utilisateur donné en paramètre
+     * 
+     * @param int utilisateurId
+     * @return bool
+     * True si la ligne a bien été supprimée, False sinon
+     */
+
+    public static function deleteUtilisateur( $utilisateurId)
+    {
+        $deleted = BaseSingleton::delete('DELETE FROM utilisateur_has_groupe WHERE utilisateur_id = ?', array('i', &$utilisateurId));
         return $deleted;
     }
 

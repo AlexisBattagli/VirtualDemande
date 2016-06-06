@@ -8,8 +8,10 @@
  */
 
 //import
-require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Utilisateur.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Groupe.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Utilisateur.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Groupe.php');
+require_once('/var/www/VirtualDemande/model/class/Utilisateur.php');
+require_once('/var/www/VirtualDemande/model/class/Groupe.php');
 
 class Utilisateur_has_Groupe {
     /*
