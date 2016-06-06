@@ -12,6 +12,12 @@ require_once('/var/www/VirtualDemande/model/DAL/RamDAL.php');
 require_once('/var/www/VirtualDemande/model/class/Stockage.php');
 require_once('/var/www/VirtualDemande/model/DAL/StockageDAL.php');
 
+require_once('/var/www/VirtualDemande/model/class/Distrib_Alias.php');
+require_once('/var/www/VirtualDemande/model/DAL/Distrib_AliasDAL.php');
+
+require_once('/var/www/VirtualDemande/model/class/Machine.php');
+require_once('/var/www/VirtualDemande/model/DAL/MachineDAL.php');
+
 //Test de tout ce qui touche la table machine
 
 //Vérification des méthodes de CpuDAL : 
@@ -208,3 +214,159 @@ require_once('/var/www/VirtualDemande/model/DAL/StockageDAL.php');
         
     //Vérification de delete - OK
         //$validStockage = StockageDAL::delete(3);
+
+//Vérification des méthodes Distrib_AliasDAL : 
+    //Vérification de findByDefault - OK
+            //$defautDistribAlias=Distrib_AliasDAL::findByDefault();
+            //echo 'Distrib Alias par défaut a pour ID:'.$defautDistribAlias->getId();
+            //echo 'Distrib par défaut a pour ID:'.$defautDistribAlias->getDistrib();
+            //echo 'Nom Complet par défaut :'.$defautDistribAlias->getNomComplet();
+            //echo 'Pseudo par défaut :'.$defautDistribAlias->getPseudo();
+            //echo 'Commentaire par défaut :'.$defautDistribAlias->getCommentaire();
+            //echo 'Visible par défaut :'.$defautDistribAlias->getVisible();
+
+    //Vérification de findById - OK
+            //$defautDistribAlias=Distrib_AliasDAL::findById(2);
+            //echo 'Distrib Alias par défaut a pour ID:'.$defautDistribAlias->getId();
+            //echo 'Distrib par défaut a pour ID:'.$defautDistribAlias->getDistrib();
+            //echo 'Nom Complet par défaut :'.$defautDistribAlias->getNomComplet();
+            //echo 'Pseudo par défaut :'.$defautDistribAlias->getPseudo();
+            //echo 'Commentaire par défaut :'.$defautDistribAlias->getCommentaire();
+            //echo 'Visible par défaut :'.$defautDistribAlias->getVisible();
+
+    //Vérification de findAll - OK
+            //$lesDistribAlias=Distrib_AliasDAL::findAll();
+            //$taille=count($lesDistribAlias);
+            //echo 'Nombre Distrib Alias :'.$taille;
+
+    //Vérification de findByVisible - OK 
+            //$lesDistribAlias=Distrib_AliasDAL::findByVisible();
+            //$taille=count($lesDistribAlias);
+            //echo 'Nombre Distrib Alias visible:'.$taille;
+
+    //Vérification de findByDN - OK
+            //$defautDistribAlias=Distrib_AliasDAL::findByDN(2,"1default_complet_name_disitrib");
+            //echo 'Distrib Alias par défaut a pour ID:'.$defautDistribAlias->getId();
+            //echo 'Distrib par défaut a pour ID:'.$defautDistribAlias->getDistrib();
+            //echo 'Nom Complet par défaut :'.$defautDistribAlias->getNomComplet();
+            //echo 'Pseudo par défaut :'.$defautDistribAlias->getPseudo();
+            //echo 'Commentaire par défaut :'.$defautDistribAlias->getCommentaire();
+            //echo 'Visible par défaut :'.$defautDistribAlias->getVisible();
+            
+    //Vérification d'insertion - OK
+        //$defautDistribAlias=new Distrib_Alias();
+        //$defautDistribAlias->setDistrib(1);
+        //$defautDistribAlias->setNomComplet("DistribgTest");
+        //$defautDistribAlias->setPseudo("PseudogTest");
+        //$defautDistribAlias->setCommentaire("CommentairegTest");
+        //$defautDistribAlias->setVisible(1);
+        //$validDistribAlias = Distrib_AliasDAL::insertOnDuplicate($defautDistribAlias);
+        
+    //Vérification de update - OK
+        //$defautDistribAlias=new Distrib_Alias();
+        //$defautDistribAlias->setId(5);
+        //$defautDistribAlias->setDistrib(2);
+        //$defautDistribAlias->setNomComplet("Test");
+        //$defautDistribAlias->setPseudo("Pseudo");
+        //$defautDistribAlias->setCommentaire("Comment");
+        //$defautDistribAlias->setVisible(1);
+        //$validDistribAlias = Distrib_AliasDAL::insertOnDuplicate($defautDistribAlias);
+        
+    //Vérification de delete - OK
+        //$validDistribAlias = Distrib_AliasDAL::delete(5);
+
+//Vérification des méthodes de MachineDAL :
+    //Vérification de findByDefault - OK
+            //$defautMachine=MachineDAL::findByDefault();
+            //echo 'Machine par défaut a pour ID:'.$defautMachine->getId();
+            //echo 'Distrib Alias par défaut :'.$defautMachine->getDistribAlias();
+            //echo 'Utilisateur par défaut:'.$defautMachine->getUtilisateur();
+            //echo 'Cpu par défaut:'.$defautMachine->getCpu();
+            //echo 'Ram par défaut:'.$defautMachine->getRam();
+            //echo 'Stockage par défaut:'.$defautMachine->getStockage();
+            //echo 'Nom par défaut :'.$defautMachine->getNom();
+            //echo 'Description par défaut :'.$defautMachine->getDescription();
+            //echo 'Date creation par défaut :'.$defautMachine->getDateCreation();
+            //echo 'Date expiration par défaut :'.$defautMachine->getDateExpiration();
+            //echo 'Etat par défaut :'.$defautMachine->getEtat();
+
+    //Vérification de findById - OK
+            //$defautMachine=MachineDAL::findById(5);
+            //echo 'Machine par défaut a pour ID:'.$defautMachine->getId();
+            //echo 'Distrib Alias par défaut :'.$defautMachine->getDistribAlias();
+            //echo 'Utilisateur par défaut:'.$defautMachine->getUtilisateur();
+            //echo 'Cpu par défaut:'.$defautMachine->getCpu();
+            //echo 'Ram par défaut:'.$defautMachine->getRam();
+            //echo 'Stockage par défaut:'.$defautMachine->getStockage();
+            //echo 'Nom par défaut :'.$defautMachine->getNom();
+            //echo 'Description par défaut :'.$defautMachine->getDescription();
+            //echo 'Date creation par défaut :'.$defautMachine->getDateCreation();
+            //echo 'Date expiration par défaut :'.$defautMachine->getDateExpiration();
+            //echo 'Etat par défaut :'.$defautMachine->getEtat();
+
+    //Vérification de findAll - OK
+            //$lesMachines=MachineDAL::findAll();
+            //$taille=count($lesMachines);
+            //echo 'Nombre Machine :'.$taille;
+            
+    //Vérification de findByUser($userId) - OK
+            //$lesMachines=MachineDAL::findByUser(14);
+            //$taille=count($lesMachines);
+            //echo 'Nombre Machine :'.$taille;
+
+    //Vérification de findSuccessByUser($userId) - OK
+            //$lesMachines=MachineDAL::findSuccessByUser(1);
+            //$taille=count($lesMachines);
+            //echo 'Nombre Machine :'.$taille;
+
+    //Vérification de findNotCreatByUser($userId) - OK
+            //$lesMachines=MachineDAL::findNotCreatByUser(1);
+            //$taille=count($lesMachines);
+            //echo 'Nombre Machine :'.$taille;
+            
+    //Vérification de findByDN($userId, $nom) - OK
+            //$defautMachine=MachineDAL::findByDN(1,"1default_name_machine");
+            //echo 'Machine par défaut a pour ID:'.$defautMachine->getId();
+            //echo 'Distrib Alias par défaut :'.$defautMachine->getDistribAlias();
+            //echo 'Utilisateur par défaut:'.$defautMachine->getUtilisateur();
+            //echo 'Cpu par défaut:'.$defautMachine->getCpu();
+            //echo 'Ram par défaut:'.$defautMachine->getRam();
+            //echo 'Stockage par défaut:'.$defautMachine->getStockage();
+            //echo 'Nom par défaut :'.$defautMachine->getNom();
+            //echo 'Description par défaut :'.$defautMachine->getDescription();
+            //echo 'Date creation par défaut :'.$defautMachine->getDateCreation();
+            //echo 'Date expiration par défaut :'.$defautMachine->getDateExpiration();
+            //echo 'Etat par défaut :'.$defautMachine->getEtat();
+            
+    //Vérification d'insertion - OK
+            //$defautMachine=new Machine();
+            //$defautMachine->setDistribAlias(2);
+            //$defautMachine->setUtilisateur(6);
+            //$defautMachine->setCpu(2);
+            //$defautMachine->setRam(2);
+            //$defautMachine->setStockage(2);
+            //$defautMachine->setNom("mamachine");
+            //$defautMachine->setDescription("MAMACHINE");
+            //$defautMachine->setDateCreation("2015-05-06");
+            //$defautMachine->setDateExpiration("2016-05-06");
+            //$defautMachine->setEtat(1);
+            //$validMachine = MachineDAL::insertOnDuplicate($defautMachine);
+            
+        
+    //Vérification de update - OK
+            //$defautMachine=new Machine();
+            //$defautMachine->setId(7);
+            //$defautMachine->setDistribAlias(1);
+            //$defautMachine->setUtilisateur(1);
+            //$defautMachine->setCpu(1);
+            //$defautMachine->setRam(1);
+            //$defautMachine->setStockage(1);
+            //$defautMachine->setNom("11mamachine");
+            //$defautMachine->setDescription("11MAMACHINE");
+            //$defautMachine->setDateCreation("2005-05-06");
+            //$defautMachine->setDateExpiration("2006-05-06");
+            //$defautMachine->setEtat(1);
+            //$validMachine = MachineDAL::insertOnDuplicate($defautMachine);
+        
+    //Vérification de delete - OK
+            //$validMachine = MachineDAL::delete(7);

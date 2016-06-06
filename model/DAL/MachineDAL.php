@@ -10,6 +10,7 @@
 require_once('BaseSingleton.php');
 //require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Machine.php');
 require_once('/var/www/VirtualDemande/model/class/Machine.php');
+require_once('/var/www/VirtualDemande/model/DAL/StockageDAL.php');
 
 class MachineDAL 
 {
@@ -22,12 +23,12 @@ class MachineDAL
     {
         $id=1;
         $data = BaseSingleton::select('SELECT machine.id as id, '
-                        . 'machine.Utilisateur_id as Utilisateur_id, '
-                        . 'machine.Distrib_Alias_id as Distrib_Alias_id, '
+                        . 'machine.utilisateur_id as utilisateur_id, '
+                        . 'machine.distrib_alias_id as distrib_alias_id, '
                         . 'machine.nom as nom, '
-                        . 'machine.Cpu_id as Cpu_id, '
-                        . 'machine.Ram_id as Ram_id, '
-                        . 'machine.Stockage_id as Stockage_id, '
+                        . 'machine.cpu_id as cpu_id, '
+                        . 'machine.ram_id as ram_id, '
+                        . 'machine.stockage_id as stockage_id, '
                         . 'machine.description as description, '
                         . 'machine.date_creation as date_creation, '
                         . 'machine.date_expiration as date_expiration, '
@@ -43,6 +44,7 @@ class MachineDAL
         {
             $machine = null;
         }
+        
         return $machine;
     }
     
@@ -55,12 +57,12 @@ class MachineDAL
     public static function findById($id)
     {
         $data = BaseSingleton::select('SELECT machine.id as id, '
-                        . 'machine.Utilisateur_id as Utilisateur_id, '
-                        . 'machine.Distrib_Alias_id as Distrib_Alias_id, '
+                        . 'machine.utilisateur_id as utilisateur_id, '
+                        . 'machine.distrib_alias_id as distrib_alias_id, '
                         . 'machine.nom as nom, '
-                        . 'machine.Cpu_id as Cpu_id, '
-                        . 'machine.Ram_id as Ram_id, '
-                        . 'machine.Stockage_id as Stockage_id, '
+                        . 'machine.cpu_id as cpu_id, '
+                        . 'machine.ram_id as ram_id, '
+                        . 'machine.stockage_id as stockage_id, '
                         . 'machine.description as description, '
                         . 'machine.date_creation as date_creation, '
                         . 'machine.date_expiration as date_expiration, '
@@ -114,12 +116,12 @@ class MachineDAL
         $mesMachines = array();
 
         $data = BaseSingleton::select('SELECT machine.id as id, '
-                        . 'machine.Utilisateur_id as Utilisateur_id, '
-                        . 'machine.Distrib_Alias_id as Distrib_Alias_id, '
+                        . 'machine.utilisateur_id as utilisateur_id, '
+                        . 'machine.distrib_alias_id as distrib_alias_id, '
                         . 'machine.nom as nom, '
-                        . 'machine.Cpu_id as Cpu_id, '
-                        . 'machine.Ram_id as Ram_id, '
-                        . 'machine.Stockage_id as Stockage_id, '
+                        . 'machine.cpu_id as cpu_id, '
+                        . 'machine.ram_id as ram_id, '
+                        . 'machine.stockage_id as stockage_id, '
                         . 'machine.description as description, '
                         . 'machine.date_creation as date_creation, '
                         . 'machine.date_expiration as date_expiration, '
@@ -148,12 +150,12 @@ class MachineDAL
         $mesMachines = array();
 
         $data = BaseSingleton::select('SELECT machine.id as id, '
-                        . 'machine.Utilisateur_id as Utilisateur_id, '
-                        . 'machine.Distrib_Alias_id as Distrib_Alias_id, '
+                        . 'machine.utilisateur_id as utilisateur_id, '
+                        . 'machine.distrib_alias_id as distrib_alias_id, '
                         . 'machine.nom as nom, '
-                        . 'machine.Cpu_id as Cpu_id, '
-                        . 'machine.Ram_id as Ram_id, '
-                        . 'machine.Stockage_id as Stockage_id, '
+                        . 'machine.cpu_id as cpu_id, '
+                        . 'machine.ram_id as ram_id, '
+                        . 'machine.stockage_id as stockage_id, '
                         . 'machine.description as description, '
                         . 'machine.date_creation as date_creation, '
                         . 'machine.date_expiration as date_expiration, '
@@ -181,18 +183,18 @@ class MachineDAL
         $mesMachines = array();
 
         $data = BaseSingleton::select('SELECT machine.id as id, '
-                        . 'machine.Utilisateur_id as Utilisateur_id, '
-                        . 'machine.Distrib_Alias_id as Distrib_Alias_id, '
+                        . 'machine.utilisateur_id as utilisateur_id, '
+                        . 'machine.distrib_alias_id as distrib_alias_id, '
                         . 'machine.nom as nom, '
-                        . 'machine.Cpu_id as Cpu_id, '
-                        . 'machine.Ram_id as Ram_id, '
-                        . 'machine.Stockage_id as Stockage_id, '
+                        . 'machine.cpu_id as cpu_id, '
+                        . 'machine.ram_id as ram_id, '
+                        . 'machine.stockage_id as stockage_id, '
                         . 'machine.description as description, '
                         . 'machine.date_creation as date_creation, '
                         . 'machine.date_expiration as date_expiration, '
                         . 'machine.etat as etat '
                         . ' FROM machine'
-                . ' ORDER BY machine.Utilisateur_id ASC, machine.Distrib_Alias_id ASC');
+                . ' ORDER BY machine.utilisateur_id ASC, machine.distrib_alias_id ASC');
 
         foreach ($data as $row)
         {
@@ -205,7 +207,7 @@ class MachineDAL
     }
     
     /*
-     * Retourne la Machine correspondant au couple Utilisateur_id/nom
+     * Retourne la Machine correspondant au couple utilisateur_id/nom
      * Ce couple étant unique, il n'y qu'une seul ligne retourner.
      * Il est recherché sans tenir compte de la casse sur nom
      * 
@@ -215,18 +217,18 @@ class MachineDAL
     public static function findByDN($userId, $nom)
     {
         $data = BaseSingleton::select('SELECT machine.id as id, '
-                        . 'machine.Utilisateur_id as Utilisateur_id, '
-                        . 'machine.Distrib_Alias_id as Distrib_Alias_id, '
+                        . 'machine.utilisateur_id as utilisateur_id, '
+                        . 'machine.distrib_alias_id as distrib_alias_id, '
                         . 'machine.nom as nom, '
-                        . 'machine.Cpu_id as Cpu_id, '
-                        . 'machine.Ram_id as Ram_id, '
-                        . 'machine.Stockage_id as Stockage_id, '
+                        . 'machine.cpu_id as cpu_id, '
+                        . 'machine.ram_id as ram_id, '
+                        . 'machine.stockage_id as stockage_id, '
                         . 'machine.description as description, '
                         . 'machine.date_creation as date_creation, '
                         . 'machine.date_expiration as date_expiration, '
                         . 'machine.etat as etat '
                         . ' FROM machine'
-                        . ' WHERE machine.Utilisateur_id = ? AND LOWER(machine.nom) = LOWER(?)', array('is', &$userId, &$nom));
+                        . ' WHERE machine.utilisateur_id = ? AND LOWER(machine.nom) = LOWER(?)', array('is', &$userId, &$nom));
         $machine = new Machine();
 
         if (sizeof($data) > 0)
@@ -265,9 +267,10 @@ class MachineDAL
         $dateExpiration = $machine->getDateExpiration(); //string
         $etat=$machine->getEtat();//int
         $id = $machine->getId(); //int
+        
         if ($id < 0)
         {
-            $sql = 'INSERT INTO machine (Utilisateur_id, Distrib_Alias_id, nom, Cpu_id, Ram_id, Stockage_id, description, date_creation, date_expiration,etat) '
+            $sql = 'INSERT INTO machine (utilisateur_id, distrib_alias_id, nom, cpu_id, ram_id, stockage_id, description, date_creation, date_expiration,etat) '
                     . ' VALUES (?,?,?,?,?,?,?,DATE_FORMAT(NOW(),\'%Y-%m-%d\'),DATE_FORMAT(?,\'%Y-%m-%d\'),?) ';
 
             //Prépare les info concernant les type de champs
@@ -286,19 +289,20 @@ class MachineDAL
         else
         {
             $sql = 'UPDATE machine '
-                    . 'SET Utilisateur_id = ?, '
-                    . 'Distrib_Alias_id = ?, '
+                    . 'SET utilisateur_id = ?, '
+                    . 'distrib_alias_id = ?, '
                     . 'nom = ?, '
-                    . 'cpu = ?, '
-                    . 'ram = ?, '
-                    . 'stockage = ?, '
+                    . 'cpu_id = ?, '
+                    . 'ram_id = ?, '
+                    . 'stockage_id = ?, '
                     . 'description = ?, '
+                    . 'date_creation = ?, '
                     . 'date_expiration = ?, '
                     . 'etat = ? '
                     . 'WHERE id = ? ';
 
             //Prépare les info concernant les type de champs
-            $params = array('iisiiissii',
+            $params = array('iisiiisssii',
                 &$userId,
                 &$distribaliasId,
                 &$nom,

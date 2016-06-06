@@ -10,11 +10,16 @@
  * @history 
  */
 //import
-require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Distrib_Alias.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Utilisateur.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Cpu.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Ram.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Stockage.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Distrib_AliasDAL.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/UtilisateurDAL.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/CpuDAL.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/RamDAL.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/StockageDAL.php');
+require_once('/var/www/VirtualDemande/model/DAL/Distrib_AliasDAL.php');
+require_once('/var/www/VirtualDemande/model/DAL/UtilisateurDAL.php');
+require_once('/var/www/VirtualDemande/model/DAL/CpuDAL.php');
+require_once('/var/www/VirtualDemande/model/DAL/RamDAL.php');
+require_once('/var/www/VirtualDemande/model/DAL/StockageDAL.php');        
 
 class Machine {
     /*
@@ -204,7 +209,7 @@ class Machine {
         }
         else if (is_int($utilisateur))
         {
-            $this->utilisateur = UtiliateurDAL::findById($utilisateur);
+            $this->utilisateur = UtilisateurDAL::findById($utilisateur);
         }
         else if (is_a($utilisateur, "Utilisateur"))
         {
