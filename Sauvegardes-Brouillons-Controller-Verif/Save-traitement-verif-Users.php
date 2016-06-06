@@ -1,4 +1,5 @@
 <?php
+//Problème de lecture des objets  ????!!!! 
 //A installer obligatoirement : apt-get install  php5-mysqlnd*
 //                              /etc/init.d/apache2 restart
 // C'est le driver permettant d'avoir la fonction get_result()
@@ -32,6 +33,9 @@ require_once('/var/www/VirtualDemande/model/DAL/GroupeDAL.php');
 
 require_once('/var/www/VirtualDemande/model/class/Utilisateur_has_Groupe.php');
 require_once('/var/www/VirtualDemande/model/DAL/Utilisateur_has_GroupeDAL.php');
+
+require_once('/var/www/VirtualDemande/model/class/Limitant.php');
+require_once('/var/www/VirtualDemande/model/DAL/LimitantDAL.php');
 
 /*
 //Création d'un Utilisateur par défaut
@@ -398,7 +402,7 @@ else
         //$newUtilisateurhasgroupe->setGroupe(2);
         //$validUtilisateurHasGroupe = Utilisateur_has_GroupeDAL::insertOnDuplicate($newUtilisateurhasgroupe);
         
-    //Vérification de update - Pas besoin
+    //Vérification de update - OK - Pas besoin
     
     //delete - OK
         //$validUtilisateurGroupe = Utilisateur_has_GroupeDAL::delete(3,1);
@@ -409,4 +413,42 @@ else
     //deleteUtilisateur - OK
         //$validUtilisateurGroupe = Utilisateur_has_GroupeDAL::deleteUtilisateur(14);
 
-//Problème de lecture des objets  ????!!!! 
+//Vérification des méthodes de LimitantDAL : 
+    //Vérification de findByDefault - OK 
+        //$defautLimitant=LimitantDAL::findByDefault();
+        //echo 'Limitant a pour ID:'.$defautLimitant->getId();
+        //echo 'nb_user_max par défaut :'.$defautLimitant->getNbUserMax();
+        //echo 'nb_vm_user par défaut :'.$defautLimitant->getNbVMUser();
+        
+    //Vérification de findById - OK
+        //$defautLimitant=LimitantDAL::findById(3);
+        //echo 'Limitant a pour ID:'.$defautLimitant->getId();
+        //echo 'nb_user_max par défaut :'.$defautLimitant->getNbUserMax();
+        //echo 'nb_vm_user par défaut :'.$defautLimitant->getNbVMUser();
+    
+    //Vérification de findAll - OK
+        //$lesLimitant=LimitantDAL::findAll();
+        //$taille=count($lesLimitant);
+        //echo 'Nombre groupe :'.$taille;
+
+    //Vérification de findByLimitant
+        //$defautLimitant=LimitantDAL::findByLimitant(99,5);
+        //echo 'Limitant a pour ID:'.$defautLimitant->getId();
+        //echo 'nb_user_max par défaut :'.$defautLimitant->getNbUserMax();
+        //echo 'nb_vm_user par défaut :'.$defautLimitant->getNbVMUser();
+        
+    //Vérification d'insertion - OK
+        //$defautLimitant=new Limitant();
+        //$defautLimitant->setNbUserMax(1000);
+        //$defautLimitant->setNbVMUser(2);
+        //$validGroupe = LimitantDAL::insertOnDuplicate($defautLimitant);
+        
+    //Vérification de update - OK
+        //$defautLimitant=new Limitant();
+        //$defautLimitant->setId(2);
+        //$defautLimitant->setNbUserMax(300);
+        //$defautLimitant->setNbVMUser(200);
+        //$validGroupe = LimitantDAL::insertOnDuplicate($defautLimitant);
+        
+    //Vérification de delete - OK
+        //$validLimitant = LimitantDAL::delete(5);
