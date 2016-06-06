@@ -184,12 +184,12 @@ class DistribDAL
                     . ' VALUES (?,?,?,?,?) ';
 
             //Prépare les info concernant les types de champs
-            $params = array('ssssb',
+            $params = array('ssssi',
                 &$nom,
                 &$archi,
                 &$version,
                 &$ihm,
-                $visible
+                &$visible
             );
         }
         else
@@ -203,7 +203,7 @@ class DistribDAL
                     . 'WHERE id = ? ';
 
             //Prépare les info concernant les type de champs
-            $params = array('ssssbi',
+            $params = array('ssssii',
                 &$nom,
                 &$archi,
                 &$version,
