@@ -11,7 +11,8 @@
  * IMPORT
  */
 require_once('BaseSingleton.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Ram.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Ram.php');
+require_once('/var/www/VirtualDemande/model/class/Ram.php');
 
 class RamDAL {
     /*
@@ -168,7 +169,7 @@ class RamDAL {
                     . ' VALUES (?,?) ';
 
             //Prépare les info concernant les type de champs
-            $params = array('ib',
+            $params = array('ii',
                 &$valeur,
                 &$visible
             );
@@ -181,7 +182,7 @@ class RamDAL {
                     . 'WHERE id = ? ';
 
             //Prépare les info concernant les type de champs
-            $params = array('ibi',
+            $params = array('iii',
                 &$valeur,
                 &$visible,
                 &$id

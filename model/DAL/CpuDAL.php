@@ -169,7 +169,7 @@ class CpuDAL {
                     . ' VALUES (?,?) ';
 
             //Prépare les info concernant les type de champs
-            $params = array('ib',
+            $params = array('ii',
                 &$nbCoeur,
                 &$visible
             );
@@ -182,7 +182,7 @@ class CpuDAL {
                     . 'WHERE id = ? ';
 
             //Prépare les info concernant les type de champs
-            $params = array('ibi',
+            $params = array('iii',
                 &$nbCoeur,
                 &$visible,
                 &$id
