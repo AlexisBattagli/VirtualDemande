@@ -33,6 +33,7 @@ class Distrib_AliasDAL {
                         . ' FROM distrib_alias'
                         . ' WHERE distrib_alias.id = ?', array('i', &$id));
         $distribAlias = new Distrib_Alias();
+        
         if (sizeof($data) > 0)
         {
             $distribAlias->hydrate($data[0]);
