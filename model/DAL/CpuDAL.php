@@ -11,7 +11,8 @@
  * IMPORT
  */
 require_once('BaseSingleton.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Cpu.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Cpu.php');
+require_once('/var/www/VirtualDemande/model/class/Cpu.php');
 
 class CpuDAL {
     /*

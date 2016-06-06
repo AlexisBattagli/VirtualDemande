@@ -10,7 +10,8 @@
  * IMPORT
  */
 require_once('BaseSingleton.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Distrib.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Distrib.php');
+require_once('/var/www/VirtualDemande/model/class/Distrib.php');
 
 class DistribDAL 
 {
@@ -109,14 +110,13 @@ class DistribDAL
      public static function findByNAVI($nom, $archi, $version, $ihm, $visible)
     {
         $data = BaseSingleton::select('SELECT distrib.id as id, '
-                        . 'distrib.Distrib_id as nom, '
                         . 'distrib.nom as nom, '
                         . 'distrib.archi as archi, '
                         . 'distrib.version as version, '
                         . 'distrib.ihm as ihm, '
-                        . 'distrib.visible as visible'
+                        . 'distrib.visible as visible '
                         . ' FROM distrib'
-                        . ' WHERE LOWER(distrib.nom) = LOWER(?)AND LOWER(distrib.archi) = LOWER(?) AND LOWER(distrib.version) = LOWER(?) AND LOWER(distrib.ihm) = LOWER(?) AND LOWER(distrib.visible) = LOWER(?)', array('ssssb', &$nom, &$archi, &$version, &$ihm, $visible));
+                        . ' WHERE LOWER(distrib.nom) = LOWER(?) AND LOWER(distrib.archi) = LOWER(?) AND LOWER(distrib.version) = LOWER(?) AND LOWER(distrib.ihm) = LOWER(?) AND distrib.visible = ?', array('ssssi', &$nom, &$archi, &$version, &$ihm, &$visible));
         $distrib = new Distrib();
 
         if (sizeof($data) > 0)

@@ -131,7 +131,7 @@ class UtilisateurDAL
                         . 'utilisateur.date_naissance as date_naissance, '
                         . 'utilisateur.nb_vm as nb_vm '
                         . ' FROM utilisateur'
-                        . ' WHERE LOWER(utilisateur.login) = LOWER(?)', array('s', &$login));
+                        . ' WHERE utilisateur.login = ?', array('s', &$login));
         $utilisateur = new Utilisateur();
 
         if (sizeof($data) > 0)
@@ -208,6 +208,38 @@ class UtilisateurDAL
         }
 
         return $rows;
+    }
+    
+    /*
+     * Retourne True si le nom d'utilisateur et le mot de passe sont bons
+     * 
+     * @param string $login, string $password
+     * @return 1 | 0
+     */
+    
+    public static function connection($login,$password) 
+    {
+        $data = BaseSingleton::select('SELECT utilisateur.id as id, '
+                        . 'utilisateur.Role_id as Role_Id, '
+                        . 'utilisateur.nom as nom, '
+                        . 'utilisateur.prenom as prenom, '
+                        . 'utilisateur.login as login, '
+                        . 'utilisateur.passwd as passwd, '
+                        . 'utilisateur.mail as mail, '
+                        . 'utilisateur.date_creation as date_creation, '
+                        . 'utilisateur.date_naissance as date_naissance, '
+                        . 'utilisateur.nb_vm as nb_vm '
+                        . ' FROM utilisateur'
+                        . ' WHERE utilisateur.login = ? AND utilisateur.passwd = ?', array('ss',&$login,&$password));
+
+        if (sizeof($data) > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     
     
