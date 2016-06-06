@@ -11,7 +11,8 @@
  * IMPORT
  */
 require_once('BaseSingleton.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Stockage.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Stockage.php');
+require_once('/var/www/VirtualDemande/model/class/Stockage.php');
 
 class StockageDAL {
     /*
@@ -96,7 +97,7 @@ class StockageDAL {
      * 
      * @return array[Stockage] Tous les Stockage sont placées dans un Tableau
      */
-    public static function findAll()
+    public static function findByVisible()
     {
         $mesStockages = array();
 
@@ -168,7 +169,7 @@ class StockageDAL {
                     . ' VALUES (?,?) ';
 
             //Prépare les info concernant les type de champs
-            $params = array('ib',
+            $params = array('ii',
                 &$valeur,
                 &$visible
             );
@@ -181,7 +182,7 @@ class StockageDAL {
                     . 'WHERE id = ? ';
 
             //Prépare les info concernant les type de champs
-            $params = array('ibi',
+            $params = array('iii',
                 &$valeur,
                 &$visible,
                 &$id
