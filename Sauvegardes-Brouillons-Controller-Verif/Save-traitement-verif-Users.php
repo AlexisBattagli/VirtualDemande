@@ -23,10 +23,16 @@ require_once('/var/www/VirtualDemande/model/class/Utilisateur.php');
 require_once('/var/www/VirtualDemande/model/DAL/UtilisateurDAL.php');
 require_once('/var/www/VirtualDemande/model/class/Guacamole_User.php');
 require_once('/var/www/VirtualDemande/model/DAL/Guacamole_UserDAL.php');
+
 require_once('/var/www/VirtualDemande/model/class/Guacamole_User_Permission.php');
 require_once('/var/www/VirtualDemande/model/DAL/Guacamole_User_PermissionDAL.php');
+
 require_once('/var/www/VirtualDemande/model/class/Groupe.php');
 require_once('/var/www/VirtualDemande/model/DAL/GroupeDAL.php');
+
+require_once('/var/www/VirtualDemande/model/class/Utilisateur_has_Groupe.php');
+require_once('/var/www/VirtualDemande/model/DAL/Utilisateur_has_GroupeDAL.php');
+
 /*
 //Création d'un Utilisateur par défaut
 $newUtilisateur=new Utilisateur();
@@ -329,8 +335,14 @@ else
     //Vérification de findAll - OK
         //$lesGroupes=GroupeDAL::findAll();
         //$taille=count($lesGroupes);
-        //echo 'Nombre role :'.$taille;
+        //echo 'Nombre groupe :'.$taille;
 
+/*    //Vérification de findByUser -
+        echo "OK";
+        $lesGroupes=GroupeDAL::findByUser(1);
+        $taille=count($lesGroupes);
+        echo 'Nombre groupe :'.$taille;
+*/
     //Vérification de findByNom - OK
         //$defautGroupe=GroupeDAL::findByNom("Group1");
         //echo 'Groupe par défaut a pour ID:'.$defautGroupe->getId();
@@ -354,4 +366,47 @@ else
     //Vérification de delete - OK
         //$validGroupe = GroupeDAL::delete(14);
 
+//Vérification des méthodes de Utilisateur_has_GroupeDAL : 
+    //Vérification de findByGroupe - OK
+        //$lesUtilisateurs_has_Groupes=Utilisateur_has_GroupeDAL::findByGroupe(1);
+        //$taille=count($lesUtilisateurs_has_Groupes);
+        //echo 'Nombre de utilisateur_has_groupe :'.$taille;
+        
+    //Vérification de findByUtilisateur - OK
+        //$lesUtilisateurs_has_Groupes=Utilisateur_has_GroupeDAL::findByUtilisateur(1);
+        //$taille=count($lesUtilisateurs_has_Groupes);
+        //echo 'Nombre de utilisateur_has_groupe :'.$taille;
+    
+    //Vérification de findByUser - OK
+        //$lesUtilisateurs_has_Groupes=Utilisateur_has_GroupeDAL::findByUser(1);
+        //$taille=count($lesUtilisateurs_has_Groupes);
+        //echo 'Nombre de utilisateur_has_groupe :'.$taille;
+    
+    //Vérification de findAll - OK
+        //$lesUtilisateurs_has_Groupes=Utilisateur_has_GroupeDAL::findAll();
+        //$taille=count($lesUtilisateurs_has_Groupes);
+        //echo 'Nombre de utilisateur_has_groupe :'.$taille;
+        
+    //Vérification de findByGU - OK
+        //$UtilisateurHasGroupe=Utilisateur_has_GroupeDAL::findByGU(1,1);
+        //echo 'Groupe a pour ID:'.$UtilisateurHasGroupe->getGroupe();
+        //echo 'Utilisateur a pour Nom:'.$UtilisateurHasGroupe->getUtilisateur()->getId();
+        
+    //Vérification de insertion - OK
+        //$newUtilisateurhasgroupe=new Utilisateur_has_Groupe();
+        //$newUtilisateurhasgroupe->setUtilisateur(12);
+        //$newUtilisateurhasgroupe->setGroupe(2);
+        //$validUtilisateurHasGroupe = Utilisateur_has_GroupeDAL::insertOnDuplicate($newUtilisateurhasgroupe);
+        
+    //Vérification de update - Pas besoin
+    
+    //delete - OK
+        //$validUtilisateurGroupe = Utilisateur_has_GroupeDAL::delete(3,1);
+        
+    //deleteGroupe - OK
+        //$validUtilisateurGroupe = Utilisateur_has_GroupeDAL::deleteGroupe(2);
+        
+    //deleteUtilisateur - OK
+        //$validUtilisateurGroupe = Utilisateur_has_GroupeDAL::deleteUtilisateur(14);
 
+//Problème de lecture des objets  ????!!!! 
