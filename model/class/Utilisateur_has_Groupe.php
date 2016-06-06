@@ -70,8 +70,8 @@ class Utilisateur_has_Groupe {
 
     public function hydrate($dataSet)
     {
-        $this->groupe = $dataSet['Groupe_id'];
-	$this->utilisateur = $dataSet['Utilisateur_id'];
+        $this->groupe = $dataSet['groupe_id'];
+	$this->utilisateur = $dataSet['utilisateur_id'];
     }
 
     /*

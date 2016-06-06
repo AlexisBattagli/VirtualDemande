@@ -12,7 +12,8 @@
  * quel sont les groupes auxquels appartient une machine
  */
 require_once('BaseSingleton.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Groupe_has_Machine.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Groupe_has_Machine.php');
+require_once('/var/www/VirtualDemande/model/class/Groupe_has_Machine.php');
 
 class Groupe_has_MachineDAL {
     /*
@@ -27,11 +28,11 @@ class Groupe_has_MachineDAL {
         $mesGroupe_has_Machines = array();
 
         $data = BaseSingleton::select('SELECT '
-                        . ' Groupe_has_Machine.Groupe_id as Groupe_id, '
-                        . ' Groupe_has_Machine.Machine_id as Machine_id, '
-                        . ' Groupe_has_Machine.commentaire as commentaire '
-                        . ' FROM Groupe_has_Machine'
-                        . ' ORDER BY Groupe_has_Machine.Groupe_id ASC, Groupe_has_Machine.machine ASC');
+                        . ' groupe_has_machine.groupe_id as groupe_id, '
+                        . ' groupe_has_machine.machine_id as machine_id, '
+                        . ' groupe_has_machine.commentaire as commentaire '
+                        . ' FROM groupe_has_machine'
+                        . ' ORDER BY groupe_has_machine.groupe_id ASC, groupe_has_machine.machine_id ASC');
 
         foreach ($data as $row)
         {
@@ -55,11 +56,11 @@ class Groupe_has_MachineDAL {
         $mesGroupe_has_Machines = array();
 
         $data = BaseSingleton::select('SELECT '
-                        . ' Groupe_has_Machine.Groupe_id as Groupe_id, '
-                        . ' Groupe_has_Machine.Machine_id as Machine_id, '
-                        . ' Groupe_has_Machine.commentaire as commentaire '
-                        . ' FROM Groupe_has_Machine'
-                        . ' WHERE Groupe_has_Machine.Groupe_id = ?', array('i', &$groupeId));
+                        . ' groupe_has_machine.groupe_id as groupe_id, '
+                        . ' groupe_has_machine.machine_id as machine_id, '
+                        . ' groupe_has_machine.commentaire as commentaire '
+                        . ' FROM groupe_has_machine'
+                        . ' WHERE groupe_has_machine.groupe_id = ?', array('i', &$groupeId));
 
         foreach ($data as $row)
         {
@@ -83,11 +84,11 @@ class Groupe_has_MachineDAL {
         $mesGroupe_has_Machines = array();
 
         $data = BaseSingleton::select('SELECT '
-                        . ' Groupe_has_Machine.Groupe_id as Groupe_id, '
-                        . ' Groupe_has_Machine.Machine_id as Machine_id, '
-                        . ' Groupe_has_Machine.commentaire as commentaire '
-                        . ' FROM Groupe_has_Machine'
-                        . ' WHERE Groupe_has_Machine.Machine_id = ?', array('i', &$machineId));
+                        . ' groupe_has_machine.groupe_id as groupe_id, '
+                        . ' groupe_has_machine.machine_id as machine_id, '
+                        . ' groupe_has_machine.commentaire as commentaire '
+                        . ' FROM groupe_has_machine'
+                        . ' WHERE groupe_has_machine.machine_id = ?', array('i', &$machineId));
 
         foreach ($data as $row)
         {
@@ -110,11 +111,11 @@ class Groupe_has_MachineDAL {
     public static function findByGM($groupeId, $machineId)
     {
         $data = BaseSingleton::select('SELECT '
-                        . ' Groupe_has_Machine.Groupe_id as Groupe_id, '
-                        . ' Groupe_has_Machine.Machine_id as Machine_id, '
-                        . ' Groupe_has_Machine.commentaire as commentaire '
-                        . ' FROM Groupe_has_Machine'
-                        . ' WHERE Groupe_has_Machine.Groupe_id = ? AND Groupe_has_Machine.machine_id = ?', array('ii', &$groupeId, &$machineId));
+                        . ' groupe_has_machine.groupe_id as groupe_id, '
+                        . ' groupe_has_machine.machine_id as machine_id, '
+                        . ' groupe_has_machine.commentaire as commentaire '
+                        . ' FROM groupe_has_machine'
+                        . ' WHERE groupe_has_machine.groupe_id = ? AND groupe_has_machine.machine_id = ?', array('ii', &$groupeId, &$machineId));
         $groupeHasMachine = new Groupe_has_Machine();
 
         if (sizeof($data) > 0)
@@ -145,9 +146,10 @@ class Groupe_has_MachineDAL {
         $groupeId = $groupeHasMachine->getGroupe()->getId(); //int
         $machineId = $groupeHasMachine->getMachine()->getId(); //int
         $commentaire = $groupeHasMachine->getCommentaire();
-        if (is_null(findByGM($groupeId, $machineId)))
+        
+        if (is_null(self::findByGM($groupeId, $machineId)))
         {
-            $sql = 'INSERT INTO Groupe_has_Machine (Groupe_id, Machine_id, commentaire) '
+            $sql = 'INSERT INTO groupe_has_machine (groupe_id, machine_id, commentaire) '
                     . ' VALUES (?,?,?) ';
 
             //Prépare les info concernant les types de champs
@@ -159,17 +161,18 @@ class Groupe_has_MachineDAL {
         }
         else
         {
-            $sql = 'UPDATE Groupe_has_Machine '
-                    . 'SET Groupe_id = ?, '
-                    . 'Machine_id = ? '
-                    . 'WHERE Groupe_id = ? AND Machine_id = ?';
+            $sql = 'UPDATE groupe_has_machine '
+                    . 'SET groupe_id = ?, '
+                    . 'machine_id = ?, '
+                    . 'commentaire = ? '
+                    . 'WHERE groupe_id = ? AND machine_id = ?';
 
             //Prépare les info concernant les type de champs
-            $params = array('iiisi',
+            $params = array('iisii',
                 &$groupeId,
                 &$machineId,
-                &$groupeId,
                 &$commentaire,
+                &$groupeId,
                 &$machineId
             );
         }
@@ -190,7 +193,35 @@ class Groupe_has_MachineDAL {
 
     public static function delete($groupeId, $machineId)
     {
-        $deleted = BaseSingleton::delete('DELETE FROM Groupe_has_Machine WHERE Groupe_id = ? AND machine_id = ?', array('ii', &$groupeId, &$machineId));
+        $deleted = BaseSingleton::delete('DELETE FROM groupe_has_machine WHERE Groupe_id = ? AND machine_id = ?', array('ii', &$groupeId, &$machineId));
+        return $deleted;
+    }
+    
+    /*
+     * Supprime la Groupe_has_Machine correspondant a l'id de Machine donné en paramètre
+     * 
+     * @param int $groupeId, int machineId
+     * @return bool
+     * True si la ligne a bien été supprimée, False sinon
+     */
+
+    public static function deleteGroupe($groupeId)
+    {
+        $deleted = BaseSingleton::delete('DELETE FROM groupe_has_machine WHERE Groupe_id = ?', array('i', &$groupeId));
+        return $deleted;
+    }
+    
+    /*
+     * Supprime la Groupe_has_Machine correspondant au couple à l'id Machine donné en paramètre
+     * 
+     * @param int $groupeId, int machineId
+     * @return bool
+     * True si la ligne a bien été supprimée, False sinon
+     */
+
+    public static function deleteMachine($machineId)
+    {
+        $deleted = BaseSingleton::delete('DELETE FROM groupe_has_machine WHERE machine_id = ?', array('i', &$machineId));
         return $deleted;
     }
 

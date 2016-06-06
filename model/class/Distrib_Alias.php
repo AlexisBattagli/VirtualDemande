@@ -92,7 +92,7 @@ class Distrib_Alias {
     public function hydrate($dataSet)
     {
         $this->id = $dataSet['id'];
-        $this->distrib = $dataSet['distrib_id'];
+        $this->distrib = $dataSet['Distrib_id'];
         $this->nomComplet = $dataSet['nom_complet'];
         $this->pseudo = $dataSet['pseudo'];
         $this->commentaire = $dataSet['commentaire'];

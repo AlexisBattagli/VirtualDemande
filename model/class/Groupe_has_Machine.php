@@ -8,8 +8,10 @@
  */
 
 //import
-require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Machine.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Groupe.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Machine.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Groupe.php');
+require_once('/var/www/VirtualDemande/model/DAL/MachineDAL.php');
+require_once('/var/www/VirtualDemande/model/DAL/GroupeDAL.php');
 
 class Groupe_has_Machine {
     /*
@@ -73,8 +75,8 @@ class Groupe_has_Machine {
 
     public function hydrate($dataSet)
     {
-        $this->groupe = $dataSet['Groupe_id'];
-	$this->machine = $dataSet['Machine_id'];
+        $this->groupe = $dataSet['groupe_id'];
+	$this->machine = $dataSet['machine_id'];
         $this->commentaire = $dataSet['commentaire'];
     }
 
@@ -161,6 +163,6 @@ class Groupe_has_Machine {
 
     public function getCommentaire()
     {
-        $this->commentaire;
+        return $this->commentaire;
     }
 }
