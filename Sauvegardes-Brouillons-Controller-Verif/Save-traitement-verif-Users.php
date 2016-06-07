@@ -351,6 +351,11 @@ else
         //echo 'Groupe par défaut a pour ID:'.$defautGroupe->getId();
         //echo 'Groupe par défaut a pour Nom:'.$defautGroupe->getNom();
 
+    //Vérification de findLessMachine($utilisateurId, $machineId) -
+            //$lesGroupeHasMachines=GroupeDAL::findLessMachine(1,5);
+            //$taille=count($lesGroupeHasMachines);
+            //echo 'Nombre groupe has machine :'.$taille;
+
     //Vérification d'insertion - OK
         //$newGroupe=new Groupe();
         //$newGroupe->setNom("Taratoto");
