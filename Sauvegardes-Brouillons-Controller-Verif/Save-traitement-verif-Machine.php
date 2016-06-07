@@ -1,15 +1,16 @@
 <?php
 
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/CpuDAL.php');
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/DistribDAL.php');
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/RamDAL.php');
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/StockageDAL.php');
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Distrib_AliasDAL.php');
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/MachineDAL.php');
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Groupe_has_MachineDAL.php');
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Guacamole_ConnectionDAL.php');
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Guacamole_Connection_ParameterDAL.php');
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Guacamole_Connection_PermissionDAL.php');        
+//import
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/CpuDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/DistribDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/RamDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/StockageDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Distrib_AliasDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/MachineDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Groupe_has_MachineDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Guacamole_ConnectionDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Guacamole_Connection_ParameterDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Guacamole_Connection_PermissionDAL.php');        
 
 //Test de tout ce qui touche la table machine
 
@@ -297,6 +298,11 @@
             //echo 'Date expiration par défaut :'.$defautMachine->getDateExpiration();
             //echo 'Etat par défaut :'.$defautMachine->getEtat();
 
+    //Vérification de findByShareByUser - OK
+            //$lesMachines=MachineDAL::findByShareByUser(9);
+            //$taille=count($lesMachines);
+            //echo 'Nombre Machine :'.$taille;        
+
     //Vérification de findAll - OK
             //$lesMachines=MachineDAL::findAll();
             //$taille=count($lesMachines);
@@ -388,7 +394,18 @@
             //echo 'Machine :'.$lesGroupeHasMachines->getMachine()->getId();
             //echo 'Groupe :'.$lesGroupeHasMachines->getGroupe()->getId();
             //echo 'Commentaire :'.$lesGroupeHasMachines->getCommentaire();
-            
+    
+    //Vérification de isInGroupe($groupeId, $machineId) - OK
+            //$statut=Groupe_has_MachineDAL::isInGroupe(1, 6);
+            //if($statut==false)
+            //{
+                //echo "La machine n'est pas dans le groupe";
+            //}
+            //else
+            //{
+                //echo "La machine est dans le groupe";
+            //}
+
     //Vérification d'insertion - OK
         //$GroupeHasMachine=new Groupe_has_Machine();
         //$GroupeHasMachine->setGroupe(5);

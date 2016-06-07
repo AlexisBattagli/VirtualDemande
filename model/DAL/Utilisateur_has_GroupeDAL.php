@@ -94,6 +94,28 @@ class Utilisateur_has_GroupeDAL {
 
         return $rows;
     }
+    
+    /*
+     * Renvoie true ou false en fonction si l'utilisateur est dans le groupe ou non
+     * 
+     * @param int $userId, int $groupeId
+     * return 0 | 1
+     * 
+     */
+    
+    public static function isInByUser($utilisateurId,$groupeId)
+    {
+        $utilisateurHasGroupe=  self::findByGU($groupeId, $utilisateurId);
+        $statut=true;
+        
+        if(is_null($utilisateurHasGroupe))
+        {
+            $statut=false;
+        }
+        
+        return $statut;
+    }
+    
 
     /*
      * Retourne l'ensemble des Utilisateur_has_Groupe qui sont en base

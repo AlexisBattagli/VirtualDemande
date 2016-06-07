@@ -351,9 +351,14 @@ else
         //echo 'Groupe par défaut a pour ID:'.$defautGroupe->getId();
         //echo 'Groupe par défaut a pour Nom:'.$defautGroupe->getNom();
 
-    //Vérification de findLessMachine($utilisateurId, $machineId) -
+    //Vérification de findLessMachine($utilisateurId, $machineId) - OK
             //$lesGroupeHasMachines=GroupeDAL::findLessMachine(1,5);
             //$taille=count($lesGroupeHasMachines);
+            //echo 'Nombre groupe has machine :'.$taille;
+
+    //Vérification de findLessUser($utilisateurId) - OK
+            //$lesGroupes=GroupeDAL::findLessUser(1);
+            //$taille=count($lesGroupes);
             //echo 'Nombre groupe has machine :'.$taille;
 
     //Vérification d'insertion - OK
@@ -390,6 +395,17 @@ else
         //$taille=count($lesUtilisateurs_has_Groupes);
         //echo 'Nombre de utilisateur_has_groupe :'.$taille;
     
+    //Vérification de isInByUser($utilisateurId,$groupeId) - OK
+        //$statut=Utilisateur_has_GroupeDAL::isInByUser(1, 2);
+            //if($statut==false)
+            //{
+                //echo "L'utilisateur n'est pas dans le groupe";
+            //}
+            //else
+            //{
+                //echo "L'utilisateur est dans le groupe";
+            //}
+            
     //Vérification de findAll - OK
         //$lesUtilisateurs_has_Groupes=Utilisateur_has_GroupeDAL::findAll();
         //$taille=count($lesUtilisateurs_has_Groupes);

@@ -98,7 +98,7 @@ class GroupeDAL
     }
     
     /*
-     * Renvoie liste des groupe de l’utilisateur où une VM donnée n’est pas. 
+     * Renvoie liste des groupes de l’utilisateur où une VM donnée n’est pas. 
      * 
      * @param int $userId, int $machineId
      * return array[Groupe] Tous les Groupes sont placés dans un Tableau
@@ -123,6 +123,34 @@ class GroupeDAL
         }
 
         return $mesGroupesLessMachine;
+    }
+    
+    /*
+     * Renvoie liste des groupes où 'l'utilisateur donné n’est pas. 
+     * 
+     * @param int $userId
+     * return array[Groupe] Tous les Groupes sont placés dans un Tableau
+     */
+    
+    public static function findLessUser($utilisateurId)
+    {
+        $mesGroupesLessUser = array();
+        
+        $mesGroupes=self::findAll();
+
+        foreach ($mesGroupes as $row)
+        {
+            $groupeId=$row->getId();
+            $statut= Utilisateur_has_GroupeDAL::isInByUser($utilisateurId,$groupeId);
+            
+            if($statut==false)
+            {
+                $groupe = new Groupe();
+                $mesGroupesLessUser[] = $groupe;
+            }
+        }
+
+        return $mesGroupesLessUser;
     }
     
     /*
