@@ -9,6 +9,7 @@
 
 require_once('BaseSingleton.php');
 //require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Utilisateur.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Limitant.php);
 require_once('/var/www/VirtualDemande/model/class/Utilisateur.php');
 require_once('/var/www/VirtualDemande/model/class/Limitant.php');
 

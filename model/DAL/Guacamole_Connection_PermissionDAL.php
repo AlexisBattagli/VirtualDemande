@@ -10,8 +10,6 @@
 //import
 require_once('BaseSingletonGuacamole.php');
 //require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Guacamole_Connection_Permission.php');
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Guacamole_UserDAL.php');
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Guacamole_ConnectionDAL.php');
 require_once('/var/www/VirtualDemande/model/class/Guacamole_Connection_Permission.php');
 
 class Guacamole_Connection_PermissionDAL {

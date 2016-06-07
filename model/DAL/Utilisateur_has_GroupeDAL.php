@@ -15,7 +15,7 @@
  * quel sont les groupe uaxquels appartient un utilisateur
  */
 require_once('BaseSingleton.php');
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Utilisateur_has_Groupe.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Utilisateur_has_Groupe.php'');
 require_once('/var/www/VirtualDemande/model/class/Utilisateur_has_Groupe.php');
 
 class Utilisateur_has_GroupeDAL {

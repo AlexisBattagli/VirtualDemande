@@ -8,8 +8,8 @@
  */
 
 //import
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Machine.php');
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Groupe.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/MachineDAL.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/GroupeDAL.php');
 require_once('/var/www/VirtualDemande/model/DAL/MachineDAL.php');
 require_once('/var/www/VirtualDemande/model/DAL/GroupeDAL.php');
 

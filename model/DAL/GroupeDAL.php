@@ -12,6 +12,7 @@
  */
 require_once('BaseSingleton.php');
 //require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Groupe.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Utilisateur_has_GroupeDAL.php');
 require_once('/var/www/VirtualDemande/model/class/Groupe.php');
 require_once('/var/www/VirtualDemande/model/DAL/Utilisateur_has_GroupeDAL.php');
 
