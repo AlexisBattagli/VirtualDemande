@@ -9,10 +9,10 @@
 
 //import
 require_once('BaseSingletonGuacamole.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Guacamole_Connection_Permission.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Guacamole_User.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Guacamole_Connection.php');
-
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Guacamole_Connection_Permission.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Guacamole_UserDAL.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Guacamole_ConnectionDAL.php');
+require_once('/var/www/VirtualDemande/model/class/Guacamole_Connection_Permission.php');
 
 class Guacamole_Connection_PermissionDAL {
     /*
@@ -26,7 +26,7 @@ class Guacamole_Connection_PermissionDAL {
     {
         $mesGuacamoleConnectionPermissions = array();
 
-        $data = BaseSingleton::select('SELECT guacamole_connection_permission.user_id as user_id, '
+        $data = BaseSingletonGuacamole::select('SELECT guacamole_connection_permission.user_id as user_id, '
                         . 'guacamole_connection_permission.connection_id as connection_id, '
                         . 'guacamole_connection_permission.permission as permission '
                         . ' FROM guacamole_connection_permission'
@@ -53,7 +53,7 @@ class Guacamole_Connection_PermissionDAL {
     {
         $mesGuacamoleConnectionPermissions = array();
 
-        $data = BaseSingleton::select('SELECT guacamole_connection_permission.user_id as user_id, '
+        $data = BaseSingletonGuacamole::select('SELECT guacamole_connection_permission.user_id as user_id, '
                         . 'guacamole_connection_permission.connection_id as connection_id, '
                         . 'guacamole_connection_permission.permission as permission '
                         . ' FROM guacamole_connection_permission'
@@ -80,7 +80,7 @@ class Guacamole_Connection_PermissionDAL {
     {
         $mesGuacamoleConnectionPermissions = array();
 
-        $data = BaseSingleton::select('SELECT guacamole_connection_permission.user_id as user_id, '
+        $data = BaseSingletonGuacamole::select('SELECT guacamole_connection_permission.user_id as user_id, '
                         . 'guacamole_connection_permission.connection_id as connection_id, '
                         . 'guacamole_connection_permission.permission as permission '
                         . ' FROM guacamole_connection_permission'
@@ -104,13 +104,13 @@ class Guacamole_Connection_PermissionDAL {
      * @return Guacamole_Connection_Permission | null
      */
 
-    public static function findByUC($userId, $connectionId)
+    public static function findByUCP($userId, $connectionId, $permission)
     {
-        $data = BaseSingleton::select('SELECT guacamole_connection_permission.user_id as user_id, '
+        $data = BaseSingletonGuacamole::select('SELECT guacamole_connection_permission.user_id as user_id, '
                         . 'guacamole_connection_permission.connection_id as connection_id, '
                         . 'guacamole_connection_permission.permission as permission '
                         . ' FROM guacamole_connection_permission'
-                        . ' WHERE guacamole_connection_permission.user_id = ? AND guacamole_connection_permission.connection_id = ?', array('ii', &$userId, &$connectionId));
+                        . ' WHERE guacamole_connection_permission.user_id = ? AND guacamole_connection_permission.connection_id = ? AND LOWER(guacamole_connection_permission.permission) = LOWER(?)', array('iis', &$userId, &$connectionId,&$permission));
         $guacamoleConnectionPermission = new Guacamole_Connection_Permission();
 
         if (sizeof($data) > 0)
@@ -140,9 +140,9 @@ class Guacamole_Connection_PermissionDAL {
         //Récupère les valeurs de l'objet Guacamole_Connection_Permission passé en para de la méthode
         $userId=$guacamoleConnectionPermission->getUser()->getUserId(); //int
         $connectionId=$guacamoleConnectionPermission->getConnection()->getConnectionId(); //int
-        $permission=$guacamoleConnectionPermission->getParameterValue(); //string
-
-        if (is_null(findByUC($userId, $connectionId)))
+        $permission=$guacamoleConnectionPermission->getPermission(); //string
+        
+        if (is_null(self::findByUCP($userId, $connectionId,$permission)))
         {
             $sql = 'INSERT INTO guacamole_connection_permission (user_id, connection_id, permission) '
                     . ' VALUES (?,?,?) ';
@@ -186,11 +186,27 @@ class Guacamole_Connection_PermissionDAL {
      * True si la ligne a bien été supprimée, False sinon
      */
 
-    public static function delete($userId, $connectionId)
+    public static function delete($userId, $connectionId,$permission)
+    {
+        $deleted = BaseSingletonGuacamole::delete('DELETE FROM guacamole_connection_permission WHERE user_id = ? AND connection_id = ? AND LOWER(permission) = LOWER(?)', array('iis', &$userId, &$connectionId, &$permission));
+        return $deleted;
+    }
+    
+    /*
+     * Supprime la Guacamole_Connection_Permission correspondant au couple d'id de userId/connectionId donné en paramètre
+     * 
+     * @param int userId, int connectionId
+     * @return bool
+     * True si la ligne a bien été supprimée, False sinon
+     */
+
+    public static function deleteUC($userId, $connectionId)
     {
         $deleted = BaseSingletonGuacamole::delete('DELETE FROM guacamole_connection_permission WHERE user_id = ? AND connection_id = ?', array('ii', &$userId, &$connectionId));
         return $deleted;
     }
+    
+    
     
     /*
      * Supprime la Guacamole_Connection_Permission correspondant au couple d'id de userId donné en paramètre

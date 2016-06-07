@@ -30,6 +30,8 @@ require_once('/var/www/VirtualDemande/model/DAL/Guacamole_ConnectionDAL.php');
 require_once('/var/www/VirtualDemande/model/class/Guacamole_Connection_Parameter.php');
 require_once('/var/www/VirtualDemande/model/DAL/Guacamole_Connection_ParameterDAL.php');
 
+require_once('/var/www/VirtualDemande/model/DAL/Guacamole_Connection_PermissionDAL.php');
+
 //Test de tout ce qui touche la table machine
 
 //Vérification des méthodes de CpuDAL : 
@@ -581,40 +583,46 @@ require_once('/var/www/VirtualDemande/model/DAL/Guacamole_Connection_ParameterDA
             //$validGucamoleConnectionParameter = Guacamole_Connection_ParameterDAL::deleteConnection(3);
 
 //Vérification des méthodes de Guacamole_Connection_PermissionDAL :
-    //Vérification de findAll - 
-            //$lesGucamoleConnectionParameters=Guacamole_Connection_ParameterDAL::findAll(); 
-            //$taille=count($lesGucamoleConnectionParameters);
-            //echo 'Nombre GucamoleConnections :'.$taille;
+    //Vérification de findAll - OK
+            //$lesGucamoleConnectionPermissions=Guacamole_Connection_PermissionDAL::findAll(); 
+            //$taille=count($lesGucamoleConnectionPermissions);
+            //echo 'Nombre GucamolePermissions :'.$taille;
             
-    //Vérification de findByConnection($connectionId) - 
-            //$lesGucamoleConnectionParameters=Guacamole_Connection_ParameterDAL::findByConnection(1); 
-            //$taille=count($lesGucamoleConnectionParameters);
-            //echo 'Nombre GucamoleConnections :'.$taille;
+    //Vérification de findByConnection($connectionId) - OK 
+            //$lesGucamoleConnectionPermissions=Guacamole_Connection_PermissionDAL::findByConnection(1); 
+            //$taille=count($lesGucamoleConnectionPermissions);
+            //echo 'Nombre GucamolePermissions :'.$taille;
+
+    //Vérification de findByUser($userId) - OK
+            //$lesGucamoleConnectionPermissions=Guacamole_Connection_PermissionDAL::findByUser(1); 
+            //$taille=count($lesGucamoleConnectionPermissions);
+            //echo 'Nombre GucamolePermissions :'.$taille;
             
-    //Vérification de findByCP($connectionId, $parameterName) - 
-            //$gucamoleConnectionParameter=Guacamole_Connection_ParameterDAL::findByCP(1, "font-size"); 
-            //$taille=count($gucamoleConnectionParameter);
-            //echo 'Nombre GucamoleConnections :'.$taille;
-            //echo "Connection ID : ".$gucamoleConnectionParameter->getConnection()->getConnectionId();
-            //echo "Parameter Name : ".$gucamoleConnectionParameter->getParameterName();
-            //echo "Parameter Value : ".$gucamoleConnectionParameter->getParameterValue();
+    //Vérification de findByUCP($userId, $connectionId) - OK
+            //$lesGucamoleConnectionPermissions=Guacamole_Connection_PermissionDAL::findByUCP(1,1,"UPDATE"); 
+            //$taille=count($lesGucamoleConnectionPermissions);
+            //echo 'Nombre GucamolePermissions :'.$taille;
+            //echo "Utilisateur ID : ".$lesGucamoleConnectionPermissions->getUser()->getUserId();
+            //echo "Connection ID : ".$lesGucamoleConnectionPermissions->getConnection()->getConnectionId();
+            //echo "Permissions : ".$lesGucamoleConnectionPermissions->getPermission();
     
     //Vérification d'insertion - 
-            //$gucamoleConnectionParameter=new Guacamole_Connection_Parameter(); 
-            //$gucamoleConnectionParameter->setConnection(3); 
-            //$gucamoleConnectionParameter->setParameterName("ParameterName"); 
-            //$gucamoleConnectionParameter->setParameterValue("ParameterValeue"); 
-            //$validGucamoleConnectionParameter = Guacamole_Connection_ParameterDAL::insertOnDuplicate($gucamoleConnectionParameter);
-        
-    //Vérification de update - 
-            //$gucamoleConnectionParameter=new Guacamole_Connection_Parameter(); 
-            //$gucamoleConnectionParameter->setConnection(3); 
-            //$gucamoleConnectionParameter->setParameterName("ParameterName"); 
-            //$gucamoleConnectionParameter->setParameterValue("A+++"); 
-            //$validGucamoleConnectionParameter = Guacamole_Connection_ParameterDAL::insertOnDuplicate($gucamoleConnectionParameter);
+            //$GucamoleConnectionPermissions=new Guacamole_Connection_Permission(); 
+            //$GucamoleConnectionPermissions->setUser(6);
+            //$GucamoleConnectionPermissions->setConnection(5);
+            //$GucamoleConnectionPermissions->setPermission("UPDATE");
+            //$validGucamoleConnectionPermission = Guacamole_Connection_PermissionDAL::insertOnDuplicate($GucamoleConnectionPermissions);
             
-    //Vérification de delete($connectionId, $parameterName) - 
-            //$validGucamoleConnectionParameter = Guacamole_Connection_ParameterDAL::delete(3,"ParameterName");
+    //Vérification de update - OK - Pas besoin
+    
+    //Vérification de deletedelete($userId, $connectionId,$permission) - OK
+            //$validGucamoleConnectionParameter = Guacamole_Connection_PermissionDAL::delete(6,5,"UPDATE");            
+            
+    //Vérification de deleteUC($userId, $connectionId) - 
+            //$validGucamoleConnectionParameter = Guacamole_Connection_PermissionDAL::deleteUC(6,5);  
 
     //Vérification de deleteConnection($connectionId) - 
-            //$validGucamoleConnectionParameter = Guacamole_Connection_ParameterDAL::deleteConnection(3);        
+            //$validGucamoleConnectionParameter = Guacamole_Connection_PermissionDAL::deleteConnection(5);  
+
+    //Vérification de deleteUser($userId) - 
+            //$validGucamoleConnectionParameter = Guacamole_Connection_PermissionDAL::deleteUser(3);  

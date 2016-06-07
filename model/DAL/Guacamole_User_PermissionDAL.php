@@ -186,7 +186,21 @@ class Guacamole_User_PermissionDAL {
      * True si la ligne a bien été supprimée, False sinon
      */
 
-    public static function delete($userId, $affectedUserId)
+    public static function delete($userId, $affectedUserId,$permission)
+    {
+        $deleted = BaseSingletonGuacamole::delete('DELETE FROM guacamole_user_permission WHERE user_id = ? AND affected_user_id = ? AND LOWER(permission) = LOWER(?)', array('iis', &$userId, &$affectedUserId, &$permission));
+        return $deleted;
+    }
+    
+    /*
+     * Supprime la Guacamole_User_Permission correspondant au couple d'id de userId/affectedUserId donné en paramètre
+     * 
+     * @param int userId, int affectedUserId
+     * @return bool
+     * True si la ligne a bien été supprimée, False sinon
+     */
+
+    public static function deleteUA($userId, $affectedUserId)
     {
         $deleted = BaseSingletonGuacamole::delete('DELETE FROM guacamole_user_permission WHERE user_id = ? AND affected_user_id = ?', array('ii', &$userId, &$affectedUserId));
         return $deleted;
