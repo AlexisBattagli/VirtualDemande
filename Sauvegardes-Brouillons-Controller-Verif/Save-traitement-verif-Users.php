@@ -1,5 +1,5 @@
 <?php
-//Problème de lecture des objets  ????!!!! 
+ 
 //A installer obligatoirement : apt-get install  php5-mysqlnd*
 //                              /etc/init.d/apache2 restart
 // C'est le driver permettant d'avoir la fonction get_result()
