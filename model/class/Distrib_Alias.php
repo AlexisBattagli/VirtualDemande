@@ -8,10 +8,8 @@
  */
 
 //import
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Distrib.php');
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/DistribDAL.php');
-require_once('/var/www/VirtualDemande/model/class/Distrib.php');
-require_once('/var/www/VirtualDemande/model/DAL/DistribDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Distrib.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/DistribDAL.php');
 
 class Distrib_Alias {
     /*

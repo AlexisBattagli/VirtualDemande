@@ -11,8 +11,7 @@
  * IMPORT
  */
 require_once('BaseSingleton.php');
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Distrib_Alias.php');
-require_once('/var/www/VirtualDemande/model/class/Distrib_Alias.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Distrib_Alias.php');
 
 class Distrib_AliasDAL {
     

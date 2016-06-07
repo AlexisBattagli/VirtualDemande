@@ -8,10 +8,7 @@
  */
 
 require_once('BaseSingleton.php');
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Machine.php');
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/StockageDAL.php');
-require_once('/var/www/VirtualDemande/model/class/Machine.php');
-require_once('/var/www/VirtualDemande/model/DAL/StockageDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Machine.php');
 
 class MachineDAL 
 {

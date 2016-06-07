@@ -10,16 +10,11 @@
  * @history 
  */
 //import
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Distrib_AliasDAL.php');
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/UtilisateurDAL.php');
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/CpuDAL.php');
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/RamDAL.php');
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/StockageDAL.php');
-require_once('/var/www/VirtualDemande/model/DAL/Distrib_AliasDAL.php');
-require_once('/var/www/VirtualDemande/model/DAL/UtilisateurDAL.php');
-require_once('/var/www/VirtualDemande/model/DAL/CpuDAL.php');
-require_once('/var/www/VirtualDemande/model/DAL/RamDAL.php');
-require_once('/var/www/VirtualDemande/model/DAL/StockageDAL.php');        
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Distrib_AliasDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/UtilisateurDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/CpuDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/RamDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/StockageDAL.php');     
 
 class Machine {
     /*
@@ -167,12 +162,12 @@ class Machine {
     public function hydrate($dataSet)
     {
         $this->id = $dataSet['id'];
-        $this->utilisateur = $dataSet['Utilisateur_id'];
-        $this->distribAlias = $dataSet['Distrib_Alias_id'];
+        $this->utilisateur = $dataSet['utilisateur_id'];
+        $this->distribAlias = $dataSet['distrib_alias_id'];
         $this->nom = $dataSet['nom'];
-        $this->cpu = $dataSet['Cpu_id'];
-        $this->ram = $dataSet['Ram_id'];
-        $this->stockage = $dataSet['Stockage_id'];
+        $this->cpu = $dataSet['cpu_id'];
+        $this->ram = $dataSet['ram_id'];
+        $this->stockage = $dataSet['stockage_id'];
         $this->description = $dataSet['description'];
         $this->dateCreation = $dataSet['date_creation'];
         $this->dateExpiration = $dataSet['date_expiration'];

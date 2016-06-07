@@ -12,8 +12,7 @@
  * quel sont les groupes auxquels appartient une machine
  */
 require_once('BaseSingleton.php');
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Groupe_has_Machine.php');
-require_once('/var/www/VirtualDemande/model/class/Groupe_has_Machine.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Groupe_has_Machine.php');
 
 class Groupe_has_MachineDAL {
     /*

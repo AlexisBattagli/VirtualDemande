@@ -1,36 +1,15 @@
 <?php
 
-require_once('/var/www/VirtualDemande/model/class/Cpu.php');
-require_once('/var/www/VirtualDemande/model/DAL/CpuDAL.php');
-
-require_once('/var/www/VirtualDemande/model/class/Distrib.php');
-require_once('/var/www/VirtualDemande/model/DAL/DistribDAL.php');
-
-require_once('/var/www/VirtualDemande/model/class/Ram.php');
-require_once('/var/www/VirtualDemande/model/DAL/RamDAL.php');
-
-require_once('/var/www/VirtualDemande/model/class/Stockage.php');
-require_once('/var/www/VirtualDemande/model/DAL/StockageDAL.php');
-
-require_once('/var/www/VirtualDemande/model/class/Distrib_Alias.php');
-require_once('/var/www/VirtualDemande/model/DAL/Distrib_AliasDAL.php');
-
-require_once('/var/www/VirtualDemande/model/class/Machine.php');
-require_once('/var/www/VirtualDemande/model/DAL/MachineDAL.php');
-
-require_once('/var/www/VirtualDemande/model/class/Groupe_has_Machine.php');
-require_once('/var/www/VirtualDemande/model/DAL/Groupe_has_MachineDAL.php');
-
-require_once('/var/www/VirtualDemande/model/class/Table_log.php');
-require_once('/var/www/VirtualDemande/model/DAL/Table_logDAL.php');
-
-require_once('/var/www/VirtualDemande/model/class/Guacamole_Connection.php');
-require_once('/var/www/VirtualDemande/model/DAL/Guacamole_ConnectionDAL.php');
-
-require_once('/var/www/VirtualDemande/model/class/Guacamole_Connection_Parameter.php');
-require_once('/var/www/VirtualDemande/model/DAL/Guacamole_Connection_ParameterDAL.php');
-
-require_once('/var/www/VirtualDemande/model/DAL/Guacamole_Connection_PermissionDAL.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/CpuDAL.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/DistribDAL.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/RamDAL.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/StockageDAL.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Distrib_AliasDAL.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/MachineDAL.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Groupe_has_MachineDAL.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Guacamole_ConnectionDAL.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Guacamole_Connection_ParameterDAL.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Guacamole_Connection_PermissionDAL.php');        
 
 //Test de tout ce qui touche la table machine
 
@@ -293,11 +272,11 @@ require_once('/var/www/VirtualDemande/model/DAL/Guacamole_Connection_PermissionD
     //Vérification de findByDefault - OK
             //$defautMachine=MachineDAL::findByDefault();
             //echo 'Machine par défaut a pour ID:'.$defautMachine->getId();
-            //echo 'Distrib Alias par défaut :'.$defautMachine->getDistribAlias();
-            //echo 'Utilisateur par défaut:'.$defautMachine->getUtilisateur();
-            //echo 'Cpu par défaut:'.$defautMachine->getCpu();
-            //echo 'Ram par défaut:'.$defautMachine->getRam();
-            //echo 'Stockage par défaut:'.$defautMachine->getStockage();
+            //echo 'Distrib Alias par défaut :'.$defautMachine->getDistribAlias()->getId();
+            //echo 'Utilisateur par défaut:'.$defautMachine->getUtilisateur()->getId();
+            //echo 'Cpu par défaut:'.$defautMachine->getCpu()->getId();
+            //echo 'Ram par défaut:'.$defautMachine->getRam()->getId();
+            //echo 'Stockage par défaut:'.$defautMachine->getStockage()->getId();
             //echo 'Nom par défaut :'.$defautMachine->getNom();
             //echo 'Description par défaut :'.$defautMachine->getDescription();
             //echo 'Date creation par défaut :'.$defautMachine->getDateCreation();
@@ -308,10 +287,10 @@ require_once('/var/www/VirtualDemande/model/DAL/Guacamole_Connection_PermissionD
             //$defautMachine=MachineDAL::findById(5);
             //echo 'Machine par défaut a pour ID:'.$defautMachine->getId();
             //echo 'Distrib Alias par défaut :'.$defautMachine->getDistribAlias();
-            //echo 'Utilisateur par défaut:'.$defautMachine->getUtilisateur();
-            //echo 'Cpu par défaut:'.$defautMachine->getCpu();
-            //echo 'Ram par défaut:'.$defautMachine->getRam();
-            //echo 'Stockage par défaut:'.$defautMachine->getStockage();
+            //echo 'Utilisateur par défaut:'.$defautMachine->getUtilisateur()->getId();
+            //echo 'Cpu par défaut:'.$defautMachine->getCpu()->getId();
+            //echo 'Ram par défaut:'.$defautMachine->getRam()->getId();
+            //echo 'Stockage par défaut:'.$defautMachine->getStockage()->getId();
             //echo 'Nom par défaut :'.$defautMachine->getNom();
             //echo 'Description par défaut :'.$defautMachine->getDescription();
             //echo 'Date creation par défaut :'.$defautMachine->getDateCreation();
@@ -342,14 +321,15 @@ require_once('/var/www/VirtualDemande/model/DAL/Guacamole_Connection_PermissionD
             //$defautMachine=MachineDAL::findByDN(1,"1default_name_machine");
             //echo 'Machine par défaut a pour ID:'.$defautMachine->getId();
             //echo 'Distrib Alias par défaut :'.$defautMachine->getDistribAlias();
-            //echo 'Utilisateur par défaut:'.$defautMachine->getUtilisateur();
-            //echo 'Cpu par défaut:'.$defautMachine->getCpu();
-            //echo 'Ram par défaut:'.$defautMachine->getRam();
-            //echo 'Stockage par défaut:'.$defautMachine->getStockage();
+            //echo 'Utilisateur par défaut:'.$defautMachine->getUtilisateur()->getId();
+            //echo 'Cpu par défaut:'.$defautMachine->getCpu()->getId();
+            //echo 'Ram par défaut:'.$defautMachine->getRam()->getId();
+            //echo 'Stockage par défaut:'.$defautMachine->getStockage()->getId();
             //echo 'Nom par défaut :'.$defautMachine->getNom();
             //echo 'Description par défaut :'.$defautMachine->getDescription();
             //echo 'Date creation par défaut :'.$defautMachine->getDateCreation();
             //echo 'Date expiration par défaut :'.$defautMachine->getDateExpiration();
+            //echo 'Etat par défaut :'.$defautMachine->getEtat();
             //echo 'Etat par défaut :'.$defautMachine->getEtat();
             
     //Vérification d'insertion - OK
@@ -431,69 +411,13 @@ require_once('/var/www/VirtualDemande/model/DAL/Guacamole_Connection_PermissionD
         
     //Vérification de deleteMachine($machineId) - OK
         //$validGroupeHasMachine = Groupe_has_MachineDAL::deleteMachine(5);
-
-//Vérification des méthodes de Table_logDAL :
-    //INSERT INTO table_log (date_heure, action, code_retour, utilisateur, machine) VALUES ("23::15:02","CREATE",0,1,6)
-    //Vérification de findByDefault - OK
-            //$defautTableLog=Table_logDAL::findByDefault();
-            //echo 'Table log par défaut a pour ID:'.$defautTableLog->getId();
-            //echo 'Date_heure par défaut :'.$defautTableLog->getDateHeure();
-            //echo 'Action par défaut :'.$defautTableLog->getAction();
-            //echo 'Code_retour par défaut :'.$defautTableLog->getCodeRetour();
-            //echo 'Utilisateur par défaut :'.$defautTableLog->getUtilisateur();
-            //echo 'Machine par défaut :'.$defautTableLog->getMachine();
-
-    //Vérification de findById - OK
-            //$defautTableLog=Table_logDAL::findById(2);
-            //echo 'Table log par défaut a pour ID:'.$defautTableLog->getId();
-            //echo 'Date_heure par défaut :'.$defautTableLog->getDateHeure();
-            //echo 'Action par défaut :'.$defautTableLog->getAction();
-            //echo 'Code_retour par défaut :'.$defautTableLog->getCodeRetour();
-            //echo 'Utilisateur par défaut :'.$defautTableLog->getUtilisateur();
-            //echo 'Machine par défaut :'.$defautTableLog->getMachine();
-
-    //Vérification de findAll - OK
-            //$lesTableLogs=Table_logDAL::findAll();
-            //$taille=count($lesTableLogs);
-            //echo 'Nombre Table_log :'.$taille;
-
-    //Vérification de findByMUDAC($machine, $utilisateur, $dateHeure, $action, $codeRetour) - OK
-            //$defautTableLog=Table_logDAL::findByMUDAC(6,1,"2021-12-17 00:00:00","CREATE",1);
-            //echo 'Table log par défaut a pour ID:'.$defautTableLog->getId();
-            //echo 'Date_heure par défaut :'.$defautTableLog->getDateHeure();
-            //echo 'Action par défaut :'.$defautTableLog->getAction();
-            //echo 'Code_retour par défaut :'.$defautTableLog->getCodeRetour();
-            //echo 'Utilisateur par défaut :'.$defautTableLog->getUtilisateur();
-            //echo 'Machine par défaut :'.$defautTableLog->getMachine();
-            
-    //Vérification d'insertion - OK
-            //$defautTableLog=new Table_log();
-            //$defautTableLog->setDateHeure("2222/12/02 12:00:01");
-            //$defautTableLog->setAction("DELETE");
-            //$defautTableLog->setCodeRetour("2");
-            //$defautTableLog->setUtilisateur("4");
-            //$defautTableLog->setMachine("9");
-            //$validTableLog = Table_logDAL::insertOnDuplicate($defautTableLog);
         
-    //Vérification de update - OK
-            //$defautTableLog=new Table_log();
-            //$defautTableLog->setId(3);
-            //$defautTableLog->setDateHeure("1500/12/02 12:25:01");
-            //$defautTableLog->setAction("UPDATE");
-            //$defautTableLog->setCodeRetour("0");//
-            //$defautTableLog->setUtilisateur("2");//
-            //$defautTableLog->setMachine("5");//
-            //$validTableLog = Table_logDAL::insertOnDuplicate($defautTableLog);
-        
-    //Vérification de delete - OK
-        //$validTableLog = Table_logDAL::delete(5);
-
 //Vérification des méthodes de Guacamole_ConnectionDAL :
         //Vérification de findByDefault - OK
             //$defautGucamoleConnection=Guacamole_ConnectionDAL::findByDefault(); 
             //echo 'GucamoleConnection par défaut a pour ID:'.$defautGucamoleConnection->getConnectionId();
             //echo 'Connection name par défaut :'.$defautGucamoleConnection->getConnectionName();
-            //echo 'Parent ID par défaut :'.$defautGucamoleConnection->getParent()->getId(); - Il est null
+            //echo 'Parent ID par défaut :'.$defautGucamoleConnection->getParent()->getId(); // Il est null
             //echo 'Protocol par défaut :'.$defautGucamoleConnection->getProtocol();
             //echo 'max connection par défaut :'.$defautGucamoleConnection->getMaxConnections();
             //echo 'max_connections_per_user par défaut :'.$defautGucamoleConnection->getMaxConnectionsPerUser();

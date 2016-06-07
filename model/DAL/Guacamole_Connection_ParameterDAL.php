@@ -9,10 +9,7 @@
 
 //import
 require_once('BaseSingletonGuacamole.php');
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Guacamole_Connection_Parameter.php');
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Guacamole_ConnectionDAL.php');
-require_once('/var/www/VirtualDemande/model/class/Guacamole_Connection_Parameter.php');
-require_once('/var/www/VirtualDemande/model/DAL/Guacamole_ConnectionDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Guacamole_Connection_Parameter.php');
 
 class Guacamole_Connection_ParameterDAL {
     /*
