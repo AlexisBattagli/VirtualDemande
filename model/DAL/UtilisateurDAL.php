@@ -120,7 +120,7 @@ class UtilisateurDAL
     public static function findByLogin($login)
     {
         $data = BaseSingleton::select('SELECT utilisateur.id as id, '
-                        . 'utilisateur.role_id as Role_Id, '
+                        . 'utilisateur.role_id as role_id, '
                         . 'utilisateur.nom as nom, '
                         . 'utilisateur.prenom as prenom, '
                         . 'utilisateur.login as login, '
@@ -155,7 +155,7 @@ class UtilisateurDAL
     public static function findByMail($mail)
     {
         $data = BaseSingleton::select('SELECT utilisateur.id as id, '
-                        . 'utilisateur.role_id as Role_Id, '
+                        . 'utilisateur.role_id as role_id, '
                         . 'utilisateur.nom as nom, '
                         . 'utilisateur.prenom as prenom, '
                         . 'utilisateur.login as login, '
@@ -217,7 +217,7 @@ class UtilisateurDAL
     public static function connection($login,$password) 
     {
         $data = BaseSingleton::select('SELECT utilisateur.id as id, '
-                        . 'utilisateur.role_id as role_Id, '
+                        . 'utilisateur.role_id as role_id, '
                         . 'utilisateur.nom as nom, '
                         . 'utilisateur.prenom as prenom, '
                         . 'utilisateur.login as login, '
