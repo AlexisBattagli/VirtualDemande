@@ -8,7 +8,8 @@
  */
 
 //import
-require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Guacamole_ConnectionDAL.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Guacamole_ConnectionDAL.php');
+require_once('/var/www/VirtualDemande/model/DAL/Guacamole_ConnectionDAL.php');
 
 class Guacamole_Connection 
 {
@@ -64,20 +65,12 @@ class Guacamole_Connection
      */
     
     public function Guacamole_Connection(
-    $connectionId = -1, $connectionName="Il n'y a pas de nom à cette connexion", $parent=null, $protocol="Il n'y a pas de protocol pour cette connexion", $maxConnections=-1, $maxConnectionsPerUser=-1
+    $connectionId = -1, $connectionName="Il n'y a pas de nom à cette connexion", $parent = null, $protocol="Il n'y a pas de protocol pour cette connexion", $maxConnections=null, $maxConnectionsPerUser=null
     )
     {
         $this->connectionId = $connectionId;
         $this->connectionName = $connectionName;
-        if (is_null($parent))
-        {
-            $parent = Guacamole_ConnectionDAL::findDefault();
-            $this->parent = $parent;
-        }
-        else
-        {
-            $this->parent = $parent;
-        }
+        $this->parent = $parent;
         $this->protocol = $protocol;
         $this->maxConnections = $maxConnections;
         $this->maxConnectionsPerUser = $maxConnectionsPerUser;

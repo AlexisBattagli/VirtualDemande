@@ -22,7 +22,7 @@ class Guacamole_ConnectionDAL {
     public static function findByDefault()
     {
         $id=1;
-        $data = BaseSingleton::select('SELECT guacamole_connection.connection_id as connection_id, '
+        $data = BaseSingletonGuacamole::select('SELECT guacamole_connection.connection_id as connection_id, '
                         . 'guacamole_connection.connection_name as connection_name, '
                         . 'guacamole_connection.parent_id as parent_id, '
                         . 'guacamole_connection.protocol as protocol, '
@@ -51,7 +51,7 @@ class Guacamole_ConnectionDAL {
     
     public static function findById($id)
     {
-        $data = BaseSingleton::select('SELECT guacamole_connection.connection_id as connection_id, '
+        $data = BaseSingletonGuacamole::select('SELECT guacamole_connection.connection_id as connection_id, '
                         . 'guacamole_connection.connection_name as connection_name, '
                         . 'guacamole_connection.parent_id as parent_id, '
                         . 'guacamole_connection.protocol as protocol, '
@@ -80,7 +80,7 @@ class Guacamole_ConnectionDAL {
     {
         $mesGuacamoleConnections = array();
 
-        $data = BaseSingleton::select('SELECT guacamole_connection.connection_id as connection_id, '
+        $data = BaseSingletonGuacamole::select('SELECT guacamole_connection.connection_id as connection_id, '
                         . 'guacamole_connection.connection_name as connection_name, '
                         . 'guacamole_connection.parent_id as parent_id, '
                         . 'guacamole_connection.protocol as protocol, '
@@ -100,23 +100,23 @@ class Guacamole_ConnectionDAL {
     }
     
     /*
-     * Retourne la Guacamole_Connection correspondant à l'ensemble d'attributs connectionName/parentId/protocol/maxConnections/maxConnectionsPerUser
+     * Retourne la Guacamole_Connection correspondant à l'ensemble d'attributs connectionName/protocol/maxConnections/maxConnectionsPerUser
      * Cet ensemble étant unique, il n'y qu'une seule ligne retournée.
      * Il est recherché sans tenir compte de la casse sur connectionName/parentId/protocol/maxConnections/maxConnectionsPerUser
      * 
-     * @param string connectionName, int parentId, string protocol, int maxConnections, int maxConnectionsPerUser
+     * @param string connectionName, string protocol, int maxConnections, int maxConnectionsPerUser
      * @return Guacamole_Connection | null
      */
-     public static function findByCPP($connectionName, $parentId, $protocol)
+     public static function findByCP($connectionName, $protocol)
     {
-        $data = BaseSingleton::select('SELECT guacamole_connection.connection_id as connection_id, '
+        $data = BaseSingletonGuacamole::select('SELECT guacamole_connection.connection_id as connection_id, '
                         . 'guacamole_connection.connection_name as connection_name, '
                         . 'guacamole_connection.parent_id as parent_id, '
                         . 'guacamole_connection.protocol as protocol, '
                         . 'guacamole_connection.max_connections as max_connections, '
                         . 'guacamole_connection.max_connections_per_user as max_connections_per_user '
                         . ' FROM guacamole_connection'
-                        . ' WHERE LOWER(guacamole_connection.connection_name) = LOWER(?)AND guacamole_connection.parent_id = ? AND LOWER(guacamole_connection.protocol) = LOWER(?)', array('sis', &$connectionName, &$parentId, &$protocol));
+                        . ' WHERE LOWER(guacamole_connection.connection_name) = LOWER(?) AND LOWER(guacamole_connection.protocol) = LOWER(?)', array('ss', &$connectionName,&$protocol));
         $guacamoleConnection = new Guacamole_Connection();
 
         if (sizeof($data) > 0)
@@ -144,7 +144,12 @@ class Guacamole_ConnectionDAL {
     {
         //Récupère les valeurs de l'objet guacamoleConnection passé en para de la méthode
         $connectionName=$guacamoleConnection->getConnectionName(); //string
-        $parent=$guacamoleConnection->getParent()->getConnectionId(); //int
+        $parentId=null;
+        $parent=$guacamoleConnection->getParent(); //int
+        if($parent!=null)
+        {
+            $parentId=$guacamoleConnection->getParent()->getId(); //int
+        }
         $protocol=$guacamoleConnection->getProtocol(); //string
         $maxConnections=$guacamoleConnection->getMaxConnections(); //int
         $maxConnectionsPerUser=$guacamoleConnection->getMaxConnectionsPerUser(); //int
@@ -157,7 +162,7 @@ class Guacamole_ConnectionDAL {
             //Prépare les info concernant les type de champs
             $params = array('sisii',
                 &$connectionName,
-                &$parent,
+                &$parentId,
                 &$protocol,
                 &$maxConnections,
                 &$maxConnectionsPerUser
@@ -176,7 +181,7 @@ class Guacamole_ConnectionDAL {
             //Prépare les info concernant les type de champs
             $params = array('sisiii',
                 &$connectionName,
-                &$parent,
+                &$parentId,
                 &$protocol,
                 &$maxConnections,
                 &$maxConnectionsPerUser,
