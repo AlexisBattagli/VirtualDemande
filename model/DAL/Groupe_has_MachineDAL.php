@@ -129,6 +129,27 @@ class Groupe_has_MachineDAL {
     }
 
     /*
+     * Renvoie true ou false selon si la machine est dans le groupe donné en paramètre
+     * 
+     * @param int $groupeId, int machineId
+     * return 0 | 1
+     */
+    
+    public static function isInGroupe($groupeId, $machineId)
+    {
+        $groupeHasMachine=  self::findByGM($groupeId, $machineId);
+        $statut=true;
+        
+        if(is_null($groupeHasMachine))
+        {
+            $statut=false;
+        }
+        
+        return $statut;
+        
+    }
+
+    /*
      * Insère ou met à jour la Groupe_has_Machine donnée en paramètre.
      * Pour cela on vérifie si le couple d'id de la Machine et du Groupe transmis sont unique.
      * Si le couple return null alors il faut insèrer, sinon update aux id transmis.
