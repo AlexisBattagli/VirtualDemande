@@ -14,6 +14,7 @@
 require_once('BaseSingleton.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Groupe.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Utilisateur_has_GroupeDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Groupe_has_MachineDAL.php');
 
 class GroupeDAL 
 {
@@ -94,6 +95,34 @@ class GroupeDAL
         }
         return $mesgroupes;
         
+    }
+    
+    /*
+     * Renvoie liste des groupe de l’utilisateur où une VM donnée n’est pas. 
+     * 
+     * @param int $userId, int $machineId
+     * return array[Groupe] Tous les Groupes sont placés dans un Tableau
+     */
+    
+    public static function findLessMachine($utilisateurId, $machineId)
+    {
+        $mesGroupesLessMachine = array();
+        
+        $mesGroupesByUtilisateur=self::findByUser($utilisateurId);
+
+        foreach ($mesGroupesByUtilisateur as $row)
+        {
+            $groupeId=$row->getId();
+            $statut=  Groupe_has_MachineDAL::isInGroupe($groupeId, $machineId);
+            
+            if($statut==false)
+            {
+                $groupe = new Groupe();
+                $mesGroupesLessMachine[] = $groupe;
+            }
+        }
+
+        return $mesGroupesLessMachine;
     }
     
     /*
