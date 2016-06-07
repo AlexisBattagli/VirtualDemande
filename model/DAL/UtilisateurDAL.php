@@ -22,7 +22,7 @@ class UtilisateurDAL
     {
         $id=1;
         $data = BaseSingleton::select('SELECT utilisateur.id as id, '
-                        . 'utilisateur.Role_id as Role_id, '
+                        . 'utilisateur.role_id as role_id, '
                         . 'utilisateur.nom as nom, '
                         . 'utilisateur.prenom as prenom, '
                         . 'utilisateur.login as login, '
@@ -55,7 +55,7 @@ class UtilisateurDAL
     public static function findById($id)
     {
         $data = BaseSingleton::select('SELECT utilisateur.id as id, '
-                        . 'utilisateur.Role_id as Role_id, '
+                        . 'utilisateur.role_id as role_id, '
                         . 'utilisateur.nom as nom, '
                         . 'utilisateur.prenom as prenom, '
                         . 'utilisateur.login as login, '
@@ -88,7 +88,7 @@ class UtilisateurDAL
         $mesUtilisateurs = array();
 
         $data = BaseSingleton::select('SELECT utilisateur.id as id, '
-                        . 'utilisateur.Role_id as Role_id, '
+                        . 'utilisateur.role_id as role_id, '
                         . 'utilisateur.nom as nom, '
                         . 'utilisateur.prenom as prenom, '
                         . 'utilisateur.login as login, '
@@ -98,7 +98,7 @@ class UtilisateurDAL
                         . 'utilisateur.date_naissance as date_naissance, '
                         . 'utilisateur.nb_vm as nb_vm '
                         . ' FROM utilisateur'
-                . ' ORDER BY utilisateur.Role_id ASC, utilisateur.nom ASC, utilisateur.prenom ASC, utilisateur.login ASC');
+                . ' ORDER BY utilisateur.role_id ASC, utilisateur.nom ASC, utilisateur.prenom ASC, utilisateur.login ASC');
 
         foreach ($data as $row)
         {
@@ -120,7 +120,7 @@ class UtilisateurDAL
     public static function findByLogin($login)
     {
         $data = BaseSingleton::select('SELECT utilisateur.id as id, '
-                        . 'utilisateur.Role_id as Role_Id, '
+                        . 'utilisateur.role_id as Role_Id, '
                         . 'utilisateur.nom as nom, '
                         . 'utilisateur.prenom as prenom, '
                         . 'utilisateur.login as login, '
@@ -155,7 +155,7 @@ class UtilisateurDAL
     public static function findByMail($mail)
     {
         $data = BaseSingleton::select('SELECT utilisateur.id as id, '
-                        . 'utilisateur.Role_id as Role_Id, '
+                        . 'utilisateur.role_id as Role_Id, '
                         . 'utilisateur.nom as nom, '
                         . 'utilisateur.prenom as prenom, '
                         . 'utilisateur.login as login, '
@@ -217,7 +217,7 @@ class UtilisateurDAL
     public static function connection($login,$password) 
     {
         $data = BaseSingleton::select('SELECT utilisateur.id as id, '
-                        . 'utilisateur.Role_id as Role_Id, '
+                        . 'utilisateur.role_id as role_Id, '
                         . 'utilisateur.nom as nom, '
                         . 'utilisateur.prenom as prenom, '
                         . 'utilisateur.login as login, '
@@ -361,7 +361,7 @@ class UtilisateurDAL
         
         if ($id < 0)
         {
-            $sql = 'INSERT INTO utilisateur (Role_id, nom, prenom, login, passwd, mail, date_creation, date_naissance, nb_vm) '
+            $sql = 'INSERT INTO utilisateur (role_id, nom, prenom, login, passwd, mail, date_creation, date_naissance, nb_vm) '
                     . ' VALUES (?,?,?,?,?,?,?,?,?) ';
 
             //Prépare les info concernant les type de champs
@@ -380,7 +380,7 @@ class UtilisateurDAL
         else
         {
             $sql = 'UPDATE utilisateur '
-                    . 'SET Role_id = ?, '
+                    . 'SET role_id = ?, '
                     . 'nom = ?, '
                     . 'prenom = ?, '
                     . 'login = ?, '

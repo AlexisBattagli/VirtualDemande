@@ -120,7 +120,7 @@ class Utilisateur {
     public function hydrate($dataSet)
     {
         $this->id = $dataSet['id'];
-        $this->role = $dataSet['Role_id'];
+        $this->role = $dataSet['role_id'];
         $this->nom = $dataSet['nom'];
         $this->prenom = $dataSet['prenom'];
         $this->login = $dataSet['login'];
