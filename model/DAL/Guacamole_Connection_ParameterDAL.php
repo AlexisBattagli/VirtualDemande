@@ -9,8 +9,10 @@
 
 //import
 require_once('BaseSingletonGuacamole.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Guacamole_Connection.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Guacamole_Connection_Parameter.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Guacamole_Connection.php');
+//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Guacamole_Connection_Parameter.php');
+require_once('/var/www/VirtualDemande/model/class/Guacamole_Connection_Parameter.php');
+require_once('/var/www/VirtualDemande/model/DAL/Guacamole_ConnectionDAL.php');
 
 class Guacamole_Connection_ParameterDAL {
     /*
@@ -24,7 +26,7 @@ class Guacamole_Connection_ParameterDAL {
     {
         $mesGuacamoleConnectionParameters = array();
 
-        $data = BaseSingleton::select('SELECT guacamole_connection_parameter.connection_id as connection_id, '
+        $data = BaseSingletonGuacamole::select('SELECT guacamole_connection_parameter.connection_id as connection_id, '
                         . 'guacamole_connection_parameter.parameter_name as parameter_name, '
                         . 'guacamole_connection_parameter.parameter_value as parameter_value '
                         . ' FROM guacamole_connection_parameter'
@@ -51,7 +53,7 @@ class Guacamole_Connection_ParameterDAL {
     {
         $mesGuacamoleConnectionParameters = array();
 
-        $data = BaseSingleton::select('SELECT guacamole_connection_parameter.connection_id as connection_id, '
+        $data = BaseSingletonGuacamole::select('SELECT guacamole_connection_parameter.connection_id as connection_id, '
                         . 'guacamole_connection_parameter.parameter_name as parameter_name, '
                         . 'guacamole_connection_parameter.parameter_value as parameter_value '
                         . ' FROM guacamole_connection_parameter'
@@ -77,7 +79,7 @@ class Guacamole_Connection_ParameterDAL {
 
     public static function findByCP($connectionId, $parameterName)
     {
-        $data = BaseSingleton::select('SELECT guacamole_connection_parameter.connection_id as connection_id, '
+        $data = BaseSingletonGuacamole::select('SELECT guacamole_connection_parameter.connection_id as connection_id, '
                         . 'guacamole_connection_parameter.parameter_name as parameter_name, '
                         . 'guacamole_connection_parameter.parameter_value as parameter_value '
                         . ' FROM guacamole_connection_parameter'
@@ -107,13 +109,13 @@ class Guacamole_Connection_ParameterDAL {
 
     public static function insertOnDuplicate($guacamoleConnectionParameter)
     {
-
+        
         //Récupère les valeurs de l'objet Guacamole_Connection_Parameter passé en para de la méthode
         $connectionId=$guacamoleConnectionParameter->getConnection()->getConnectionId(); //int
         $parameterName=$guacamoleConnectionParameter->getParameterName(); //string
         $parameterValue=$guacamoleConnectionParameter->getParameterValue(); //string
 
-        if (is_null(findByCP($connectionId, $parameterName)))
+        if (is_null(self::findByCP($connectionId, $parameterName)))
         {
             $sql = 'INSERT INTO guacamole_connection_parameter (connection_id, parameter_name, parameter_value) '
                     . ' VALUES (?,?,?) ';
@@ -163,7 +165,7 @@ class Guacamole_Connection_ParameterDAL {
         return $deleted;
     }
     
-        /*
+    /*
      * Supprime la Guacamole_Connection_Parameter correspondant à connectionId donné en paramètre
      * 
      * @param int connectionId
