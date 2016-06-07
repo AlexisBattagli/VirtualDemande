@@ -186,7 +186,7 @@ else
 {
     echo "Erreur, l'utilisateur que vous voulez ajouter existe...";
 }
-
+*/
 //Vérification des méthodes de UtilisateurDAL : 
     //Vérification de GetNumberAvailableUsers() - OK
         //$id=UtilisateurDAL::GetNumberAvailableUsers();
@@ -276,8 +276,11 @@ else
     //Vérification de deleteUser - OK
         //$valid=Guacamole_User_PermissionDAL::deleteUser(15);
         
-    //Vérification de delete - OK
-        //$valid=Guacamole_User_PermissionDAL::delete(14,15);
+    //Vérification de deleteUA - OK
+        //$valid=Guacamole_User_PermissionDAL::deleteUA(14,15);
+        
+    ////Vérification de delete - OK
+        //$valid=Guacamole_User_PermissionDAL::delete(14,15,"UPDATE");
 
     //Vérification de findAll - OK
         //$lesUsers=Guacamole_User_PermissionDAL::findAll();
@@ -293,7 +296,7 @@ else
         //$lesUsers=Guacamole_User_PermissionDAL::findByAffectedUserId(3);
         //$taille=count($lesUsers);
         //echo 'Nombre de permission de utilisateur :'.$taille;
- */
+ 
 
 //Vérification des méthodes de RoleAL : 
     //Vérification de findByDefault - OK 
