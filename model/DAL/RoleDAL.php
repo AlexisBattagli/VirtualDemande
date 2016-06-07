@@ -11,8 +11,7 @@
  * IMPORT
  */
 require_once('BaseSingleton.php');
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Role.php');
-require_once('/var/www/VirtualDemande/model/class/Role.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Role.php');
 
 class RoleDAL 
 {

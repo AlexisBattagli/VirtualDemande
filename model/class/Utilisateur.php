@@ -9,8 +9,7 @@
  */
 
 //import
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/RoleDAL.php');
-require_once('/var/www/VirtualDemande/model/DAL/RoleDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/RoleDAL.php');
 
 class Utilisateur {
     /*
