@@ -8,10 +8,7 @@
  */
 
 //import
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Guacamole_User.php');
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Guacamole_UserDAL.php');
-require_once('/var/www/VirtualDemande/model/class/Guacamole_User.php');
-require_once('/var/www/VirtualDemande/model/DAL/Guacamole_UserDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Guacamole_UserDAL.php');
 
 class Guacamole_User_Permission {
     /*

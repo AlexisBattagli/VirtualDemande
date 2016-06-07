@@ -10,8 +10,7 @@
  * IMPORT
  */
 require_once('BaseSingleton.php');
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Table_log.php');
-require_once('/var/www/VirtualDemande/model/class/Table_log.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Table_log.php');
 
 class Table_logDAL {
         /*

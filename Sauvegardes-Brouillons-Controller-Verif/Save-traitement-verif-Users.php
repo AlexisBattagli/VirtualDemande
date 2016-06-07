@@ -3,8 +3,8 @@
 //A installer obligatoirement : apt-get install  php5-mysqlnd*
 //                              /etc/init.d/apache2 restart
 // C'est le driver permettant d'avoir la fonction get_result()
-/*
-                            Script d'ajout d'un Utilisateur
+
+///////////////////////////////////////Script d'ajout d'un Utilisateur
 //filter_input pour vérifier qu'il n'y a pas de "" (injection) et renvoi nul si elle est as possible ou erreur
 //is_unique voir si il n'xiste pas encore
 //guacamole=ajouter des permissions
@@ -15,29 +15,18 @@
 //For=name=id
 //Type=Submit
 //Required= champ obligatoire
- */
-
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Utilisateur.php');
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/UtilisateurDAL.php');
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Guacamole_User.php');
-require_once('/var/www/VirtualDemande/model/class/Utilisateur.php');
-require_once('/var/www/VirtualDemande/model/DAL/UtilisateurDAL.php');
-require_once('/var/www/VirtualDemande/model/class/Guacamole_User.php');
-require_once('/var/www/VirtualDemande/model/DAL/Guacamole_UserDAL.php');
-
-require_once('/var/www/VirtualDemande/model/class/Guacamole_User_Permission.php');
-require_once('/var/www/VirtualDemande/model/DAL/Guacamole_User_PermissionDAL.php');
-
-require_once('/var/www/VirtualDemande/model/class/Groupe.php');
-require_once('/var/www/VirtualDemande/model/DAL/GroupeDAL.php');
-
-require_once('/var/www/VirtualDemande/model/class/Utilisateur_has_Groupe.php');
-require_once('/var/www/VirtualDemande/model/DAL/Utilisateur_has_GroupeDAL.php');
-
-require_once('/var/www/VirtualDemande/model/class/Limitant.php');
-require_once('/var/www/VirtualDemande/model/DAL/LimitantDAL.php');
 
 /*
+//import
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/UtilisateurDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Guacamole_UserDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Guacamole_User_PermissionDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/RoleDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/GroupeDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Utilisateur_has_GroupeDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/LimitantDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Table_logDAL.php');
+
 //Création d'un Utilisateur par défaut
 $newUtilisateur=new Utilisateur();
 
@@ -303,6 +292,7 @@ else
         //$defautRole=RoleDAL::findByDefault();
         //echo 'Role par défaut a pour ID:'.$defautRole->getId();
         //echo 'Role par défaut a pour Login:'.$defautRole->getNomRole();
+        //echo 'Role par défaut a pour Description:'.$defautRole->getDescription();
 
     //Vérification de findById - OK
         //$defautRole=RoleDAL::findById(2);
@@ -351,12 +341,11 @@ else
         //$taille=count($lesGroupes);
         //echo 'Nombre groupe :'.$taille;
 
-/*    //Vérification de findByUser -
-        echo "OK";
-        $lesGroupes=GroupeDAL::findByUser(1);
-        $taille=count($lesGroupes);
-        echo 'Nombre groupe :'.$taille;
-*/
+    //Vérification de findByUser - OK
+        //$lesGroupes=GroupeDAL::findByUser(1);
+        //$taille=count($lesGroupes); 
+        //echo 'Nombre groupe :'.$taille;
+
     //Vérification de findByNom - OK
         //$defautGroupe=GroupeDAL::findByNom("Group1");
         //echo 'Groupe par défaut a pour ID:'.$defautGroupe->getId();
@@ -403,8 +392,8 @@ else
         
     //Vérification de findByGU - OK
         //$UtilisateurHasGroupe=Utilisateur_has_GroupeDAL::findByGU(1,1);
-        //echo 'Groupe a pour ID:'.$UtilisateurHasGroupe->getGroupe()->getId();
-        //echo 'Utilisateur a pour Nom:'.$UtilisateurHasGroupe->getUtilisateur()->getId();
+        //echo 'Groupe a pour Groupe:'.$UtilisateurHasGroupe->getGroupe()->getId();
+        //echo 'Groupe a pour Utilisateur:'.$UtilisateurHasGroupe->getUtilisateur()->getId();
         
     //Vérification de insertion - OK
         //$newUtilisateurhasgroupe=new Utilisateur_has_Groupe();
@@ -462,3 +451,59 @@ else
         
     //Vérification de delete - OK
         //$validLimitant = LimitantDAL::delete(5);
+
+//Vérification des méthodes de Table_logDAL :
+    //Requete : INSERT INTO table_log (date_heure, action, code_retour, utilisateur, machine) VALUES ("23::15:02","CREATE",0,1,6)
+    //Vérification de findByDefault - OK
+            //$defautTableLog=Table_logDAL::findByDefault();
+            //echo 'Table log par défaut a pour ID:'.$defautTableLog->getId();
+            //echo 'Date_heure par défaut :'.$defautTableLog->getDateHeure();
+            //echo 'Action par défaut :'.$defautTableLog->getAction();
+            //echo 'Code_retour par défaut :'.$defautTableLog->getCodeRetour();
+            //echo 'Utilisateur par défaut :'.$defautTableLog->getUtilisateur();
+            //echo 'Machine par défaut :'.$defautTableLog->getMachine();
+
+    //Vérification de findById - OK
+            //$defautTableLog=Table_logDAL::findById(2);
+            //echo 'Table log par défaut a pour ID:'.$defautTableLog->getId();
+            //echo 'Date_heure par défaut :'.$defautTableLog->getDateHeure();
+            //echo 'Action par défaut :'.$defautTableLog->getAction();
+            //echo 'Code_retour par défaut :'.$defautTableLog->getCodeRetour();
+            //echo 'Utilisateur par défaut :'.$defautTableLog->getUtilisateur();
+            //echo 'Machine par défaut :'.$defautTableLog->getMachine();
+
+    //Vérification de findAll - OK
+            //$lesTableLogs=Table_logDAL::findAll();
+            //$taille=count($lesTableLogs);
+            //echo 'Nombre Table_log :'.$taille;
+
+    //Vérification de findByMUDAC($machine, $utilisateur, $dateHeure, $action, $codeRetour) - OK
+            //$defautTableLog=Table_logDAL::findByMUDAC(6,1,"2021-12-17 00:00:00","CREATE",1);
+            //echo 'Table log par défaut a pour ID:'.$defautTableLog->getId();
+            //echo 'Date_heure par défaut :'.$defautTableLog->getDateHeure();
+            //echo 'Action par défaut :'.$defautTableLog->getAction();
+            //echo 'Code_retour par défaut :'.$defautTableLog->getCodeRetour();
+            //echo 'Utilisateur par défaut :'.$defautTableLog->getUtilisateur();
+            //echo 'Machine par défaut :'.$defautTableLog->getMachine();
+            
+    //Vérification d'insertion - OK
+            //$defautTableLog=new Table_log();
+            //$defautTableLog->setDateHeure("2222/12/02 12:00:01");
+            //$defautTableLog->setAction("DELETE");
+            //$defautTableLog->setCodeRetour("2");
+            //$defautTableLog->setUtilisateur("4");
+            //$defautTableLog->setMachine("9");
+            //$validTableLog = Table_logDAL::insertOnDuplicate($defautTableLog);
+        
+    //Vérification de update - OK
+            //$defautTableLog=new Table_log();
+            //$defautTableLog->setId(3);
+            //$defautTableLog->setDateHeure("1500/12/02 12:25:01");
+            //$defautTableLog->setAction("UPDATE");
+            //$defautTableLog->setCodeRetour("0");//
+            //$defautTableLog->setUtilisateur("2");//
+            //$defautTableLog->setMachine("5");//
+            //$validTableLog = Table_logDAL::insertOnDuplicate($defautTableLog);
+        
+    //Vérification de delete - OK
+        //$validTableLog = Table_logDAL::delete(5);

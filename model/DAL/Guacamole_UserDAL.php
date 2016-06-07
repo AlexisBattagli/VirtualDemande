@@ -9,8 +9,7 @@
 
 //import
 require_once('BaseSingletonGuacamole.php');
-//require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Guacamole_User.php');
-require_once('/var/www/VirtualDemande/model/class/Guacamole_User.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Guacamole_User.php');
 
 class Guacamole_UserDAL {
     /*
