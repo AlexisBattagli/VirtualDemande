@@ -171,7 +171,34 @@ class MachineDAL
         return $mesMachines;
     }
     
-    //findByShareByUser($userId) 
+    /*
+     * Renvoie la liste de SES vm partagé (nom de la vm, desc, groupe dans lequel elle est partagé) avec le nom du groupe
+     * 
+     * @param userId
+     * return Object
+     */
+    
+    public static function findByShareByUser($userId)
+    {
+        $rows = array();
+        $data = BaseSingleton::select('SELECT machine.nom as nom, '
+                .'distrib_alias.nom_complet as os, '
+                .'machine.description as description, '
+		.'groupe.nom as groupe '
+                .'FROM machine, distrib_alias,groupe, groupe_has_machine, utilisateur  '
+                .'WHERE machine.distrib_alias_id = distrib_alias.id '
+                .'AND groupe_has_machine.machine_id=machine.id '
+                .'AND groupe_has_machine.groupe_id=groupe.id '
+                .'AND machine.utilisateur_id=utilisateur.id '
+                .'AND utilisateur.id = ?', array('i', &$userId));
+        
+        foreach ($data as $row)
+        {
+            $rows[]=$row;
+        }
+
+        return $rows;
+    }
     
     /*
      * Retourne l'ensemble des Machines qui sont en base
