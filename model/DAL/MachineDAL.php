@@ -174,6 +174,8 @@ class MachineDAL
         return $mesMachines;
     }
     
+    //findByShareByUser($userId) 
+    
     /*
      * Retourne l'ensemble des Machines qui sont en base
      * 
