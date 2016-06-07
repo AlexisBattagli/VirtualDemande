@@ -229,14 +229,16 @@ class UtilisateurDAL
                         . ' FROM utilisateur'
                         . ' WHERE utilisateur.login = ? AND utilisateur.passwd = ?', array('ss',&$login,&$password));
 
+        $utilisateur = new Utilisateur();
         if (sizeof($data) > 0)
         {
-            return true;
+            $utilisateur->hydrate($data[0]);
         }
         else
         {
-            return false;
+            $utilisateur = null;
         }
+        return $utilisateur;
     }
     
     

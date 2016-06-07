@@ -1,5 +1,5 @@
 <?php
- 
+
 //A installer obligatoirement : apt-get install  php5-mysqlnd*
 //                              /etc/init.d/apache2 restart
 // C'est le driver permettant d'avoir la fonction get_result()
@@ -221,10 +221,18 @@ else
         //echo 'Nombre utilisateur :'.$taille;
 
     //Vérification de connection($login,$password) 
-        //if(UtilisateurDAL::connection("pseudoca","pass")==true)
+        //$defautUtilisateur=UtilisateurDAL::connection("pseudoc","pass");
+        //if(is_null($defautUtilisateur))
         //{
-            //echo "Connection oK";
+            //echo "L utilisateur n'existe pas";
         //}
+        //else
+        //{
+            //echo 'Utilisateur par défaut a pour ID:'.$defautUtilisateur->getId();
+            //echo 'Utilisateur par défaut a pour Login:'.$defautUtilisateur->getLogin();
+            //echo 'Utilisateur par défaut a pour role:'.$defautUtilisateur->getRole()->getId();
+        //}
+        
 
 //Vérification des méthodes de Guacamole_UserDAL : 
 
