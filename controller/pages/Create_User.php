@@ -1,6 +1,7 @@
 <?php
 
 //Script de création d'un utilisateur dans les deux bases de données
+    //Version amélioration ne pas envoyer id mais nom
 
 //import
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/UtilisateurDAL.php');
@@ -63,7 +64,7 @@ $newDateCreation=date("Y/m/d");
 $newUtilisateur->setDateCreation($newDateCreation);
 //echo "OK pour DateCréation:".$newUtilisateur->getDateCreation();
 
-$newUtilisateur->setRole("1");
+$newUtilisateur->setRole("2");
 //echo "OK pour Role_id:".$newUtilisateur->getRole()->getId();
 
 //====Vérification de doublons==== - OK
