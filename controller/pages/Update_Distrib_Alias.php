@@ -3,19 +3,40 @@
 //import
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Distrib_AliasDAL.php');
 
-$data   = filter_input(INPUT_POST, 'visible', FILTER_SANITIZE_STRING, FILTER_REQUIRE_ARRAY);
-$id=1;
+/* Pour test :
+ * $data = array(true,false,true,false); 
+ */
 
-$newDistribAlias=new Distrib_Alias();
+//Définition du message renvoyé
+$message="error";
 
-foreach ($data as $row)
+//Checker de où il vient
+
+$validPage = filter_input(INPUT_POST, 'page', FILTER_SANITIZE_STRING);
+
+if($validPage == "updateDistribAlias")
 {
-    $newDistribAlias=Distrib_AliasDAL::findById($id);
-    $newDistribAlias->setVisible($row);
-    $validUpdate = Distrib_AliasDAL::insertOnDuplicate($newDistribAlias);
-    $id=$id+1;
+    $data   = filter_input(INPUT_POST, 'visible', FILTER_SANITIZE_STRING, FILTER_REQUIRE_ARRAY);
+    $id=1;
+    
+    foreach ($data as $row)
+    {
+        //echo $row;
+        $newDistribAlias=Distrib_AliasDAL::findById($id);
+        while($newDistribAlias==null)
+        {
+            $id=$id+1;
+            $newDistribAlias=Distrib_AliasDAL::findById($id);
+        }
+        //echo "  NOM :".$newDistribAlias->getValeur();
+        $newDistribAlias->setVisible($row);
+        //echo "           Visible après :".$newDistribAlias->getVisible();
+        $validUpdate = Distrib_AliasDAL::insertOnDuplicate($newDistribAlias);
+        $id=$id+1;
+    }
+    
+    $message=true;
 }
-echo "fin de DistribAlias";
 
 //Renvoie à la page précédante
-    //echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"]. "' />";
+   echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'?message='.$message. "' />";
