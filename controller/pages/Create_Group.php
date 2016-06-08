@@ -36,18 +36,18 @@ if (GroupeDAL::findByNom($validNom) == null)
 
     if ($validInsertGroupe != null)
     {
-        echo "Ajout du groupe reussi dans la base DBVirtDemande ! (id:" . $validInsertGroupe . ")";
+        //echo "Ajout du groupe reussi dans la base DBVirtDemande ! (id:" . $validInsertGroupe . ")";
     }
     else
     {
-        echo "insert echec...";
+        //echo "insert echec...";
     }
     
-    //Renvoie à la page précédante
-    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"]. "' />";
 }
 else
 {
-    echo "Erreur, le groupe que vous voulez ajouter existe...";
+    //echo "Erreur, le groupe que vous voulez ajouter existe...";
 }
 
+//Renvoie à la page précédante
+    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"]. "' />";

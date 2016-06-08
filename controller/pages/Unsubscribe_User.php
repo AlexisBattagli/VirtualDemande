@@ -20,7 +20,7 @@ $validIdGroupe = filter_input(INPUT_POST, 'idGroupe', FILTER_SANITIZE_STRING);
 //Vérification si l'utilisateur fait partie du groupe
 if(Utilisateur_has_GroupeDAL::findByGU($validIdGroupe,$validIdUser)!=null)
 {
-    echo "Utilisateur est bien dans le groupe";
+    //echo "Utilisateur est bien dans le groupe";
     
     //Suppression de l'utilisateur du groupe
     $validDelete=Utilisateur_has_GroupeDAL::delete($validIdGroupe,$validIdUser);
@@ -29,7 +29,7 @@ if(Utilisateur_has_GroupeDAL::findByGU($validIdGroupe,$validIdUser)!=null)
     $groupeHasMachines=Groupe_has_MachineDAL::findByShareByUserByGroupe($validIdUser,$validIdGroupe);
     if($groupeHasMachines!= null)
     {
-        echo "Utilisateur a des machines dans le groupe";
+        //echo "Utilisateur a des machines dans le groupe";
         //Suppression de la liste des machines de l'utilisateur dans ce groupe
         foreach ($groupeHasMachines as $row)
         {
@@ -42,17 +42,15 @@ if(Utilisateur_has_GroupeDAL::findByGU($validIdGroupe,$validIdUser)!=null)
     }
     else 
     {
-        echo "Utilisateur n'a pas des machines dans le groupe";
+        //echo "Utilisateur n'a pas des machines dans le groupe";
     }
-    
-    //Renvoie à la page précédante
-    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"]. "' />";
-
 }
 else
 {
-    echo "Utilisateur n'est pas dans le groupe";
+    //echo "Utilisateur n'est pas dans le groupe";
 }
 
+//Renvoie à la page précédante
+    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"]. "' />";
 
 

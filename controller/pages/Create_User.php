@@ -75,7 +75,7 @@ if (UtilisateurDAL::isUnique($validLogin,$validEmail) == null)
 
     if ($validInsertUtilisateur != null)
     {
-        echo "Ajout de l'utilisateur reussi dans la base DBVirtDemande ! (id:" . $validInsertUtilisateur . ")";
+        //echo "Ajout de l'utilisateur reussi dans la base DBVirtDemande ! (id:" . $validInsertUtilisateur . ")";
         //Création d'un guacamole_user
 
         $newUserGuacamole=new Guacamole_User();
@@ -107,7 +107,7 @@ if (UtilisateurDAL::isUnique($validLogin,$validEmail) == null)
             //Les $accessWindowStart, $accessWindowEnd doivent être à null sinon ils ne pourront pas accéder à n'importe quelle heure sur leurs machines
             //$validFrom=null, $validUntil=null, pareils
 
-        echo "Valider";
+       // echo "Valider";
 
         //====Vérification de doublons====
         if (Guacamole_UserDAL::findByUsername($validUserName) == null)
@@ -118,7 +118,7 @@ if (UtilisateurDAL::isUnique($validLogin,$validEmail) == null)
 
             if ($validInsertUser != null)
             {
-                echo "Ajout de l'utilisateur reussi dans la base guacamole_db! (id:" . $validInsertUser . ")";
+                //echo "Ajout de l'utilisateur reussi dans la base guacamole_db! (id:" . $validInsertUser . ")";
                 //Paramètres des permissions de l'utilisateur
                 $guacamoleUserPermission=new Guacamole_User_Permission();
                 $guacamoleUserPermission->setUser($validInsertUser);
@@ -134,27 +134,23 @@ if (UtilisateurDAL::isUnique($validLogin,$validEmail) == null)
             }
             else
             {
-                echo "insert echec...";
+                //echo "insert echec...";
             }
-
-            //Renvoie à la page précédante
-            //echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"]. "' />";
         }
         else
         {
-            echo "Erreur, l'utilisateur que vous voulez ajouter existe déjà...";
+            //echo "Erreur, l'utilisateur que vous voulez ajouter existe déjà...";
         }    
     }
     else
     {
-        echo "insert echec...";
+        //echo "insert echec...";
     }
-    
-    //Renvoie à la page précédante
-    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"]. "' />";
 }
 else
 {
-    echo "Erreur, l'utilisateur que vous voulez ajouter existe...";
+    //echo "Erreur, l'utilisateur que vous voulez ajouter existe...";
 }
 
+//Renvoie à la page précédante
+    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"]. "' />";
