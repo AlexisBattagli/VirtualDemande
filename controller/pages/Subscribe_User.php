@@ -2,8 +2,7 @@
 
 /*
  * Envoie de l’id d'un utilisateur et de l'id du groupe 
- * Script (controller) pour supprimer l’utilisateur d’un groupe
- * (=> suppression de toute ces VM partagé dans ce groupe)
+ * Script (controller) pour ajouter l’utilisateur d’un groupe
  */
 
 //import
