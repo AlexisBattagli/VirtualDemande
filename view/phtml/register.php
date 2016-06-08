@@ -2,13 +2,18 @@
     <body>
         <div>
             <form action="./controller/pages/Create_User.php" method="post" >
+                
+                <div class="form-group">
+                    <input name="page" type="hidden" class="form-control" value ="register.php">
+                </div>
+                
                 <div class="form-group">
                     <label for="nameRegister">Name</label>
                     <input name="prenom" type="name" class="form-control" id="nameRegister" placeholder="Name">
                 </div>
                 <div class="form-group">
                     <label for="surnameRegister">Surname</label>
-                    <input name="nom"type="surname" class="form-control" id="surnameRegister" placeholder="Surname">
+                    <input name="nom" type="surname" class="form-control" id="surnameRegister" placeholder="Surname">
                 </div>
                 <div class="form-group">
                     <label for="usernameRegister">Username</label>
