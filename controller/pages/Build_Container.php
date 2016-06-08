@@ -4,8 +4,6 @@
 
 //import
 // web
-require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/UtilisateurDAL.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Utilisateur.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/MachineDAL.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Utilisateur.php');
 
@@ -38,7 +36,7 @@ if ($validDistAliasId != null)
     $distribName = $dist->getNom(); //utile pour le ws, distrib
     $archi = $dist->getArchi(); //utile pour le ws, archi
     $version = $dist->getVersion(); //utile pour le ws, release
-    
+    $ihm = $dist->getIhm(); //utile pour l'insert en guaca (yes|no)
 }
 
 $validRamId = filter_input(INPUT_POST, 'ram', FILTER_SANITIZE_STRING);
@@ -76,7 +74,6 @@ $newDateCreation=date("Y/m/d");
 $newMachine->setDateCreation($newDateCreation);
 
 $newMachine->setEtat(2);
-
 
 if(MachineDAL::findByName($validName) == null)
 {
@@ -121,3 +118,59 @@ catch(SoapFault $f)
 {
         echo $f;
 }
+
+//=====Analyse de ce qui est renvoyer par le ws (renvoyer par le SdA plus exactement)=====/
+$code = substr($result, 0, 1); //Prend la valeur à la position 0 de la string $result et va jusqu'à atteindre une longeur de 1, soit la première lettre de cette string
+echo "</br>Le code de retour vaut : ".$code; //TODO log
+if ($code == "0") 
+{ 
+//=====Si Container créer======/
+    echo "</br>Conteneur créer avec succès sur le serveur de Virt"; //TODO log
+    $passwdRoot = substr($result, 2); //récupère le password root
+    
+    $container = MachineDAL::findById($validInsertMachine);
+    $container->setDescription($container->getDescription() . " Mot de passe du compte root: ". $passwdRoot);
+    $container->setEtat(0);
+    
+    //====Création de la connection======//
+    $connectionContainer = new Guacamole_Connection();
+    $connectionContainer->setConnectionName($validName); //DOnne le nom du container à la connection pour pouvoir l'identifier a la suppression !
+    $connectionContainer->setMaxConnections(null);
+    $connectionContainer->setMaxConnectionsPerUser(null);
+    $connectionContainer->setParent(null);
+    if($ihm=='yes')
+    {
+        $connectionContainer->setProtocol('vnc');
+    }
+    else if($ihm=='no')
+    {
+        $connectionContainer->setProtocol('ssh');
+    }
+    else
+    {
+        echo "Type d'IHM inconnu..."; //TODO log
+    }
+    $idConnectContainer = Guacamole_ConnectionDAL::insertOnDuplicate($connectionContainer);
+    if($idConnectContainer != null)
+    {//Si création de connection guaca ok
+        //créer les parameter de la connection guaca
+        $paramConnectContainer = new Guacamole_Connection_Parameter();
+        
+    }   
+    else
+    {
+        echo "Erreur, la connection n'a pas bien était ajouter dans la DB de guaca..."; //TODO log
+    }
+}     
+else if ($code == "1"){ //If failure pending create of contener
+    echo "</br>Echec de création du conteneur... Contactez le support EVOLVE.";
+    $container = MachineDAL::findById($validInsertMachine);
+    $container->setEtat(1);
+}
+else 
+{ //If fatal error unknow...
+    echo "</br>Code retour inconnu, problème ... Contactez le support EVOLVE !";
+    $container = MachineDAL::findById($validInsertMachine);
+    $container->setEtat(1);
+}
+
