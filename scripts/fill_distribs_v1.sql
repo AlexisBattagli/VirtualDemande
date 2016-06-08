@@ -48,27 +48,51 @@ VALUE (9, 'Debian Jessie Console 32bits', 'Debian', 'Distrib Debian with release
 
 -- CentOS_6_amd64
 INSERT INTO distrib (id,nom,archi,version, ihm, visible)
-VALUE ();
+VALUE (10, 'centos', 'amd64', '6', 'yes', true);
 INSERT INTO distrib_alias (distrib_id,nom_complet,pseudo,commentaire,visible)
-VALUE ();
+VALUE (10, 'CentOS 6 Graphical 64bits', 'CentOS', 'Distrib CentOS with release 6 in 64 bits and graphical version.', true);
 
 -- CentOS_6_i386
 INSERT INTO distrib (id,nom,archi,version, ihm, visible)
-VALUE ();
+VALUE (11, 'centos', 'i386', '6', 'yes', true);
 INSERT INTO distrib_alias (distrib_id,nom_complet,pseudo,commentaire,visible)
-VALUE ();
+VALUE (11, 'CentOS 6 Graphical 32bits', 'CentOS', 'Distrib CentOS with release 6 in 32 bits and graphical version.', true);
 
 -- CentOS_7_amd64
 INSERT INTO distrib (id,nom,archi,version, ihm, visible)
-VALUE ();
+VALUE (12, 'centos', 'amd64', '7', 'yes', true);
 INSERT INTO distrib_alias (distrib_id,nom_complet,pseudo,commentaire,visible)
-VALUE ();
+VALUE (12, 'CentOS 7 Graphical 64bits', 'CentOS', 'Distrib CentOS with release 7 in 64 bits and graphical version.', true);
 
 -- CentOS_7_i386
 INSERT INTO distrib (id,nom,archi,version, ihm, visible)
-VALUE ();
+VALUE (13, 'centos', 'i386', '7', 'yes', true);
 INSERT INTO distrib_alias (distrib_id,nom_complet,pseudo,commentaire,visible)
-VALUE ();
+VALUE (13, 'CentOS 7 Graphic 32bits', 'CentOS', 'Distrib CentOS with release 7 in 32 bits and graphical version.', true);
+
+-- CentOS_6_amd64
+INSERT INTO distrib (id,nom,archi,version, ihm, visible)
+VALUE (14, 'centos', 'amd64', '6', 'no', true);
+INSERT INTO distrib_alias (distrib_id,nom_complet,pseudo,commentaire,visible)
+VALUE (14, 'CentOS 6 Console 64bits', 'CentOS', 'Distrib CentOS with release 6 in 64 bits and console version.', true);
+
+-- CentOS_6_i386
+INSERT INTO distrib (id,nom,archi,version, ihm, visible)
+VALUE (15, 'centos', 'i386', '6', 'no', true);
+INSERT INTO distrib_alias (distrib_id,nom_complet,pseudo,commentaire,visible)
+VALUE (15, 'CentOS 6 Console 32bits', 'CentOS', 'Distrib CentOS with release 6 in 32 bits and console version.', true);
+
+-- CentOS_7_amd64
+INSERT INTO distrib (id,nom,archi,version, ihm, visible)
+VALUE (16, 'centos', 'amd64', '7', 'no', true);
+INSERT INTO distrib_alias (distrib_id,nom_complet,pseudo,commentaire,visible)
+VALUE (16, 'CentOS 7 Console 64bits', 'CentOS', 'Distrib CentOS with release 7 in 64 bits and console version.', true);
+
+-- CentOS_7_i386
+INSERT INTO distrib (id,nom,archi,version, ihm, visible)
+VALUE (17, 'centos', 'i386', '7', 'no', true);
+INSERT INTO distrib_alias (distrib_id,nom_complet,pseudo,commentaire,visible)
+VALUE (17, 'CentOS 7 Console 32bits', 'CentOS', 'Distrib CentOS with release 7 in 32 bits and console version.', true);
 
 -- Ubuntu_wily_amd64
 INSERT INTO distrib (id,nom,archi,version, ihm, visible)
