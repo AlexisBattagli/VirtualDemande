@@ -2,7 +2,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/UtilisateurDAL.php');
 session_start();
-$user =null;
+$user = null;
 $pseudo = filter_input(INPUT_POST, 'login', FILTER_SANITIZE_STRING);
 $password = filter_input(INPUT_POST, 'passwd', FILTER_SANITIZE_STRING);
 
@@ -14,21 +14,20 @@ $password = filter_input(INPUT_POST, 'passwd', FILTER_SANITIZE_STRING);
 
 //User connexion
 if ($pseudo !== null && $password !== null) {
-//    $user = UtilisateurDAL::connection($pseudo, $password);
+    $user = UtilisateurDAL::connection($pseudo, $password);
     if ($user) {
         $_SESSION['user'] = $user->getId();
-        $_SESSION['role'] = $user->getRole();
+        $_SESSION['role'] = $user->getRole()->getId();
+        $_SESSION['name'] = $user->getNom();
 
         setcookie("user_id", $_SESSION['user']);
         setcookie("user_role", $_SESSION['role']);
+        setcookie("user_name", $_SESSION['name']);
     } else {
         $_SESSION['user'] = false;
     }
 }
-
-//    debug
-//var_dump($user);
-//die();
+var_dump($_COOKIE)
 ?>
 
 <html>
@@ -54,7 +53,8 @@ if ($pseudo !== null && $password !== null) {
     </head>
     <body>
 
-        <?php if (!(isset($user) && !empty($user) && $user !== false)): ?>
+        
+        <?php if (!(isset($_SESSION['user']) && !empty($_SESSION['user']) && $_SESSION['user'] !== false)): ?>
             <!-- Nav bar for unconnected user -->
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
@@ -74,7 +74,7 @@ if ($pseudo !== null && $password !== null) {
 
 
                         <ul class="nav navbar-nav">
-                            <li id="what_is_it"><a href="?page=what_is_it">What is it ? <span class="sr-only">(current)</span></a></li>
+                            <li id="what_is_it"><a href="?page=what_is_it">What is it ? </a></li>
                             <li id="how_does_it_work"><a href="?page=how_does_it_work">How does it work ?</a></li>
                             <li id="register"><a href="?page=register">Register</a></li>
                         </ul>
@@ -96,7 +96,8 @@ if ($pseudo !== null && $password !== null) {
                     </div><!-- /.navbar-collapse -->
                 </div><!-- /.container-fluid -->
             </nav>
-        <?php else :?>
+        <?php else : ?>
+
             <!-- Nav bar for connected user -->
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
@@ -118,21 +119,26 @@ if ($pseudo !== null && $password !== null) {
                         <ul class="nav navbar-nav">
                             <li id="what_is_it"><a href="?page=what_is_it">What is it ? <span class="sr-only">(current)</span></a></li>
                             <li id="how_does_it_work"><a href="?page=how_does_it_work">How does it work ?</a></li>
-                            <li id="register"><a href="?page=register">Register</a></li>
                         </ul>
 
-                        <!--A implémenter correctement-->
-                        <p class="navbar-text">Il reste X comptes disponibles</p>    
-
                         <ul class="nav navbar-nav navbar-right">
+                            <li id="what_is_it"><a href="?page=dashboard">Dashboard</a></li>
+                            <li id="how_does_it_work"><a href="">Connect to your containers</a></li>
                             <li>
-                                <form class="navbar-form" action="index.php" method="post">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control"name="login" placeholder="Username">
-                                        <input type="password" class="form-control" name="passwd" placeholder="Password">
-                                    </div>
-                                    <button type="submit" class="btn btn-default">Log In</button>
-                                </form>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="?page=manage_containers">Containers</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="?page=manage_groups">Groups </a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $_COOKIE["user_name"]; ?> <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="?page=profile">Profile</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#">Log out </a></li>
+                                </ul>
                             </li>
                         </ul>
                     </div><!-- /.navbar-collapse -->
@@ -140,7 +146,7 @@ if ($pseudo !== null && $password !== null) {
             </nav>
         <?php endif; ?>
 
-            
+
         <!-- <div id="left-column" class="col-lg-2"></div>   Décalage à droite de deux colonnes. A garder ?-->
 
         <!-- Page to show -->

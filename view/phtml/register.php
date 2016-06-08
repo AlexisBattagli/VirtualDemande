@@ -1,7 +1,7 @@
 <html>
     <body>
         <div>
-            <form>
+            <form action="" method="post" >
                 <div class="form-group">
                     <label for="nameRegister">Name</label>
                     <input type="name" class="form-control" id="nameRegister" placeholder="Name">
