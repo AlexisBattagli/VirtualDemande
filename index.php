@@ -82,7 +82,7 @@ if ($pseudo !== null && $password !== null) {
                                         <input type="text" class="form-control"name="login" placeholder="Username">
                                         <input type="password" class="form-control" name="passwd" placeholder="Password">
                                     </div>
-                                    <button type="submit" class="btn btn-default">Log In</button>
+                                    <button type="submit" class="btn btn-default">Sign In</button>
                                 </form>
                             </li>
                         </ul>
@@ -130,7 +130,7 @@ if ($pseudo !== null && $password !== null) {
                                 <ul class="dropdown-menu">
                                     <li><a href="?page=profile">Profile</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li> <form action="index.php" method="post">
+                                    <li> <form action="./controller/pages/Logout.php" method="post">
                                             <button class="dropdown-item dropdown-signout" type="submit" > Sign out </button>
                                         </form>
                                     </li>
