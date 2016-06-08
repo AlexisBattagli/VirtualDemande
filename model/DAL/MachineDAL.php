@@ -270,6 +270,42 @@ class MachineDAL
     }
     
     /*
+     * Retourne la Machine correspondant au nom
+     * Ce nom de machine étant unique, il n'y qu'une seul ligne retourner.
+     * Il est recherché sans tenir compte de la casse sur nom
+     * 
+     * @param string nom
+     * @return Machine | null
+     */
+    public static function findByName($nom)
+    {
+        $data = BaseSingleton::select('SELECT machine.id as id, '
+                        . 'machine.utilisateur_id as utilisateur_id, '
+                        . 'machine.distrib_alias_id as distrib_alias_id, '
+                        . 'machine.nom as nom, '
+                        . 'machine.cpu_id as cpu_id, '
+                        . 'machine.ram_id as ram_id, '
+                        . 'machine.stockage_id as stockage_id, '
+                        . 'machine.description as description, '
+                        . 'machine.date_creation as date_creation, '
+                        . 'machine.date_expiration as date_expiration, '
+                        . 'machine.etat as etat '
+                        . ' FROM machine'
+                        . ' WHERE LOWER(machine.nom) = LOWER(?)', array('s', &$nom));
+        $machine = new Machine();
+
+        if (sizeof($data) > 0)
+        {
+            $machine->hydrate($data[0]);
+        }
+        else
+        {
+            $machine=null;
+        }
+        return $machine;
+    }
+    
+    /*
      * Insère ou met à jour la Machine donnée en paramètre.
      * Pour cela on vérifie si l'id de la Machine transmis est sup ou inf à 0.
      * Si l'id est inf à 0 alors il faut insèrer, sinon update à l'id transmis.
