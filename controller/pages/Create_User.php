@@ -20,7 +20,7 @@ $message="error";
 
 $validPage = filter_input(INPUT_POST, 'page', FILTER_SANITIZE_STRING);
 
-if($validPage == "register.php")
+if($validPage == "register")
 {
     //Création d'un Utilisateur par défaut
     $newUtilisateur=new Utilisateur();

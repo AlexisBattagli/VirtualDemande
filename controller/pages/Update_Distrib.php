@@ -7,25 +7,35 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/DistribDAL.p
  * $data = array(true,false,true,false); 
  */
 
-$data   = filter_input(INPUT_POST, 'visible', FILTER_SANITIZE_STRING, FILTER_REQUIRE_ARRAY);
+//Définition du message renvoyé
+$message="error";
 
-$id=1;
+//Checker de où il vient
 
-foreach ($data as $row)
+$validPage = filter_input(INPUT_POST, 'page', FILTER_SANITIZE_STRING);
+
+if($validPage == "updateDistrib")
 {
-    //echo $row;
-    $newDistrib=DistribDAL::findById($id);
-    while($newDistrib==null)
+    $data   = filter_input(INPUT_POST, 'visible', FILTER_SANITIZE_STRING, FILTER_REQUIRE_ARRAY);
+
+    $id=1;
+
+    foreach ($data as $row)
     {
-        $id=$id+1;
+        //echo $row;
         $newDistrib=DistribDAL::findById($id);
+        while($newDistrib==null)
+        {
+            $id=$id+1;
+            $newDistrib=DistribDAL::findById($id);
+        }
+        //echo "  NOM :".$newDistrib->getValeur();
+        $newDistrib->setVisible($row);
+        //echo "           Visible après :".$newDistrib->getVisible();
+        $validUpdate = DistribDAL::insertOnDuplicate($newDistrib);
+        $id=$id+1;
     }
-    //echo "  NOM :".$newDistrib->getValeur();
-    $newDistrib->setVisible($row);
-    //echo "           Visible après :".$newDistrib->getVisible();
-    $validUpdate = DistribDAL::insertOnDuplicate($newDistrib);
-    $id=$id+1;
 }
 
 //Renvoie à la page précédante
-    //echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"]. "' />";
+    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'?message='.$message. "' />";
