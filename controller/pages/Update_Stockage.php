@@ -1,16 +1,21 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//import
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/StockageDAL.php');
 
-/**
- * Description of Update_Stockage
- *
- * @author Utilisateur
- */
-class Update_Stockage {
-    //put your code here
+$data   = filter_input(INPUT_POST, 'visible', FILTER_SANITIZE_STRING, FILTER_REQUIRE_ARRAY);
+$id=1;
+
+$newStockage=new Stockage();
+
+foreach ($data as $row)
+{
+    $newStockage=StockageDAL::findById($id);
+    $newStockage->setVisible($row);
+    $validUpdate = StockageDAL::insertOnDuplicate($newStockage);
+    $id=$id+1;
 }
+echo "fin de Stockage";
+
+//Renvoie à la page précédante
+    //echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"]. "' />";
