@@ -7,6 +7,11 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/UtilisateurDAL.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Guacamole_UserDAL.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Guacamole_User_PermissionDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/RoleDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/GroupeDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Utilisateur_has_GroupeDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/LimitantDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Table_logDAL.php');
 
 //Création d'un Utilisateur par défaut
 $newUtilisateur=new Utilisateur();
@@ -42,9 +47,11 @@ if ($validEmail != null)
 }
 
 $validDate = filter_input(INPUT_POST, 'date', FILTER_SANITIZE_STRING);
-if ($validDate != null)
+$date = DateTime::createFromFormat('d/m/Y', $validDate);
+$validDateFormat=$date->format('Y/m/d');
+if ($validDateFormat != null)
 {
-    $newUtilisateur->setDateNaissance($validDate);
+    $newUtilisateur->setDateNaissance($validDateFormat);
     //echo "OK pour Date de Naissance:".$newUtilisateur->getDateNaissance();
 }
 
@@ -107,7 +114,7 @@ if (UtilisateurDAL::isUnique($validLogin,$validEmail) == null)
             //Les $accessWindowStart, $accessWindowEnd doivent être à null sinon ils ne pourront pas accéder à n'importe quelle heure sur leurs machines
             //$validFrom=null, $validUntil=null, pareils
 
-       // echo "Valider";
+        //echo "Valider";
 
         //====Vérification de doublons====
         if (Guacamole_UserDAL::findByUsername($validUserName) == null)
