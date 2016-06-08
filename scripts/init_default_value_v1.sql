@@ -1,10 +1,10 @@
 -- Default value of the table ‘distrib’
 INSERT INTO distrib (id, nom, archi, version, ihm, visible)
-VALUE (1, 'default_distrib', '64bits', 'laptop', 'desktop', true); 
+VALUE (1, 'default_distrib', '64bits', 'laptop', 'desktop', false); 
 
 -- Default value of the table ‘distrib_alias’
 INSERT INTO distrib_alias (id, distrib_id, nom_complet, pseudo, commentaire, visible)
-VALUE (1, 1, 'default_complet_name_disitrib', 'default_pseudo_distrib', 'default_commentary', true);
+VALUE (1, 1, 'default_complet_name_disitrib', 'default_pseudo_distrib', 'default_commentary', false);
 
 -- Default value of the table ‘limitant’
 INSERT INTO limitant (id, nb_user_max, nb_vm_user)
