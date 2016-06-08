@@ -36,7 +36,8 @@ CREATE TABLE groupe (
 CREATE TABLE groupe_has_machine (
   groupe_id INTEGER UNSIGNED NOT NULL,
   machine_id INTEGER UNSIGNED NOT NULL,
-  commentaire VARCHAR(255) NULL
+  commentaire TEXT NULL,
+  PRIMARY KEY(groupe_id, machine_id)
 );
 
 CREATE TABLE limitant (
@@ -108,7 +109,8 @@ CREATE TABLE utilisateur (
 
 CREATE TABLE utilisateur_has_groupe (
   utilisateur_id INTEGER UNSIGNED NOT NULL,
-  role_groupe VARCHAR(255) NULL
+  groupe_id INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY(utilisateur_id, groupe_id)
 );
 
 
