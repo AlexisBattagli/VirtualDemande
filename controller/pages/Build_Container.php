@@ -73,7 +73,7 @@ if ($validUserId != null)
 }
 
 $newDateCreation=date("Y/m/d");
-$newGroupe->setDateCreation($newDateCreation);
+$newMachine->setDateCreation($newDateCreation);
 
 $newMachine->setEtat(2);
 
