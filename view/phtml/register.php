@@ -1,7 +1,7 @@
 <html>
     <body>
         <div>
-            <form action="Create_User.php" method="post" >
+            <form action="./controller/pages/Create_User.php" method="post" >
                 <div class="form-group">
                     <label for="nameRegister">Name</label>
                     <input name="prenom" type="name" class="form-control" id="nameRegister" placeholder="Name">
