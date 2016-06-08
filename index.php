@@ -6,12 +6,6 @@ $user = null;
 $pseudo = filter_input(INPUT_POST, 'login', FILTER_SANITIZE_STRING);
 $password = filter_input(INPUT_POST, 'passwd', FILTER_SANITIZE_STRING);
 
-//$user = new Utilisateur();
-//$user->setLogin($pseudo);
-//$user->setPassword($password);
-//$user->setId(15);
-//$user->setRole('lapin');
-
 //User connexion
 if ($pseudo !== null && $password !== null) {
     $user = UtilisateurDAL::connection($pseudo, $password);
@@ -125,7 +119,7 @@ var_dump($_COOKIE)
                             <li id="what_is_it"><a href="?page=dashboard">Dashboard</a></li>
                             <li id="how_does_it_work"><a href="">Connect to your containers</a></li>
                             <li>
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage <span class="caret"></span></a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="?page=manage_containers">Containers</a></li>
                                     <li role="separator" class="divider"></li>
@@ -133,7 +127,7 @@ var_dump($_COOKIE)
                                 </ul>
                             </li>
                             <li>
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $_COOKIE["user_name"]; ?> <span class="caret"></span></a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $_COOKIE["user_name"]; ?> <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="?page=profile">Profile</a></li>
                                     <li role="separator" class="divider"></li>
