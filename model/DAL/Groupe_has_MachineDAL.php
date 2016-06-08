@@ -4,6 +4,7 @@
  * La class Groupe_has_MachineDAL utilise la class Groupe_has_Machine.
  *
  * @author Alexis
+ * @author Aurelie
  * @version 0.1
  * 
  * Cette class permet de faire,
@@ -13,6 +14,7 @@
  */
 require_once('BaseSingleton.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Groupe_has_Machine.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/MachineDAL.php');
 
 class Groupe_has_MachineDAL {
     /*
@@ -126,6 +128,38 @@ class Groupe_has_MachineDAL {
             $groupeHasMachine = null;
         }
         return $groupeHasMachine;
+    }
+    
+    /*
+     * Renvoie la liste des connexions où la machine de l'utilisateur est dans le groupe
+     * 
+     * @param int $userId, int $groupeId
+     * @return array[Groupe_has_Machine] Tous les Groupe_has_Machine sont placés dans un Tableau
+     */
+    
+    public static function findByShareByUserByGroupe($userId,$groupeId)
+    {
+        $mesgroupeHasMachines = array();
+
+        $mesMachines=MachineDAL::findByShareByUser($userId);
+        
+        foreach ($mesMachines as $row)
+        { 
+            $machineNom=$row['nom'];
+            //echo $machineNom;
+            $machine=MachineDAL::findByDN($userId,$machineNom);  
+            $machineId=$machine->getId();
+            //echo $machineId;
+            $statut= self::isInGroupe($groupeId, $machineId);
+            
+            if($statut==true)
+            {
+                $groupeHasMachine = self::findByGM($groupeId, $machineId);
+                $mesgroupeHasMachines[] = $groupeHasMachine;
+            }
+        }
+
+        return $mesgroupeHasMachines;
     }
 
     /*
