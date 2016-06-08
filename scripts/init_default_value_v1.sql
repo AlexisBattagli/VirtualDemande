@@ -12,15 +12,15 @@ VALUE (1, 10, 3);
 
 -- Default value of the table ‘cpu’
 INSERT INTO cpu (id, nb_coeur, visible)
-VALUE(1, 0, true );
+VALUE(1, 0, false );
 
 -- Default value of the table ‘ram’
 INSERT INTO ram (id, valeur, visible)
-VALUE (1, 0, true);
+VALUE (1, 0, false);
 
 -- Default value of the table ‘stockage’
 INSERT INTO stockage (id, valeur, visible)
-VALUE (1, 0, true);
+VALUE (1, 0, false);
 
 -- Default value of the table ‘role’
 INSERT INTO role (id, nom_role, description)
