@@ -96,27 +96,50 @@ VALUE (17, 'CentOS 7 Console 32bits', 'CentOS', 'Distrib CentOS with release 7 i
 
 -- Ubuntu_wily_amd64
 INSERT INTO distrib (id,nom,archi,version, ihm, visible)
-VALUE ();
+VALUE (18, 'ubuntu', 'amd64', 'wily', 'yes', true);
 INSERT INTO distrib_alias (distrib_id,nom_complet,pseudo,commentaire,visible)
-VALUE ();
+VALUE (18, 'Ubuntu Wily (15.10) Graphical 64bits', 'Ubuntu', 'Distrib Ubuntu with release Wily (version 15.10) in 64 bits and graphical version.', true);
 
 -- Ubuntu_wily_i386
 INSERT INTO distrib (id,nom,archi,version, ihm, visible)
-VALUE ();
+VALUE (19, 'ubuntu', 'i386', 'wily', 'yes', true);
 INSERT INTO distrib_alias (distrib_id,nom_complet,pseudo,commentaire,visible)
-VALUE ();
+VALUE (19, 'Ubuntu Wily (15.10) Graphical 32bits', 'Ubuntu', 'Distrib Ubuntu with release Wily (version 15.10) in 32 bits and graphical version.', true);
 
 -- Ubuntu_xenial_amd64
 INSERT INTO distrib (id,nom,archi,version, ihm, visible)
-VALUE ();
+VALUE (20, 'ubuntu', 'amd64', 'xenial', 'yes', true);
 INSERT INTO distrib_alias (distrib_id,nom_complet,pseudo,commentaire,visible)
-VALUE ();
+VALUE (20, 'Ubuntu Xenial (16.04 LTS) Graphical 64bits', 'Ubuntu', 'Distrib Ubuntu with release Wily (version 16.04 LTS) in 64 bits and graphical version.', true);
 
 -- Ubuntu_xenial_i386
 INSERT INTO distrib (id,nom,archi,version, ihm, visible)
-VALUE ();
+VALUE (21, 'ubuntu', 'i386', 'xenial', 'yes', true);
 INSERT INTO distrib_alias (distrib_id,nom_complet,pseudo,commentaire,visible)
-VALUE ();
+VALUE (21, 'Ubuntu Xenial (16.04 LTS) Graphical 32bits', 'Ubuntu', 'Distrib Ubuntu with release Wily (version 16.04 LTS) in 32 bits and graphical version.', true);
 
+-- Ubuntu_wily_amd64
+INSERT INTO distrib (id,nom,archi,version, ihm, visible)
+VALUE (22, 'ubuntu', 'amd64', 'wily', 'no', true);
+INSERT INTO distrib_alias (distrib_id,nom_complet,pseudo,commentaire,visible)
+VALUE (22, 'Ubuntu Wily (15.10) Console 64bits', 'Ubuntu', 'Distrib Ubuntu with release Wily (version 15.10) in 64 bits and console version.', true);
+
+-- Ubuntu_wily_i386
+INSERT INTO distrib (id,nom,archi,version, ihm, visible)
+VALUE (23, 'ubuntu', 'i386', 'wily', 'no', true);
+INSERT INTO distrib_alias (distrib_id,nom_complet,pseudo,commentaire,visible)
+VALUE (23, 'Ubuntu Wily (15.10) Console 32bits', 'Ubuntu', 'Distrib Ubuntu with release Wily (version 15.10) in 32 bits and console version.', true);
+
+-- Ubuntu_xenial_amd64
+INSERT INTO distrib (id,nom,archi,version, ihm, visible)
+VALUE (24, 'ubuntu', 'amd64', 'xenial', 'no', true);
+INSERT INTO distrib_alias (distrib_id,nom_complet,pseudo,commentaire,visible)
+VALUE (24, 'Ubuntu Xenial (16.04 LTS) Console 64bits', 'Ubuntu', 'Distrib Ubuntu with release Wily (version 16.04 LTS) in 64 bits and console version.', true);
+
+-- Ubuntu_xenial_i386
+INSERT INTO distrib (id,nom,archi,version, ihm, visible)
+VALUE (25, 'ubuntu', 'i386', 'xenial', 'no', true);
+INSERT INTO distrib_alias (distrib_id,nom_complet,pseudo,commentaire,visible)
+VALUE (25, 'Ubuntu Xenial (16.04 LTS) Console 32bits', 'Ubuntu', 'Distrib Ubuntu with release Wily (version 16.04 LTS) in 32 bits and console version.', true);
 
 
