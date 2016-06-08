@@ -6,28 +6,21 @@ $user = null;
 $pseudo = filter_input(INPUT_POST, 'login', FILTER_SANITIZE_STRING);
 $password = filter_input(INPUT_POST, 'passwd', FILTER_SANITIZE_STRING);
 
-//$user = new Utilisateur();
-//$user->setLogin($pseudo);
-//$user->setPassword($password);
-//$user->setId(15);
-//$user->setRole('lapin');
-
 //User connexion
 if ($pseudo !== null && $password !== null) {
     $user = UtilisateurDAL::connection($pseudo, $password);
     if ($user) {
-        $_SESSION['user'] = $user->getId();
-        $_SESSION['role'] = $user->getRole()->getId();
+        $_SESSION['user_id'] = $user->getId();
+        $_SESSION['role_id'] = $user->getRole()->getId();
         $_SESSION['name'] = $user->getNom();
 
-        setcookie("user_id", $_SESSION['user']);
-        setcookie("user_role", $_SESSION['role']);
+        setcookie("user_id", $_SESSION['user_id']);
+        setcookie("user_role", $_SESSION['role_id']);
         setcookie("user_name", $_SESSION['name']);
     } else {
         $_SESSION['user'] = false;
     }
 }
-var_dump($_COOKIE)
 ?>
 
 <html>
@@ -53,8 +46,8 @@ var_dump($_COOKIE)
     </head>
     <body>
 
-        
-        <?php if (!(isset($_SESSION['user']) && !empty($_SESSION['user']) && $_SESSION['user'] !== false)): ?>
+
+        <?php if (!(isset($_SESSION['user_id']) && !empty($_SESSION['user_id']) && $_SESSION['user_id'] !== false)): ?>
             <!-- Nav bar for unconnected user -->
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
@@ -125,7 +118,7 @@ var_dump($_COOKIE)
                             <li id="what_is_it"><a href="?page=dashboard">Dashboard</a></li>
                             <li id="how_does_it_work"><a href="">Connect to your containers</a></li>
                             <li>
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage <span class="caret"></span></a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="?page=manage_containers">Containers</a></li>
                                     <li role="separator" class="divider"></li>
@@ -133,11 +126,14 @@ var_dump($_COOKIE)
                                 </ul>
                             </li>
                             <li>
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $_COOKIE["user_name"]; ?> <span class="caret"></span></a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $_COOKIE["user_name"]; ?> <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="?page=profile">Profile</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#">Log out </a></li>
+                                    <li> <form action="index.php" method="post">
+                                            <button class="dropdown-item dropdown-signout" type="submit" > Sign out </button>
+                                        </form>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>

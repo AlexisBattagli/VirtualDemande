@@ -1,10 +1,27 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : 16 mai 2016, 18:04:05
-    Author     : hundrix
-*/
+.dropdown-signout {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: 0 none;
+    text-align: left;
+    width: 100%;
+}
+
+button.dropdown-signout {
+    padding-left: 20px;
+    padding-top: 3px;
+}
+
+.dropdown-item {
+    color: #333;
+    display: block;
+    overflow: hidden;
+    padding: 4px 10px 4px 15px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dropdown-item:hover {
+    background-color: #e8e8e8;
+    background-image: linear-gradient(to bottom, #f5f5f5 0px, #e8e8e8 100%);
+    background-repeat: repeat-x;
+}
 
