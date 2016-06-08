@@ -1,5 +1,7 @@
 <?php
 
+//Script de création d'un utilisateur dans les deux bases de données
+
 //import
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/UtilisateurDAL.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Guacamole_UserDAL.php');
@@ -57,7 +59,8 @@ if ($validPassword != null)
 $newUtilisateur->setNbVm("0");
 //echo "OK pour NbVm:".$newUtilisateur->getNbVm();
 
-$newUtilisateur->setDateCreation("0000/00/00");
+$newDateCreation=date("Y/m/d");
+$newUtilisateur->setDateCreation($newDateCreation);
 //echo "OK pour DateCréation:".$newUtilisateur->getDateCreation();
 
 $newUtilisateur->setRole("1");
@@ -147,7 +150,7 @@ if (UtilisateurDAL::isUnique($validLogin,$validEmail) == null)
     }
     
     //Renvoie à la page précédante
-    //echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"]. "' />";
+    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"]. "' />";
 }
 else
 {
