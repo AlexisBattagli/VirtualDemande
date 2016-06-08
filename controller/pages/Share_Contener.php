@@ -38,6 +38,8 @@ if($validPage == "shareContener")
 
         //Suppression de le la machine partagée par l'utilisateur dans le groupe
         $validDelete=Groupe_has_MachineDAL::insertOnDuplicate($newGroupeHasMachine);
+        
+        $message=true;
 
     }
     else

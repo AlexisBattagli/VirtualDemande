@@ -48,6 +48,8 @@ if($validPage == "unsubscribeUser")
                 //echo $machineId;
                 $validDelete=Groupe_has_MachineDAL::delete($groupeId, $machineId);
             }
+            
+            $message=true;
         }
         else 
         {

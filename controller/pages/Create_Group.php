@@ -45,6 +45,7 @@ if($validPage == "createGroupe")
 
         if ($validInsertGroupe != null)
         {
+            $message=true;
             //echo "Ajout du groupe reussi dans la base DBVirtDemande ! (id:" . $validInsertGroupe . ")";
         }
         else

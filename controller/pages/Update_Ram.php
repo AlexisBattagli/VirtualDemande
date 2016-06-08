@@ -34,6 +34,8 @@ if($validPage == "updateRam")
         $validUpdate = RamDAL::insertOnDuplicate($newRam);
         $id=$id+1;
     }
+    
+    $message=true;
 }
 
 //Renvoie à la page précédante

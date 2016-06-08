@@ -30,6 +30,8 @@ if($validPage == "removeContener")
 
         //Suppression de le la machine partagée par l'utilisateur dans le groupe
         $validDelete=Groupe_has_MachineDAL::delete($validIdGroupe, $validIdMachine);
+        
+        $message=true;
     }
     else
     {

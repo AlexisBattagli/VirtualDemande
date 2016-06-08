@@ -34,6 +34,8 @@ if($validPage == "updateDistribAlias")
         $validUpdate = Distrib_AliasDAL::insertOnDuplicate($newDistribAlias);
         $id=$id+1;
     }
+    
+    $message=true;
 }
 
 //Renvoie à la page précédante

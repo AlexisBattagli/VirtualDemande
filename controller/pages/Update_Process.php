@@ -33,6 +33,8 @@ if($validPage == "updateProcess")
         $validUpdate = CpuDAL::insertOnDuplicate($newCpu);
         $id=$id+1;
     }
+    
+    $message=true;
 }
 
 //Renvoie à la page précédante

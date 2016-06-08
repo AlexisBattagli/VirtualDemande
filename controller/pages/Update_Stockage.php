@@ -34,6 +34,8 @@ if($validPage == "updateRam")
         $validUpdate = StockageDAL::insertOnDuplicate($newStockage);
         $id=$id+1;
     }
+    
+    $message=true;
 }
 
 //Renvoie à la page précédante

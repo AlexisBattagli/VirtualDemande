@@ -35,6 +35,8 @@ if($validPage == "updateDistrib")
         $validUpdate = DistribDAL::insertOnDuplicate($newDistrib);
         $id=$id+1;
     }
+    
+    $message=true;
 }
 
 //Renvoie à la page précédante

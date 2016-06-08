@@ -35,6 +35,8 @@ if($validPage == "subscribeUser")
 
         //Ajout de l'utilisateur du groupe
         $validInsert=Utilisateur_has_GroupeDAL::insertOnDuplicate($newUtilisateurHasGroupe);
+        
+        $message=true;
     }
     else
     {
