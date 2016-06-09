@@ -127,7 +127,7 @@ $HDDisplayed = StockageDAL::findByVisible();
                     </div>
 <!--                    Hidden input that return user ID A RECUP PAR CONTROLLER-->
                     <div class="form-group">
-                        <input name="user" type="hidden" class="form-control" value="<?php $_COOKIE["user_id"] ?>" >
+                        <input name="user" type="hidden" class="form-control" value="<?php $_COOKIE["user_id"]; ?>" >
                     </div>
                     <!--Name input-->
                     <div class="form-group">

@@ -89,7 +89,7 @@ if($validPage == "manage_containers.php")
 
     $newMachine->setEtat(2);
     
-    if(UtilisateurDAL::isFull($user->getId()) == false) //vérifie que l'user n'a pas atteint son quota
+    if(UtilisateurDAL::isFull($validUserId) == false) //vérifie que l'user n'a pas atteint son quota
     {
         if(MachineDAL::findByName($validName) == null)
         {
@@ -448,4 +448,4 @@ if($validPage == "manage_containers.php")
 }
 
 //Renvoie à la page précédante
-    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+    //echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
