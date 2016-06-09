@@ -1,11 +1,20 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/MachineDAL.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/GroupeDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Distrib_AliasDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/CpuDAL.php');
+
+
 $rowsFonctionnal = MachineDAL::findSuccessByUser($_COOKIE["user_id"]);
 $rowsCreated = MachineDAL::findNotCreatByUser($_COOKIE["user_id"]);
+$OSDisplayed = Distrib_AliasDAL::findByVisible();
+$CPUDisplayed = CpuDAL::findByVisible();
+
+
 //$groups = GroupeDAL::findByUser($_COOKIE["user_id"]);
+
 //echo '<pre>';
-//var_dump($rowsCreated);
+//var_dump($CPUDisplayed);
 //echo '</pre>';
 ?>
 <html>
@@ -99,6 +108,8 @@ $rowsCreated = MachineDAL::findNotCreatByUser($_COOKIE["user_id"]);
                 </tbody>
             </table>
         </div>
+        
+        <!--Container creation panel-->
         <div class="panel panel-info autocollapse">
             <div class="panel-heading clickable">
                 <h2 class="panel-title">
@@ -106,37 +117,44 @@ $rowsCreated = MachineDAL::findNotCreatByUser($_COOKIE["user_id"]);
                 </h2>
             </div>
             <div class="panel-body">
-                <form action="" method="post" >  <!--action a mettre-->
+                <!--Container creation form-->
+                <form action="./controller/pages/Build_Container.php" method="post" >
                     <!--Hidden input for return on page-->
                     <div class="form-group">
                         <input name="page" type="hidden" class="form-control" value ="manage_containers.php">
                     </div>
+                    <!--Name input-->
                     <div class="form-group">
                         <h4><label for="nameContainer">Name</label></h4>
-                        <input name="" type="name" class="form-control" id="nameContainer" placeholder="Container name">
+                        <input name="nameContainer" type="name" class="form-control" id="nameContainer" placeholder="Container name">
                     </div>
+                    <!--OS selector-->
                     <div class="form-group">
                         <h4><label>OS</label></h4>
-                        <select class="form-control">
-                            <option>Ubuntu</option>
-                            <option>Debian</option>
-                            <option>Mint</option>
-                            <option>Arch</option>
-                            <option>Gentoo</option>
+                        <select name="dist" class="form-control">
+                            <?php
+                            foreach ($OSDisplayed as $OS) {
+                                echo "<option value=" . $OS->getId() . ">";  
+                                echo $OS->getNomComplet();
+                                echo "</option>";
+                            }
+                            ?>
                         </select>
                     </div>
+                    <!--CPU selector-->
                     <div class="form-group">
                         <h4><label>Number of processors</label></h4>
-                        <label class="radio-inline">
-                            <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1"> 1
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2"> 2
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="3"> 3
-                        </label>
+                        <select name="cpu" class="form-control">
+                            <?php
+                            foreach ($CPUDisplayed as $CPU) {
+                                echo "<option value=" . $CPU->getId() . ">";  //a modifier pour envoi nom complet
+                                echo $CPU->getNbCoeur() . " cores";
+                                echo "</option>";
+                            }
+                            ?>
+                        </select>
                     </div>
+                    
                     <div class="form-group">
                         <h4><label>RAM quantity</label></h4>
                         <label class="radio-inline">
@@ -163,7 +181,7 @@ $rowsCreated = MachineDAL::findNotCreatByUser($_COOKIE["user_id"]);
                     </div>
                     <div>
                         <h4><label>Personnal description</label></h4>
-                        <textarea class="form-control" rows="3" placeholder="Enter a personnal description for your container."></textarea>
+                        <textarea name="descriptionContainer" class="form-control" rows="3" placeholder="Enter a personnal description for your container."></textarea>
                     </div>
                     <div>
                         <button type="submit" class="btn btn-default">Create container</button>
