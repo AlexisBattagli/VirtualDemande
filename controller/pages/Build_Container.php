@@ -207,7 +207,7 @@ if ($validPage == "manage_containers.php") {
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Paramètre username = root de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            exit();
+                            //exit();
                             //echo "Paramètre username = root de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur..."; //TODO log
                         }
 
@@ -226,7 +226,7 @@ if ($validPage == "manage_containers.php") {
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Paramètre password de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            exit();
+                            //exit();
                            // echo "Paramètre password de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur..."; //TODO log
                         }
 
@@ -245,7 +245,7 @@ if ($validPage == "manage_containers.php") {
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Paramètre hostname = " . $addrIpContainer . " de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            exit();
+                            //exit();
                            // echo "Paramètre hostname = " . $addrIpContainer . " de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur..."; //TODO log
                         }
 
@@ -270,7 +270,7 @@ if ($validPage == "manage_containers.php") {
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Erreur, type d'ihm inconnu... Sérieux, comment ça a pu arriver ?!!");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            exit();
+                           // exit();
                           //  echo "Erreur, type d'ihm inconnu... Sérieux, comment ça a pu arriver ?!!"; //TODO log
                         }
                         $validInsertParamPort = Guacamole_Connection_ParameterDAL::insertOnDuplicate($paramConnectContainer);
@@ -285,7 +285,7 @@ if ($validPage == "manage_containers.php") {
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Paramètre port de la connection (connection n°" . $idConnectContainer . ") non ajoutée.");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            exit();
+                           // exit();
                            // echo "Paramètre port de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur..."; //TODO log
                         }
 
@@ -308,7 +308,7 @@ if ($validPage == "manage_containers.php") {
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission READ pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            exit();
+                          //  exit();
                           //  echo "La permission READ pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
                         }
 
@@ -326,7 +326,7 @@ if ($validPage == "manage_containers.php") {
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission UPDATE pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            exit();
+                           // exit();
                            // echo "La permission UPDATE pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
                         }
 
@@ -344,7 +344,7 @@ if ($validPage == "manage_containers.php") {
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission DELETE pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            exit();
+                          //  exit();
                           //  echo "La permission DELETE pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
                         }
 
@@ -362,7 +362,7 @@ if ($validPage == "manage_containers.php") {
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission ADMINISTER pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            exit();
+                           // exit();
                           //  echo "La permission ADMINISTER pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
                         }
 
@@ -372,7 +372,7 @@ if ($validPage == "manage_containers.php") {
                         $newLog->setLoginUtilisateur($loginUtilisateur);
                         $newLog->setMsg("Erreur, la connection n'a pas bien était ajouter dans la DB de guaca...");
                         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                        exit();
+                       // exit();
                        // echo "Erreur, la connection n'a pas bien était ajouter dans la DB de guaca..."; //TODO log
                     }
                 } else if ($code == "1") { //If failure pending create of contener
