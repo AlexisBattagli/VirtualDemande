@@ -4,9 +4,7 @@
  * Script de déconnexion
  */
 
-// Initialisation de la session.
-// Si vous utilisez un autre nom
-// session_name("autrenom")
+// Initialisation de la session
 session_start();
 
 // Détruit toutes les variables de session
