@@ -77,6 +77,7 @@ if($validPage == "manage_containers.php")
     }
 
     $validUserId = filter_input(INPUT_POST, 'user', FILTER_SANITIZE_STRING); //sera utile pour l'insert
+    echo $validUserId;
     if ($validUserId != null)
     {
         $user = UtilisateurDAL::findById($validUserId); //sert à l'insert
@@ -147,6 +148,10 @@ if($validPage == "manage_containers.php")
                                 'cpu' => $valueCpu,
                                 'stockage' => $valueStock
                         )); 
+                echo "<pre>\n";
+                echo "Request: \n".htmlspecialchars($client->__getLastRequest())."\n";
+                echo "Response: \n".htmlspecialchars($client->__getLastResponse())."\n";
+                 echo "</pre>\n";
         }
         catch(SoapFault $f)
         {

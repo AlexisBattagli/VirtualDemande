@@ -6,7 +6,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/CpuDAL.php')
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/RamDAL.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/StockageDAL.php');
 
-
+$userId=$_COOKIE["user_id"];
 $rowsFonctionnal = MachineDAL::findSuccessByUser($_COOKIE["user_id"]);
 $rowsCreated = MachineDAL::findNotCreatByUser($_COOKIE["user_id"]);
 $OSDisplayed = Distrib_AliasDAL::findByVisible();
@@ -127,7 +127,7 @@ $HDDisplayed = StockageDAL::findByVisible();
                     </div>
 <!--                    Hidden input that return user ID A RECUP PAR CONTROLLER-->
                     <div class="form-group">
-                        <input name="user" type="hidden" class="form-control" value="<?php $_COOKIE["user_id"]; ?>" >
+                        <input name="user" type="hidden" class="form-control" value="<?php echo $userId; ?>" >
                     </div>
                     <!--Name input-->
                     <div class="form-group">
