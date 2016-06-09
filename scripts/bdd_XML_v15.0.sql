@@ -84,13 +84,11 @@ CREATE TABLE stockage (
 );
 
 CREATE TABLE table_log (
-  table_log_id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  date_heure DATETIME NULL,
-  action TEXT NULL,
-  code_retour TEXT NULL,
-  utilisateur TEXT NULL,
-  machine TEXT NULL,
-  PRIMARY KEY(table_log_id)
+  id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  msg TEXT NULL,
+  date_time DATETIME NULL,
+  level ENUM('ERROR','INFO','WARN') NULL,
+  PRIMARY KEY(id)
 );
 
 CREATE TABLE utilisateur (
