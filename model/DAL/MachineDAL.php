@@ -120,7 +120,7 @@ class MachineDAL
                 .'stockage.valeur as stockage, '
                 .'machine.description as description, '
                 .'machine.date_creation as date_creation, '
-                .'machine.date_expiration as date_expiration, '
+                .'machine.date_expiration as date_expiration '
                 .'FROM machine, distrib_alias, cpu, ram, stockage '
                 .'WHERE machine.distrib_alias_id = distrib_alias.id '
                 .'AND machine.cpu_id = cpu.id '
