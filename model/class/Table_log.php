@@ -21,25 +21,32 @@ class Table_log {
     private $id;
     
     /*
-     * action d'un Table_log dans la table Table_log
+     * msg d'un Table_log dans la table Table_log
      * @var string 
      */
 
     private $msg;
     
     /*
-     * dateHeure d'un Table_log dans la table Table_log
+     * dateTime d'un Table_log dans la table Table_log
      * @var string 
      */
 
     private $dateTime;
     
     /*
-     * action d'un Table_log dans la table Table_log
+     * level d'un Table_log dans la table Table_log
      * @var string 
      */
 
     private $level;
+    
+    /*
+     * login_utilisateur d'un Table_log dans la table Table_log
+     * @var string 
+     */
+
+    private $loginUtilisateur;
     
     /*
       ==============================
@@ -48,13 +55,14 @@ class Table_log {
      */
 
     public function Table_log(
-    $id = -1, $msg = "Aucune message", $dateTime = "0000-00-00 00:00:00", $level = null
+    $id = -1, $msg = "Aucune message", $level = null, $loginUtilisateur="Aucun utilisateur"
     )
     {
         $this->id = $id;
         $this->msg = $msg;
-        $this->dateTime = $dateTime;
+        $this->dateTime = date('Y/m/d G:i:s');
         $this->level = $level;
+        $this->loginUtilisateur = $loginUtilisateur;
     }
 
     /*
@@ -69,6 +77,7 @@ class Table_log {
         $this->msg = $dataSet['msg'];
         $this->dateTime = $dataSet['date_time'];
         $this->level = $dataSet['level'];
+        $this->loginUtilisateur = $dataSet['login_utilisateur'];
     }
 
     /*
@@ -119,7 +128,7 @@ class Table_log {
         return $this->dateTime;
     }
     
-    //dateHeure
+    //level
     public function setLevel($level)
     {
         if (is_string($level))
@@ -131,5 +140,19 @@ class Table_log {
     public function getLevel()
     {
         return $this->level;
+    }
+    
+    //login_utilisateur
+    public function setLoginUtilisateur($loginUtilisateur)
+    {
+        if (is_string($loginUtilisateur))
+        {
+            $this->loginUtilisateur = $loginUtilisateur;
+        }
+    }
+
+    public function getLoginUtilisateur()
+    {
+        return $this->loginUtilisateur;
     }
 }
