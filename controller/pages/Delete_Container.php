@@ -17,14 +17,13 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Guacamole_Co
 $message="error";
 
 //Checker de où il vient
-
 $validPage = filter_input(INPUT_POST, 'page', FILTER_SANITIZE_STRING);
 
 if($validPage == "DeleteContainer")
 {
     //=====Vérification de ce qui est renvoyé par le formulaire
-        $validIdMachine = filter_input(INPUT_POST, 'idMachine', FILTER_SANITIZE_STRING);
-        echo "OK pour Id Machine : ".$validIdMachine;
+    $validIdMachine = filter_input(INPUT_POST, 'idMachine', FILTER_SANITIZE_STRING);
+    echo "OK pour Id Machine : ".$validIdMachine;
 
     //Vérifier si le container existe
     $machine=MachineDAL::findById($validIdMachine);
@@ -32,11 +31,11 @@ if($validPage == "DeleteContainer")
     if($machine != null)
     {
         //Récupérer le nom de la machine
-        $NomMachine=$machine->getNom();
+        $nomMachine=$machine->getNom();
         //echo "Nom de la machine :".$NomMachine;
 
         //Récupérer l'id de connexion
-        $connection=Guacamole_ConnectionDAL::findByNom($NomMachine);
+        $connection=Guacamole_ConnectionDAL::findByNom($nomMachine);
         $connectionId=$connection->getConnectionId();
         //echo "Id de connexion de la machine :".$connectionId;
 
@@ -55,6 +54,10 @@ if($validPage == "DeleteContainer")
         //Suppprimer les partages de cette machine
         $validDeletePartage=Groupe_has_MachineDAL::deleteMachine($validIdMachine);
         //echo "Suppr Partage"; 
+        
+        //Trouve l'user de la machine et décrémente de 1 son nombre de Container
+        $owner = $machine->getUtilisateur();
+        $owner->setNbVm($owner->getNbVm() - 1); 
 
         //Supprimer le container dans la base DBVirtDemand
         $validDeleteMachine=MachineDAL::delete($validIdMachine);

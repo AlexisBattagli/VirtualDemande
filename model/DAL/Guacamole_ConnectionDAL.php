@@ -71,7 +71,7 @@ class Guacamole_ConnectionDAL {
     }
     
     /*
-     * Retourne la connexion correspondant au nom donné
+     * Retourne la connexion correspondant au nom donné (sans prendre en compte la casse
      *      
      * @param string $nom
      * @return Guacamole_Connection
@@ -86,7 +86,7 @@ class Guacamole_ConnectionDAL {
                         . 'guacamole_connection.max_connections as max_connections, '
                         . 'guacamole_connection.max_connections_per_user as max_connections_per_user '
                         . ' FROM guacamole_connection'
-                        . ' WHERE guacamole_connection.connection_name = ?', array('s', &$nom));
+                        . ' WHERE LOWER(guacamole_connection.connection_name) = LOWER(?)', array('s', &$nom));
         $guacamoleConnection = new Guacamole_Connection();
         if (sizeof($data) > 0)
         {
