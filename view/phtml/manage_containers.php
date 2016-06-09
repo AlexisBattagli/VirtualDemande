@@ -3,12 +3,16 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/MachineDAL.p
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/GroupeDAL.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Distrib_AliasDAL.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/CpuDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/RamDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/StockageDAL.php');
 
 
 $rowsFonctionnal = MachineDAL::findSuccessByUser($_COOKIE["user_id"]);
 $rowsCreated = MachineDAL::findNotCreatByUser($_COOKIE["user_id"]);
 $OSDisplayed = Distrib_AliasDAL::findByVisible();
 $CPUDisplayed = CpuDAL::findByVisible();
+$RAMDisplayed = RamDAL::findByVisible();
+$HDDisplayed = StockageDAL::findByVisible();
 
 
 //$groups = GroupeDAL::findByUser($_COOKIE["user_id"]);
@@ -123,6 +127,10 @@ $CPUDisplayed = CpuDAL::findByVisible();
                     <div class="form-group">
                         <input name="page" type="hidden" class="form-control" value ="manage_containers.php">
                     </div>
+                    <!--Hidden input that return user ID-->
+                    <div class="form-group">
+                        <input name="user" type="hidden" class="form-control" value=$_COOKIE["user_id"] >
+                    </div>
                     <!--Name input-->
                     <div class="form-group">
                         <h4><label for="nameContainer">Name</label></h4>
@@ -147,38 +155,40 @@ $CPUDisplayed = CpuDAL::findByVisible();
                         <select name="cpu" class="form-control">
                             <?php
                             foreach ($CPUDisplayed as $CPU) {
-                                echo "<option value=" . $CPU->getId() . ">";  //a modifier pour envoi nom complet
+                                echo "<option value=" . $CPU->getId() . ">";  
                                 echo $CPU->getNbCoeur() . " cores";
                                 echo "</option>";
                             }
                             ?>
                         </select>
                     </div>
-                    
+                    <!--RAM selector-->
                     <div class="form-group">
                         <h4><label>RAM quantity</label></h4>
-                        <label class="radio-inline">
-                            <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1"> 1 Gb
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2"> 2 Gb
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="4"> 4 Gb
-                        </label>
+                        <select name="ram" class="form-control">
+                            <?php
+                            foreach ($RAMDisplayed as $RAM) {
+                                echo "<option value=" . $RAM->getId() . ">";  
+                                echo $RAM->getValeur() . " GB";
+                                echo "</option>";
+                            }
+                            ?>
+                        </select>
                     </div>
+                    <!--Hard drive space selector-->
                     <div class="form-group">
                         <h4><label>Hard drive space</label></h4>
-                        <label class="radio-inline">
-                            <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1"> 10 GB
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2"> 20 GB
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="3"> 50 GB
-                        </label>
+                        <select name="stock" class="form-control">
+                            <?php
+                            foreach ($HDDisplayed as $HDD) {
+                                echo "<option value=" . $HDD->getId() . ">";  
+                                echo $HDD->getValeur() . " GB";
+                                echo "</option>";
+                            }
+                            ?>
+                        </select>
                     </div>
+                    <!--Personnal description input-->
                     <div>
                         <h4><label>Personnal description</label></h4>
                         <textarea name="descriptionContainer" class="form-control" rows="3" placeholder="Enter a personnal description for your container."></textarea>

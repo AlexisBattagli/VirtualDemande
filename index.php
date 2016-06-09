@@ -116,7 +116,7 @@ if ($pseudo !== null && $password !== null) {
 
                         <ul class="nav navbar-nav navbar-right">
                             <li id="what_is_it"><a href="?page=dashboard">Dashboard</a></li>
-                            <li id="how_does_it_work"><a href="http://web-server:8080/guacamole-0.9.9/#/">Connect to your containers</a></li>  //ouvrir dans un nouvel onglet
+                            <li id="how_does_it_work"><a href="http://web-server:8080/guacamole-0.9.9/#/">Connect to your containers</a></li>  <!--ouvrir dans un nouvel onglet-->
                             <li>
                                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
