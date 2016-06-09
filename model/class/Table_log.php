@@ -48,12 +48,12 @@ class Table_log {
      */
 
     public function Table_log(
-    $id = -1, $msg = "Aucune message", $dateTime = "0000-00-00 00:00:00", $level = null
+    $id = -1, $msg = "Aucune message", $level = null
     )
     {
         $this->id = $id;
         $this->msg = $msg;
-        $this->dateTime = $dateTime;
+        $this->dateTime = date('Y/m/d G:i:s');
         $this->level = $level;
     }
 
