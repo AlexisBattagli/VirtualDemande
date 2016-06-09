@@ -1,6 +1,8 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/MachineDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/GroupeDAL.php');
 $rows = MachineDAL::findByUser($_COOKIE["user_id"]);
+$groups = GroupeDAL::findByUser($_COOKIE["user_id"]);
 ?>
 <html>
     <body>
@@ -9,8 +11,8 @@ $rows = MachineDAL::findByUser($_COOKIE["user_id"]);
             <table class = "table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th>OS</th>
                         <th>Name</th>
+                        <th>OS</th>
                         <th>Description</th>
                     </tr>
                 </thead>
@@ -28,6 +30,37 @@ $rows = MachineDAL::findByUser($_COOKIE["user_id"]);
                     ?>
                 </tbody>
             </table>
+        </div>
+        <div>
+            <a class="btn btn-default" href="?page=manage_containers" role="button">Manage your containers</a>
+<!--        </div>
+        <div>-->
+            <a class="btn btn-default" href="?page=manage_containers" role="button">Create a new container</a> <!--Rajouter une ancre-->
+        </div>
+        <div>
+            <h2><span class="label label-primary">Your groups</span></h2>
+            <table class = "table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach ($groups as $group) {
+                        echo "<tr><td>";
+                        echo $group->getNom();
+                        echo "</td><td>";
+                        echo $group->getDescription();
+                        echo "</td></tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <a class="btn btn-default" href="?page=manage_groups" role="button">Manage your groups</a>
         </div>
     </body>
 </html>
