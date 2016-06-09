@@ -285,7 +285,7 @@ class Utilisateur {
     //nb_vm
     public function setNbVm($nbVm)
     {
-        if (is_string($nbVm))
+        if (is_int($nbVm))
         {
             $this->nbVm = $nbVm;
         }

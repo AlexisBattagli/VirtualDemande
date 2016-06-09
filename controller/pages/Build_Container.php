@@ -77,7 +77,6 @@ if($validPage == "manage_containers.php")
     }
 
     $validUserId = filter_input(INPUT_POST, 'user', FILTER_SANITIZE_STRING); //sera utile pour l'insert
-    echo $validUserId;
     if ($validUserId != null)
     {
         $user = UtilisateurDAL::findById($validUserId); //sert à l'insert
@@ -109,6 +108,11 @@ if($validPage == "manage_containers.php")
                 $newLog->setMsg("Machine correctement ajoutée en base, d'id: ". $validInsertMachine);
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                 echo "Machine correctement ajouter en base, d'id: ". $validInsertMachine; // TODO log
+                echo "ici";
+        //=====Incrémente le nombre de Container de l'utilisateur=====//
+                $variable=$user->getNbVm()+1;
+                $user->setNbVm($variable);
+                $valid= UtilisateurDAL::insertOnDuplicate($user); 
             }
             else
             {
@@ -414,9 +418,6 @@ if($validPage == "manage_containers.php")
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                     echo "La permission ADMINISTER pour la conneciton n°".$idConnectContainer." n'a pas bien été ajoutée !"; //TODO log
                 }
-
-    //=====Incrémente le nombre de Container de l'utilisateur=====//
-                $user->setNbVm($user->getNbVm()+1); 
 
                 $message="ok";
             }   
