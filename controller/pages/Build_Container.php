@@ -84,9 +84,15 @@ if($validPage == "manage_containers.php")
         $loginUtilisateur=$user->getLogin();
     }
 
-    $newDateCreation=date("Y/m/d");
+    $newDateCreation=date("Y-m-d");
     $newMachine->setDateCreation($newDateCreation);
-
+    
+    $date = date_create($newDateCreation); 
+    date_add($date, date_interval_create_from_date_string('1 year'));
+    $dateExpiration=date_format($date, 'Y-m-d');
+    //echo $dateExpiration;
+    $newMachine->setDateExpiration($dateExpiration);
+    
     $newMachine->setEtat(2);
     
     if(UtilisateurDAL::isFull($validUserId) == false) //vérifie que l'user n'a pas atteint son quota
@@ -124,7 +130,7 @@ if($validPage == "manage_containers.php")
         //=====Appel Web Service pour build le container sur le serveur de virt=====/
         try
         {
-                $client = new SoapCLient(null,
+                $client = new SoapClient(null,
                         array (
                                 'uri' => 'http://virt-server/BuildContainerRequest',
                                 'location' => 'http://virt-server/build_container_ws.php',
@@ -140,7 +146,7 @@ if($validPage == "manage_containers.php")
                                 'ram' => $valueRam,
                                 'cpu' => $valueCpu,
                                 'stockage' => $valueStock
-                        ));
+                        )); 
         }
         catch(SoapFault $f)
         {
@@ -148,6 +154,7 @@ if($validPage == "manage_containers.php")
         }
 
         //=====Analyse de ce qui est renvoyer par le ws (renvoyer par le SdA plus exactement)=====/
+        echo "Resultat:".$result;
         $code = substr($result, 0, 1); //Prend la valeur à la position 0 de la string $result et va jusqu'à atteindre une longeur de 1, soit la première lettre de cette string
         $newLog->setLevel("INFO");
 	$newLog->setLoginUtilisateur($loginUtilisateur);
