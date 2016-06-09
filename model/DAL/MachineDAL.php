@@ -126,7 +126,7 @@ class MachineDAL
                 .'AND machine.cpu_id = cpu.id '
                 .'AND machine.ram_id = ram.id '
                 .'AND machine.stockage_id = stockage.id '
-                .'machine.utilisateur_id = ? AND machine.etat = 0', array('i', &$userId));
+                .'AND machine.utilisateur_id = ? AND machine.etat = 0', array('i', &$userId));
 
         foreach ($data as $row)
         {
