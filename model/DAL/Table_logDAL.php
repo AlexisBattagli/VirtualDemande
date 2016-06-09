@@ -102,7 +102,7 @@ class Table_logDAL {
      * @param int machine, int utilisateur, string date_heure, string action, string code_retour
      * @return Table_log | null
      */
-    public static function findByMDL($msg, $dateTime, $level)
+    public static function findByMDL($msg, $dateTime, $level,$loginUtilisateur)
     {
         $data = BaseSingleton::select('SELECT table_log.id as id, '
                         . 'table_log.msg as msg, '
@@ -110,7 +110,7 @@ class Table_logDAL {
                         . 'table_log.login_utilisateur as login_utilisateur, '                
                         . 'table_log.level as level '
                         . ' FROM table_log'
-                        . ' WHERE LOWER(table_log.msg) = LOWER(?) AND table_log.date_time = ? AND LOWER(table_log.level) = LOWER(?)', array('sss', &$msg, &$dateTime, &$level));
+                        . ' WHERE LOWER(table_log.msg) = LOWER(?) AND table_log.date_time = ? AND LOWER(table_log.level) = LOWER(?) AND LOWER(table_log.login_utilisateur) = LOWER(?)', array('ssss', &$msg, &$dateTime, &$level,&$loginUtilisateur));
         $tableLog = new Table_log();
 
         if (sizeof($data) > 0)
@@ -162,7 +162,7 @@ class Table_logDAL {
                     . 'SET msg = ?, '
                     . 'date_time = ?, '
                     . 'level = ?, '
-                    . 'login_utilisateur = ?, '
+                    . 'login_utilisateur = ? '
                     . 'WHERE id = ? ';
 
             //Prépare les info concernant les type de champs
