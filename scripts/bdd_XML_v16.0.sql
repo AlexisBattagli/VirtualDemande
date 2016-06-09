@@ -88,6 +88,7 @@ CREATE TABLE table_log (
   msg TEXT NULL,
   date_time DATETIME NULL,
   level ENUM('ERROR','INFO','WARN') NULL,
+  login_utilisateur TEXT NULL,
   PRIMARY KEY(id)
 );
 
