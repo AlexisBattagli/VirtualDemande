@@ -17,7 +17,7 @@ $message="error";
 //Checker de où il vient
 $validPage = filter_input(INPUT_POST, 'page', FILTER_SANITIZE_STRING);
 
-if($validPage == "BuildContainer")
+if($validPage == "manage_containers.php")
 {
     $newMachine = new Machine();
 
