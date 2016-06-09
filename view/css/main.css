@@ -25,3 +25,8 @@ button.dropdown-signout {
     background-repeat: repeat-x;
 }
 
+
+.clickable
+{
+    cursor: pointer;
+}
