@@ -111,30 +111,29 @@ class MachineDAL
      */
     public static function findSuccessByUser($userId)
     {
-        $mesMachines = array();
+        $rows = array();
 
-        $data = BaseSingleton::select('SELECT machine.id as id, '
-                        . 'machine.utilisateur_id as utilisateur_id, '
-                        . 'machine.distrib_alias_id as distrib_alias_id, '
-                        . 'machine.nom as nom, '
-                        . 'machine.cpu_id as cpu_id, '
-                        . 'machine.ram_id as ram_id, '
-                        . 'machine.stockage_id as stockage_id, '
-                        . 'machine.description as description, '
-                        . 'machine.date_creation as date_creation, '
-                        . 'machine.date_expiration as date_expiration, '
-                        . 'machine.etat as etat '
-                        . ' FROM machine'
-                        . ' WHERE machine.utilisateur_id = ? AND machine.etat = 0', array('i', &$userId));
+        $data = BaseSingleton::select('SELECT machine.nom as nom, '
+                .'distrib_alias.nom_complet as os, '
+                .'cpu.nb_coeur as cpu, '
+                .'ram.valeur as ram, '
+                .'stockage.valeur as stockage, '
+                .'machine.description as description, '
+                .'machine.date_creation as date_creation, '
+                .'machine.date_expiration as date_expiration, '
+                .'FROM machine, distrib_alias, cpu, ram, stockage '
+                .'WHERE machine.distrib_alias_id = distrib_alias.id '
+                .'AND machine.cpu_id = cpu.id '
+                .'AND machine.ram_id = ram.id '
+                .'AND machine.stockage_id = stockage.id '
+                .' WHERE machine.utilisateur_id = ? AND machine.etat = 0', array('i', &$userId));
 
         foreach ($data as $row)
         {
-            $machine = new Machine();
-            $machine->hydrate($row);
-            $mesMachines[] = $machine;
+            $rows[]=$row;
         }
 
-        return $mesMachines;
+        return $rows;
     }
 
     /*
@@ -155,8 +154,6 @@ class MachineDAL
                         . 'machine.ram_id as ram_id, '
                         . 'machine.stockage_id as stockage_id, '
                         . 'machine.description as description, '
-                        . 'machine.date_creation as date_creation, '
-                        . 'machine.date_expiration as date_expiration, '
                         . 'machine.etat as etat '
                         . ' FROM machine'
                         . ' WHERE machine.utilisateur_id = ? AND machine.etat != 0', array('i', &$userId));
