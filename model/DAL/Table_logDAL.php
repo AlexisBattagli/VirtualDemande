@@ -24,6 +24,7 @@ class Table_logDAL {
         $data = BaseSingleton::select('SELECT table_log.id as id, '
                         . 'table_log.msg as msg, '
                         . 'table_log.date_time as date_time, '
+                        . 'table_log.login_utilisateur as login_utilisateur, '
                         . 'table_log.level as level '
                         . ' FROM table_log'
                         . ' WHERE table_log.id = ?', array('i', &$id));
@@ -50,6 +51,7 @@ class Table_logDAL {
         $data = BaseSingleton::select('SELECT table_log.id as id, '
                         . 'table_log.msg as msg, '
                         . 'table_log.date_time as date_time, '
+                        . 'table_log.login_utilisateur as login_utilisateur, '                
                         . 'table_log.level as level '
                         . ' FROM table_log'
                         . ' WHERE table_log.id = ?', array('i', &$id));
@@ -77,6 +79,7 @@ class Table_logDAL {
         $data = BaseSingleton::select('SELECT table_log.id as id, '
                         . 'table_log.msg as msg, '
                         . 'table_log.date_time as date_time, '
+                        . 'table_log.login_utilisateur as login_utilisateur, '                
                         . 'table_log.level as level '
                         . ' FROM table_log'
                 . ' ORDER BY table_log.date_time ASC');
@@ -104,6 +107,7 @@ class Table_logDAL {
         $data = BaseSingleton::select('SELECT table_log.id as id, '
                         . 'table_log.msg as msg, '
                         . 'table_log.date_time as date_time, '
+                        . 'table_log.login_utilisateur as login_utilisateur, '                
                         . 'table_log.level as level '
                         . ' FROM table_log'
                         . ' WHERE LOWER(table_log.msg) = LOWER(?) AND table_log.date_time = ? AND LOWER(table_log.level) = LOWER(?)', array('sss', &$msg, &$dateTime, &$level));
@@ -137,17 +141,19 @@ class Table_logDAL {
         $msg = $tableLog->getMsg(); //string
         $dateTime = $tableLog->getDateTime(); //string
         $level = $tableLog->getLevel(); //string
+        $loginUtilisateur = $tableLog->getLoginUtilisateur(); //string
         $id = $tableLog->getId(); //int
         if ($id < 0)
         {
-            $sql = 'INSERT INTO table_log (msg, date_time, level) '
-                    . ' VALUES (?,?,?) ';
+            $sql = 'INSERT INTO table_log (msg, date_time, level, login_utilisateur) '
+                    . ' VALUES (?,?,?,?) ';
 
             //Prépare les info concernant les type de champs
-            $params = array('sss',
+            $params = array('ssss',
                 &$msg,
                 &$dateTime,
-                &$level
+                &$level,
+                &$loginUtilisateur
             );
         }
         else
@@ -155,14 +161,16 @@ class Table_logDAL {
             $sql = 'UPDATE table_log '
                     . 'SET msg = ?, '
                     . 'date_time = ?, '
-                    . 'level = ? '
+                    . 'level = ?, '
+                    . 'login_utilisateur = ?, '
                     . 'WHERE id = ? ';
 
             //Prépare les info concernant les type de champs
-            $params = array('sssi',
+            $params = array('ssssi',
                 &$msg,
                 &$dateTime,
                 &$level,
+                &$loginUtilisateur,
                 &$id
             );
         }
