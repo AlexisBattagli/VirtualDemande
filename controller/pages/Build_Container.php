@@ -109,7 +109,7 @@ if ($validPage == "manage_containers.php") {
                         'uri' => 'http://virt-server/BuildContainerRequest',
                         'location' => 'http://virt-server/build_container_ws.php',
                         'trace' => 1,
-                        'exceptions' => 1
+                        'exceptions' => 0
                     ));
                     $result = $client->__call('buildContainer', array(
                         'nameContainer' => $validName,
