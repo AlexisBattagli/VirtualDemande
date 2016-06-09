@@ -302,14 +302,14 @@ if ($validPage == "manage_containers.php") {
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission READ pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                           // echo "La permission READ pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !"; //TODO log
+                            echo "La permission READ pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !"; //TODO log
                         } else {
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission READ pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                           //  exit();
-                          //  echo "La permission READ pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
+                            echo "La permission READ pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
                         }
 
                         //ajout la permission UPDATE
@@ -320,14 +320,14 @@ if ($validPage == "manage_containers.php") {
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission UPDATE pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                          //  echo "La permission UPDATE pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !"; //TODO log
+                            echo "La permission UPDATE pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !"; //TODO log
                         } else {
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission UPDATE pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                            // exit();
-                           // echo "La permission UPDATE pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
+                            echo "La permission UPDATE pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
                         }
 
                         //ajout la permission DELETE
@@ -338,14 +338,14 @@ if ($validPage == "manage_containers.php") {
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission DELETE pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                           // echo "La permission DELETE pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !"; //TODO log
+                            echo "La permission DELETE pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !"; //TODO log
                         } else {
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission DELETE pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                           //  exit();
-                          //  echo "La permission DELETE pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
+                            echo "La permission DELETE pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
                         }
 
                         //ajout la permission ADMINISTER
@@ -356,14 +356,14 @@ if ($validPage == "manage_containers.php") {
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission ADMINISTER pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                          //  echo "La permission ADMINISTER pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !"; //TODO log
+                            echo "La permission ADMINISTER pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !"; //TODO log
                         } else {
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission ADMINISTER pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                            // exit();
-                          //  echo "La permission ADMINISTER pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
+                            echo "La permission ADMINISTER pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
                         }
 
                         $message = "ok";
@@ -373,14 +373,14 @@ if ($validPage == "manage_containers.php") {
                         $newLog->setMsg("Erreur, la connection n'a pas bien était ajouter dans la DB de guaca...");
                         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                        // exit();
-                       // echo "Erreur, la connection n'a pas bien était ajouter dans la DB de guaca..."; //TODO log
+                        echo "Erreur, la connection n'a pas bien était ajouter dans la DB de guaca..."; //TODO log
                     }
                 } else if ($code == "1") { //If failure pending create of contener
                     $newLog->setLevel("WARN");
                     $newLog->setLoginUtilisateur($loginUtilisateur);
                     $newLog->setMsg("Echec de création du conteneur... Contactez le support EVOLVE.");
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                   // echo "</br>Echec de création du conteneur... Contactez le support EVOLVE.";
+                    echo "</br>Echec de création du conteneur... Contactez le support EVOLVE.";
                     $container = MachineDAL::findById($validInsertMachine);
                     $container->setEtat(1);
                 } else { //If fatal error unknow...
@@ -388,7 +388,7 @@ if ($validPage == "manage_containers.php") {
                     $newLog->setLoginUtilisateur($loginUtilisateur);
                     $newLog->setMsg("Code retour inconnu, problème ... Contactez le support EVOLVE !");
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                   // echo "</br>Code retour inconnu, problème ... Contactez le support EVOLVE !";
+                    echo "</br>Code retour inconnu, problème ... Contactez le support EVOLVE !";
                     $container = MachineDAL::findById($validInsertMachine);
                     $container->setEtat(1);
                 }
