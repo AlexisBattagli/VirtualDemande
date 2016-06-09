@@ -321,14 +321,14 @@ class UtilisateurDAL
             $utilisateur->hydrate($datanbreActuel[0]);
         }
         $nbreActuel=$utilisateur->getNbVm();
-        $statut=false;
+        $statut=true;
         
         if(is_int($nbreActuel)&&(is_int($nbreMax)))
         {
             $nbreRestant=$nbreMax-$nbreActuel;
             if($nbreRestant>=1)
             {
-                $statut=true;
+                $statut=false;
             }
         }
         

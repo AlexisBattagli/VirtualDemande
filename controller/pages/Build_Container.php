@@ -82,6 +82,7 @@ if($validPage == "manage_containers.php")
         $user = UtilisateurDAL::findById($validUserId); //sert à l'insert
         $newMachine->setUtilisateur($user);
         $loginUtilisateur=$user->getLogin();
+        //echo $loginUtilisateur;
     }
 
     $newDateCreation=date("Y-m-d");
@@ -452,11 +453,11 @@ if($validPage == "manage_containers.php")
     }
     else
     {
-        $newLog->setLevel("WARN");
-        $newLog->setLoginUtilisateur($loginUtilisateur);
-        $newLog->setMsg("L'user ". $user->getPseudo() . " a atteint son quota de Contenair");
+        $newLog->setLevel("WARN"); 
+        $newLog->setLoginUtilisateur($loginUtilisateur); 
+        $newLog->setMsg("L'user ". $user->getLogin() . " a atteint son quota de Contenair");
         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-        echo "L'user ". $user->getPseudo() . " a atteint son quota de Contenair."; // TODO log
+        echo "L'user ". $user->getLogin() . " a atteint son quota de Contenair."; // TODO log
     }
 }
 
