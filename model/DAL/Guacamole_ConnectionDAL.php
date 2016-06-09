@@ -71,6 +71,35 @@ class Guacamole_ConnectionDAL {
     }
     
     /*
+     * Retourne la connexion correspondant au nom donné
+     *      
+     * @param string $nom
+     * @return Guacamole_Connection
+     */
+    
+    public static function findByNom($nom)
+    {
+        $data = BaseSingletonGuacamole::select('SELECT guacamole_connection.connection_id as connection_id, '
+                        . 'guacamole_connection.connection_name as connection_name, '
+                        . 'guacamole_connection.parent_id as parent_id, '
+                        . 'guacamole_connection.protocol as protocol, '
+                        . 'guacamole_connection.max_connections as max_connections, '
+                        . 'guacamole_connection.max_connections_per_user as max_connections_per_user '
+                        . ' FROM guacamole_connection'
+                        . ' WHERE guacamole_connection.connection_name = ?', array('s', &$nom));
+        $guacamoleConnection = new Guacamole_Connection();
+        if (sizeof($data) > 0)
+        {
+            $guacamoleConnection->hydrate($data[0]);
+        }
+        else
+        {
+            $guacamoleConnection = null;
+        }
+        return $guacamoleConnection;
+    }
+    
+    /*
      * Retourne l'ensemble des connexions qui sont en base
      * 
      * @return array[Guacamole_Connection] Tous les Guacamole_Connection sont placées dans un Tableau
