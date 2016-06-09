@@ -135,7 +135,7 @@ if ($code == "0")
     $container->setDescription($container->getDescription() . " Mot de passe du compte root: ". $passwdRoot);
     $container->setEtat(0);
     
-    //====Création de la connection======//
+//====Création de la connection======//
     $connectionContainer = new Guacamole_Connection();
     $connectionContainer->setConnectionName($validName); //DOnne le nom du container à la connection pour pouvoir l'identifier a la suppression !
     $connectionContainer->setMaxConnections(null);
@@ -156,7 +156,7 @@ if ($code == "0")
     $idConnectContainer = Guacamole_ConnectionDAL::insertOnDuplicate($connectionContainer);
     if($idConnectContainer != null)
     {//Si création de connection guaca ok
-        //créer les parameter de la connection guaca
+//======créer les parameter de la connection guaca=====/
         $paramConnectContainer = new Guacamole_Connection_Parameter();
         $paramConnectContainer->setConnection($idConnectContainer);
         
@@ -224,7 +224,59 @@ if ($code == "0")
         {
             echo "Paramètre port de la connection (connection n°".$idConnectContainer.") non ajoutée, erreur..."; //TODO log
         }
+   
+//=====Créer les permission sur la connection pur l'user donné=====//
+        $permConnectContainer = new Guacamole_Connection_Permission();
+        $permConnectContainer->setConnection($idConnectContainer);
+        $permConnectContainer->setUser($user->getId());
         
+        //ajout la permission READ
+        $permConnectContainer->setPermission("READ");
+        $validInsertPermR = Guacamole_Connection_PermissionDAL::insertOnDuplicate($permConnectContainer);
+        if($validInsertPermR != null)
+        {
+            echo "La permission READ pour la conneciton n°".$idConnectContainer." a bien été ajoutée !"; //TODO log
+        }
+        else
+        {
+            echo "La permission READ pour la conneciton n°".$idConnectContainer." n'a pas bien été ajoutée !"; //TODO log
+        }
+        
+        //ajout la permission UPDATE
+        $permConnectContainer->setPermission("UPDATE");
+        $validInsertPermU = Guacamole_Connection_PermissionDAL::insertOnDuplicate($permConnectContainer);
+        if($validInsertPermU != null)
+        {
+            echo "La permission UPDATE pour la conneciton n°".$idConnectContainer." a bien été ajoutée !"; //TODO log
+        }
+        else
+        {
+            echo "La permission UPDATE pour la conneciton n°".$idConnectContainer." n'a pas bien été ajoutée !"; //TODO log
+        }
+        
+        //ajout la permission DELETE
+        $permConnectContainer->setPermission("DELETE");
+        $validInsertPermD = Guacamole_Connection_PermissionDAL::insertOnDuplicate($permConnectContainer);
+        if($validInsertPermD != null)
+        {
+            echo "La permission DELETE pour la conneciton n°".$idConnectContainer." a bien été ajoutée !"; //TODO log
+        }
+        else
+        {
+            echo "La permission DELETE pour la conneciton n°".$idConnectContainer." n'a pas bien été ajoutée !"; //TODO log
+        }
+        
+        //ajout la permission ADMINISTER
+        $permConnectContainer->setPermission("ADMINISTER");
+        $validInsertPermA = Guacamole_Connection_PermissionDAL::insertOnDuplicate($permConnectContainer);
+        if($validInsertPermA != null)
+        {
+            echo "La permission ADMINISTER pour la conneciton n°".$idConnectContainer." a bien été ajoutée !"; //TODO log
+        }
+        else
+        {
+            echo "La permission ADMINISTER pour la conneciton n°".$idConnectContainer." n'a pas bien été ajoutée !"; //TODO log
+        }
     }   
     else
     {
