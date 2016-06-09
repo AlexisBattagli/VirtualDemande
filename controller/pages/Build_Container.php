@@ -126,7 +126,10 @@ if ($code == "0")
 { 
 //=====Si Container créer======/
     echo "</br>Conteneur créer avec succès sur le serveur de Virt"; //TODO log
-    $passwdRoot = substr($result, 2); //récupère le password root
+    $passwdRoot = substr($result, 1, 10); //récupère le password root de longeur 10 carac en partant du carac n°1
+    echo "[DEBUG]: mot de passe root: ".$passwdRoot;
+    $addrIpContainer = substr($result, 11); //recupère l'addresse ip du container renvoyer par SdA
+    echo "[DEBUG]: addresse ip container: ". $addrIpContainer;
     
     $container = MachineDAL::findById($validInsertMachine);
     $container->setDescription($container->getDescription() . " Mot de passe du compte root: ". $passwdRoot);
@@ -155,6 +158,72 @@ if ($code == "0")
     {//Si création de connection guaca ok
         //créer les parameter de la connection guaca
         $paramConnectContainer = new Guacamole_Connection_Parameter();
+        $paramConnectContainer->setConnection($idConnectContainer);
+        
+        //set le paramètre username
+        $paramConnectContainer->setParameterName("username");
+        $paramConnectContainer->setParameterValue("root");
+        $validInsertParamUsername = Guacamole_Connection_ParameterDAL::insertOnDuplicate($paramConnectContainer);
+        if($validInsertParamUsername != null)
+        {
+            echo "Paramètre username = root de la connection (connection n°".$idConnectContainer.") correctmeent ajoutée."; //TODO log
+        }
+        else
+        {
+            echo "Paramètre username = root de la connection (connection n°".$idConnectContainer.") non ajoutée, erreur..."; //TODO log
+        }
+        
+        //set le paramètre password
+        $paramConnectContainer->setParameterName("password");
+        $paramConnectContainer->setParameterValue($passwdRoot);
+        $validInsertParamPwd = Guacamole_Connection_ParameterDAL::insertOnDuplicate($paramConnectContainer);
+        if($validInsertParamPwd != null)
+        {
+            echo "Paramètre password de la connection (connection n°".$idConnectContainer.") correctmeent ajoutée."; //TODO log
+        }
+        else
+        {
+            echo "Paramètre password de la connection (connection n°".$idConnectContainer.") non ajoutée, erreur..."; //TODO log
+        }
+        
+        //set le paramètre hostname
+        $paramConnectContainer->setParameterName("hostname");
+        $paramConnectContainer->setParameterValue($addrIpContainer);
+        $validInsertParamHostname = Guacamole_Connection_ParameterDAL::insertOnDuplicate($paramConnectContainer);
+        if($validInsertParamHostname != null)
+        {
+            echo "Paramètre hostname = " . $addrIpContainer . " de la connection (connection n°".$idConnectContainer.") correctmeent ajoutée."; //TODO log
+        }
+        else
+        {
+            echo "Paramètre hostname = " . $addrIpContainer . " de la connection (connection n°".$idConnectContainer.") non ajoutée, erreur..."; //TODO log
+        }
+        
+        //set le paramètre port
+        $paramConnectContainer->setParameterName("port");
+        if($ihm=='yes')
+        {
+            $paramConnectContainer->setParameterValue(22);
+            echo "Port de connection 22, pour la connection n°".$idConnectContainer; //TODO log
+        }
+        else if($ihm=='no')
+        {
+            $paramConnectContainer->setParameterValue(5900);
+            echo "Port de connection 5900, pour la connection n°".$idConnectContainer; //TODO log
+        }
+        else
+        {
+            echo "Erreur, type d'ihm inconnu... Sérieux, comment ça a pu arriver ?!!"; //TODO log
+        }
+        $validInsertParamPort = Guacamole_Connection_ParameterDAL::insertOnDuplicate($paramConnectContainer);
+        if($validInsertParamPort != null)
+        {
+            echo "Paramètre port de la connection (connection n°".$idConnectContainer.") correctmeent ajoutée."; //TODO log
+        }
+        else
+        {
+            echo "Paramètre port de la connection (connection n°".$idConnectContainer.") non ajoutée, erreur..."; //TODO log
+        }
         
     }   
     else
