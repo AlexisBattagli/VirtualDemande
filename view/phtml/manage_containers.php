@@ -17,9 +17,7 @@ $HDDisplayed = StockageDAL::findByVisible();
 
 //$groups = GroupeDAL::findByUser($_COOKIE["user_id"]);
 
-//echo '<pre>';
-//var_dump($CPUDisplayed);
-//echo '</pre>';
+//echl
 ?>
 <html>
     <body>
@@ -127,9 +125,9 @@ $HDDisplayed = StockageDAL::findByVisible();
                     <div class="form-group">
                         <input name="page" type="hidden" class="form-control" value ="manage_containers.php">
                     </div>
-                    <!--Hidden input that return user ID-->
+<!--                    Hidden input that return user ID A RECUP PAR CONTROLLER-->
                     <div class="form-group">
-                        <input name="user" type="hidden" class="form-control" value=$_COOKIE["user_id"] >
+                        <input name="user" type="hidden" class="form-control" value="<?php $_COOKIE["user_id"] ?>" >
                     </div>
                     <!--Name input-->
                     <div class="form-group">
