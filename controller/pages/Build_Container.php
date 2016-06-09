@@ -96,8 +96,8 @@ if ($validPage == "manage_containers.php") {
                 $newLog->setLoginUtilisateur($loginUtilisateur);
                 $newLog->setMsg("Machine correctement ajoutée en base, d'id: " . $validInsertMachine);
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                echo "Machine correctement ajouter en base, d'id: " . $validInsertMachine; // TODO log
-                echo "ici";
+               // echo "</br>Machine correctement ajouter en base, d'id: " . $validInsertMachine; // TODO log
+                
                 //=====Incrémente le nombre de Container de l'utilisateur=====//
                 $variable = $user->getNbVm() + 1;
                 $user->setNbVm($variable);
@@ -106,8 +106,8 @@ if ($validPage == "manage_containers.php") {
                 //=====Appel Web Service pour build le container sur le serveur de virt=====/
                 try {
                     $client = new SoapClient(null, array(
-                        'uri' => 'http://virt-server/BuildContainerRequest',
-                        'location' => 'http://virt-server/build_container_ws.php',
+                        'uri' => 'http://virt-server/ws_lxc/BuildContainerRequest',
+                        'location' => 'http://virt-server/ws_lxc/build_container_ws.php',
                         'trace' => 1,
                         'exceptions' => 0
                     ));
@@ -120,22 +120,25 @@ if ($validPage == "manage_containers.php") {
                         'cpu' => $valueCpu,
                         'stockage' => $valueStock
                     ));
-                    echo "<pre>\n";
-                    echo "Request: \n" . htmlspecialchars($client->__getLastRequest()) . "\n";
-                    echo "Response: \n" . htmlspecialchars($client->__getLastResponse()) . "\n";
-                    echo "</pre>\n";
+                    //echo "<pre>\n";
+                    //echo "Request: \n" . htmlspecialchars($client->__getLastRequest()) . "\n";
+                    //echo "Response: \n" . htmlspecialchars($client->__getLastResponse()) . "\n";
+                    //echo "</pre>\n";
                 } catch (SoapFault $f) {
-                    echo $f;
+                    $newLog->setLevel("ERROR");
+                    $newLog->setLoginUtilisateur($loginUtilisateur);
+                    $newLog->setMsg("Erreur SOAP: ".$f);
+                    $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
+                    exit();
                 }
 
                 //=====Analyse de ce qui est renvoyer par le ws (renvoyer par le SdA plus exactement)=====/
-                echo "Resultat:" . $result;
                 $code = substr($result, 0, 1); //Prend la valeur à la position 0 de la string $result et va jusqu'à atteindre une longeur de 1, soit la première lettre de cette string
                 $newLog->setLevel("INFO");
                 $newLog->setLoginUtilisateur($loginUtilisateur);
                 $newLog->setMsg("Le code de retour de ws vaut : " . $code);
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                echo "</br>Le code de retour vaut : " . $code; //TODO log
+               // echo "</br>Le code de retour vaut : " . $code; //TODO log
                 if ($code == "0") {
                     //=====Si Container créer======/
 
@@ -143,12 +146,16 @@ if ($validPage == "manage_containers.php") {
                     $newLog->setLoginUtilisateur($loginUtilisateur);
                     $newLog->setMsg("Conteneur " . $validName . " créé avec succès sur le serveur de Virt");
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                    echo "</br>Conteneur créer avec succès sur le serveur de Virt"; //TODO log
+                  //  echo "</br>Conteneur créer avec succès sur le serveur de Virt"; //TODO log
+                    
                     $passwdRoot = substr($result, 1, 10); //récupère le password root de longeur 10 carac en partant du carac n°1
-                    echo "[DEBUG]: mot de passe root: " . $passwdRoot;
                     $addrIpContainer = substr($result, 11); //recupère l'addresse ip du container renvoyer par SdA
-                    echo "[DEBUG]: addresse ip container: " . $addrIpContainer;
-
+                    $newLog->setLevel("INFO");
+                    $newLog->setLoginUtilisateur($loginUtilisateur);
+                    $newLog->setMsg("L'adresse IP du conteneur " . $validName . " est: ".$addrIpContainer);
+                    $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
+                   // echo "</br>L'adresse IP du conteneur " . $validName . " est: ".$addrIpContainer;
+                    
                     $container = MachineDAL::findById($validInsertMachine);
                     $container->setDescription($container->getDescription() . " Mot de passe du compte root: " . $passwdRoot);
                     $container->setEtat(0);
@@ -177,7 +184,7 @@ if ($validPage == "manage_containers.php") {
                         $newLog->setLoginUtilisateur($loginUtilisateur);
                         $newLog->setMsg("Type d'IHM inconnu...");
                         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                        echo "Type d'IHM inconnu..."; //TODO log
+                        exit();
                     }
                     $idConnectContainer = Guacamole_ConnectionDAL::insertOnDuplicate($connectionContainer);
                     if ($idConnectContainer != null) {//Si création de connection guaca ok
@@ -194,13 +201,14 @@ if ($validPage == "manage_containers.php") {
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Paramètre username = root de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée.");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            echo "Paramètre username = root de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée."; //TODO log
+                           // echo "Paramètre username = root de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée."; //TODO log
                         } else {
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Paramètre username = root de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            echo "Paramètre username = root de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur..."; //TODO log
+                            exit();
+                            //echo "Paramètre username = root de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur..."; //TODO log
                         }
 
                         //set le paramètre password
@@ -212,13 +220,14 @@ if ($validPage == "manage_containers.php") {
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Paramètre password de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée.");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            echo "Paramètre password de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée."; //TODO log
+                           // echo "Paramètre password de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée."; //TODO log
                         } else {
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Paramètre password de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            echo "Paramètre password de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur..."; //TODO log
+                            exit();
+                           // echo "Paramètre password de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur..."; //TODO log
                         }
 
                         //set le paramètre hostname
@@ -230,13 +239,14 @@ if ($validPage == "manage_containers.php") {
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Paramètre hostname = " . $addrIpContainer . " de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée.");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            echo "Paramètre hostname = " . $addrIpContainer . " de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée."; //TODO log
+                            //echo "Paramètre hostname = " . $addrIpContainer . " de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée."; //TODO log
                         } else {
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Paramètre hostname = " . $addrIpContainer . " de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            echo "Paramètre hostname = " . $addrIpContainer . " de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur..."; //TODO log
+                            exit();
+                           // echo "Paramètre hostname = " . $addrIpContainer . " de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur..."; //TODO log
                         }
 
                         //set le paramètre port
@@ -247,20 +257,21 @@ if ($validPage == "manage_containers.php") {
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Port de connection vnc 5900, pour la connection n°" . $idConnectContainer);
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            echo "Port de connection 5900, pour la connection n°" . $idConnectContainer; //TODO log
+                           // echo "Port de connection 5900, pour la connection n°" . $idConnectContainer; //TODO log
                         } else if ($ihm == 'no') {
                             $paramConnectContainer->setParameterValue(22);
                             $newLog->setLevel("INFO");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Port de connection 22, pour la connection n°" . $idConnectContainer);
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            echo "Port de connection 22, pour la connection n°" . $idConnectContainer; //TODO log
+                            //echo "Port de connection 22, pour la connection n°" . $idConnectContainer; //TODO log
                         } else {
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Erreur, type d'ihm inconnu... Sérieux, comment ça a pu arriver ?!!");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            echo "Erreur, type d'ihm inconnu... Sérieux, comment ça a pu arriver ?!!"; //TODO log
+                            exit();
+                          //  echo "Erreur, type d'ihm inconnu... Sérieux, comment ça a pu arriver ?!!"; //TODO log
                         }
                         $validInsertParamPort = Guacamole_Connection_ParameterDAL::insertOnDuplicate($paramConnectContainer);
                         if ($validInsertParamPort != null) {
@@ -268,13 +279,14 @@ if ($validPage == "manage_containers.php") {
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Paramètre port de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée.");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            echo "Paramètre port de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée."; //TODO log
+                           // echo "Paramètre port de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée."; //TODO log
                         } else {
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Paramètre port de la connection (connection n°" . $idConnectContainer . ") non ajoutée.");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            echo "Paramètre port de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur..."; //TODO log
+                            exit();
+                           // echo "Paramètre port de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur..."; //TODO log
                         }
 
                         //=====Créer les permission sur la connection pur l'user donné=====//
@@ -290,13 +302,14 @@ if ($validPage == "manage_containers.php") {
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission READ pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            echo "La permission READ pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !"; //TODO log
+                           // echo "La permission READ pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !"; //TODO log
                         } else {
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission READ pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            echo "La permission READ pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
+                            exit();
+                          //  echo "La permission READ pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
                         }
 
                         //ajout la permission UPDATE
@@ -307,13 +320,14 @@ if ($validPage == "manage_containers.php") {
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission UPDATE pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            echo "La permission UPDATE pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !"; //TODO log
+                          //  echo "La permission UPDATE pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !"; //TODO log
                         } else {
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission UPDATE pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            echo "La permission UPDATE pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
+                            exit();
+                           // echo "La permission UPDATE pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
                         }
 
                         //ajout la permission DELETE
@@ -324,13 +338,14 @@ if ($validPage == "manage_containers.php") {
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission DELETE pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            echo "La permission DELETE pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !"; //TODO log
+                           // echo "La permission DELETE pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !"; //TODO log
                         } else {
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission DELETE pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            echo "La permission DELETE pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
+                            exit();
+                          //  echo "La permission DELETE pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
                         }
 
                         //ajout la permission ADMINISTER
@@ -341,13 +356,14 @@ if ($validPage == "manage_containers.php") {
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission ADMINISTER pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            echo "La permission ADMINISTER pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !"; //TODO log
+                          //  echo "La permission ADMINISTER pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !"; //TODO log
                         } else {
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission ADMINISTER pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            echo "La permission ADMINISTER pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
+                            exit();
+                          //  echo "La permission ADMINISTER pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
                         }
 
                         $message = "ok";
@@ -356,14 +372,15 @@ if ($validPage == "manage_containers.php") {
                         $newLog->setLoginUtilisateur($loginUtilisateur);
                         $newLog->setMsg("Erreur, la connection n'a pas bien était ajouter dans la DB de guaca...");
                         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                        echo "Erreur, la connection n'a pas bien était ajouter dans la DB de guaca..."; //TODO log
+                        exit();
+                       // echo "Erreur, la connection n'a pas bien était ajouter dans la DB de guaca..."; //TODO log
                     }
                 } else if ($code == "1") { //If failure pending create of contener
                     $newLog->setLevel("WARN");
                     $newLog->setLoginUtilisateur($loginUtilisateur);
                     $newLog->setMsg("Echec de création du conteneur... Contactez le support EVOLVE.");
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                    echo "</br>Echec de création du conteneur... Contactez le support EVOLVE.";
+                   // echo "</br>Echec de création du conteneur... Contactez le support EVOLVE.";
                     $container = MachineDAL::findById($validInsertMachine);
                     $container->setEtat(1);
                 } else { //If fatal error unknow...
@@ -371,7 +388,7 @@ if ($validPage == "manage_containers.php") {
                     $newLog->setLoginUtilisateur($loginUtilisateur);
                     $newLog->setMsg("Code retour inconnu, problème ... Contactez le support EVOLVE !");
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                    echo "</br>Code retour inconnu, problème ... Contactez le support EVOLVE !";
+                   // echo "</br>Code retour inconnu, problème ... Contactez le support EVOLVE !";
                     $container = MachineDAL::findById($validInsertMachine);
                     $container->setEtat(1);
                 }
@@ -380,21 +397,23 @@ if ($validPage == "manage_containers.php") {
                 $newLog->setLoginUtilisateur($loginUtilisateur);
                 $newLog->setMsg("Echec de l'insertion en base de la Machine");
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                echo "Echec de l'insertion en base de la Machine"; // TODO log
+                exit();
+               // echo "Echec de l'insertion en base de la Machine"; // TODO log
             }
         } else {
             $newLog->setLevel("ERROR");
             $newLog->setLoginUtilisateur($loginUtilisateur);
             $newLog->setMsg("Un container existe déjà avec ce nom (" . $validName . ").");
             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-            echo "Un container existe déjà avec ce nom..."; // TODO log
+            exit();
+            //echo "Un container existe déjà avec ce nom..."; // TODO log
         }
     } else {
         $newLog->setLevel("WARN");
         $newLog->setLoginUtilisateur($loginUtilisateur);
         $newLog->setMsg("L'user " . $user->getLogin() . " a atteint son quota de Contenair");
         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-        echo "L'user " . $user->getLogin() . " a atteint son quota de Contenair."; // TODO log
+      //  echo "L'user " . $user->getLogin() . " a atteint son quota de Contenair."; // TODO log
     }
 }
 
