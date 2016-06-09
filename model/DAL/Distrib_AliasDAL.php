@@ -88,7 +88,7 @@ class Distrib_AliasDAL {
                         . 'distrib_alias.commentaire as commentaire, '
                         . 'distrib_alias.visible as visible '
                         . ' FROM distrib_alias '
-                . ' WHERE distrib_alias.visible = 0');
+                . ' WHERE distrib_alias.visible = 1');
 
         foreach ($data as $row)
         {

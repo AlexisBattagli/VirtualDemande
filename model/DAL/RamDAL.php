@@ -104,7 +104,7 @@ class RamDAL {
                         . 'ram.valeur as valeur, '
                         . 'ram.visible as visible '
                         . ' FROM ram'
-                . ' WHERE ram.visible = 0');
+                . ' WHERE ram.visible = 1');
 
         foreach ($data as $row)
         {

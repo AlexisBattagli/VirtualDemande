@@ -104,7 +104,7 @@ class StockageDAL {
                         . 'stockage.valeur as valeur, '
                         . 'stockage.visible as visible '
                         . ' FROM stockage'
-                . ' WHERE stockage.visible = 0');
+                . ' WHERE stockage.visible = 1');
 
         foreach ($data as $row)
         {

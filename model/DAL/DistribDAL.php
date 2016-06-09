@@ -145,7 +145,7 @@ class DistribDAL
                         . 'distrib.ihm as ihm, '
                         . 'distrib.visible as visible '
                         . ' FROM distrib'
-                . ' WHERE distrib.visible = 0');
+                . ' WHERE distrib.visible = 1');
 
         foreach ($data as $row)
         {

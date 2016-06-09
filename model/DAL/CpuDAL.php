@@ -104,7 +104,7 @@ class CpuDAL {
                         . 'cpu.nb_coeur as nb_coeur, '
                         . 'cpu.visible as visible '
                         . ' FROM cpu'
-                . ' WHERE cpu.visible = 0');
+                . ' WHERE cpu.visible = 1');
 
         foreach ($data as $row)
         {
