@@ -21,14 +21,12 @@ class Table_logDAL {
     public static function findByDefault()
     {
         $id=1;
-        $data = BaseSingleton::select('SELECT table_log.table_log_id as id, '
-                        . 'table_log.machine as machine, '
-                        . 'table_log.utilisateur as utilisateur, '
-                        . 'table_log.date_heure as date_heure, '
-                        . 'table_log.action as action, '
-                        . 'table_log.code_retour as code_retour '
+        $data = BaseSingleton::select('SELECT table_log.id as id, '
+                        . 'table_log.msg as msg, '
+                        . 'table_log.date_time as date_time, '
+                        . 'table_log.level as level '
                         . ' FROM table_log'
-                        . ' WHERE table_log.table_log_id = ?', array('i', &$id));
+                        . ' WHERE table_log.id = ?', array('i', &$id));
         $tableLog = new Table_log();
         if (sizeof($data) > 0)
         {
@@ -49,14 +47,12 @@ class Table_logDAL {
      */
     public static function findById($id)
     {
-        $data = BaseSingleton::select('SELECT table_log.table_log_id as id, '
-                        . 'table_log.machine as machine, '
-                        . 'table_log.utilisateur as utilisateur, '
-                        . 'table_log.date_heure as date_heure, '
-                        . 'table_log.action as action, '
-                        . 'table_log.code_retour as code_retour '
+        $data = BaseSingleton::select('SELECT table_log.id as id, '
+                        . 'table_log.msg as msg, '
+                        . 'table_log.date_time as date_time, '
+                        . 'table_log.level as level '
                         . ' FROM table_log'
-                        . ' WHERE table_log.table_log_id = ?', array('i', &$id));
+                        . ' WHERE table_log.id = ?', array('i', &$id));
         $tableLog = new Table_log();
         if (sizeof($data) > 0)
         {
@@ -78,14 +74,12 @@ class Table_logDAL {
     {
         $mestableLogs = array();
 
-        $data = BaseSingleton::select('SELECT table_log.table_log_id as id, '
-                        . 'table_log.machine as machine, '
-                        . 'table_log.utilisateur as utilisateur, '
-                        . 'table_log.date_heure as date_heure, '
-                        . 'table_log.action as action, '
-                        . 'table_log.code_retour as code_retour '
+        $data = BaseSingleton::select('SELECT table_log.id as id, '
+                        . 'table_log.msg as msg, '
+                        . 'table_log.date_time as date_time, '
+                        . 'table_log.level as level '
                         . ' FROM table_log'
-                . ' ORDER BY table_log.machine ASC, table_log.utilisateur ASC, table_log.action ASC');
+                . ' ORDER BY table_log.date_time ASC');
 
         foreach ($data as $row)
         {
@@ -105,16 +99,14 @@ class Table_logDAL {
      * @param int machine, int utilisateur, string date_heure, string action, string code_retour
      * @return Table_log | null
      */
-    public static function findByMUDAC($machine, $utilisateur, $dateHeure, $action, $codeRetour)
+    public static function findByMDL($msg, $dateTime, $level)
     {
-        $data = BaseSingleton::select('SELECT table_log.table_log_id as id, '
-                        . 'table_log.machine as machine, '
-                        . 'table_log.utilisateur as utilisateur, '
-                        . 'table_log.date_heure as date_heure, '
-                        . 'table_log.action as action, '
-                        . 'table_log.code_retour as code_retour '
+        $data = BaseSingleton::select('SELECT table_log.id as id, '
+                        . 'table_log.msg as msg, '
+                        . 'table_log.date_time as date_time, '
+                        . 'table_log.level as level '
                         . ' FROM table_log'
-                        . ' WHERE table_log.machine = ? AND table_log.utilisateur = ? AND table_log.date_heure = ? AND LOWER(table_log.action) = LOWER(?) AND LOWER(table_log.code_retour) = LOWER(?)', array('sssss', &$machine, &$utilisateur, &$dateHeure, &$action, &$codeRetour));
+                        . ' WHERE LOWER(table_log.msg) = LOWER(?) AND table_log.date_time = ? AND LOWER(table_log.level) = LOWER(?)', array('sss', &$msg, &$dateTime, &$level));
         $tableLog = new Table_log();
 
         if (sizeof($data) > 0)
@@ -142,43 +134,35 @@ class Table_logDAL {
     {
 
         //Récupère les valeurs de l'objet table_log passé en para de la méthode
-        $machine = $tableLog->getMachine(); //string
-        $utilisateur = $tableLog->getUtilisateur(); //string
-        $dateHeure = $tableLog->getDateHeure(); //string
-        $action = $tableLog->getAction(); //string
-        $codeRetour = $tableLog->getCodeRetour(); //string
+        $msg = $tableLog->getMsg(); //string
+        $dateTime = $tableLog->getDateTime(); //string
+        $level = $tableLog->getLevel(); //string
         $id = $tableLog->getId(); //int
         if ($id < 0)
         {
-            $sql = 'INSERT INTO table_log (utilisateur, machine, date_heure, action, code_retour) '
-                    . ' VALUES (?,?,?,?,?) ';
+            $sql = 'INSERT INTO table_log (msg, date_time, level) '
+                    . ' VALUES (?,?,?) ';
 
             //Prépare les info concernant les type de champs
-            $params = array('sssss',
-                &$machine,
-                &$utilisateur,
-                &$dateHeure,
-                &$action,
-                &$codeRetour
+            $params = array('sss',
+                &$msg,
+                &$dateTime,
+                &$level
             );
         }
         else
         {
             $sql = 'UPDATE table_log '
-                    . 'SET machine = ?, '
-                    . 'utilisateur = ?, '
-                    . 'date_heure = ?, '
-                    . 'action = ?, '
-                    . 'code_retour = ? '
-                    . 'WHERE table_log_id = ? ';
+                    . 'SET msg = ?, '
+                    . 'date_time = ?, '
+                    . 'level = ? '
+                    . 'WHERE id = ? ';
 
             //Prépare les info concernant les type de champs
-            $params = array('sssssi',
-                &$machine,
-                &$utilisateur,
-                &$dateHeure,
-                &$action,
-                &$codeRetour,
+            $params = array('sssi',
+                &$msg,
+                &$dateTime,
+                &$level,
                 &$id
             );
         }
@@ -199,7 +183,7 @@ class Table_logDAL {
 
     public static function delete($id)
     {
-        $deleted = BaseSingleton::delete('DELETE FROM table_log WHERE table_log_id = ?', array('i', &$id));
+        $deleted = BaseSingleton::delete('DELETE FROM table_log WHERE id = ?', array('i', &$id));
         return $deleted;
     }
 

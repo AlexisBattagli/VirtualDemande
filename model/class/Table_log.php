@@ -21,39 +21,25 @@ class Table_log {
     private $id;
     
     /*
-     * Machine d'un Table_log dans la table Table_log
+     * action d'un Table_log dans la table Table_log
      * @var string 
      */
 
-    private $machine;
-    
-    /*
-     * Utilisateur d'un Table_log dans la table Table_log
-     * @var string 
-     */
-
-    private $utilisateur;
+    private $msg;
     
     /*
      * dateHeure d'un Table_log dans la table Table_log
      * @var string 
      */
 
-    private $dateHeure;
+    private $dateTime;
     
     /*
      * action d'un Table_log dans la table Table_log
      * @var string 
      */
 
-    private $action;
-    
-    /*
-     * codeRetour d'un Table_log dans la table Table_log
-     * @var string 
-     */
-
-    private $codeRetour;
+    private $level;
     
     /*
       ==============================
@@ -62,15 +48,13 @@ class Table_log {
      */
 
     public function Table_log(
-    $id = -1, $machine = "Aucune Machine", $utilisateur = "Aucun utilisateur", $dateHeure = "0000-00-00 00:00:00", $action = "Aucune action", $codeRetour = "Aucune code retour"
+    $id = -1, $msg = "Aucune message", $dateTime = "0000-00-00 00:00:00", $level = null
     )
     {
         $this->id = $id;
-        $this->machine = $machine;
-        $this->utilisateur = $utilisateur;
-        $this->dateHeure = $dateHeure;
-        $this->action = $action;
-        $this->codeRetour = $codeRetour;
+        $this->msg = $msg;
+        $this->dateTime = $dateTime;
+        $this->level = $level;
     }
 
     /*
@@ -82,11 +66,9 @@ class Table_log {
     public function hydrate($dataSet)
     {
         $this->id = $dataSet['id'];
-        $this->machine = $dataSet['machine'];
-        $this->utilisateur = $dataSet['utilisateur'];
-        $this->dateHeure = $dataSet['date_heure'];
-        $this->action = $dataSet['action'];
-        $this->codeRetour = $dataSet['code_retour'];
+        $this->msg = $dataSet['msg'];
+        $this->dateTime = $dataSet['date_time'];
+        $this->level = $dataSet['level'];
     }
 
     /*
@@ -109,73 +91,45 @@ class Table_log {
         return $this->id;
     }
     
-    //Machine
-    public function setMachine($machine)
+    //msg
+    public function setMsg($msg)
     {
-        if (is_string($machine))
+        if (is_string($msg))
         {
-            $this->machine = $machine;
+            $this->msg = $msg;
         }
     }
 
-    public function getMachine()
+    public function getMsg()
     {
-        return $this->machine;
+        return $this->msg;
     }
     
-    //Utilisateur
-    public function setUtilisateur($utilisateur)
+    //date_time
+    public function setDateTime($dateTime)
     {
-        if (is_string($utilisateur))
+        if (is_string($dateTime))
         {
-            $this->utilisateur = $utilisateur;
+            $this->dateTime = $dateTime;
         }
     }
 
-    public function getUtilisateur()
+    public function getDateTime()
     {
-        return $this->utilisateur;
+        return $this->dateTime;
     }
     
     //dateHeure
-    public function setDateHeure($dateHeure)
+    public function setLevel($level)
     {
-        if (is_string($dateHeure))
+        if (is_string($level))
         {
-            $this->dateHeure = $dateHeure;
+            $this->level = $level;
         }
     }
 
-    public function getDateHeure()
+    public function getLevel()
     {
-        return $this->dateHeure;
-    }
-    
-    //action
-    public function setAction($action)
-    {
-        if (is_string($action))
-        {
-            $this->action = $action;
-        }
-    }
-
-    public function getAction()
-    {
-        return $this->action;
-    }
-    
-    //codeRetour
-    public function setCodeRetour($codeRetour)
-    {
-        if (is_string($codeRetour))
-        {
-            $this->codeRetour = $codeRetour;
-        }
-    }
-
-    public function getCodeRetour()
-    {
-        return $this->codeRetour;
+        return $this->level;
     }
 }
