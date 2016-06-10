@@ -289,10 +289,13 @@ if ($validPage == "manage_containers.php") {
                            // echo "Paramètre port de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur..."; //TODO log
                         }
 
+                        $guacUserId = Guacamole_UserDAL::findByUsername($loginUtilisateur);
+                        echo "</br>[DEBUG] loginutilisateur = ". $loginUtilisateur;
+                        echo "</br>[DEBUG] validLogin = " . $validLogin;
                         //=====Créer les permission sur la connection pur l'user donné=====//
                         $permConnectContainer = new Guacamole_Connection_Permission();
                         $permConnectContainer->setConnection($idConnectContainer);
-                        $permConnectContainer->setUser($user->getId());
+                        $permConnectContainer->setUser($guacUserId);
 
                         //ajout la permission READ
                         $permConnectContainer->setPermission("READ");
