@@ -1,7 +1,7 @@
 <?php
 
 //Script de création d'un utilisateur dans les deux bases de données
-    //Version amélioration ne pas envoyer id mais nom
+    //B+
 
 //import
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/UtilisateurDAL.php');
