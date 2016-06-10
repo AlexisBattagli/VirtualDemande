@@ -14,7 +14,7 @@ $message="error";
 
 $validPage = filter_input(INPUT_POST, 'page', FILTER_SANITIZE_STRING);
 
-if($validPage == "removeContener")
+if($validPage == "manage_groups.php")
 {
     //=====Vérification de ce qui est renvoyé par le formulaire
     $validIdMachine = filter_input(INPUT_POST, 'idMachine', FILTER_SANITIZE_STRING);
