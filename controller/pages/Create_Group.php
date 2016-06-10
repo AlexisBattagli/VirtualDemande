@@ -12,7 +12,7 @@ $message="error";
 
 $validPage = filter_input(INPUT_POST, 'page', FILTER_SANITIZE_STRING);
 
-if($validPage == "createGroupe")
+if($validPage == "manage_groups.php")
 {
     //Création d'un Utilisateur par défaut
     $newGroupe=new Groupe();

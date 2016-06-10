@@ -15,23 +15,24 @@ $message="error";
 
 $validPage = filter_input(INPUT_POST, 'page', FILTER_SANITIZE_STRING);
 
-if($validPage == "subscribeUser")
+if($validPage == "manage_groups.php")
 {
+    echo "ici";
     $newUtilisateurHasGroupe=new Utilisateur_has_Groupe();
 
     //=====Vérification de ce qui est renvoyé par le formulaire
     $validIdUser = filter_input(INPUT_POST, 'idUser', FILTER_SANITIZE_STRING);
     $newUtilisateurHasGroupe->setUtilisateur($validIdUser);
-    //echo "OK pour Id User : ".$newUtilisateurHasGroupe->getUtilisateur()->getId();
+    echo "OK pour Id User : ".$newUtilisateurHasGroupe->getUtilisateur()->getId();
 
     $validIdGroupe = filter_input(INPUT_POST, 'idGroupe', FILTER_SANITIZE_STRING);
     $newUtilisateurHasGroupe->setGroupe($validIdGroupe);
-    //echo "OK pour Id Groupe : ".$newUtilisateurHasGroupe->getGroupe()->getId();
+    echo "OK pour Id Groupe : ".$newUtilisateurHasGroupe->getGroupe()->getId();
 
     //Vérification si l'utilisateur fait partie du groupe
     if(Utilisateur_has_GroupeDAL::findByGU($validIdGroupe,$validIdUser)==null)
     {
-        //echo "Utilisateur n'est pas dans le groupe";
+        echo "Utilisateur n'est pas dans le groupe";
 
         //Ajout de l'utilisateur du groupe
         $validInsert=Utilisateur_has_GroupeDAL::insertOnDuplicate($newUtilisateurHasGroupe);
@@ -40,7 +41,7 @@ if($validPage == "subscribeUser")
     }
     else
     {
-        //echo "Utilisateur est deja dans le groupe";
+        echo "Utilisateur est deja dans le groupe";
     }
 }
 

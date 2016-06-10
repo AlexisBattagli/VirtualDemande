@@ -17,7 +17,7 @@ $message="error";
 
 $validPage = filter_input(INPUT_POST, 'page', FILTER_SANITIZE_STRING);
 
-if($validPage == "unsubscribeUser")
+if($validPage == "manage_groups.php")
 {
     //=====Vérification de ce qui est renvoyé par le formulaire
     $validIdUser = filter_input(INPUT_POST, 'idUser', FILTER_SANITIZE_STRING);
@@ -63,4 +63,4 @@ if($validPage == "unsubscribeUser")
 }
 
 //Renvoie à la page précédante
-    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+    //echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
