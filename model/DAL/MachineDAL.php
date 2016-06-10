@@ -407,7 +407,7 @@ class MachineDAL
      */
     
     public static function copy($origine, $clone)
-    {
+    { 
         $clone->setUtilisateur($origine->getUtilisateur());
         $clone->setDistribAlias($origine->getDistribAlias());
         $clone->setNom($origine->getNom());
@@ -416,7 +416,8 @@ class MachineDAL
         $clone->setStockage($origine->getStockage());
         $clone->setDescription($origine->getDescription());
         $clone->setDateCreation($origine->getDateCreation());
-        $clone->setDateExpiration($origine->getDateExpiration());
-        $clone->setDateEtat($origine->getDateEtat());
+        $clone->setDateExpiration($origine->getDateExpiration()); 
+        $clone->setEtat($origine->getEtat());
+        
     }
 }
