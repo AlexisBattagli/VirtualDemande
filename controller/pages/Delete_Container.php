@@ -66,7 +66,8 @@ if($validPage == "manage_containers.php")
             $newLog->setLoginUtilisateur($loginUtilisateur);
             $newLog->setMsg("Erreur SOAP: ".$f);
             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-            exit();
+            //Renvoie à la page précédante
+                    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
         }
 
         $result=0;
@@ -104,7 +105,8 @@ if($validPage == "manage_containers.php")
                     $newLog->setMsg("L'ensemble des parametres de connection pour la connection n° $connectionId n'ont pas bien été supprimés.");
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
                     //echo "L'ensemble des parametres de connection pour la connection n° $connectionId ont bien été supprimés."; 
-                    exit();
+                    //Renvoie à la page précédante
+                        echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
                 }
 
                 //Supprimer les élements connection_permission
@@ -125,7 +127,8 @@ if($validPage == "manage_containers.php")
                     $newLog->setMsg("L'ensemble des permissions de connection pour la connection n° $connectionId n'ont pas bien été supprimés.");
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
                     //echo "L'ensemble des permissions de connection pour la connection n° $connectionId ont bien été supprimés.";   
-                    exit();
+                    //Renvoie à la page précédante
+                        echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
                 }
 
                 //Supprimer le container dans la base guacamole
@@ -145,7 +148,8 @@ if($validPage == "manage_containers.php")
                     $newLog->setMsg("La connection n°$connectionId n'a pas bien été supprimé.");
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
                     //echo "La connection n°$connectionId a bien été supprimé."; 
-                    exit();
+                    //Renvoie à la page précédante
+                        echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
                 }
             }
             else
@@ -174,7 +178,8 @@ if($validPage == "manage_containers.php")
                 $newLog->setMsg("La machine $nomMachine n'a pas bien été enlever des groupe dans le(s)quel(s) elle était partagée.");
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
                 //echo "La machine $nomMachine a bien été enlever des groupe dans le(s)quel(s) elle était partagée."; 
-                exit();
+                //Renvoie à la page précédante
+                    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
             }
             
             //Trouve l'user de la machine et décrémente de 1 son nombre de Container
@@ -204,7 +209,8 @@ if($validPage == "manage_containers.php")
                 $newLog->setMsg("La machine $nomMachine d'id $validIdMachine appartenant à l'utilisateur $owner->getPseudo() n'a pas bien été supprimée !");
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
                 //echo "La machine $nomMachine d'id $validIdMachine appartenant à l'utilisateur $owner->getPseudo() a bien été supprimée !";
-                exit();
+                //Renvoie à la page précédante
+                    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
             }
         
             $message="ok";
@@ -216,7 +222,8 @@ if($validPage == "manage_containers.php")
             $newLog->setMsg("Erreur lors de la suppression du container nommé $nomMachine");
             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
             //echo "Erreur lors de la suppression du container nommé ". $nomMachine; //TODO log
-            exit();
+            //Renvoie à la page précédante
+                    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
         }
     }
 }
