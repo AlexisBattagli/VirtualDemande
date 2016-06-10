@@ -82,16 +82,23 @@ class Groupe_has_MachineDAL {
 
     public static function findNomByGroupe($groupeId)
     {
-        $rows = array();
-
-        $data = BaseSingleton::select('SELECT '
-                        . ' groupe.nom as groupe, '
-                        . ' machine.nom as machine, '
-                        . ' groupe_has_machine.commentaire as commentaire '
-                        . ' FROM groupe_has_machine, machine, groupe'
-                        . ' WHERE groupe_has_machine.machine_id=machine.id '
-                        . ' AND groupe_has_machine.groupe_id=groupe.id '
-                        . ' AND groupe_has_machine.groupe_id = ?', array('i', &$groupeId));
+        $rows = array(); //id //nom //os //cpu //ram //stockage //description
+       
+        $data = BaseSingleton::select('SELECT machine.id as id, '
+                .'machine.nom as nom, '
+                .'distrib_alias.nom_complet as os, '
+                .'cpu.nb_coeur as cpu, '
+                .'ram.valeur as ram, '
+                .'stockage.valeur as stockage, '
+                .'machine.description as description '
+                .'FROM machine, distrib_alias, cpu, ram, stockage, groupe_has_machine, groupe '
+                .'WHERE machine.distrib_alias_id = distrib_alias.id '
+                .'AND machine.cpu_id = cpu.id '
+                .'AND machine.ram_id = ram.id '
+                .'AND machine.stockage_id = stockage.id '
+                .'AND groupe_has_machine.machine_id=machine.id '
+                .'AND groupe_has_machine.groupe_id=groupe.id '
+                .'AND groupe_has_machine.groupe_id = ?', array('i', &$groupeId));
 
         foreach ($data as $row)
         {
