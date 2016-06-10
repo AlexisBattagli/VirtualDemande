@@ -8,9 +8,9 @@ $groupContainer = Groupe_has_MachineDAL::findNomByGroupe($_COOKIE["user_id"]);
 $sharedContainers = UtilisateurDAL::findShareContener($_COOKIE["user_id"]);
 $unsubscribedGroupList = GroupeDAL::findLessUser($_COOKIE["user_id"]);
 
-//echo "<pre>";
-//var_dump($unsubscribedGroupList);
-//echo "</pre>";
+echo "<pre>";
+var_dump($unsubscribedGroupList);
+echo "</pre>";
 ?>
 
 <html>
@@ -40,7 +40,7 @@ $unsubscribedGroupList = GroupeDAL::findLessUser($_COOKIE["user_id"]);
                                         <input name="idGroupe" type="hidden" class="form-control" value="<?= $groupList->getId() ?>">
                                     </div>
                                     <divl>
-                                        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-eject" aria-hidden="true"></span></button>
+                                        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-export" aria-hidden="true"></span></button>
                                         </div>
                                 </form>
                             </td>
@@ -96,7 +96,7 @@ $unsubscribedGroupList = GroupeDAL::findLessUser($_COOKIE["user_id"]);
                                                                     <input name = "idMachine" type = "hidden" class = "form-control" value="<?= $containerGroupList["id"] ?>">
                                                                 </div>
                                                                 <div>
-                                                                    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-import" aria-hidden="true"></span></button>
+                                                                    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-copy" aria-hidden="true"></span></button>
                                                                 </div>
                                                             </form>
                                                         </td>
@@ -153,7 +153,7 @@ $unsubscribedGroupList = GroupeDAL::findLessUser($_COOKIE["user_id"]);
                                         <input name = "idGroupe" type = "hidden" class = "form-control" value="<?= $shared["groupe_id"] ?>">
                                     </div>
                                     <div>
-                                        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                                        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span></button>
                                     </div>
                                 </form>
                             </td>
@@ -163,7 +163,7 @@ $unsubscribedGroupList = GroupeDAL::findLessUser($_COOKIE["user_id"]);
             </table>
         </div>
 
-        <!--Possessed group list-->
+        <!--Unsubscribed groups-->
         <div>
             <h2><span class="label label-primary">Groups you're not subscribed to</span></h2>
             <table class = "table table-bordered table-hover">
@@ -189,13 +189,13 @@ $unsubscribedGroupList = GroupeDAL::findLessUser($_COOKIE["user_id"]);
                                         <input name = "page" type = "hidden" class = "form-control" value = "manage_containers.php">
                                     </div>
                                     <div class = "form-group">
-                                        <input name = "idUser" type = "hidden" class = "form-control" value="<?php echo $_COOKIE["user_id"] ?>">
+                                        <input name = "idUser" type = "hidden" class = "form-control" value="<?php echo $_COOKIE["user_id"]; ?>">
                                     </div>
                                     <div class = "form-group">
                                         <input name = "idGroupe" type = "hidden" class = "form-control" value="<?= $unsubscribedGroup->getId() ?>">
                                     </div>
                                     <div>
-                                        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                                        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-import" aria-hidden="true"></span></button>
                                     </div>
                                 </form>
                             </td>

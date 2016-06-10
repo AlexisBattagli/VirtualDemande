@@ -24,6 +24,7 @@ $HDDisplayed = StockageDAL::findByVisible();
 ?>
 <html>
     <body>
+        <!--List of the containers that are fonctionnals-->
         <div>
             <h2><span class="label label-primary">Fonctionnal containers</span></h2>
             <table class = "table table-bordered table-hover">
@@ -78,6 +79,7 @@ $HDDisplayed = StockageDAL::findByVisible();
                 </tbody>
             </table>
         </div>
+        <!--List of the the containers that are in creation-->
         <div>
             <h2><span class="label label-primary">Containers being created</span></h2>
             <table class = "table table-bordered table-hover">
@@ -134,7 +136,6 @@ $HDDisplayed = StockageDAL::findByVisible();
                 </tbody>
             </table>
         </div>
-
         <!--Container creation panel-->
         <div class="panel panel-info autocollapse">
             <div class="panel-heading clickable">
@@ -221,6 +222,7 @@ $HDDisplayed = StockageDAL::findByVisible();
                 </form>
             </div>
         </div>
+        <!--Container sharing panel-->
         <div class="panel panel-info autocollapse">
             <div class="panel-heading clickable">
                 <h2 class="panel-title">
@@ -229,14 +231,16 @@ $HDDisplayed = StockageDAL::findByVisible();
             </div>
             <div class="panel-body">
                 <form action="" method="post" >  <!--action a mettre-->
+                    <!--Container selector-->
                     <div class="form-group">
                         <h4><label>Container to share</label></h4>
                         <select class="form-control">
-                            <option>Container 1</option>
-                            <option>Container 2</option>
-                            <option>Container 3</option>
+                            <?php foreach($rowsFonctionnal as $containerList) : ?>
+                            <option> <?= $containerList["nom"]?> </option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
+                    <!--Group selector-->
                     <div class="form-group">
                         <h4><label>Group</label></h4>
                         <select class="form-control">
