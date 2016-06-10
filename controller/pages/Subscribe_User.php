@@ -22,7 +22,7 @@ if($validPage == "manage_groups.php")
     //=====Vérification de ce qui est renvoyé par le formulaire
     $validIdUser = filter_input(INPUT_POST, 'idUser', FILTER_SANITIZE_STRING);
     $newUtilisateurHasGroupe->setUtilisateur($validIdUser);
-    //echo "OK pour Id User : ".$newUtilisateurHasGroupe->getUtilisateur()->getId();
+    // echo "OK pour Id User : ".$newUtilisateurHasGroupe->getUtilisateur()->getId();
 
     $validIdGroupe = filter_input(INPUT_POST, 'idGroupe', FILTER_SANITIZE_STRING);
     $newUtilisateurHasGroupe->setGroupe($validIdGroupe);
