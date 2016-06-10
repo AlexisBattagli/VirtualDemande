@@ -398,4 +398,25 @@ class MachineDAL
         $deleted = BaseSingleton::delete('DELETE FROM machine WHERE id = ?', array('i', &$id));
         return $deleted;
     }
+    
+    /*
+     * Copie en profondeur la machine Origine dans la machine Clone
+     * 
+     * @param Machine $origine
+     * @param Machine $clone
+     */
+    
+    public static function copy($origine, $clone)
+    {
+        $clone->setUtilisateur($origine->getUtilisateur());
+        $clone->setDistribAlias($origine->getDistribAlias());
+        $clone->setNom($origine->getNom());
+        $clone->setCpu($origine->getCpu());
+        $clone->setRam($origine->getRam());
+        $clone->setStockage($origine->getStockage());
+        $clone->setDescription($origine->getDescription());
+        $clone->setDateCreation($origine->getDateCreation());
+        $clone->setDateExpiration($origine->getDateExpiration());
+        $clone->setDateEtat($origine->getDateEtat());
+    }
 }
