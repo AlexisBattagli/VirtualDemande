@@ -30,9 +30,10 @@ if($validPage == "manage_containers.php")
 
     //Vérifier si le container existe
     $machine=MachineDAL::findById($validIdMachine);
+    $validMachine=$machine->getId();
 
     if($machine != null)
-    {
+    { 
         //Récupérer le login de l'utilisateur
         $loginUtilisateur=$machine->getUtilisateur()->getLogin();
         
@@ -45,6 +46,7 @@ if($validPage == "manage_containers.php")
         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
         
  /*       
+        
         //=====Appel Web Service pour remove le container sur le serveur de virt=====/
         try
         {
@@ -69,9 +71,9 @@ if($validPage == "manage_containers.php")
             exit();
         }
 */
-        $result=0;
+$result=0;
         if ($result == "0")
-        {
+        { 
             //Récupérer l'id de connexion
             $connection=Guacamole_ConnectionDAL::findByNom($nomMachine); 
             $connectionId=$connection->getConnectionId();
@@ -84,8 +86,8 @@ if($validPage == "manage_containers.php")
 
             //Supprimer les élements connection_parameter
             $validDeletePermission=Guacamole_Connection_ParameterDAL::deleteConnection($connectionId);
-            echo $connectionId;
-            if(is_null(Guacamole_Connection_ParameterDAL::findByConnection($connectionId)))
+            $nbrePermission=count(Guacamole_Connection_ParameterDAL::findByConnection($connectionId));
+            if($nbrePermission == 0)
             {
                 $newLog->setLevel("INFO");
                 $newLog->setLoginUtilisateur($loginUtilisateur);
@@ -105,7 +107,8 @@ if($validPage == "manage_containers.php")
             
             //Supprimer les élements connection_permission
             $validDeleteParameter=Guacamole_Connection_PermissionDAL::deleteConnection($connectionId);
-            if(is_null(Guacamole_Connection_PermissionDAL::findByConnection($connectionId)))
+            $nbreParameter=count(Guacamole_Connection_PermissionDAL::findByConnection($connectionId));
+            if($nbreParameter == 0)
             {
                 $newLog->setLevel("INFO");
                 $newLog->setLoginUtilisateur($loginUtilisateur);
@@ -144,11 +147,12 @@ if($validPage == "manage_containers.php")
                 //echo "La connection n°$connectionId a bien été supprimé."; 
                 exit();
             }
-             
+
 
             //Suppprimer les partages de cette machine
             $validDeletePartage=Groupe_has_MachineDAL::deleteMachine($validIdMachine);
-            if(is_null(Groupe_has_MachineDAL::findByMachine($validIdMachine)))
+            $nbreGroupeHasMachine=count(Groupe_has_MachineDAL::findByMachine($validIdMachine));
+            if($nbreGroupeHasMachine == 0)
             {
                 $newLog->setLevel("INFO");
                 $newLog->setLoginUtilisateur($loginUtilisateur);
@@ -158,7 +162,7 @@ if($validPage == "manage_containers.php")
             }
             else
             {
-                $newLog->setLevel("INFO");
+                $newLog->setLevel("ERROR");
                 $newLog->setLoginUtilisateur($loginUtilisateur);
                 $newLog->setMsg("La machine $nomMachine n'a pas bien été enlever des groupe dans le(s)quel(s) elle était partagée.");
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
@@ -205,7 +209,7 @@ if($validPage == "manage_containers.php")
             $newLog->setLoginUtilisateur($loginUtilisateur);
             $newLog->setMsg("Erreur lors de la suppression du container nommé $nomMachine");
             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
-            echo "Erreur lors de la suppression du container nommé ". $nomMachine; //TODO log
+            //echo "Erreur lors de la suppression du container nommé ". $nomMachine; //TODO log
             exit();
         }
     }
