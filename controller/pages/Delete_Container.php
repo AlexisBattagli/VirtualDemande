@@ -23,7 +23,6 @@ if($validPage == "DeleteContainer")
 {
     //=====Vérification de ce qui est renvoyé par le formulaire
     $validIdMachine = filter_input(INPUT_POST, 'idMachine', FILTER_SANITIZE_STRING);
-    echo "OK pour Id Machine : ".$validIdMachine;
 
     //Vérifier si le container existe
     $machine=MachineDAL::findById($validIdMachine);
@@ -32,15 +31,15 @@ if($validPage == "DeleteContainer")
     {
         //Récupérer le nom de la machine
         $nomMachine=$machine->getNom();
-        //echo "Nom de la machine :".$NomMachine;
+        //echo "Le nom de la machine à supprimer est".$nomMachine;
         
         //=====Appel Web Service pour remove le container sur le serveur de virt=====/
         try
         {
             $client = new SoapCLient(null,
                 array (
-                        'uri' => 'http://virt-server/RemoveContainerRequest',
-                        'location' => 'http://virt-server/remove_container_ws.php',
+                        'uri' => 'http://virt-server/ws_lxc/RemoveContainerRequest',
+                        'location' => 'http://virt-server/ws_lxc/remove_container_ws.php',
                         'trace' => 1,
                         'exceptions' => 0
                 ));
@@ -51,7 +50,11 @@ if($validPage == "DeleteContainer")
         }
         catch(SoapFault $f)
         {
-            echo $f;
+            $newLog->setLevel("ERROR");
+            $newLog->setLoginUtilisateur($loginUtilisateur);
+            $newLog->setMsg("Erreur SOAP: ".$f);
+            $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
+            exit();
         }
 
         if ($result == "0")
@@ -59,31 +62,33 @@ if($validPage == "DeleteContainer")
             //Récupérer l'id de connexion
             $connection=Guacamole_ConnectionDAL::findByNom($nomMachine);
             $connectionId=$connection->getConnectionId();
-            //echo "Id de connexion de la machine :".$connectionId;
+            //echo "Début de la suppression de la connection n°$connectionId";
 
             //Supprimer les élements connection_parameter
             $validDeletePermission=Guacamole_Connection_ParameterDAL::deleteConnection($connectionId);
-            //echo "Suppr Parameter"; 
+            //echo "L'ensemble des parametres de connection pour la connection n° $connectionId ont bien été supprimés."; 
 
             //Supprimer les élements connection_permission
             $validDeleteParameter=Guacamole_Connection_PermissionDAL::deleteConnection($connectionId);
-            //echo "Suppr Permission";      
+            //echo "L'ensemble des permissions de connection pour la connection n° $connectionId ont bien été supprimés.";      
 
             //Supprimer le container dans la base guacamole
             $validDeleteConnection=Guacamole_ConnectionDAL::delete($connectionId);
-            //echo "Suppr Connection";  
+            //echo "La connection n°$connectionId a bien été supprimé.";  
 
             //Suppprimer les partages de cette machine
             $validDeletePartage=Groupe_has_MachineDAL::deleteMachine($validIdMachine);
-            //echo "Suppr Partage"; 
-        
+            //echo "La machine $nomMachine a bien été enlever des groupe dans le(s)quel(s) elle était partagée."; 
+            
             //Trouve l'user de la machine et décrémente de 1 son nombre de Container
             $owner = $machine->getUtilisateur();
             $owner->setNbVm($owner->getNbVm() - 1); 
-
+            //!! ajouter insert !!
+            // echo "Le quota de l'utilisateur $owner->getPseudo() est maintenant à $owner->getNbVm()";
+            
             //Supprimer le container dans la base DBVirtDemand
             $validDeleteMachine=MachineDAL::delete($validIdMachine);
-            //echo "final";
+            //echo "La machine $nomMachine d'id $validIdMachine appartenant à l'utilisateur $owner->getPseudo() a bien été supprimée !";
         
             $message="ok";
         }
