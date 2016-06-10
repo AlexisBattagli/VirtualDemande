@@ -193,11 +193,13 @@ class UtilisateurDAL
         $data = BaseSingleton::select('SELECT machine.nom as nom, '
                 .'groupe_has_machine.machine_id as machine_id, '
                 .'groupe_has_machine.groupe_id as groupe_id, '
+                .'groupe.nom as groupe, '
                 .'distrib_alias.nom_complet as os, '
                 .'machine.description as description '
-                .'FROM machine, distrib_alias, groupe_has_machine, utilisateur  '
+                .'FROM machine, distrib_alias, groupe_has_machine, utilisateur, groupe  '
                 .'WHERE machine.distrib_alias_id = distrib_alias.id '
                 .'AND groupe_has_machine.machine_id=machine.id '
+                .'AND groupe_has_machine.groupe_id=groupe.id '
                 .'AND machine.utilisateur_id=utilisateur.id '
                 .'AND utilisateur.id = ?', array('i', &$userId));
         
