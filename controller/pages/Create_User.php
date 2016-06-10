@@ -28,28 +28,28 @@ if($validPage == "register.php")
     //=====Vérification de ce qui est renvoyé par le formulaire
     $validLogin = filter_input(INPUT_POST, 'pseudo', FILTER_SANITIZE_STRING);
 
-    if (!is_null($validLogin))
+    if ($validLogin != null)
     {
         $newUtilisateur->setLogin($validLogin);
         //echo "OK pour Login : ".$newUtilisateur->getLogin();
     }
 
     $validNom = filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_STRING);
-    if (!is_null($validNom))
+    if ($validNom != null)
     {
         $newUtilisateur->setNom($validNom);
         //echo "OK pour Nom :".$newUtilisateur->getNom();
     }
 
     $validPrenom = filter_input(INPUT_POST, 'prenom', FILTER_SANITIZE_STRING);
-    if (!is_null($validPrenom))
+    if ($validPrenom != null)
     {
         $newUtilisateur->setPrenom($validPrenom);
         //echo "OK pour Prenom :".$newUtilisateur->getPrenom();
     }
 
     $validEmail = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
-    if (!is_null($validEmail))
+    if ($validEmail != null)
     {
         $newUtilisateur->setMail($validEmail);
         //echo "OK pour Mail :".$newUtilisateur->getMail();
@@ -58,14 +58,14 @@ if($validPage == "register.php")
     $validDate = filter_input(INPUT_POST, 'date', FILTER_SANITIZE_STRING);
     $date = DateTime::createFromFormat('d/m/Y', $validDate);
     $validDateFormat=$date->format('Y/m/d');
-    if (!is_null($validDateFormat))
+    if ($validDateFormat != null)
     {
         $newUtilisateur->setDateNaissance($validDateFormat);
         //echo "OK pour Date de Naissance:".$newUtilisateur->getDateNaissance();
     }
 
     $validPassword = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
-    if (!is_null($validPassword))
+    if ($validPassword != null)
     {
         $newUtilisateur->setPassword($validPassword);
         //echo "OK pour Passwd:".$newUtilisateur->getPassword();
@@ -84,12 +84,12 @@ if($validPage == "register.php")
     //echo "OK pour Role_id:".$newUtilisateur->getRole()->getId();
 
     //====Vérification de doublons==== - OK
-    if (is_null(UtilisateurDAL::isUnique($validLogin,$validEmail)))
+    if (UtilisateurDAL::isUnique($validLogin,$validEmail) == null)
     {
     //=====Insertion=====/ - OK
         $validInsertUtilisateur = UtilisateurDAL::insertOnDuplicate($newUtilisateur);
 
-        if (!is_null($validInsertUtilisateur))
+        if ($validInsertUtilisateur != null)
         {
             //echo "Ajout de l'utilisateur reussi dans la base DBVirtDemande ! (id:" . $validInsertUtilisateur . ")";
             //Création d'un guacamole_user
@@ -98,7 +98,7 @@ if($validPage == "register.php")
 
             //=====Vérification de ce qui est renvoyé par le formulaire
             $validUserName = filter_input(INPUT_POST, 'pseudo', FILTER_SANITIZE_STRING);
-            if (!is_null($validUserName))
+            if ($validUserName != null)
             {
                 $newUserGuacamole->setUserName($validUserName);
                 //echo "OK pour Username : ".$newUserGuacamole->getUsername();
@@ -106,7 +106,7 @@ if($validPage == "register.php")
 
             $validPassword = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
 
-            if (!is_null($validPassword))
+            if ($validPassword != null)
             {
                 $newUserGuacamole->setPasswordHash($validPassword);
                 //echo "OK pour PasswdHash:".$newUserGuacamole->getPasswordHash();
@@ -126,13 +126,13 @@ if($validPage == "register.php")
             //echo "Valider";
 
             //====Vérification de doublons====
-            if (is_null(Guacamole_UserDAL::findByUsername($validUserName)))
+            if (Guacamole_UserDAL::findByUsername($validUserName) == null)
             {
             //=====Insertion=====/ - OK
 
                 $validInsertUser = Guacamole_UserDAL::insertOnDuplicate($newUserGuacamole);
 
-                if (!is_null($validInsertUser))
+                if ($validInsertUser != null)
                 {
                     //echo "Ajout de l'utilisateur reussi dans la base guacamole_db! (id:" . $validInsertUser . ")";
                     //Paramètres des permissions de l'utilisateur
