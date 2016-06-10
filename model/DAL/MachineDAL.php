@@ -113,7 +113,8 @@ class MachineDAL
     {
         $rows = array();
 
-        $data = BaseSingleton::select('SELECT machine.nom as nom, '
+        $data = BaseSingleton::select('SELECT machine.id as id, '
+                .'machine.nom as nom, '
                 .'distrib_alias.nom_complet as os, '
                 .'cpu.nb_coeur as cpu, '
                 .'ram.valeur as ram, '
@@ -146,7 +147,8 @@ class MachineDAL
     {
         $rows = array();
 
-        $data = BaseSingleton::select('SELECT machine.nom as nom, '
+       $data = BaseSingleton::select('SELECT machine.id as id, '
+                .'machine.nom as nom, '
                 .'distrib_alias.nom_complet as os, '
                 .'cpu.nb_coeur as cpu, '
                 .'ram.valeur as ram, '
