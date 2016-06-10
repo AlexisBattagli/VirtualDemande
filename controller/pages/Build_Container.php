@@ -101,7 +101,7 @@ if ($validPage == "manage_containers.php") {
                 //=====Incrémente le nombre de Container de l'utilisateur=====//
                 $variable = $user->getNbVm() + 1;
                 $user->setNbVm($variable);
-                $valid = UtilisateurDAL::insertOnDuplicate($user);
+                $validInsertNewNbCont = UtilisateurDAL::insertOnDuplicate($user);
                 if($validInsertNewNbCont != null){
                     $newLog->setLevel("INFO");
                     $newLog->setLoginUtilisateur($loginUtilisateur);
