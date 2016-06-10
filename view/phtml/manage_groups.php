@@ -8,9 +8,9 @@ $groupContainer = Groupe_has_MachineDAL::findNomByGroupe($_COOKIE["user_id"]);
 $sharedContainers = UtilisateurDAL::findShareContener($_COOKIE["user_id"]);
 $unsubscribedGroupList = GroupeDAL::findLessUser($_COOKIE["user_id"]);
 
-echo "<pre>";
-var_dump($unsubscribedGroupList);
-echo "</pre>";
+//echo "<pre>";
+//var_dump($unsubscribedGroupList);
+//echo "</pre>";
 ?>
 
 <html>
@@ -39,9 +39,9 @@ echo "</pre>";
                                     <div class="form-group">
                                         <input name="idGroupe" type="hidden" class="form-control" value="<?= $groupList->getId() ?>">
                                     </div>
-                                    <divl>
+                                    <div>
                                         <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-export" aria-hidden="true"></span></button>
-                                        </div>
+                                    </div>
                                 </form>
                             </td>
                         </tr>
@@ -108,7 +108,7 @@ echo "</pre>";
                                 </div>
                             </td>
                         </tr>
-                    <?php endforeach ?>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
@@ -186,7 +186,7 @@ echo "</pre>";
                             <td>
                                 <form action="./controller/pages/Subscribe_User.php" method="post" >
                                     <div class = "form-group">
-                                        <input name = "page" type = "hidden" class = "form-control" value = "manage_containers.php">
+                                        <input name = "page" type = "hidden" class = "form-control" value = "manage_groups.php">
                                     </div>
                                     <div class = "form-group">
                                         <input name = "idUser" type = "hidden" class = "form-control" value="<?php echo $_COOKIE["user_id"]; ?>">
