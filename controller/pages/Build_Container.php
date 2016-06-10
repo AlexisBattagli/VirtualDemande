@@ -173,7 +173,19 @@ if ($validPage == "manage_containers.php") {
                     $container = MachineDAL::findById($validInsertMachine);
                     $container->setDescription($container->getDescription() . " Mot de passe du compte root: " . $passwdRoot);
                     $container->setEtat(0);
-                    $validTableLog = MachineDAL::insertOnDuplicate($container);
+                    $validUpdateMachine = MachineDAL::insertOnDuplicate($container);
+                    if($validUpdateMachine != null){
+                        $newLog->setLevel("INFO");
+                        $newLog->setLoginUtilisateur($loginUtilisateur);
+                        $newLog->setMsg("Mise à jour de la description du container ".$container->getNom()." en ajoutant le mot de passe root.");
+                        $validTableLog = Table_logDAL::insertOnDuplicate($newLog); 
+                    } else {
+                        $newLog->setLevel("ERROR");
+                        $newLog->setLoginUtilisateur($loginUtilisateur);
+                        $newLog->setMsg("Echec de la mise à jour de la description du container ".$container->getNom()." pour ajouter le mot de passe root.");
+                        $validTableLog = Table_logDAL::insertOnDuplicate($newLog); 
+                        exit();
+                    }
                     
                     //====Création de la connection======//
                     $connectionContainer = new Guacamole_Connection();
