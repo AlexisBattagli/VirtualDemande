@@ -191,6 +191,8 @@ class UtilisateurDAL
     {
         $rows = array();
         $data = BaseSingleton::select('SELECT machine.nom as nom, '
+                .'groupe_has_machine.machine_id as machine_id, '
+                .'groupe_has_machine.groupe_id as groupe_id, '
                 .'distrib_alias.nom_complet as os, '
                 .'machine.description as description '
                 .'FROM machine, distrib_alias, groupe_has_machine, utilisateur  '
