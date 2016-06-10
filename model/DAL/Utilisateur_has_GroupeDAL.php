@@ -242,7 +242,6 @@ class Utilisateur_has_GroupeDAL {
 
         //Exec la requête
         $idInsert = BaseSingleton::insertOrEdit($sql, $params);
-        echo "ok";
         return $idInsert;
     }
 
