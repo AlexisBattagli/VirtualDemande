@@ -30,7 +30,7 @@ if ($validPage == "manage_containers.php")
 
     //=====Vérification de ce qui est renvoyé par le formulaire
     $validNameMachineOrigine = filter_input(INPUT_POST, 'nameMachineOrigine', FILTER_SANITIZE_STRING); //sera utile pour insert et ws, nameContainer
-    if ($validNameMachineOrigine != null) {
+    if (!is_null($validNameMachineOrigine)) {
         $machineOrigine = MachineDAL::findByName($validNameMachineOrigine);//Machine à cloner
         MachineDAL::copy($machineOrigine, $machineClone); //copy en profondeur de la machine origine dans la machine clone    
         $machineClone->setDescription("Machine cloné à partir de la machine ".$machineOrigine->getNom()); //modofie la description
@@ -43,7 +43,7 @@ if ($validPage == "manage_containers.php")
     }
 
     $validIdUser = filter_input(INPUT_POST, 'idUser', FILTER_SANITIZE_STRING);
-    if ($validIdUser != null) {
+    if (!is_null($validIdUser)) {
         $user = UtilisateurDAL::findById($validIdUser);
         $loginUtilisateur = $user->getLogin(); //création du champ login pour les logs
         $machineClone->setUtilisateur($user); //modifie l'utilisateur de la machine clone
@@ -54,7 +54,7 @@ if ($validPage == "manage_containers.php")
     }
 
     $validNomMachineClone = filter_input(INPUT_POST, 'nomMachineClone', FILTER_SANITIZE_STRING);
-    if ($validNomMachineClone != null) {
+    if (!is_null($validNomMachineClone)) {
         $machineClone->setNom($validNomMachineClone); //modifie le noml de la machine clone
     }
     else {
@@ -74,10 +74,10 @@ if ($validPage == "manage_containers.php")
 
 
     if (UtilisateurDAL::isFull($validUserId) == false) {
-        if (MachineDAL::findByName($validNomMachineClone) == null) {
+        if (is_null(MachineDAL::findByName($validNomMachineClone))) {
     //=====Insertion de la Machine en base=====/ - OK
             $validInsertMachineClone = MachineDAL::insertOnDuplicate($machineClone);
-            if ($validInsertMachineClone != null) {
+            if (!is_null($validInsertMachineClone)) {
                 $newLog->setLevel("INFO");
                 $newLog->setLoginUtilisateur($loginUtilisateur);
                 $newLog->setMsg("Machine correctement ajoutée en base, d'id: " . $validInsertMachineClone);
@@ -87,7 +87,7 @@ if ($validPage == "manage_containers.php")
                 $variable = $user->getNbVm() + 1;
                 $user->setNbVm($variable);
                 $validInsertNewNbCont = UtilisateurDAL::insertOnDuplicate($user);
-                if($validInsertNewNbCont != null){
+                if(!is_null($validInsertNewNbCont)){
                     $newLog->setLevel("INFO");
                     $newLog->setLoginUtilisateur($loginUtilisateur);
                     $newLog->setMsg("Mise a jour du quota, passe à ".$variable);
@@ -144,7 +144,7 @@ if ($validPage == "manage_containers.php")
                     $container->setDescription($container->getDescription() . " Mot de passe du compte root: " . $passwdRoot);
                     $container->setEtat(0);
                     $validUpdateDescClone = MachineDAL::insertOnDuplicate($container);
-                    if($validUpdateDescClone != null){
+                    if(!is_null($validUpdateDescClone)){
                         $newLog->setLevel("INFO");
                         $newLog->setLoginUtilisateur($loginUtilisateur);
                         $newLog->setMsg("Mise à jour de la description du container ".$container->getNom()." en ajoutant le mot de passe root.");
@@ -183,7 +183,7 @@ if ($validPage == "manage_containers.php")
                         exit();
                     }
                     $idConnectContainer = Guacamole_ConnectionDAL::insertOnDuplicate($connectionContainer);
-                    if ($idConnectContainer != null) {//Si création de connection guaca ok
+                    if (!is_null($idConnectContainer)) {//Si création de connection guaca ok
     //======créer les parameter de la connection guaca=====/
                         $paramConnectContainer = new Guacamole_Connection_Parameter();
                         $paramConnectContainer->setConnection($idConnectContainer);
