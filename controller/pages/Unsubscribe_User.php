@@ -20,7 +20,7 @@ $validPage = filter_input(INPUT_POST, 'page', FILTER_SANITIZE_STRING);
 if($validPage == "manage_groups.php")
 {
     //=====Vérification de ce qui est renvoyé par le formulaire
-    $validIdUser = filter_input(INPUT_POST, 'idUser', FILTER_SANITIZE_STRING);
+    $validIdUser = $_COOKIE["user_id"];
     //echo "OK pour Id User : ".$validIdUser;
 
     $validIdGroupe = filter_input(INPUT_POST, 'idGroupe', FILTER_SANITIZE_STRING);
