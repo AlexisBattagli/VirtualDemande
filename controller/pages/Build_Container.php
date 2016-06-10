@@ -21,7 +21,7 @@ $message = "error";
 //Checker de où il vient
 $validPage = filter_input(INPUT_POST, 'page', FILTER_SANITIZE_STRING);
 
-if ($validPage == "manage_containers.php") {
+if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container.php")) {
     $newMachine = new Machine();
 
     //=====Vérification de ce qui est renvoyé par le formulaire
