@@ -26,17 +26,17 @@ if ($validPage == "manage_containers.php") {
 
     //=====Vérification de ce qui est renvoyé par le formulaire
     $validName = filter_input(INPUT_POST, 'nameContainer', FILTER_SANITIZE_STRING); //sera utile pour insert et ws, nameContainer
-    if ($validName != null) {
+    if (!is_null($validName)) {
         $newMachine->setNom($validName);
     }
 
     $validDesc = filter_input(INPUT_POST, 'descriptionContainer', FILTER_SANITIZE_STRING); //utile pour insert
-    if ($validDesc != null) {
+    if (!is_null($validDesc)) {
         $newMachine->setDescription($validDesc);
     }
 
     $validDistAliasId = filter_input(INPUT_POST, 'dist', FILTER_SANITIZE_STRING);
-    if ($validDistAliasId != null) {
+    if (!is_null($validDistAliasId)) {
         $distAlias = Distrib_AliasDAL::findById($validDistAliasId); //sera utile pour l'insertt en base
         $newMachine->setDistribAlias($distAlias);
 
@@ -48,28 +48,28 @@ if ($validPage == "manage_containers.php") {
     }
 
     $validRamId = filter_input(INPUT_POST, 'ram', FILTER_SANITIZE_STRING);
-    if ($validRamId != null) {
+    if (!is_null($validRamId)) {
         $ram = RamDAL::findById($validRamId); //sera utile pour l'insertt en base
         $newMachine->setRam($ram);
         $valueRam = $ram->getValeur();  //sera utile pour le ws, ram
     }
 
     $validStockId = filter_input(INPUT_POST, 'stock', FILTER_SANITIZE_STRING);
-    if ($validStockId != null) {
+    if (!is_null($validStockId)) {
         $stock = StockageDAL::findById($validStockId); //sera utile pour l'insertt en base
         $newMachine->setStockage($stock);
         $valueStock = $stock->getValeur(); //sera utile pour le ws, stockage
     }
 
     $validCpuId = filter_input(INPUT_POST, 'cpu', FILTER_SANITIZE_STRING);
-    if ($validCpuId != null) {
+    if (!is_null($validCpuId)) {
         $cpu = CpuDAL::findById($validCpuId); //sera utile pour l'insertt en base
         $newMachine->setCpu($cpu);
         $valueCpu = $cpu->getNbCoeur(); //sera utile pour le ws, cpu
     }
 
     $validUserId = filter_input(INPUT_POST, 'user', FILTER_SANITIZE_STRING); //sera utile pour l'insert
-    if ($validUserId != null) {
+    if (!is_null($validUserId)) {
         $user = UtilisateurDAL::findById($validUserId); //sert à l'insert
         $newMachine->setUtilisateur($user);
         $loginUtilisateur = $user->getLogin();
@@ -88,10 +88,10 @@ if ($validPage == "manage_containers.php") {
     $newMachine->setEtat(2);
 
     if (UtilisateurDAL::isFull($validUserId) == false) { //vérifie que l'user n'a pas atteint son quota
-        if (MachineDAL::findByName($validName) == null) {
+        if (is_null(MachineDAL::findByName($validName))) {
             //=====Insertion de la Machine en base=====/ - OK
             $validInsertMachine = MachineDAL::insertOnDuplicate($newMachine);
-            if ($validInsertMachine != null) {
+            if (!is_null($validInsertMachine)) {
                 $newLog->setLevel("INFO");
                 $newLog->setLoginUtilisateur($loginUtilisateur);
                 $newLog->setMsg("Machine correctement ajoutée en base, d'id: " . $validInsertMachine);
@@ -102,7 +102,7 @@ if ($validPage == "manage_containers.php") {
                 $variable = $user->getNbVm() + 1;
                 $user->setNbVm($variable);
                 $validInsertNewNbCont = UtilisateurDAL::insertOnDuplicate($user);
-                if($validInsertNewNbCont != null){
+                if(!is_null($validInsertNewNbCont)){
                     $newLog->setLevel("INFO");
                     $newLog->setLoginUtilisateur($loginUtilisateur);
                     $newLog->setMsg("Mise a jour du quota, passe à ".$variable);
@@ -153,7 +153,7 @@ if ($validPage == "manage_containers.php") {
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                 
                // echo "</br>Le code de retour vaut : " . $code; //TODO log
-                if ($code == "0") {
+                if (!is_null($code) && $code == "0") {
                     //=====Si Container créer======/
 
                     $newLog->setLevel("INFO");
@@ -174,7 +174,7 @@ if ($validPage == "manage_containers.php") {
                     $container->setDescription($container->getDescription() . " Mot de passe du compte root: " . $passwdRoot);
                     $container->setEtat(0);
                     $validUpdateMachine = MachineDAL::insertOnDuplicate($container);
-                    if($validUpdateMachine != null){
+                    if(!is_null($validUpdateMachine)){
                         $newLog->setLevel("INFO");
                         $newLog->setLoginUtilisateur($loginUtilisateur);
                         $newLog->setMsg("Mise à jour de la description du container ".$container->getNom()." en ajoutant le mot de passe root.");
@@ -213,7 +213,7 @@ if ($validPage == "manage_containers.php") {
                         exit();
                     }
                     $idConnectContainer = Guacamole_ConnectionDAL::insertOnDuplicate($connectionContainer);
-                    if ($idConnectContainer != null) {//Si création de connection guaca ok
+                    if (!is_null($idConnectContainer)) {//Si création de connection guaca ok
                         //======créer les parameter de la connection guaca=====/
                         $paramConnectContainer = new Guacamole_Connection_Parameter();
                         $paramConnectContainer->setConnection($idConnectContainer);
@@ -402,7 +402,7 @@ if ($validPage == "manage_containers.php") {
                         exit();
                         //echo "Erreur, la connection n'a pas bien était ajouter dans la DB de guaca..."; //TODO log
                     }
-                } else if ($code == "1") { //If failure pending create of contener
+                } else if (!is_null($code) && $code == "1") { //If failure pending create of contener
                     $newLog->setLevel("WARN");
                     $newLog->setLoginUtilisateur($loginUtilisateur);
                     $newLog->setMsg("Echec de création du conteneur... Contactez le support EVOLVE.");
