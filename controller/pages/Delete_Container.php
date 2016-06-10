@@ -44,13 +44,11 @@ if($validPage == "manage_containers.php")
         $newLog->setLoginUtilisateur($loginUtilisateur);
         $newLog->setMsg("Le nom de la machine à supprimer est".$nomMachine);
         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
-        
- /*       
-        
+               
         //=====Appel Web Service pour remove le container sur le serveur de virt=====/
         try
         {
-            $client = new SoapCLient(null,
+            $client = new SoapClient(null,
                 array (
                         'uri' => 'http://virt-server/ws_lxc/RemoveContainerRequest',
                         'location' => 'http://virt-server/ws_lxc/remove_container_ws.php',
@@ -60,7 +58,7 @@ if($validPage == "manage_containers.php")
             $result = $client->__call('removeContainer',
                 array(
                         'nameContainer' => $nomMachine
-                ));
+                )); 
         }
         catch(SoapFault $f)
         {
@@ -70,85 +68,94 @@ if($validPage == "manage_containers.php")
             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
             exit();
         }
-*/
-$result=0;
+
+        $result=0;
         if ($result == "0")
         { 
-            //Récupérer l'id de connexion
+            //Vérification s'il y a eu une insertion dans la base de données guacamole
             $connection=Guacamole_ConnectionDAL::findByNom($nomMachine); 
-            $connectionId=$connection->getConnectionId();
             
-            $newLog->setLevel("INFO");
-            $newLog->setLoginUtilisateur($loginUtilisateur);
-            $newLog->setMsg("Début de la suppression de la connection n°".$connectionId);
-            $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-            //echo "Début de la suppression de la connection n°$connectionId";
-
-            //Supprimer les élements connection_parameter
-            $validDeletePermission=Guacamole_Connection_ParameterDAL::deleteConnection($connectionId);
-            $nbrePermission=count(Guacamole_Connection_ParameterDAL::findByConnection($connectionId));
-            if($nbrePermission == 0)
+            if(!is_null($connection))
             {
+                //Récupérer l'id de connexion
+                $connectionId=$connection->getConnectionId();
+
                 $newLog->setLevel("INFO");
                 $newLog->setLoginUtilisateur($loginUtilisateur);
-                $newLog->setMsg("L'ensemble des parametres de connection pour la connection n° $connectionId ont bien été supprimés.");
-                $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
-                //echo "L'ensemble des parametres de connection pour la connection n° $connectionId ont bien été supprimés."; 
+                $newLog->setMsg("Début de la suppression de la connection n°".$connectionId);
+                $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
+                //echo "Début de la suppression de la connection n°$connectionId";
+
+                //Supprimer les élements connection_parameter
+                $validDeletePermission=Guacamole_Connection_ParameterDAL::deleteConnection($connectionId);
+                $nbrePermission=count(Guacamole_Connection_ParameterDAL::findByConnection($connectionId));
+                if($nbrePermission == 0)
+                {
+                    $newLog->setLevel("INFO");
+                    $newLog->setLoginUtilisateur($loginUtilisateur);
+                    $newLog->setMsg("L'ensemble des parametres de connection pour la connection n° $connectionId ont bien été supprimés.");
+                    $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
+                    //echo "L'ensemble des parametres de connection pour la connection n° $connectionId ont bien été supprimés."; 
+                }
+                else
+                {
+                    $newLog->setLevel("ERROR");
+                    $newLog->setLoginUtilisateur($loginUtilisateur);
+                    $newLog->setMsg("L'ensemble des parametres de connection pour la connection n° $connectionId n'ont pas bien été supprimés.");
+                    $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
+                    //echo "L'ensemble des parametres de connection pour la connection n° $connectionId ont bien été supprimés."; 
+                    exit();
+                }
+
+                //Supprimer les élements connection_permission
+                $validDeleteParameter=Guacamole_Connection_PermissionDAL::deleteConnection($connectionId);
+                $nbreParameter=count(Guacamole_Connection_PermissionDAL::findByConnection($connectionId));
+                if($nbreParameter == 0)
+                {
+                    $newLog->setLevel("INFO");
+                    $newLog->setLoginUtilisateur($loginUtilisateur);
+                    $newLog->setMsg("L'ensemble des permissions de connection pour la connection n° $connectionId ont bien été supprimés.");
+                    $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
+                    //echo "L'ensemble des permissions de connection pour la connection n° $connectionId ont bien été supprimés.";      
+                }
+                else
+                {
+                    $newLog->setLevel("ERROR");
+                    $newLog->setLoginUtilisateur($loginUtilisateur);
+                    $newLog->setMsg("L'ensemble des permissions de connection pour la connection n° $connectionId n'ont pas bien été supprimés.");
+                    $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
+                    //echo "L'ensemble des permissions de connection pour la connection n° $connectionId ont bien été supprimés.";   
+                    exit();
+                }
+
+                //Supprimer le container dans la base guacamole
+                $validDeleteConnection=Guacamole_ConnectionDAL::delete($connectionId);
+                if(is_null(Guacamole_ConnectionDAL::findById($id)))
+                {
+                    $newLog->setLevel("INFO");
+                    $newLog->setLoginUtilisateur($loginUtilisateur);
+                    $newLog->setMsg("La connection n°$connectionId a bien été supprimé.");
+                    $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
+                    //echo "La connection n°$connectionId a bien été supprimé."; 
+                }
+                else
+                {
+                    $newLog->setLevel("ERROR");
+                    $newLog->setLoginUtilisateur($loginUtilisateur);
+                    $newLog->setMsg("La connection n°$connectionId n'a pas bien été supprimé.");
+                    $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
+                    //echo "La connection n°$connectionId a bien été supprimé."; 
+                    exit();
+                }
             }
             else
             {
-                $newLog->setLevel("ERROR");
+                $newLog->setLevel("WARN");
                 $newLog->setLoginUtilisateur($loginUtilisateur);
-                $newLog->setMsg("L'ensemble des parametres de connection pour la connection n° $connectionId n'ont pas bien été supprimés.");
-                $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
-                //echo "L'ensemble des parametres de connection pour la connection n° $connectionId ont bien été supprimés."; 
-                exit();
+                $newLog->setMsg("La machine $nomMachine n'avait pas de connexion dans guacamole.");
+                $validTableLog = Table_logDAL::insertOnDuplicate($newLog);                    
             }
             
-            //Supprimer les élements connection_permission
-            $validDeleteParameter=Guacamole_Connection_PermissionDAL::deleteConnection($connectionId);
-            $nbreParameter=count(Guacamole_Connection_PermissionDAL::findByConnection($connectionId));
-            if($nbreParameter == 0)
-            {
-                $newLog->setLevel("INFO");
-                $newLog->setLoginUtilisateur($loginUtilisateur);
-                $newLog->setMsg("L'ensemble des permissions de connection pour la connection n° $connectionId ont bien été supprimés.");
-                $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
-                //echo "L'ensemble des permissions de connection pour la connection n° $connectionId ont bien été supprimés.";      
-            }
-            else
-            {
-                $newLog->setLevel("ERROR");
-                $newLog->setLoginUtilisateur($loginUtilisateur);
-                $newLog->setMsg("L'ensemble des permissions de connection pour la connection n° $connectionId n'ont pas bien été supprimés.");
-                $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
-                //echo "L'ensemble des permissions de connection pour la connection n° $connectionId ont bien été supprimés.";   
-                exit();
-            }
-            
-            
-
-            //Supprimer le container dans la base guacamole
-            $validDeleteConnection=Guacamole_ConnectionDAL::delete($connectionId);
-            if(is_null(Guacamole_ConnectionDAL::findById($id)))
-            {
-                $newLog->setLevel("INFO");
-                $newLog->setLoginUtilisateur($loginUtilisateur);
-                $newLog->setMsg("La connection n°$connectionId a bien été supprimé.");
-                $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
-                //echo "La connection n°$connectionId a bien été supprimé."; 
-            }
-            else
-            {
-                $newLog->setLevel("ERROR");
-                $newLog->setLoginUtilisateur($loginUtilisateur);
-                $newLog->setMsg("La connection n°$connectionId n'a pas bien été supprimé.");
-                $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
-                //echo "La connection n°$connectionId a bien été supprimé."; 
-                exit();
-            }
-
-
             //Suppprimer les partages de cette machine
             $validDeletePartage=Groupe_has_MachineDAL::deleteMachine($validIdMachine);
             $nbreGroupeHasMachine=count(Groupe_has_MachineDAL::findByMachine($validIdMachine));
@@ -169,7 +176,6 @@ $result=0;
                 //echo "La machine $nomMachine a bien été enlever des groupe dans le(s)quel(s) elle était partagée."; 
                 exit();
             }
-            
             
             //Trouve l'user de la machine et décrémente de 1 son nombre de Container
             $owner = $machine->getUtilisateur();
