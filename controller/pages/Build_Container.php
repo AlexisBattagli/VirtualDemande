@@ -102,6 +102,19 @@ if ($validPage == "manage_containers.php") {
                 $variable = $user->getNbVm() + 1;
                 $user->setNbVm($variable);
                 $valid = UtilisateurDAL::insertOnDuplicate($user);
+                if($validInsertNewNbCont != null){
+                    $newLog->setLevel("INFO");
+                    $newLog->setLoginUtilisateur($loginUtilisateur);
+                    $newLog->setMsg("Mise a jour du quota, passe à ".$variable);
+                    $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
+                }
+                else {
+                    $newLog->setLevel("ERROR");
+                    $newLog->setLoginUtilisateur($loginUtilisateur);
+                    $newLog->setMsg("Echec de la mise a jour du quota");
+                    $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
+                    exit();
+                }
 
                //=====Appel Web Service pour build le container sur le serveur de virt=====/
                 try {
@@ -160,7 +173,19 @@ if ($validPage == "manage_containers.php") {
                     $container = MachineDAL::findById($validInsertMachine);
                     $container->setDescription($container->getDescription() . " Mot de passe du compte root: " . $passwdRoot);
                     $container->setEtat(0);
-                    $validTableLog = MachineDAL::insertOnDuplicate($container);
+                    $validUpdateMachine = MachineDAL::insertOnDuplicate($container);
+                    if($validUpdateMachine != null){
+                        $newLog->setLevel("INFO");
+                        $newLog->setLoginUtilisateur($loginUtilisateur);
+                        $newLog->setMsg("Mise à jour de la description du container ".$container->getNom()." en ajoutant le mot de passe root.");
+                        $validTableLog = Table_logDAL::insertOnDuplicate($newLog); 
+                    } else {
+                        $newLog->setLevel("ERROR");
+                        $newLog->setLoginUtilisateur($loginUtilisateur);
+                        $newLog->setMsg("Echec de la mise à jour de la description du container ".$container->getNom()." pour ajouter le mot de passe root.");
+                        $validTableLog = Table_logDAL::insertOnDuplicate($newLog); 
+                        exit();
+                    }
                     
                     //====Création de la connection======//
                     $connectionContainer = new Guacamole_Connection();
