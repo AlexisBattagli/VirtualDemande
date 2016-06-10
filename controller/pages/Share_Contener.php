@@ -14,7 +14,7 @@ $message="error";
 
 $validPage = filter_input(INPUT_POST, 'page', FILTER_SANITIZE_STRING);
 
-if($validPage == "shareContener")
+if($validPage == "manage_containers.php")
 {
     $newGroupeHasMachine=new Groupe_has_Machine();
 
