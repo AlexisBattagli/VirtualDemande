@@ -316,9 +316,10 @@ if ($validPage == "manage_containers.php") {
                         }
 
                         //=====Créer les permission sur la connection pur l'user donné=====//
+                        $guacUserId = Guacamole_UserDAL::findByUsername($loginUtilisateur);
                         $permConnectContainer = new Guacamole_Connection_Permission();
                         $permConnectContainer->setConnection($idConnectContainer);
-                        $permConnectContainer->setUser($user->getId());
+                        $permConnectContainer->setUser($guacUserId);
 
                         //ajout la permission READ
                         $permConnectContainer->setPermission("READ");
