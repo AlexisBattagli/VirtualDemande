@@ -95,6 +95,31 @@ class Utilisateur_has_GroupeDAL {
         return $rows;
     }
     
+        /*
+     * Retourne l'ensemble des Groupes dont un Utilisateur_id passé en param n'est pas
+     * 
+     * @param int $UtilisateurId
+     * @return  Utilisateur_has_Groupe
+     */
+
+    public static function findByNotUser($utilisateurId)
+    {
+        $rows = array();
+
+        $data = BaseSingleton::select('SELECT groupe.nom as nom, '
+                .'groupe.description as description '
+                .'groupe.id as id '
+                .'FROM utilisateur_has_groupe, groupe '
+                .'WHERE utilisateur_has_groupe.groupe_id = groupe.id AND utilisateur_has_groupe.utilisateur_id != ?', array('i', &$utilisateurId));
+        
+        foreach ($data as $row)
+        {
+            $rows[]=$row;
+        }
+
+        return $rows;
+    }
+    
     /*
      * Renvoie true ou false en fonction si l'utilisateur est dans le groupe ou non
      * 
