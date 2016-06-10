@@ -142,10 +142,11 @@ class GroupeDAL
         {
             $groupeId=$row->getId();
             $statut= Utilisateur_has_GroupeDAL::isInByUser($utilisateurId,$groupeId);
+            echo $statut;
             
             if($statut==false)
             {
-                $groupe = new Groupe();
+                $groupe = self::findById($groupeId);
                 $mesGroupesLessUser[] = $groupe;
             }
         }
