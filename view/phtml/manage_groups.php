@@ -4,7 +4,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Groupe_has_M
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/UtilisateurDAL.php');
 
 $groupUser = GroupeDAL::findByUser($_COOKIE["user_id"]);
-$groupContainer = Groupe_has_MachineDAL::findNomByGroupe($_COOKIE["user_id"]);
 $sharedContainers = UtilisateurDAL::findShareContener($_COOKIE["user_id"]);
 $unsubscribedGroupList = GroupeDAL::findLessUser($_COOKIE["user_id"]);
 
@@ -67,6 +66,7 @@ $unsubscribedGroupList = GroupeDAL::findLessUser($_COOKIE["user_id"]);
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <?php $groupContainer = Groupe_has_MachineDAL::findNomByGroupe($groupList->getId()); ?>
                                                 <?php foreach ($groupContainer as $containerGroupList) : ?>
                                                     <tr>
                                                         <td>
