@@ -18,7 +18,7 @@ $message="error";
 $validPage = filter_input(INPUT_POST, 'page', FILTER_SANITIZE_STRING);
 
 if($validPage == "manage_groups.php")
-{ echo UtilisateurDAL::GetNumberAvailableUsers();
+{ 
     //=====Vérification de ce qui est renvoyé par le formulaire
     $validIdUser = $_COOKIE["user_id"];
     //echo "OK pour Id User : ".$validIdUser;
