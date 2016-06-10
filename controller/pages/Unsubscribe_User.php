@@ -18,7 +18,7 @@ $message="error";
 $validPage = filter_input(INPUT_POST, 'page', FILTER_SANITIZE_STRING);
 
 if($validPage == "manage_groups.php")
-{
+{ echo UtilisateurDAL::GetNumberAvailableUsers();
     //=====Vérification de ce qui est renvoyé par le formulaire
     $validIdUser = $_COOKIE["user_id"];
     //echo "OK pour Id User : ".$validIdUser;
@@ -33,7 +33,7 @@ if($validPage == "manage_groups.php")
 
         //Suppression de l'utilisateur du groupe
         $validDelete=Utilisateur_has_GroupeDAL::delete($validIdGroupe,$validIdUser);
-
+        $message="ok";
         //Vérification si l'uitilisateur avait des machines partagés dans ce groupe
         $groupeHasMachines=Groupe_has_MachineDAL::findByShareByUserByGroupe($validIdUser,$validIdGroupe);
         if($groupeHasMachines!= null)
@@ -48,8 +48,6 @@ if($validPage == "manage_groups.php")
                 //echo $machineId;
                 $validDelete=Groupe_has_MachineDAL::delete($groupeId, $machineId);
             }
-            
-            $message=true;
         }
         else 
         {
