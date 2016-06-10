@@ -103,7 +103,7 @@ if ($validPage == "manage_containers.php") {
                 $user->setNbVm($variable);
                 $valid = UtilisateurDAL::insertOnDuplicate($user);
 
-                //=====Appel Web Service pour build le container sur le serveur de virt=====/
+               //=====Appel Web Service pour build le container sur le serveur de virt=====/
                 try {
                     $client = new SoapClient(null, array(
                         'uri' => 'http://virt-server/ws_lxc/BuildContainerRequest',
@@ -138,6 +138,7 @@ if ($validPage == "manage_containers.php") {
                 $newLog->setLoginUtilisateur($loginUtilisateur);
                 $newLog->setMsg("Le code de retour de ws vaut : " . $code);
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
+                
                // echo "</br>Le code de retour vaut : " . $code; //TODO log
                 if ($code == "0") {
                     //=====Si Container créer======/
@@ -196,18 +197,18 @@ if ($validPage == "manage_containers.php") {
                         $paramConnectContainer->setParameterName("username");
                         $paramConnectContainer->setParameterValue("root");
                         $validInsertParamUsername = Guacamole_Connection_ParameterDAL::insertOnDuplicate($paramConnectContainer);
-                        if ($validInsertParamUsername != null) {
+                        if (!is_null(Guacamole_Connection_ParameterDAL::findByCP($paramConnectContainer->getConnection()->getConnectionId(),$paramConnectContainer->getParameterName()))) {
                             $newLog->setLevel("INFO");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Paramètre username = root de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée.");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                           // echo "Paramètre username = root de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée."; //TODO log
+                            //echo "Paramètre username = root de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée."; //TODO log
                         } else {
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Paramètre username = root de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            //exit();
+                            exit();
                             //echo "Paramètre username = root de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur..."; //TODO log
                         }
 
@@ -215,7 +216,7 @@ if ($validPage == "manage_containers.php") {
                         $paramConnectContainer->setParameterName("password");
                         $paramConnectContainer->setParameterValue($passwdRoot);
                         $validInsertParamPwd = Guacamole_Connection_ParameterDAL::insertOnDuplicate($paramConnectContainer);
-                        if ($validInsertParamPwd != null) {
+                        if (!is_null(Guacamole_Connection_ParameterDAL::findByCP($paramConnectContainer->getConnection()->getConnectionId(),$paramConnectContainer->getParameterName()))) {
                             $newLog->setLevel("INFO");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Paramètre password de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée.");
@@ -226,7 +227,7 @@ if ($validPage == "manage_containers.php") {
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Paramètre password de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            //exit();
+                            exit();
                            // echo "Paramètre password de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur..."; //TODO log
                         }
 
@@ -234,7 +235,7 @@ if ($validPage == "manage_containers.php") {
                         $paramConnectContainer->setParameterName("hostname");
                         $paramConnectContainer->setParameterValue($addrIpContainer);
                         $validInsertParamHostname = Guacamole_Connection_ParameterDAL::insertOnDuplicate($paramConnectContainer);
-                        if ($validInsertParamHostname != null) {
+                        if (!is_null(Guacamole_Connection_ParameterDAL::findByCP($paramConnectContainer->getConnection()->getConnectionId(),$paramConnectContainer->getParameterName()))) {
                             $newLog->setLevel("INFO");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Paramètre hostname = " . $addrIpContainer . " de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée.");
@@ -245,7 +246,7 @@ if ($validPage == "manage_containers.php") {
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Paramètre hostname = " . $addrIpContainer . " de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            //exit();
+                            exit();
                            // echo "Paramètre hostname = " . $addrIpContainer . " de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur..."; //TODO log
                         }
 
@@ -270,11 +271,11 @@ if ($validPage == "manage_containers.php") {
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Erreur, type d'ihm inconnu... Sérieux, comment ça a pu arriver ?!!");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                           // exit();
+                           exit();
                           //  echo "Erreur, type d'ihm inconnu... Sérieux, comment ça a pu arriver ?!!"; //TODO log
                         }
                         $validInsertParamPort = Guacamole_Connection_ParameterDAL::insertOnDuplicate($paramConnectContainer);
-                        if ($validInsertParamPort != null) {
+                        if (!is_null(Guacamole_Connection_ParameterDAL::findByCP($paramConnectContainer->getConnection()->getConnectionId(),$paramConnectContainer->getParameterName()))) {
                             $newLog->setLevel("INFO");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Paramètre port de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée.");
@@ -285,88 +286,85 @@ if ($validPage == "manage_containers.php") {
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Paramètre port de la connection (connection n°" . $idConnectContainer . ") non ajoutée.");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                           // exit();
+                           exit();
                            // echo "Paramètre port de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur..."; //TODO log
                         }
 
-                        $guacUserId = Guacamole_UserDAL::findByUsername($loginUtilisateur);
-                        echo "</br>[DEBUG] loginutilisateur = ". $loginUtilisateur;
-                        echo "</br>[DEBUG] validLogin = " . $validLogin;
                         //=====Créer les permission sur la connection pur l'user donné=====//
                         $permConnectContainer = new Guacamole_Connection_Permission();
                         $permConnectContainer->setConnection($idConnectContainer);
-                        $permConnectContainer->setUser($guacUserId);
+                        $permConnectContainer->setUser($user->getId());
 
                         //ajout la permission READ
                         $permConnectContainer->setPermission("READ");
                         $validInsertPermR = Guacamole_Connection_PermissionDAL::insertOnDuplicate($permConnectContainer);
-                        if ($validInsertPermR != null) {
+                        if (!is_null(Guacamole_Connection_PermissionDAL::findByUCP($permConnectContainer->getUser()->getUserId(), $permConnectContainer->getConnection()->getConnectionId(), $permConnectContainer->getPermission()))) {
                             $newLog->setLevel("INFO");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission READ pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            echo "La permission READ pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !"; //TODO log
+                            //echo "La permission READ pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !"; //TODO log
                         } else {
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission READ pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                          //  exit();
-                            echo "La permission READ pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
+                            exit();
+                            //echo "La permission READ pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
                         }
 
                         //ajout la permission UPDATE
                         $permConnectContainer->setPermission("UPDATE");
                         $validInsertPermU = Guacamole_Connection_PermissionDAL::insertOnDuplicate($permConnectContainer);
-                        if ($validInsertPermU != null) {
+                        if (!is_null(Guacamole_Connection_PermissionDAL::findByUCP($permConnectContainer->getUser()->getUserId(), $permConnectContainer->getConnection()->getConnectionId(), $permConnectContainer->getPermission()))) {
                             $newLog->setLevel("INFO");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission UPDATE pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            echo "La permission UPDATE pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !"; //TODO log
+                            //echo "La permission UPDATE pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !"; //TODO log
                         } else {
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission UPDATE pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                           // exit();
-                            echo "La permission UPDATE pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
+                            exit();
+                            //echo "La permission UPDATE pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
                         }
 
                         //ajout la permission DELETE
                         $permConnectContainer->setPermission("DELETE");
                         $validInsertPermD = Guacamole_Connection_PermissionDAL::insertOnDuplicate($permConnectContainer);
-                        if ($validInsertPermD != null) {
+                        if (!is_null(Guacamole_Connection_PermissionDAL::findByUCP($permConnectContainer->getUser()->getUserId(), $permConnectContainer->getConnection()->getConnectionId(), $permConnectContainer->getPermission()))) {
                             $newLog->setLevel("INFO");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission DELETE pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            echo "La permission DELETE pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !"; //TODO log
+                            //echo "La permission DELETE pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !"; //TODO log
                         } else {
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission DELETE pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                          //  exit();
-                            echo "La permission DELETE pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
+                            exit();
+                            //echo "La permission DELETE pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
                         }
 
                         //ajout la permission ADMINISTER
                         $permConnectContainer->setPermission("ADMINISTER");
                         $validInsertPermA = Guacamole_Connection_PermissionDAL::insertOnDuplicate($permConnectContainer);
-                        if ($validInsertPermA != null) {
+                        if (!is_null(Guacamole_Connection_PermissionDAL::findByUCP($permConnectContainer->getUser()->getUserId(), $permConnectContainer->getConnection()->getConnectionId(), $permConnectContainer->getPermission()))) {
                             $newLog->setLevel("INFO");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission ADMINISTER pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            echo "La permission ADMINISTER pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !"; //TODO log
+                            //echo "La permission ADMINISTER pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !"; //TODO log
                         } else {
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission ADMINISTER pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !");
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                           // exit();
-                            echo "La permission ADMINISTER pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
+                            exit();
+                            //echo " FINAL : La permission ADMINISTER pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
                         }
 
                         $message = "ok";
@@ -375,8 +373,8 @@ if ($validPage == "manage_containers.php") {
                         $newLog->setLoginUtilisateur($loginUtilisateur);
                         $newLog->setMsg("Erreur, la connection n'a pas bien était ajouter dans la DB de guaca...");
                         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                       // exit();
-                        echo "Erreur, la connection n'a pas bien était ajouter dans la DB de guaca..."; //TODO log
+                        exit();
+                        //echo "Erreur, la connection n'a pas bien était ajouter dans la DB de guaca..."; //TODO log
                     }
                 } else if ($code == "1") { //If failure pending create of contener
                     $newLog->setLevel("WARN");

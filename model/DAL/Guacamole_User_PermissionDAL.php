@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Description of Guacamole_User_PermissionDAL
+ * Description of Guacamole_Connection_PermissionDAL
  *
  * @author Alexis
  * @author Aurelie
@@ -9,163 +9,163 @@
 
 //import
 require_once('BaseSingletonGuacamole.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Guacamole_User_Permission.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/class/Guacamole_Connection_Permission.php');
 
-class Guacamole_User_PermissionDAL {
+class Guacamole_Connection_PermissionDAL {
     /*
-     * Retourne l'ensemble des Guacamole_User_Permission qui sont en base
-     * Lister par Groupe ASC puis Machine ASC
+     * Retourne l'ensemble des Guacamole_Connection_Permission qui sont en base
+     * Lister par user_id ASC puis connection_id ASC puis permission ASC
      * 
-     * @return array[Guacamole_User_Permission] Tous les Guacamole_User_Permission sont placés dans un Tableau
+     * @return array[Guacamole_Connection_Permission] Tous les Guacamole_Connection_Permission sont placés dans un Tableau
      */
 
     public static function findAll()
     {
-        $mesguacamoleUserPermissions = array();
+        $mesGuacamoleConnectionPermissions = array();
 
-        $data = BaseSingletonGuacamole::select('SELECT guacamole_user_permission.user_id as user_id, '
-                        . 'guacamole_user_permission.affected_user_id as affected_user_id, '
-                        . 'guacamole_user_permission.permission as permission '
-                        . ' FROM guacamole_user_permission'
-                        . ' ORDER BY guacamole_user_permission.user_id ASC, guacamole_user_permission.affected_user_id ASC, guacamole_user_permission.permission ASC');
+        $data = BaseSingletonGuacamole::select('SELECT guacamole_connection_permission.user_id as user_id, '
+                        . 'guacamole_connection_permission.connection_id as connection_id, '
+                        . 'guacamole_connection_permission.permission as permission '
+                        . ' FROM guacamole_connection_permission'
+                        . ' ORDER BY guacamole_connection_permission.user_id ASC, guacamole_connection_permission.connection_id ASC, guacamole_connection_permission.permission ASC');
 
         foreach ($data as $row)
         {
-            $guacamoleUserPermission = new Guacamole_User_Permission();
-            $guacamoleUserPermission->hydrate($row);
-            $mesguacamoleUserPermissions[] = $guacamoleUserPermission;
+            $guacamoleConnectionPermission = new Guacamole_Connection_Permission();
+            $guacamoleConnectionPermission->hydrate($row);
+            $mesGuacamoleConnectionPermissions[] = $guacamoleConnectionPermission;
         }
 
-        return $mesguacamoleUserPermissions;
+        return $mesGuacamoleConnectionPermissions;
     }
     
-    /*
-     * Retourne l'ensemble des Guacamole_User_Permission pour un user_id passée en param
+        /*
+     * Retourne l'ensemble des Guacamole_Connection_Permission pour une connection_id passée en param
      * 
      * @param int $userId
-     * @return  array[Guacamole_User_Permission]
+     * @return  array[Guacamole_Connection_Permission]
      */
 
     public static function findByUser($userId)
     {
-        $mesguacamoleUserPermissions = array();
+        $mesGuacamoleConnectionPermissions = array();
 
-        $data = BaseSingletonGuacamole::select('SELECT guacamole_user_permission.user_id as user_id, '
-                        . 'guacamole_user_permission.affected_user_id as affected_user_id, '
-                        . 'guacamole_user_permission.permission as permission '
-                        . ' FROM guacamole_user_permission'
-                        . ' WHERE guacamole_user_permission.user_id = ?', array('i', &$userId));
+        $data = BaseSingletonGuacamole::select('SELECT guacamole_connection_permission.user_id as user_id, '
+                        . 'guacamole_connection_permission.connection_id as connection_id, '
+                        . 'guacamole_connection_permission.permission as permission '
+                        . ' FROM guacamole_connection_permission'
+                        . ' WHERE guacamole_connection_permission.user_id = ?', array('i', &$userId));
 
         foreach ($data as $row)
         {
-            $guacamoleUserPermission = new Guacamole_User_Permission();
-            $guacamoleUserPermission->hydrate($row);
-            $mesguacamoleUserPermissions[] = $guacamoleUserPermission;
+            $guacamoleConnectionPermission = new Guacamole_Connection_Permission();
+            $guacamoleConnectionPermission->hydrate($row);
+            $mesGuacamoleConnectionPermissions[] = $guacamoleConnectionPermission;
         }
 
-        return $mesguacamoleUserPermissions;
+        return $mesGuacamoleConnectionPermissions;
     }
     
     /*
-     * Retourne l'ensemble des Guacamole_User_Permission pour un affected_user_id passée en param
+     * Retourne l'ensemble des Guacamole_Connection_Permission pour une connection_id passée en param
      * 
-     * @param int $affectedUserId
-     * @return  array[Guacamole_User_Permission]
+     * @param int $connectionId
+     * @return  array[Guacamole_Connection_Permission]
      */
 
-    public static function findByAffectedUserId($affectedUserId)
+    public static function findByConnection($connectionId)
     {
-        $mesguacamoleUserPermissions = array();
+        $mesGuacamoleConnectionPermissions = array();
 
-        $data = BaseSingletonGuacamole::select('SELECT guacamole_user_permission.user_id as user_id, '
-                        . 'guacamole_user_permission.affected_user_id as affected_user_id, '
-                        . 'guacamole_user_permission.permission as permission '
-                        . ' FROM guacamole_user_permission'
-                        . ' WHERE guacamole_user_permission.affected_user_id = ?', array('i', &$affectedUserId));
+        $data = BaseSingletonGuacamole::select('SELECT guacamole_connection_permission.user_id as user_id, '
+                        . 'guacamole_connection_permission.connection_id as connection_id, '
+                        . 'guacamole_connection_permission.permission as permission '
+                        . ' FROM guacamole_connection_permission'
+                        . ' WHERE guacamole_connection_permission.connection_id = ?', array('i', &$connectionId));
 
         foreach ($data as $row)
         {
-            $guacamoleUserPermission = new Guacamole_User_Permission();
-            $guacamoleUserPermission->hydrate($row);
-            $mesguacamoleUserPermissions[] = $guacamoleUserPermission;
+            $guacamoleConnectionPermission = new Guacamole_Connection_Permission();
+            $guacamoleConnectionPermission->hydrate($row);
+            $mesGuacamoleConnectionPermissions[] = $guacamoleConnectionPermission;
         }
 
-        return $mesguacamoleUserPermissions;
-    }    
+        return $mesGuacamoleConnectionPermissions;
+    }
     
     /*
-     * Retourne le Guacamole_User_Permission correspondant au couple userId/affectedUserId
+     * Retourne le Guacamole_Connection_Permission correspondant au couple user/connectionId
      * Ce couple étant unique, il n'y qu'une seul ligne retourner.
      * 
-     * @param int userId, int affectedUserId
-     * @return Guacamole_User_Permission | null
+     * @param int userId, int connectionId
+     * @return Guacamole_Connection_Permission | null
      */
 
-    public static function findByUAP($userId, $affectedUserId, $permission)
+    public static function findByUCP($userId, $connectionId, $permission)
     {
-        $data = BaseSingletonGuacamole::select('SELECT guacamole_user_permission.user_id as user_id, '
-                        . 'guacamole_user_permission.affected_user_id as affected_user_id, '
-                        . 'guacamole_user_permission.permission as permission '
-                        . ' FROM guacamole_user_permission'
-                        . ' WHERE guacamole_user_permission.user_id = ? AND guacamole_user_permission.affected_user_id = ? AND LOWER(guacamole_user_permission.permission) = LOWER(?)', array('iis', &$userId, &$affectedUserId,&$permission));
-        $guacamoleUserPermission = new Guacamole_User_Permission();
+        $data = BaseSingletonGuacamole::select('SELECT guacamole_connection_permission.user_id as user_id, '
+                        . 'guacamole_connection_permission.connection_id as connection_id, '
+                        . 'guacamole_connection_permission.permission as permission '
+                        . ' FROM guacamole_connection_permission'
+                        . ' WHERE guacamole_connection_permission.user_id = ? AND guacamole_connection_permission.connection_id = ? AND guacamole_connection_permission.permission = ?', array('iis', &$userId, &$connectionId,&$permission));
+        $guacamoleConnectionPermission = new Guacamole_Connection_Permission();
 
         if (sizeof($data) > 0)
         {
-            $guacamoleUserPermission->hydrate($data[0]);
+            $guacamoleConnectionPermission->hydrate($data[0]);
         }
         else
         {
-            $guacamoleUserPermission = null;
+            $guacamoleConnectionPermission = null;
         }
-        return $guacamoleUserPermission;
+        return $guacamoleConnectionPermission;
     }
     
     /*
-     * Insère ou met à jour la Guacamole_User_Permission donnée en paramètre.
-     * Pour cela on vérifie si l'id de user_id, affected_user_id et permission transmis sont uniques.
+     * Insère ou met à jour la Guacamole_Connection_Permission donnée en paramètre.
+     * Pour cela on vérifie si l'id de user_id, connection_id, parameter_name transmis sont uniques.
      * Si le couple return null alors il faut insèrer, sinon update aux id transmis.
      * 
-     * @param Guacamole_User_Permission $guacamoleUserPermission
+     * @param Guacamole_Connection_Permission $guacamoleConnectionPermission
      * @return int id
      * L'id de l'objet inséré en base. False si ça a planté
      */
 
-    public static function insertOnDuplicate($guacamoleUserPermission)
+    public static function insertOnDuplicate($guacamoleConnectionPermission)
     {
 
-        //Récupère les valeurs de l'objet Guacamole_User_Permission passé en para de la méthode
-        $userId=$guacamoleUserPermission->getUser()->getUserId(); //int
-        $affectedUserId=$guacamoleUserPermission->getAffectedUser()->getUserId(); //int
-        $permission=$guacamoleUserPermission->getPermission(); //string
-
-        if (is_null(self::findByUAP($userId, $affectedUserId,$permission)))
+        //Récupère les valeurs de l'objet Guacamole_Connection_Permission passé en para de la méthode
+        $userId=$guacamoleConnectionPermission->getUser()->getUserId(); //int
+        $connectionId=$guacamoleConnectionPermission->getConnection()->getConnectionId(); //int
+        $permission=$guacamoleConnectionPermission->getPermission(); //string
+        
+        if (is_null(self::findByUCP($userId, $connectionId,$permission)))
         {
-            $sql = 'INSERT INTO guacamole_user_permission (user_id, affected_user_id, permission) '
+            $sql = 'INSERT INTO guacamole_connection_permission (user_id, connection_id, permission) '
                     . ' VALUES (?,?,?) ';
 
             //Prépare les info concernant les types de champs
             $params = array('iis',
                 &$userId,
-                &$affectedUserId,
+                &$connectionId,
                 &$permission
             );
         }
         else
         {
-            $sql = 'UPDATE guacamole_user_permission '
+            $sql = 'UPDATE guacamole_connection_permission '
                     . 'SET user_id = ?, '
-                    . 'affected_user_id = ?, '
+                    . 'connection_id = ?, '
                     . 'permission = ? '
-                    . 'WHERE user_id = ? AND affected_user_id = ?';
+                    . 'WHERE user_id = ? AND connection_id = ?';
 
             //Prépare les info concernant les type de champs
             $params = array('iisii',
                 &$userId,
-                &$affectedUserId,
+                &$connectionId,
                 &$permission,
                 &$userId,
-                &$affectedUserId
+                &$connectionId
             );
         }
 
@@ -176,35 +176,37 @@ class Guacamole_User_PermissionDAL {
     }
 
     /*
-     * Supprime la Guacamole_User_Permission correspondant au couple d'id de userId/affectedUserId donné en paramètre
+     * Supprime la Guacamole_Connection_Permission correspondant au couple d'id de userId/connectionId donné en paramètre
      * 
-     * @param int userId, int affectedUserId
+     * @param int userId, int connectionId
      * @return bool
      * True si la ligne a bien été supprimée, False sinon
      */
 
-    public static function delete($userId, $affectedUserId,$permission)
+    public static function delete($userId, $connectionId,$permission)
     {
-        $deleted = BaseSingletonGuacamole::delete('DELETE FROM guacamole_user_permission WHERE user_id = ? AND affected_user_id = ? AND LOWER(permission) = LOWER(?)', array('iis', &$userId, &$affectedUserId, &$permission));
+        $deleted = BaseSingletonGuacamole::delete('DELETE FROM guacamole_connection_permission WHERE user_id = ? AND connection_id = ? AND LOWER(permission) = LOWER(?)', array('iis', &$userId, &$connectionId, &$permission));
         return $deleted;
     }
     
     /*
-     * Supprime la Guacamole_User_Permission correspondant au couple d'id de userId/affectedUserId donné en paramètre
+     * Supprime la Guacamole_Connection_Permission correspondant au couple d'id de userId/connectionId donné en paramètre
      * 
-     * @param int userId, int affectedUserId
+     * @param int userId, int connectionId
      * @return bool
      * True si la ligne a bien été supprimée, False sinon
      */
 
-    public static function deleteUA($userId, $affectedUserId)
+    public static function deleteUC($userId, $connectionId)
     {
-        $deleted = BaseSingletonGuacamole::delete('DELETE FROM guacamole_user_permission WHERE user_id = ? AND affected_user_id = ?', array('ii', &$userId, &$affectedUserId));
+        $deleted = BaseSingletonGuacamole::delete('DELETE FROM guacamole_connection_permission WHERE user_id = ? AND connection_id = ?', array('ii', &$userId, &$connectionId));
         return $deleted;
     }
     
+    
+    
     /*
-     * Supprime la Guacamole_User_Permission correspondant à de userIddonné en paramètre
+     * Supprime la Guacamole_Connection_Permission correspondant au couple d'id de userId donné en paramètre
      * 
      * @param int userId
      * @return bool
@@ -213,21 +215,21 @@ class Guacamole_User_PermissionDAL {
 
     public static function deleteUser($userId)
     {
-        $deleted = BaseSingletonGuacamole::delete('DELETE FROM guacamole_user_permission WHERE user_id = ?', array('i', &$userId));
+        $deleted = BaseSingletonGuacamole::delete('DELETE FROM guacamole_connection_permission WHERE user_id = ?', array('i', &$userId));
         return $deleted;
     }
     
     /*
-     * Supprime la Guacamole_User_Permission correspondant au couple d'id de userId/affectedUserId donné en paramètre
+     * Supprime la Guacamole_Connection_Permission correspondant à connectionId donné en paramètre
      * 
-     * @param int affectedUserId
+     * @param int connectionId
      * @return bool
      * True si la ligne a bien été supprimée, False sinon
      */
 
-    public static function deleteAffectedUser($affectedUserId)
+    public static function deleteConnection($connectionId)
     {
-        $deleted = BaseSingletonGuacamole::delete('DELETE FROM guacamole_user_permission WHERE affected_user_id = ?', array('i', &$affectedUserId));
+        $deleted = BaseSingletonGuacamole::delete('DELETE FROM guacamole_connection_permission WHERE connection_id = ?', array('i', &$connectionId));
         return $deleted;
     }
 }
