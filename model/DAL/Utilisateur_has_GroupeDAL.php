@@ -107,7 +107,7 @@ class Utilisateur_has_GroupeDAL {
         $rows = array();
 
         $data = BaseSingleton::select('SELECT groupe.nom as nom, '
-                .'groupe.description as description '
+                .'groupe.description as description, '
                 .'groupe.id as id '
                 .'FROM utilisateur_has_groupe, groupe '
                 .'WHERE utilisateur_has_groupe.groupe_id = groupe.id AND utilisateur_has_groupe.utilisateur_id != ?', array('i', &$utilisateurId));
