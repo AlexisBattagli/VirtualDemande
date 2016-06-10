@@ -72,6 +72,34 @@ class Groupe_has_MachineDAL {
 
         return $mesGroupe_has_Machines;
     }
+    
+        /*
+     * Retourne l'ensemble des Machines pour un Groupe_id passé en param
+     * 
+     * @param int $GroupeId
+     * @return  array[Groupe_has_Machine]
+     */
+
+    public static function findNomByGroupe($groupeId)
+    {
+        $rows = array();
+
+        $data = BaseSingleton::select('SELECT '
+                        . ' groupe.nom as groupe, '
+                        . ' machine.nom as machine, '
+                        . ' groupe_has_machine.commentaire as commentaire '
+                        . ' FROM groupe_has_machine, machine, groupe'
+                        . ' WHERE groupe_has_machine.machine_id=machine.id '
+                        . ' AND groupe_has_machine.groupe_id=groupe.id '
+                        . ' AND groupe_has_machine.groupe_id = ?', array('i', &$groupeId));
+
+        foreach ($data as $row)
+        {
+            $rows[]=$row;
+        }
+
+        return $rows;
+    }
 
     /*
      * Retourne l'ensemble des Groupe pour un Machine_id passé en param
