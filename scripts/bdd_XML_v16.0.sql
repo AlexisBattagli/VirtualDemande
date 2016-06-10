@@ -57,7 +57,7 @@ CREATE TABLE machine (
   nom VARCHAR(255) NULL,
   description VARCHAR(255) NULL,
   date_creation DATE NULL,
-  date_expiration DATETIME NULL,
+  date_expiration DATE NULL,
   etat INTEGER UNSIGNED NULL,
   PRIMARY KEY(id)
 );
