@@ -153,7 +153,7 @@ if ($validPage == "manage_containers.php") {
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                 
                // echo "</br>Le code de retour vaut : " . $code; //TODO log
-                if (!is_null($code) && $code == "0") {
+                if ($code == "0") {
                     //=====Si Container créer======/
 
                     $newLog->setLevel("INFO");
@@ -402,7 +402,7 @@ if ($validPage == "manage_containers.php") {
                         exit();
                         //echo "Erreur, la connection n'a pas bien était ajouter dans la DB de guaca..."; //TODO log
                     }
-                } else if (!is_null($code) && $code == "1") { //If failure pending create of contener
+                } else if ($code == "1") { //If failure pending create of contener
                     $newLog->setLevel("WARN");
                     $newLog->setLoginUtilisateur($loginUtilisateur);
                     $newLog->setMsg("Echec de création du conteneur... Contactez le support EVOLVE.");
