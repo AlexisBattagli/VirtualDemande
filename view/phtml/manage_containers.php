@@ -6,7 +6,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/CpuDAL.php')
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/RamDAL.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/StockageDAL.php');
 
-$userId=$_COOKIE["user_id"];
+$userId = $_COOKIE["user_id"];
 $rowsFonctionnal = MachineDAL::findSuccessByUser($_COOKIE["user_id"]);
 $rowsCreated = MachineDAL::findNotCreatByUser($_COOKIE["user_id"]);
 $OSDisplayed = Distrib_AliasDAL::findByVisible();
@@ -17,7 +17,10 @@ $HDDisplayed = StockageDAL::findByVisible();
 
 //$groups = GroupeDAL::findByUser($_COOKIE["user_id"]);
 
-//echl
+//echo "<pre>";
+//var_dump($rowsCreated);
+//echo "</pre>";
+
 ?>
 <html>
     <body>
@@ -57,7 +60,18 @@ $HDDisplayed = StockageDAL::findByVisible();
                         echo "</td><td>";
                         echo $containers["date_expiration"];
                         echo "</td><td>";
-                        echo " ";  //Champ à remplir avec bouton action
+                        echo "<form action=\"./controller/pages/Delete_Container.php\" method=\"post\" >
+                            <div class = \"form-group\">
+                                <input name = \"page\" type = \"hidden\" class = \"form-control\" value = \"manage_containers.php\">
+                            </div>
+                            <div class = \"form-group\">
+                                <input name = \"idMachine\" type = \"hidden\" class = \"form-control\" value = \"" . $containers["id"] ."\">
+                            </div>
+                            <div>
+                                <button type=\"submit\" class=\"btn btn-default\"><span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span></button>
+                            </div>
+                        </form>";
+                        
                         echo "</td></tr>";
                     }
                     ?>
@@ -102,15 +116,25 @@ $HDDisplayed = StockageDAL::findByVisible();
                             echo "Creation failure";
                         }
                         echo "</td><td>";
-
-                        echo " ";  //Champ à remplir avec bouton action
+                        echo "<form action=\"./controller/pages/Delete_Container.php\" method=\"post\" >
+                            <div class = \"form-group\">
+                                <input name = \"page\" type = \"hidden\" class = \"form-control\" value = \"manage_containers.php\">
+                            </div>
+                            <div class = \"form-group\">
+                                <input name = \"idMachine\" type = \"hidden\" class = \"form-control\" value = \"" . $containers["id"] ."\">
+                            </div>
+                            <div>
+                                <button type=\"submit\" class=\"btn btn-default\"><span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span></button>
+                            </div>
+                        </form>";
+                        
                         echo "</td></tr>";
                     }
                     ?>
                 </tbody>
             </table>
         </div>
-        
+
         <!--Container creation panel-->
         <div class="panel panel-info autocollapse">
             <div class="panel-heading clickable">
@@ -125,7 +149,7 @@ $HDDisplayed = StockageDAL::findByVisible();
                     <div class="form-group">
                         <input name="page" type="hidden" class="form-control" value ="manage_containers.php">
                     </div>
-<!--                    Hidden input that return user ID A RECUP PAR CONTROLLER-->
+                    <!--                    Hidden input that return user ID A RECUP PAR CONTROLLER-->
                     <div class="form-group">
                         <input name="user" type="hidden" class="form-control" value="<?php echo $userId; ?>" >
                     </div>
@@ -140,7 +164,7 @@ $HDDisplayed = StockageDAL::findByVisible();
                         <select name="dist" class="form-control">
                             <?php
                             foreach ($OSDisplayed as $OS) {
-                                echo "<option value=" . $OS->getId() . ">";  
+                                echo "<option value=" . $OS->getId() . ">";
                                 echo $OS->getNomComplet();
                                 echo "</option>";
                             }
@@ -153,7 +177,7 @@ $HDDisplayed = StockageDAL::findByVisible();
                         <select name="cpu" class="form-control">
                             <?php
                             foreach ($CPUDisplayed as $CPU) {
-                                echo "<option value=" . $CPU->getId() . ">";  
+                                echo "<option value=" . $CPU->getId() . ">";
                                 echo $CPU->getNbCoeur() . " cores";
                                 echo "</option>";
                             }
@@ -166,7 +190,7 @@ $HDDisplayed = StockageDAL::findByVisible();
                         <select name="ram" class="form-control">
                             <?php
                             foreach ($RAMDisplayed as $RAM) {
-                                echo "<option value=" . $RAM->getId() . ">";  
+                                echo "<option value=" . $RAM->getId() . ">";
                                 echo $RAM->getValeur() . " GB";
                                 echo "</option>";
                             }
@@ -179,7 +203,7 @@ $HDDisplayed = StockageDAL::findByVisible();
                         <select name="stock" class="form-control">
                             <?php
                             foreach ($HDDisplayed as $HDD) {
-                                echo "<option value=" . $HDD->getId() . ">";  
+                                echo "<option value=" . $HDD->getId() . ">";
                                 echo $HDD->getValeur() . " GB";
                                 echo "</option>";
                             }
