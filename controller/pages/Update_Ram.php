@@ -35,7 +35,7 @@ if($validPage == "forms_administration.php")
         $id=$id+1;
     }
     
-    $message=true;
+    $message="ok";
 }
 
 //Renvoie à la page précédante
