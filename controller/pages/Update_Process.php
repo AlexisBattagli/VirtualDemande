@@ -13,7 +13,7 @@ $message="error";
 
 $validPage = filter_input(INPUT_POST, 'page', FILTER_SANITIZE_STRING);
 
-if($validPage == "updateProcess")
+if($validPage == "forms_administration.php")
 {
     $data = filter_input(INPUT_POST, 'visible', FILTER_SANITIZE_STRING, FILTER_REQUIRE_ARRAY);
     $id=1;
