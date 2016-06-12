@@ -16,7 +16,7 @@ $validPage = filter_input(INPUT_POST, 'page', FILTER_SANITIZE_STRING);
 
 if($validPage == "forms_administration.php")
 {
-    //$validBonneVariable=filter_input(INPUT_POST, 'varNom', FILTER_SANITIZE_STRING);
+    $validBonneVariable=filter_input(INPUT_POST, 'varNom', FILTER_SANITIZE_STRING);
     $data   = filter_input(INPUT_POST, $validBonneVariable, FILTER_SANITIZE_STRING, FILTER_REQUIRE_ARRAY);
     $id=1;
     
