@@ -24,8 +24,8 @@ if($validPage == "manage_containers.php")
     $groupes=findLessMachine($validIdUser, $validIdMachine);
     
     //Envoi des groupes récupérés
-    $jason=jason_encode($groupes);
-    echo $jason;
+    $json=json_encode($groupes);
+    echo $json;
     
     $message="ok";
 }
