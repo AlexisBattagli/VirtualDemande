@@ -23,9 +23,14 @@ $OSList = Distrib_AliasDAL::findAll();
                 <?php foreach ($OSList as $OS): ?>
                     <div class="os-parameters" >
                         <label class="checkbox-inline">
-                            <input type="hidden" name="varNom" value="<?= $OS->getNomComplet() ?>"  >
-                            <input type="hidden" name="<?= $OS->getNomComplet() ?>" value="0"  >
-                            <input type="checkbox" name="<?= $OS->getNomComplet() ?>" <?php if ($OS->getVisible() == 1) : ?> checked=<?php endif; ?> id="inlineCheckbox" value="1"> <?= $OS->getNomComplet() ?>  <!--Trouver la value-->
+                        <input type="checkbox" name="idsDistribAlias[]" <?php if ($OS->getVisible() == 1) : ?> checked=<?php endif; ?> id="<?php echo $OS->getId(); ?>" value="<?php echo $OS->getId(); ?>"/>
+                        <label for="<?php echo $OS->getId(); ?>">
+            <?php
+            echo $OS->getNomComplet()."<br/>";
+            ?>
+        </label>
+                            
+                            
                         </label>
                     </div>
                 <?php endforeach; ?>
