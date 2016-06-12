@@ -12,7 +12,7 @@ $OSList = Distrib_AliasDAL::findAll();
     <body>
         <h2><span class="label label-warning">Visible items configuration - Check the items you want to be visible for the user</span></h2>
         <!--OS settings-->
-        <form action="./controller/pages/Unsubscribe_User.php" method="post" >
+        <form action="./controller/pages/Update_Distrib_Alias.php" method="post" >
             <div>
                 <h3><span class="label label-primary">OS parameters</span></h3>
             </div>
@@ -20,7 +20,8 @@ $OSList = Distrib_AliasDAL::findAll();
                 <?php foreach ($OSList as $OS): ?>
                     <div class="os-parameters" >
                         <label class="checkbox-inline">
-                            <input type="checkbox" <?php if ($OS->getVisible() == 1) : ?> checked=<?php endif; ?> id="inlineCheckbox" value=""> <?= $OS->getNomComplet() ?>  <!--Trouver la value-->
+                            <input type="hidden" name="<?= $OS->getNomComplet() ?>" value="0"  >
+                            <input type="checkbox" name="<?= $OS->getNomComplet() ?>" <?php if ($OS->getVisible() == 1) : ?> checked=<?php endif; ?> id="inlineCheckbox" value="1"> <?= $OS->getNomComplet() ?>  <!--Trouver la value-->
                         </label>
                     </div>
                 <?php endforeach; ?>
