@@ -21,6 +21,11 @@ if ($pseudo !== null && $password !== null) {
         $_SESSION['user'] = false;
     }
 }
+
+//echo "<pre>";
+//var_dump($_COOKIE);
+//echo "</pre>";
+
 ?>
 
 <html>
@@ -73,7 +78,7 @@ if ($pseudo !== null && $password !== null) {
                         </ul>
 
                         <!--A implémenter correctement-->
-                        <p class="navbar-text">Il reste <?php echo UtilisateurDAL::GetNumberAvailableUsers();; ?> comptes disponibles</p>    
+                        <p class="navbar-text">Il reste <?php echo UtilisateurDAL::GetNumberAvailableUsers(); ?> comptes disponibles</p>    
 
                         <ul class="nav navbar-nav navbar-right">
                             <li>
@@ -86,8 +91,8 @@ if ($pseudo !== null && $password !== null) {
                                 </form>
                             </li>
                         </ul>
-                    </div><!-- /.navbar-collapse -->
-                </div><!-- /.container-fluid -->
+                    </div>
+                </div>
             </nav>
         <?php else : ?>
 
@@ -125,6 +130,9 @@ if ($pseudo !== null && $password !== null) {
                                     <li><a href="?page=manage_groups">Groups </a></li>
                                 </ul>
                             </li>
+                            <?php if ($_COOKIE["user_role"]== 3) : ?>
+                            <li id="what_is_it"><a href="?page=forms_administration">Forms Administration</a></li>
+                            <?php endif; ?>
                             <li>
                                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $_COOKIE["user_name"]; ?> <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
@@ -137,13 +145,12 @@ if ($pseudo !== null && $password !== null) {
                                 </ul>
                             </li>
                         </ul>
-                    </div><!-- /.navbar-collapse -->
-                </div><!-- /.container-fluid -->
+                    </div>
+                </div>
             </nav>
         <?php endif; ?>
 
 
-        <!-- <div id="left-column" class="col-lg-2"></div>   Décalage à droite de deux colonnes. A garder ?-->
 
         <!-- Page to show -->
         <div id="content" class="col-lg-12">
