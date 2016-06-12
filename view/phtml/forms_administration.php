@@ -16,6 +16,9 @@ $OSList = Distrib_AliasDAL::findAll();
             <div>
                 <h3><span class="label label-primary">OS parameters</span></h3>
             </div>
+            <div class = "form-group">
+                <input name = "page" type = "hidden" class = "form-control" value = "forms_administration.php">
+            </div>
             <div class="os-parameters-parent">
                 <?php foreach ($OSList as $OS): ?>
                     <div class="os-parameters" >
