@@ -73,7 +73,7 @@ if ($pseudo !== null && $password !== null) {
                         </ul>
 
                         <!--A implémenter correctement-->
-                        <p class="navbar-text">Il reste X comptes disponibles</p>    
+                        <p class="navbar-text">Il reste <?php echo UtilisateurDAL::GetNumberAvailableUsers();; ?> comptes disponibles</p>    
 
                         <ul class="nav navbar-nav navbar-right">
                             <li>

@@ -142,9 +142,9 @@ $unsubscribedGroupList = GroupeDAL::findLessUser($_COOKIE["user_id"]);
                                 <?= $shared["groupe"] ?>
                             </td>
                             <td>
-                                <form action="./controller/pages/Clone_Container.php" method="post" >
+                                <form action="./controller/pages/Remove_Contener.php" method="post" >
                                     <div class = "form-group">
-                                        <input name = "page" type = "hidden" class = "form-control" value = "manage_containers.php">
+                                        <input name = "page" type = "hidden" class = "form-control" value = "manage_groups.php">
                                     </div>
                                     <div class = "form-group">
                                         <input name = "idMachine" type = "hidden" class = "form-control" value="<?= $shared["machine_id"] ?>">

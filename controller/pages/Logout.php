@@ -25,4 +25,4 @@ if (ini_get("session.use_cookies")) {
 session_destroy();
 
 //Renvoie à la page précédante
-    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"]. "' />";
+    echo "<meta http-equiv='refresh' content='1; url=/VirtualDemande/index.php?page=home' />";
