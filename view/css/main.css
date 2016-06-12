@@ -30,3 +30,12 @@ button.dropdown-signout {
 {
     cursor: pointer;
 }
+
+.clearfix {
+    clear: both;
+}
+
+.os-parameters{
+    float: left;
+    min-width: 25%;
+}

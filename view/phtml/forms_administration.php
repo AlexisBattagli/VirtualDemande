@@ -16,14 +16,17 @@ $OSList = Distrib_AliasDAL::findAll();
             <div>
                 <h3><span class="label label-primary">OS parameters</span></h3>
             </div>
-            <div>
+            <div class="os-parameters-parent">
                 <?php foreach ($OSList as $OS): ?>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" <?php if ($OS->getVisible() == 1) : ?> checked="checked"<?php endif; ?> id="inlineCheckbox" value=""> <?= $OS->getNomComplet() ?>  <!--Trouver la value-->
-                    </label>
+                    <div class="os-parameters" >
+                        <label class="checkbox-inline">
+                            <input type="checkbox" <?php if ($OS->getVisible() == 1) : ?> checked=<?php endif; ?> id="inlineCheckbox" value=""> <?= $OS->getNomComplet() ?>  <!--Trouver la value-->
+                        </label>
+                    </div>
                 <?php endforeach; ?>
+                <div class="clearfix"></div>
             </div>
-            <div>
+            <div class="os-button">
                 <button type="submit" class="btn btn-default">Update</button>
             </div>
         </form>
