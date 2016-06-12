@@ -25,6 +25,8 @@ if($validPage == "manage_containers.php")
     //Envoi des groupes récupérés
     $jason=jason_encode($groupes);
     echo $jason;
+    
+    $message="ok";
 }
 
 //Renvoie à la page précédante
