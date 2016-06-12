@@ -30,7 +30,7 @@ class BaseSingleton {
             self::$instance = new BaseSingleton();
         }
 
-        self::$instance->mysqli = new mysqli('localhost', 'root', '-+', 'DBVirtDemande');
+        self::$instance->mysqli = new mysqli('web-server', 'root', '-+', 'DBVirtDemande');
     }
 
     private function disconnect()

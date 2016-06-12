@@ -25,7 +25,7 @@ class BaseSingletonGuacamole {
             self::$instance = new BaseSingletonGuacamole();
         }
 
-        self::$instance->mysqli = new mysqli('localhost', 'root', '-+', 'guacamole_db'); //localhost correspond au nom du serveur de virt
+        self::$instance->mysqli = new mysqli('web-server', 'root', '-+', 'guacamole_db'); //localhost correspond au nom du serveur de virt
     }
 
     private function disconnect()
