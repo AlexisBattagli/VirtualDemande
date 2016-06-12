@@ -146,7 +146,7 @@ if ($pseudo !== null && $password !== null) {
         <!-- <div id="left-column" class="col-lg-2"></div>   Décalage à droite de deux colonnes. A garder ?-->
 
         <!-- Page to show -->
-        <div id="content" class="col-lg-8">
+        <div id="content" class="col-lg-12">
             <?php
             $page_to_require = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_URL);
             if ($page_to_require !== null) {
@@ -157,7 +157,6 @@ if ($pseudo !== null && $password !== null) {
             ?>
             <span id="called_page" class="hidden"><?= $page_to_require ?></span>
         </div>
-        <div id="right-column" class="col-lg-2"></div>
     </body>
 </html>
 
