@@ -3,10 +3,6 @@
 //import
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/StockageDAL.php');
 
-/* Pour test :
- * $data = array(true,false,true,false); 
- */
-
 //Définition du message renvoyé
 $message="error";
 
@@ -16,30 +12,32 @@ $validPage = filter_input(INPUT_POST, 'page', FILTER_SANITIZE_STRING);
 
 if($validPage == "forms_administration.php")
 {
-    
-    //Passer à 0 les distribs pour qu'elles ne soient pas visibles
-    $lesStockage= StockageDAL::findAll();
-
-    foreach ($lesStockage as $row)
-    {
-        $newStockage=$row;
-        $newStockage->setVisible(false);
-        $validUpdate = StockageDAL::insertOnDuplicate($newStockage);
-    }
-    
     //Récupération de la valeur passée
     $data = filter_input(INPUT_POST, 'idsStockage', FILTER_SANITIZE_STRING, FILTER_REQUIRE_ARRAY);
-    
-    $id=1;
-    
-    foreach ($data as $row)
+    if(!is_null($data))
     {
-        $newStockage=StockageDAL::findById($row);
-        $newStockage->setVisible(true);
-        $validUpdate = StockageDAL::insertOnDuplicate($newStockage);
-    }
+        //Passer à 0 les distribs pour qu'elles ne soient pas visibles
+        $lesStockage= StockageDAL::findAll();
 
-    $message="ok";
+        foreach ($lesStockage as $row)
+        {
+            $newStockage=$row;
+            $newStockage->setVisible(false);
+            $validUpdate = StockageDAL::insertOnDuplicate($newStockage);
+        }
+
+        $id=1;
+
+        foreach ($data as $row)
+        {
+            $newStockage=StockageDAL::findById($row);
+            $newStockage->setVisible(true);
+            $validUpdate = StockageDAL::insertOnDuplicate($newStockage);
+        }
+
+        $message="ok";
+    }
+    
 }
 
 //Renvoie à la page précédante

@@ -3,10 +3,6 @@
 //import
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/RamDAL.php');
 
-/* Pour test :
- * $data = array(true,false,true,false); 
- */
-
 //Définition du message renvoyé
 $message="error";
 
@@ -16,30 +12,32 @@ $validPage = filter_input(INPUT_POST, 'page', FILTER_SANITIZE_STRING);
 
 if($validPage == "forms_administration.php")
 {
-    
-    //Passer à 0 les distribs pour qu'elles ne soient pas visibles
-    $lesRam= RamDAL::findAll();
-
-    foreach ($lesRam as $row)
-    {
-        $newRam=$row;
-        $newRam->setVisible(false);
-        $validUpdate = RamDAL::insertOnDuplicate($newRam);
-    }
-    
     //Récupération de la valeur passée
     $data = filter_input(INPUT_POST, 'idsRam', FILTER_SANITIZE_STRING, FILTER_REQUIRE_ARRAY);
-    
-    $id=1;
-    
-    foreach ($data as $row)
+    if(!is_null($data))
     {
-        $newRam=RamDAL::findById($row);
-        $newRam->setVisible(true);
-        $validUpdate = RamDAL::insertOnDuplicate($newRam);
-    }
+        //Passer à 0 les distribs pour qu'elles ne soient pas visibles
+        $lesRam= RamDAL::findAll();
 
-    $message="ok";
+        foreach ($lesRam as $row)
+        {
+            $newRam=$row;
+            $newRam->setVisible(false);
+            $validUpdate = RamDAL::insertOnDuplicate($newRam);
+        }
+
+        $id=1;
+
+        foreach ($data as $row)
+        {
+            $newRam=RamDAL::findById($row);
+            $newRam->setVisible(true);
+            $validUpdate = RamDAL::insertOnDuplicate($newRam);
+        }
+
+        $message="ok";
+    }
+    
 }
 
 //Renvoie à la page précédante
