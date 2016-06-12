@@ -16,27 +16,31 @@ $validPage = filter_input(INPUT_POST, 'page', FILTER_SANITIZE_STRING);
 
 if($validPage == "forms_administration.php")
 {
-    $data = filter_input(INPUT_POST, 'visible', FILTER_SANITIZE_STRING, FILTER_REQUIRE_ARRAY);
-    $id=1;
+    
+    //Passer à 0 les distribs pour qu'elles ne soient pas visibles
+    $lesRam= RamDAL::findAll();
 
-    foreach ($data as $row)
+    foreach ($lesRam as $row)
     {
-        //echo $row;
-        $newRam=RamDAL::findById($id);
-        while($newRam==null)
-        {
-            $id=$id+1;
-            $newRam=RamDAL::findById($id);
-        }
-        //echo "  NOM :".$newRam->getValeur();
-        $newRam->setVisible($row);
-        //echo "           Visible après :".$newRam->getVisible();
+        $newRam=$row;
+        $newRam->setVisible(false);
         $validUpdate = RamDAL::insertOnDuplicate($newRam);
-        $id=$id+1;
     }
     
+    //Récupération de la valeur passée
+    $data = filter_input(INPUT_POST, 'idsRam', FILTER_SANITIZE_STRING, FILTER_REQUIRE_ARRAY);
+    
+    $id=1;
+    
+    foreach ($data as $row)
+    {
+        $newRam=RamDAL::findById($row);
+        $newRam->setVisible(true);
+        $validUpdate = RamDAL::insertOnDuplicate($newRam);
+    }
+
     $message="ok";
 }
 
 //Renvoie à la page précédante
-    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+   echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";

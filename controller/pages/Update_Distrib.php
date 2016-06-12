@@ -16,28 +16,31 @@ $validPage = filter_input(INPUT_POST, 'page', FILTER_SANITIZE_STRING);
 
 if($validPage == "forms_administration.php")
 {
-    $data   = filter_input(INPUT_POST, 'visible', FILTER_SANITIZE_STRING, FILTER_REQUIRE_ARRAY);
+    
+    //Passer à 0 les distribs pour qu'elles ne soient pas visibles
+    $lesDistrib= DistribDAL::findAll();
 
-    $id=1;
-
-    foreach ($data as $row)
+    foreach ($lesDistrib as $row)
     {
-        //echo $row;
-        $newDistrib=DistribDAL::findById($id);
-        while($newDistrib==null)
-        {
-            $id=$id+1;
-            $newDistrib=DistribDAL::findById($id);
-        }
-        //echo "  NOM :".$newDistrib->getValeur();
-        $newDistrib->setVisible($row);
-        //echo "           Visible après :".$newDistrib->getVisible();
-        $validUpdate = DistribDAL::insertOnDuplicate($newDistrib);
-        $id=$id+1;
+        $newdistrib=$row;
+        $newdistrib->setVisible(false);
+        $validUpdate = DistribDAL::insertOnDuplicate($newdistrib);
     }
     
+    //Récupération de la valeur passée
+    $data = filter_input(INPUT_POST, 'idsDistrib', FILTER_SANITIZE_STRING, FILTER_REQUIRE_ARRAY);
+    
+    $id=1;
+    
+    foreach ($data as $row)
+    {
+        $newDistrib=DistribDAL::findById($row);
+        $newDistrib->setVisible(true);
+        $validUpdate = DistribDAL::insertOnDuplicate($newDistrib);
+    }
+
     $message="ok";
 }
 
 //Renvoie à la page précédante
-    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+   echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
