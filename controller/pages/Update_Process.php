@@ -3,9 +3,6 @@
 //import
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/CpuDAL.php');
 
-/* Pour test :
- * $data = array(true,false,true,false); 
- */
 //Définition du message renvoyé
 $message="error";
 
@@ -15,27 +12,33 @@ $validPage = filter_input(INPUT_POST, 'page', FILTER_SANITIZE_STRING);
 
 if($validPage == "forms_administration.php")
 {
-    $data = filter_input(INPUT_POST, 'visible', FILTER_SANITIZE_STRING, FILTER_REQUIRE_ARRAY);
-    $id=1;
-
-    foreach ($data as $row)
+    //Récupération de la valeur passée
+    $data = filter_input(INPUT_POST, 'idsCpu', FILTER_SANITIZE_STRING, FILTER_REQUIRE_ARRAY);
+    if(!is_null($data))
     {
-        //echo $row;
-        $newCpu=CpuDAL::findById($id);
-        while($newCpu==null)
+        //Passer à 0 les distribs pour qu'elles ne soient pas visibles
+        $lesCpu= CpuDAL::findAll();
+
+        foreach ($lesCpu as $row)
         {
-            $id=$id+1;
-            $newCpu=CpuDAL::findById($id);
+            $newCpu=$row;
+            $newCpu->setVisible(false);
+            $validUpdate = CpuDAL::insertOnDuplicate($newCpu);
         }
-        //echo "  NOM :".$newCpu->getValeur();
-        $newCpu->setVisible($row);
-        //echo "           Visible après :".$newCpu->getVisible();
-        $validUpdate = CpuDAL::insertOnDuplicate($newCpu);
-        $id=$id+1;
+
+        $id=1;
+
+        foreach ($data as $row)
+        {
+            $newCpu=CpuDAL::findById($row);
+            $newCpu->setVisible(true);
+            $validUpdate = CpuDAL::insertOnDuplicate($newCpu);
+        }
+
+        $message="ok";
     }
     
-    $message="ok";
 }
 
 //Renvoie à la page précédante
-    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+   echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
