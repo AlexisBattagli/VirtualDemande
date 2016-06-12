@@ -125,6 +125,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                         'trace' => 1,
                         'exceptions' => 0
                     ));
+                    ini_set('default_socket_timeout', 300); //permet de tenir la connection 5min (300sec)
                     $result = $client->__call('buildContainer', array(
                         'nameContainer' => $validName,
                         'archi' => $archi,
