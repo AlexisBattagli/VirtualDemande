@@ -49,7 +49,7 @@ if($validPage == "manage_groups.php")
         $validDelete=Groupe_has_MachineDAL::delete($validIdGroupe, $validIdMachine);
         
         $newLog->setLevel("INFO");
-        $newLog->setMsg("Suppression réussi du partage de la machine (id:$validIdMachine) à un groupe (id:$validIdGroupe).");
+        $newLog->setMsg("Suppression réussie du partage de la machine (id:$validIdMachine) à un groupe (id:$validIdGroupe).");
         $newLog->setDateTime(date('Y/m/d G:i:s'));
         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
         
@@ -57,7 +57,7 @@ if($validPage == "manage_groups.php")
     }
     else
     {
-        $newLog->setLevel("ERROR");
+        $newLog->setLevel("WARN");
         $newLog->setMsg("Machine (id:$validIdMachine) n'est pas dans le groupe (id:$validIdGroupe).");
         $newLog->setDateTime(date('Y/m/d G:i:s'));
         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);

@@ -6,6 +6,10 @@
 
 //import
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Groupe_has_MachineDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Table_logDAL.php');
+
+//Définition d'un objet Table_log pour faire des insert de log
+$newLog = new Table_log();
 
 //Définition du message renvoyé
 $message="error";
@@ -31,19 +35,41 @@ if($validPage == "manage_containers.php")
     $newGroupeHasMachine->setCommentaire($validIdComment);
     //echo "OK pour Commentaire : ".$newGroupeHasMachine->getCommentaire;
 
+    $validIdUser = $_COOKIE["user_id"];
+    //echo "OK pour Id User : ".$validIdUser;
+    $newLog->setLoginUtilisateur(UtilisateurDAL::findById($validIdUser)->getLogin());
+    
+    $newLog->setLevel("INFO");
+    $newLog->setMsg("Initialisation du partage de la machine (id:$validIdMachine) au groupe (id:$validIdGroupe).");
+    $newLog->setDateTime(date('Y/m/d G:i:s'));
+    $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
+    
     //Vérification si l'utilisateur fait partie du groupe
-    if(Groupe_has_MachineDAL::findByGM($validIdGroupe,$validIdMachine)==null)
+    if(is_null(Groupe_has_MachineDAL::findByGM($validIdGroupe,$validIdMachine)))
     {
+        $newLog->setLevel("INFO");
+        $newLog->setMsg("La machine (id:$validIdMachine) n'est pas dans le groupe (id:$validIdGroupe).");
+        $newLog->setDateTime(date('Y/m/d G:i:s'));
+        $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
         //echo "Machine n'est pas dans le groupe";
 
-        //Suppression de le la machine partagée par l'utilisateur dans le groupe
-        $validDelete=Groupe_has_MachineDAL::insertOnDuplicate($newGroupeHasMachine);
+        //Ajout de le la machine par l'utilisateur dans le groupe
+        $validInsert=Groupe_has_MachineDAL::insertOnDuplicate($newGroupeHasMachine);
+        
+        $newLog->setLevel("INFO");
+        $newLog->setMsg("Ajout réussi du partage de la machine (id:$validIdMachine) à un groupe (id:$validIdGroupe).");
+        $newLog->setDateTime(date('Y/m/d G:i:s'));
+        $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
         
         $message=true;
 
     }
     else
     {
+        $newLog->setLevel("WARN");
+        $newLog->setMsg("La machine (id:$validIdMachine) est déjà dans le groupe (id:$validIdGroupe).");
+        $newLog->setDateTime(date('Y/m/d G:i:s'));
+        $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
         //echo "Machine est deja dans le groupe";
     }
 }
