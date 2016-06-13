@@ -85,6 +85,8 @@ if($validPage == "manage_groups.php")
                 $newLog->setMsg("Echec de l'Ajout de l'utilisateur dans le groupe (id:$validInsertGroupe).");
                 $newLog->setDateTime(date('Y/m/d G:i:s'));
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
+                //Renvoie à la page précédante
+                    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
             }
         }
         else
@@ -94,6 +96,8 @@ if($validPage == "manage_groups.php")
             $newLog->setDateTime(date('Y/m/d G:i:s'));
             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
             //echo "insert echec...";
+            //Renvoie à la page précédante
+                echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
         }
     }
     else
@@ -103,6 +107,8 @@ if($validPage == "manage_groups.php")
         $newLog->setDateTime(date('Y/m/d G:i:s'));
         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
         //echo "Erreur, le groupe que vous voulez ajouter existe...";
+        //Renvoie à la page précédante
+            echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
     }
 }
 
