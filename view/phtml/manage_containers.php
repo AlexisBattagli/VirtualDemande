@@ -232,7 +232,7 @@ $HDDisplayed = StockageDAL::findByVisible();
                 </h2>
             </div>
             <div class="panel-body">
-                <form action="" method="post" >  <!--action a mettre-->
+                <form action="./controller/pages/Share_Contener.php" method="post" >  <!--action a mettre-->
                     <!--Container selector-->
                     <div class="form-group">
                         <h4><label>Container to share</label></h4>
