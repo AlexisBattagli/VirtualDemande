@@ -239,17 +239,17 @@ $HDDisplayed = StockageDAL::findByVisible();
                     </div>
                     <div class="form-group">
                         <h4><label>Container to share</label></h4>
-                        <select class="form-control" id="container-to-share">
+                        <select name="idMachine" class="form-control" id="container-to-share">
                             <option selected="selected" disabled> --Select a container to share-- </option>  <!-- rajouter disabled -->
                             <?php foreach($rowsFonctionnal as $containerList) : ?>
-                            <option name="idMachine" value="<?= $containerList["id"]?>"> <?= $containerList["nom"]?> </option>
+                            <option value="<?= $containerList["id"]?>"> <?= $containerList["nom"]?> </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
                     <!--Group selector-->
                     <div class="form-group">
                         <h4><label>Group</label></h4>
-                        <select class="form-control" id="shareable-groups"></select>
+                        <select name="idGroupe" class="form-control" id="shareable-groups"></select>
                     </div>
                     <div>
                         <h4><label>Commentary</label></h4>
