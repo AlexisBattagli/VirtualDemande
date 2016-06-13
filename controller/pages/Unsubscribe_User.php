@@ -9,6 +9,11 @@
 //import
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Utilisateur_has_GroupeDAL.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Groupe_has_MachineDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/UtilisateurDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Table_logDAL.php');
+
+//Définition d'un objet Table_log pour faire des insert de log
+$newLog = new Table_log();
 
 //Définition du message renvoyé
 $message="error";
@@ -18,11 +23,11 @@ $message="error";
 $validPage = filter_input(INPUT_POST, 'page', FILTER_SANITIZE_STRING);
 
 if($validPage == "manage_groups.php")
-{ 
+{  
     //=====Vérification de ce qui est renvoyé par le formulaire
-    $validIdUser = $_COOKIE["user_id"];
+    $validIdUser = $_COOKIE["user_id"]; 
     //echo "OK pour Id User : ".$validIdUser;
-    $newUtilisateurHasGroupe->setUtilisateur($validIdUser);
+    $newLog->setLevel($validIdUser);
 
     $validIdGroupe = filter_input(INPUT_POST, 'idGroupe', FILTER_SANITIZE_STRING);
     //echo "OK pour Id Groupe : ".$validIdGroupe;
@@ -31,7 +36,7 @@ if($validPage == "manage_groups.php")
     $newLog->setMsg("Initialisation de la suppression de l'utilisateur (id:$validIdUser) au groupe (id:$validIdGroupe).");
     $newLog->setDateTime(date('Y/m/d G:i:s'));
     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-    
+
     //Vérification si l'utilisateur fait partie du groupe
     if(!is_null(Utilisateur_has_GroupeDAL::findByGU($validIdGroupe,$validIdUser)))
     {
@@ -43,7 +48,7 @@ if($validPage == "manage_groups.php")
 
         //Suppression de l'utilisateur du groupe
         $validDelete=Utilisateur_has_GroupeDAL::delete($validIdGroupe,$validIdUser);
-        $message="ok";
+
         //Vérification si l'uitilisateur avait des machines partagés dans ce groupe
         $groupeHasMachines=Groupe_has_MachineDAL::findByShareByUserByGroupe($validIdUser,$validIdGroupe);
         if(!is_null($groupeHasMachines))
@@ -75,6 +80,8 @@ if($validPage == "manage_groups.php")
             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
             //echo "Utilisateur n'a pas des machines dans le groupe";
         }
+        
+        $message="ok";
     }
     else
     {
