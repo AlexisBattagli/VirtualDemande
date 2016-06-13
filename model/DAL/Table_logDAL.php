@@ -82,7 +82,61 @@ class Table_logDAL {
                         . 'table_log.login_utilisateur as login_utilisateur, '                
                         . 'table_log.level as level '
                         . ' FROM table_log'
-                . ' ORDER BY table_log.date_time ASC');
+                . ' ORDER BY table_log.id ASC');
+
+        foreach ($data as $row)
+        {
+            $tableLog = new Table_log();
+            $tableLog->hydrate($row);
+            $mestableLogs[] = $tableLog;
+        }
+
+        return $mestableLogs;
+    }
+    
+    /*
+     * Retourne l'ensemble des Table_log qui sont en base trié par le level
+     * 
+     * @return array[Table_log] Toutes les Table_log sont placées dans un Tableau
+     */
+    public static function findAllOrderByLevel()
+    {
+        $mestableLogs = array();
+
+        $data = BaseSingleton::select('SELECT table_log.id as id, '
+                        . 'table_log.msg as msg, '
+                        . 'table_log.date_time as date_time, '
+                        . 'table_log.login_utilisateur as login_utilisateur, '                
+                        . 'table_log.level as level '
+                        . ' FROM table_log'
+                . ' ORDER BY table_log.level ASC');
+
+        foreach ($data as $row)
+        {
+            $tableLog = new Table_log();
+            $tableLog->hydrate($row);
+            $mestableLogs[] = $tableLog;
+        }
+
+        return $mestableLogs;
+    }
+    
+    /*
+     * Retourne l'ensemble des Table_log qui sont en base dont l'user est passé en paramètre
+     * 
+     * @return array[Table_log] Toutes les Table_log sont placées dans un Tableau
+     */
+    public static function findByUser($user)
+    {
+        $mestableLogs = array();
+
+        $data = BaseSingleton::select('SELECT table_log.id as id, '
+                        . 'table_log.msg as msg, '
+                        . 'table_log.date_time as date_time, '
+                        . 'table_log.login_utilisateur as login_utilisateur, '                
+                        . 'table_log.level as level '
+                        . ' FROM table_log'
+                        . ' WHERE LOWER(table_log.login_utilisateur) = LOWER(?)', array('i', &$user));
 
         foreach ($data as $row)
         {
