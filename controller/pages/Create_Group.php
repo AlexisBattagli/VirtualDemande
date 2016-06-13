@@ -3,8 +3,17 @@
 //Script de création d'un groupe
 
 //import
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/UtilisateurDAL.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/GroupeDAL.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Utilisateur_has_GroupeDAL.php');
+
+//Définition d'un objet Table_log pour faire des insert de log
+$newLog = new Table_log();
+$validIdUser = $_COOKIE["user_id"];
+$user=  UtilisateurDAL::findById($validIdUser);
+$nomUser=$user->getLogin();
+//echo "OK pour Id User : ".$nomUser;
+$newLog->setLoginUtilisateur($nomUser);
 
 //Définition du message renvoyé
 $message="error";
@@ -15,6 +24,11 @@ $validPage = filter_input(INPUT_POST, 'page', FILTER_SANITIZE_STRING);
 
 if($validPage == "manage_groups.php")
 {
+    $newLog->setLevel("INFO");
+    $newLog->setMsg("Initialisation de la création d'un groupe.");
+    $newLog->setDateTime(date('Y/m/d G:i:s'));
+    $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
+    
     //Création d'un Utilisateur par défaut
     $newGroupe=new Groupe();
 
@@ -38,32 +52,55 @@ if($validPage == "manage_groups.php")
     $newDateCreation=date("Y/m/d");
     $newGroupe->setDateCreation($newDateCreation);
     //echo "OK pour DateCréation:".$newGroupe->getDateCreation();
-
-    $validIdUser = $_COOKIE["user_id"];
-    //echo "OK pour Id User : ".$validIdUser;
     
     if (GroupeDAL::findByNom($validNom) == null)
     {
     //=====Insertion=====/ - OK
         $validInsertGroupe = GroupeDAL::insertOnDuplicate($newGroupe);
 
-        if ($validInsertGroupe != null)
+        if (!is_null($validInsertGroupe))
         {
+            $newLog->setLevel("INFO");
+            $newLog->setMsg("Ajout du groupe reussi dans la base DBVirtDemande ! (id: $validInsertGroupe )");
+            $newLog->setDateTime(date('Y/m/d G:i:s'));
+            $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
+            //echo "Ajout du groupe reussi dans la base DBVirtDemande ! (id:" . $validInsertGroupe . ")";
+            
             $newUtilisateurHasGroupe=new Utilisateur_has_Groupe();
             $newUtilisateurHasGroupe->setGroupe($validInsertGroupe);
             $newUtilisateurHasGroupe->setUtilisateur($validIdUser);
             $validInsert=  Utilisateur_has_GroupeDAL::insertOnDuplicate($newUtilisateurHasGroupe);
-            $message="ok";
-            //echo "Ajout du groupe reussi dans la base DBVirtDemande ! (id:" . $validInsertGroupe . ")";
+            if(is_null($validInsert != null))
+            {
+                $newLog->setLevel("INFO");
+                $newLog->setMsg("Ajout reussi de l'utilisateur dans le groupe (id:$validInsertGroupe).");
+                $newLog->setDateTime(date('Y/m/d G:i:s'));
+                $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
+                $message="ok";
+            }
+            else
+            {
+                $newLog->setLevel("ERROR");
+                $newLog->setMsg("Echec de l'Ajout de l'utilisateur dans le groupe (id:$validInsertGroupe).");
+                $newLog->setDateTime(date('Y/m/d G:i:s'));
+                $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
+            }
         }
         else
         {
+            $newLog->setLevel("ERROR");
+            $newLog->setMsg("Echec de l'Ajout du groupe dans la base DBVirtDemande !");
+            $newLog->setDateTime(date('Y/m/d G:i:s'));
+            $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
             //echo "insert echec...";
         }
-
     }
     else
     {
+        $newLog->setLevel("ERROR");
+        $newLog->setMsg("Le groupe que vous voulez ajouter existe...");
+        $newLog->setDateTime(date('Y/m/d G:i:s'));
+        $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
         //echo "Erreur, le groupe que vous voulez ajouter existe...";
     }
 }
