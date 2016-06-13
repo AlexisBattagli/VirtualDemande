@@ -1,7 +1,8 @@
 <?php 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Table_logDAL.php');
 
-$logs = Table_logDAL::findAll();
+$all_logs = Table_logDAL::findAll();
+
 
 ?>
 
@@ -11,6 +12,14 @@ $logs = Table_logDAL::findAll();
         <title>Admin EVOLVE: Logs</title>
     </head>
     <body>
+        <div>
+            <h3><span class="label label-info">Filters</span></h3>
+            <form action="" method="post">
+                <fieldset>
+                    test
+                </fieldset>
+            </form>
+        </div>
         <div>
             <h2><span class="label label-primary">Logs EVOLVE</span></h2>
             <table class ="table table-bordered table-hover">
@@ -23,7 +32,7 @@ $logs = Table_logDAL::findAll();
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($logs as $log) : ?>
+                    <?php foreach ($logs as $all_log) : ?>
                     <tr>
                         <td><?= $log->getDateTime() ?></td>
                         <td><?= $log->getLevel() ?></td>
