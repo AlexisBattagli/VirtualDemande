@@ -13,7 +13,16 @@ $unsubscribedGroupList = GroupeDAL::findLessUser($_COOKIE["user_id"]);
 ?>
 
 <html>
+    <!--Javascript for cloning popup-->
+            <script src="./view/javascript/manage_groups.js"></script>
+
     <body>
+        <!--Alert for success/fail of cloning-->
+        <div id="alert-clone" class="alert alert-success hidden" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <span id ='alert-clone-span'>The request has been send. Go to your <b>Manage Containers</b> page to see the result</span>
+        </div>
+        
         <!--Groups in which the user belongs-->
         <div>
             <h2><span class="label label-primary">Groups you belong</span></h2>
@@ -88,17 +97,9 @@ $unsubscribedGroupList = GroupeDAL::findLessUser($_COOKIE["user_id"]);
                                                             <?= $containerGroupList["description"] ?>
                                                         </td>
                                                         <td>
-                                                            <form action="./controller/pages/Clone_Container.php" method="post" >
-                                                                <div class = "form-group">
-                                                                    <input name = "page" type = "hidden" class = "form-control" value = "manage_containers.php">
-                                                                </div>
-                                                                <div class = "form-group">
-                                                                    <input name = "idMachine" type = "hidden" class = "form-control" value="<?= $containerGroupList["id"] ?>">
-                                                                </div>
-                                                                <div>
-                                                                    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-copy" aria-hidden="true"></span></button>
-                                                                </div>
-                                                            </form>
+                                                            <div>
+                                                                <button  class="btn btn-default" data-toggle="modal" data-target="#cloneContainer"><span class="glyphicon glyphicon-copy" aria-hidden="true"></span></button>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 <?php endforeach; ?>
@@ -112,6 +113,34 @@ $unsubscribedGroupList = GroupeDAL::findLessUser($_COOKIE["user_id"]);
                 </tbody>
             </table>
         </div>
+        <!--Cloning button pop-up-->
+        <div class="modal fade" id="cloneContainer" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Clone container</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!--Form for cloning a container-->
+                        <form action="./controller/pages/Clone_Container.php" method="post" >
+                            <div class = "form-group">
+                                <input id = "idMachine" type = "hidden" class = "form-control" value="<?= $containerGroupList["id"] ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="nameClonedContainer">Enter a new name to clone this container in your personnal space</label>
+                                <input  id="nomMachineClone" type="name" class="form-control" placeholder="Name">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" id="submit-clone-container" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>l
+
 
         <!--Shared containers list-->
         <div>
