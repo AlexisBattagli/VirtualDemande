@@ -5,31 +5,29 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/GroupeDAL.ph
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/MachineDAL.php');
 
 //Définition du message renvoyé
-$message="error";
+$message = "error";
 
 //Checker de où il vient
+//=====Vérification de ce qui est renvoyé par le formulaire
+$validIdMachine = filter_input(INPUT_POST, 'idMachine', FILTER_SANITIZE_STRING);
+$machine = MachineDAL::findById($validIdMachine);
 
-$validPage = filter_input(INPUT_POST, 'page', FILTER_SANITIZE_STRING);
+//Récupération de l'id de l'utilisateur
+$validIdUser = $machine->getUtilisateur()->getId();
 
-if($validPage == "manage_containers.php")
-{
-    //=====Vérification de ce qui est renvoyé par le formulaire
-    $validIdMachine = filter_input(INPUT_POST, 'idMachine', FILTER_SANITIZE_STRING);
-    
-    //Récupération de l'id de l'utilisateur
-    $machine=  MachineDAL::findById($validIdMachine);
-    $validIdUser= $machine->getUtilisateur()->getId();
-        
-    //Récupération des groupes de l'utilisateur où la machine n'est pas.
-    $groupes=findLessMachine($validIdUser, $validIdMachine);
-    
-    //Envoi des groupes récupérés
-    $json=json_encode($groupes);
-    echo $json;
-    
-    $message="ok";
+//Récupération des groupes de l'utilisateur où la machine n'est pas.
+$groupes = GroupeDAL::findLessMachine($validIdUser, $validIdMachine);
+
+$groupesJson = [];
+foreach ($groupes as $group) {
+    $groupesJson[$group->getId()]['id'] = $group->getId();
+    $groupesJson[$group->getId()]['nom'] = $group->getNom();
+    $groupesJson[$group->getId()]['date_creation'] = $group->getDateCreation();
+    $groupesJson[$group->getId()]['description'] = $group->getDescription();
 }
+//Envoi des groupes récupérés
+$json = json_encode($groupesJson);
+echo $json;
 
-//Renvoie à la page précédante
-    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+
 

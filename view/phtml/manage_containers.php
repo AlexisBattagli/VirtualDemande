@@ -23,6 +23,8 @@ $HDDisplayed = StockageDAL::findByVisible();
 
 ?>
 <html>
+    <!--Javascript file for dynamic select-->
+        <script src="./view/javascript/share_groups.js"></script>
     <body>
         <!--List of the containers that are fonctionnals-->
         <div>
@@ -192,7 +194,7 @@ $HDDisplayed = StockageDAL::findByVisible();
                             <?php
                             foreach ($RAMDisplayed as $RAM) {
                                 echo "<option value=" . $RAM->getId() . ">";
-                                echo $RAM->getValeur() . " GB";
+                                echo $RAM->getValeur() . " MB";
                                 echo "</option>";
                             }
                             ?>
@@ -234,20 +236,17 @@ $HDDisplayed = StockageDAL::findByVisible();
                     <!--Container selector-->
                     <div class="form-group">
                         <h4><label>Container to share</label></h4>
-                        <select class="form-control">
+                        <select class="form-control" id="container-to-share">
+                            <option selected="selected" disabled> --Select a container to share-- </option>  <!-- rajouter disabled -->
                             <?php foreach($rowsFonctionnal as $containerList) : ?>
-                            <option> <?= $containerList["nom"]?> </option>
+                            <option value="<?= $containerList["id"]?>"> <?= $containerList["nom"]?> </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
                     <!--Group selector-->
                     <div class="form-group">
                         <h4><label>Group</label></h4>
-                        <select class="form-control">
-                            <option>Group 1</option>
-                            <option>Group 2</option>
-                            <option>Group 3</option>
-                        </select>
+                        <select class="form-control" id="shareable-groups"></select>
                     </div>
                     <div>
                         <button type="submit" class="btn btn-default">Share</button>
