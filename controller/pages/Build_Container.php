@@ -235,7 +235,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                         $paramConnectContainer->setConnection($idConnectContainer);
 
                         
-                        if($ihm == "no")
+                        if($ihm == 'no')
                         {
                             //set le paramètre color-scheme
                             $paramConnectContainer->setParameterName("color-scheme");

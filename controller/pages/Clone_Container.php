@@ -252,6 +252,47 @@ if ($validPage == "manage_containers.php")
                             //Renvoie à la page précédante
                                 echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
                         }
+                        
+                        if($ihm == 'no')
+                        {
+                            //set le paramètre color-scheme
+                            $paramConnectContainer->setParameterName("color-scheme");
+                            $paramConnectContainer->setParameterValue("green-black");
+                            $validInsertParamUsername = Guacamole_Connection_ParameterDAL::insertOnDuplicate($paramConnectContainer);
+                            if (!is_null(Guacamole_Connection_ParameterDAL::findByCP($paramConnectContainer->getConnection()->getConnectionId(),$paramConnectContainer->getParameterName()))) {
+                                $newLog->setLevel("INFO");
+                                $newLog->setLoginUtilisateur($loginUtilisateur);
+                                $newLog->setMsg("Paramètre 'color-scheme' = 'green-black' de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée.");
+                                $newLog->setDateTime(date('Y/m/d G:i:s'));
+                                $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
+                            } else {
+                                $newLog->setLevel("ERROR");
+                                $newLog->setLoginUtilisateur($loginUtilisateur);
+                                $newLog->setMsg("Paramètre 'color-scheme' = 'green-black' de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
+                                $newLog->setDateTime(date('Y/m/d G:i:s'));
+                                $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
+                                echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                            }
+
+                            //set le paramètre font-size
+                            $paramConnectContainer->setParameterName("font-size");
+                            $paramConnectContainer->setParameterValue("11");
+                            $validInsertParamPwd = Guacamole_Connection_ParameterDAL::insertOnDuplicate($paramConnectContainer);
+                            if (!is_null(Guacamole_Connection_ParameterDAL::findByCP($paramConnectContainer->getConnection()->getConnectionId(),$paramConnectContainer->getParameterName()))) {
+                                $newLog->setLevel("INFO");
+                                $newLog->setLoginUtilisateur($loginUtilisateur);
+                                $newLog->setMsg("Paramètre 'font-size' = 11 de la connection (connection n°" . $idConnectContainer . ") correctement ajoutée.");
+                                $newLog->setDateTime(date('Y/m/d G:i:s'));
+                                $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
+                            } else {
+                                $newLog->setLevel("ERROR");
+                                $newLog->setLoginUtilisateur($loginUtilisateur);
+                                $newLog->setMsg("Paramètre 'font-size' = 11 de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
+                                $newLog->setDateTime(date('Y/m/d G:i:s'));
+                                $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
+                                echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                            }
+                        }
 
                         //set le paramètre hostname
                         $paramConnectContainer->setParameterName("hostname");
@@ -276,17 +317,17 @@ if ($validPage == "manage_containers.php")
                         //set le paramètre port
                         $paramConnectContainer->setParameterName("port");
                         if ($ihm == 'yes') {
-                            $paramConnectContainer->setParameterValue(5900);
+                            $paramConnectContainer->setParameterValue("5901");
                             $newLog->setLevel("INFO");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
-                            $newLog->setMsg("Port de connection vnc 5900, pour la connection n°" . $idConnectContainer);
+                            $newLog->setMsg("Port de connection vnc 5901, pour la connection n°" . $idConnectContainer);
                             $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                         } else if ($ihm == 'no') {
-                            $paramConnectContainer->setParameterValue(22);
+                            $paramConnectContainer->setParameterValue("22");
                             $newLog->setLevel("INFO");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
-                            $newLog->setMsg("Port de connection 22, pour la connection n°" . $idConnectContainer);
+                            $newLog->setMsg("Port de connection ssh 22, pour la connection n°" . $idConnectContainer);
                             $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                         } else {
