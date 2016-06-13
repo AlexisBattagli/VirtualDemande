@@ -32,14 +32,15 @@ if ($pseudo !== null && $password !== null) {
     <head>
         <meta charset="UTF-8">
         <title>Le titre</title>
-        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <!--jQuery library-->
+        <script src="./view/library/jQuery/jquery-2.1.4.min.js"></script>
         <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="./view/library/bootstrap/bootstrap-3.3.5.min.css">
         <!-- Optional theme -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="./view/library/bootstrap/bootstrap-theme-3.3.5.min.css">
 
         <!-- Latest compiled and minified JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script src="./view/library/bootstrap/bootstrap-js-3.3.5.min.js"></script>
 
         <!--Javascript file for all pages-->
         <script src="./view/javascript/main.js"></script>
