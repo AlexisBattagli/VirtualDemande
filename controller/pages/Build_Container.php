@@ -235,21 +235,21 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                         $paramConnectContainer = new Guacamole_Connection_Parameter();
                         $paramConnectContainer->setConnection($idConnectContainer);
 
-                        //set le paramètre username
-                        $paramConnectContainer->setParameterName("username");
-                        $paramConnectContainer->setParameterValue("root");
+                        //set le paramètre color-scheme
+                        $paramConnectContainer->setParameterName("color-scheme");
+                        $paramConnectContainer->setParameterValue("green-black");
                         $validInsertParamUsername = Guacamole_Connection_ParameterDAL::insertOnDuplicate($paramConnectContainer);
                         if (!is_null(Guacamole_Connection_ParameterDAL::findByCP($paramConnectContainer->getConnection()->getConnectionId(),$paramConnectContainer->getParameterName()))) {
                             $newLog->setLevel("INFO");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
-                            $newLog->setMsg("Paramètre username = root de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée.");
+                            $newLog->setMsg("Paramètre 'color-scheme' = 'green-black' de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée.");
                             $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                             //echo "Paramètre username = root de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée."; //TODO log
                         } else {
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
-                            $newLog->setMsg("Paramètre username = root de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
+                            $newLog->setMsg("Paramètre 'color-scheme' = 'green-black' de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
                             $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                             //Renvoie à la page précédante
@@ -257,21 +257,21 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                             //echo "Paramètre username = root de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur..."; //TODO log
                         }
 
-                        //set le paramètre password
-                        $paramConnectContainer->setParameterName("password");
-                        $paramConnectContainer->setParameterValue($passwdRoot);
+                        //set le paramètre font-size
+                        $paramConnectContainer->setParameterName("font-size");
+                        $paramConnectContainer->setParameterValue("11");
                         $validInsertParamPwd = Guacamole_Connection_ParameterDAL::insertOnDuplicate($paramConnectContainer);
                         if (!is_null(Guacamole_Connection_ParameterDAL::findByCP($paramConnectContainer->getConnection()->getConnectionId(),$paramConnectContainer->getParameterName()))) {
                             $newLog->setLevel("INFO");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
-                            $newLog->setMsg("Paramètre password de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée.");
+                            $newLog->setMsg("Paramètre 'font-size' = 11 de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée.");
                             $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                            // echo "Paramètre password de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée."; //TODO log
                         } else {
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
-                            $newLog->setMsg("Paramètre password de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
+                            $newLog->setMsg("Paramètre 'font-size' = 11 de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
                             $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                             //Renvoie à la page précédante
