@@ -136,7 +136,7 @@ class Table_logDAL {
                         . 'table_log.login_utilisateur as login_utilisateur, '                
                         . 'table_log.level as level '
                         . ' FROM table_log'
-                        . ' WHERE LOWER(table_log.login_utilisateur) = LOWER(?)', array('i', &$user));
+                        . ' WHERE LOWER(table_log.login_utilisateur) = LOWER(?)', array('s', &$user));
 
         foreach ($data as $row)
         {
