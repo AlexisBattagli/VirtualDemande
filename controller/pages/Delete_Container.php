@@ -72,8 +72,14 @@ if($validPage == "manage_containers.php")
                     echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
         }
 
+	 $newLog->setLevel("INFO");
+         $newLog->setLoginUtilisateur($loginUtilisateur);
+         $newLog->setMsg("Result SdA: ".$result);
+         $newLog->setDateTime(date('Y/m/d G:i:s'));
+         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
+            
       //  $result=0;
-        if ($result == "0")
+        if ($result == '0')
         { 
             //Vérification s'il y a eu une insertion dans la base de données guacamole
             $connection=Guacamole_ConnectionDAL::findByNom($nomMachine); 
@@ -200,7 +206,7 @@ if($validPage == "manage_containers.php")
             $validUser=UtilisateurDAL::insertOnDuplicate($owner);
             $newLog->setLevel("INFO");
             $newLog->setLoginUtilisateur($loginUtilisateur);
-            $newLog->setMsg("Le quota de l'utilisateur $owner->getPseudo() est maintenant à $owner->getNbVm()");
+            $newLog->setMsg("Le quota de l'utilisateur ". $owner->getLogin() ." est maintenant à ". $owner->getNbVm()");
             $newLog->setDateTime(date('Y/m/d G:i:s'));
             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
             //echo "Le quota de l'utilisateur $owner->getPseudo() est maintenant à $owner->getNbVm()";
