@@ -226,8 +226,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                         $newLog->setMsg("Type d'IHM inconnu...");
                         $newLog->setDateTime(date('Y/m/d G:i:s'));
                         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                        //Renvoie à la page précédante
-                            echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                        echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
                     }
                     $idConnectContainer = Guacamole_ConnectionDAL::insertOnDuplicate($connectionContainer);
                     if (!is_null($idConnectContainer)) {//Si création de connection guaca ok
@@ -235,46 +234,46 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                         $paramConnectContainer = new Guacamole_Connection_Parameter();
                         $paramConnectContainer->setConnection($idConnectContainer);
 
-                        //set le paramètre color-scheme
-                        $paramConnectContainer->setParameterName("color-scheme");
-                        $paramConnectContainer->setParameterValue("green-black");
-                        $validInsertParamUsername = Guacamole_Connection_ParameterDAL::insertOnDuplicate($paramConnectContainer);
-                        if (!is_null(Guacamole_Connection_ParameterDAL::findByCP($paramConnectContainer->getConnection()->getConnectionId(),$paramConnectContainer->getParameterName()))) {
-                            $newLog->setLevel("INFO");
-                            $newLog->setLoginUtilisateur($loginUtilisateur);
-                            $newLog->setMsg("Paramètre 'color-scheme' = 'green-black' de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée.");
-                            $newLog->setDateTime(date('Y/m/d G:i:s'));
-                            $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            //echo "Paramètre username = root de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée."; //TODO log
-                        } else {
-                            $newLog->setLevel("ERROR");
-                            $newLog->setLoginUtilisateur($loginUtilisateur);
-                            $newLog->setMsg("Paramètre 'color-scheme' = 'green-black' de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
-                            $newLog->setDateTime(date('Y/m/d G:i:s'));
-                            $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            //Renvoie à la page précédante
+                        
+                        if($ihm == "no")
+                        {
+                            //set le paramètre color-scheme
+                            $paramConnectContainer->setParameterName("color-scheme");
+                            $paramConnectContainer->setParameterValue("green-black");
+                            $validInsertParamUsername = Guacamole_Connection_ParameterDAL::insertOnDuplicate($paramConnectContainer);
+                            if (!is_null(Guacamole_Connection_ParameterDAL::findByCP($paramConnectContainer->getConnection()->getConnectionId(),$paramConnectContainer->getParameterName()))) {
+                                $newLog->setLevel("INFO");
+                                $newLog->setLoginUtilisateur($loginUtilisateur);
+                                $newLog->setMsg("Paramètre 'color-scheme' = 'green-black' de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée.");
+                                $newLog->setDateTime(date('Y/m/d G:i:s'));
+                                $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
+                            } else {
+                                $newLog->setLevel("ERROR");
+                                $newLog->setLoginUtilisateur($loginUtilisateur);
+                                $newLog->setMsg("Paramètre 'color-scheme' = 'green-black' de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
+                                $newLog->setDateTime(date('Y/m/d G:i:s'));
+                                $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                                 echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
-                            //echo "Paramètre username = root de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur..."; //TODO log
-                        }
+                            }
 
-                        //set le paramètre font-size
-                        $paramConnectContainer->setParameterName("font-size");
-                        $paramConnectContainer->setParameterValue("11");
-                        $validInsertParamPwd = Guacamole_Connection_ParameterDAL::insertOnDuplicate($paramConnectContainer);
-                        if (!is_null(Guacamole_Connection_ParameterDAL::findByCP($paramConnectContainer->getConnection()->getConnectionId(),$paramConnectContainer->getParameterName()))) {
-                            $newLog->setLevel("INFO");
-                            $newLog->setLoginUtilisateur($loginUtilisateur);
-                            $newLog->setMsg("Paramètre 'font-size' = 11 de la connection (connection n°" . $idConnectContainer . ") correctement ajoutée.");
-                            $newLog->setDateTime(date('Y/m/d G:i:s'));
-                            $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                           // echo "Paramètre password de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée."; //TODO log
-                        } else {
-                            $newLog->setLevel("ERROR");
-                            $newLog->setLoginUtilisateur($loginUtilisateur);
-                            $newLog->setMsg("Paramètre 'font-size' = 11 de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
-                            $newLog->setDateTime(date('Y/m/d G:i:s'));
-                            $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
+                            //set le paramètre font-size
+                            $paramConnectContainer->setParameterName("font-size");
+                            $paramConnectContainer->setParameterValue("11");
+                            $validInsertParamPwd = Guacamole_Connection_ParameterDAL::insertOnDuplicate($paramConnectContainer);
+                            if (!is_null(Guacamole_Connection_ParameterDAL::findByCP($paramConnectContainer->getConnection()->getConnectionId(),$paramConnectContainer->getParameterName()))) {
+                                $newLog->setLevel("INFO");
+                                $newLog->setLoginUtilisateur($loginUtilisateur);
+                                $newLog->setMsg("Paramètre 'font-size' = 11 de la connection (connection n°" . $idConnectContainer . ") correctement ajoutée.");
+                                $newLog->setDateTime(date('Y/m/d G:i:s'));
+                                $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
+                            } else {
+                                $newLog->setLevel("ERROR");
+                                $newLog->setLoginUtilisateur($loginUtilisateur);
+                                $newLog->setMsg("Paramètre 'font-size' = 11 de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
+                                $newLog->setDateTime(date('Y/m/d G:i:s'));
+                                $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                                 echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                            }
                         }
                         
                         //set le paramètre username
