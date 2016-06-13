@@ -82,7 +82,7 @@ class Table_logDAL {
                         . 'table_log.login_utilisateur as login_utilisateur, '                
                         . 'table_log.level as level '
                         . ' FROM table_log'
-                . ' ORDER BY table_log.id ASC');
+                . ' ORDER BY table_log.id DESC');
 
         foreach ($data as $row)
         {
