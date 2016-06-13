@@ -4,6 +4,7 @@
 
 //import
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/GroupeDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Utilisateur_has_GroupeDAL.php');
 
 //Définition du message renvoyé
 $message="error";
@@ -38,6 +39,9 @@ if($validPage == "manage_groups.php")
     $newGroupe->setDateCreation($newDateCreation);
     //echo "OK pour DateCréation:".$newGroupe->getDateCreation();
 
+    $validIdUser = $_COOKIE["user_id"];
+    //echo "OK pour Id User : ".$validIdUser;
+    
     if (GroupeDAL::findByNom($validNom) == null)
     {
     //=====Insertion=====/ - OK
@@ -45,7 +49,11 @@ if($validPage == "manage_groups.php")
 
         if ($validInsertGroupe != null)
         {
-            $message=true;
+            $newUtilisateurHasGroupe=new Utilisateur_has_Groupe();
+            $newUtilisateurHasGroupe->setGroupe($validInsertGroupe);
+            $newUtilisateurHasGroupe->setUtilisateur($validIdUser);
+            $validInsert=  Utilisateur_has_GroupeDAL::insertOnDuplicate($newUtilisateurHasGroupe);
+            $message="ok";
             //echo "Ajout du groupe reussi dans la base DBVirtDemande ! (id:" . $validInsertGroupe . ")";
         }
         else
