@@ -47,8 +47,6 @@ if($validPage == "manage_groups.php")
     
     $validIdUser = $_COOKIE["user_id"];
     //echo "OK pour Id User : ".$validIdUser;
-    
-    //$user=  UtilisateurDAL::findById($validUser);
     $newLog->setLoginUtilisateur(UtilisateurDAL::findById($validIdUser)->getLogin());
     
     $newLog->setLevel("INFO");

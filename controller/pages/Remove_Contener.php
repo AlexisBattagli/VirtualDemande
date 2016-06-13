@@ -6,6 +6,10 @@
 
 //import
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Groupe_has_MachineDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Table_logDAL.php');
+
+//Définition d'un objet Table_log pour faire des insert de log
+$newLog = new Table_log();
 
 //Définition du message renvoyé
 $message="error";
