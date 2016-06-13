@@ -128,7 +128,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                         'trace' => 1,
                         'exceptions' => 0
                     ));
-                    ini_set('default_socket_timeout', 300); //permet de tenir la connection 5min (300sec)
+                    ini_set('default_socket_timeout', 720); //permet de tenir la connection 5min (300sec)
                     $result = $client->__call('buildContainer', array(
                         'nameContainer' => $validName,
                         'archi' => $archi,
@@ -337,11 +337,11 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                         //set le paramètre port
                         $paramConnectContainer->setParameterName("port");
                         if ($ihm == 'yes') {
-                            $paramConnectContainer->setParameterValue("5900");
+                            $paramConnectContainer->setParameterValue("5901");
                             $validInsertParamHostname = Guacamole_Connection_ParameterDAL::insertOnDuplicate($paramConnectContainer);
                             $newLog->setLevel("INFO");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
-                            $newLog->setMsg("Port de connection vnc 5900, pour la connection n°" . $idConnectContainer);
+                            $newLog->setMsg("Port de connection vnc 5901, pour la connection n°" . $idConnectContainer);
                             $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                         } else if ($ihm == 'no') {
