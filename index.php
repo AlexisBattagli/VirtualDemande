@@ -35,12 +35,12 @@ if ($pseudo !== null && $password !== null) {
         <!--jQuery library-->
         <script src="./view/library/jQuery/jquery-2.1.4.min.js"></script>
         <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="./view/library/bootstrap/bootstrap-3.3.5.min.css">
+        <link rel="stylesheet" href="./view/library/bootstrap/css/bootstrap-3.3.5.min.css">
         <!-- Optional theme -->
-        <link rel="stylesheet" href="./view/library/bootstrap/bootstrap-theme-3.3.5.min.css">
+        <link rel="stylesheet" href="./view/library/bootstrap/css/bootstrap-theme-3.3.5.min.css">
 
         <!-- Latest compiled and minified JavaScript -->
-        <script src="./view/library/bootstrap/bootstrap-js-3.3.5.min.js"></script>
+        <script src="./view/library/bootstrap/js/bootstrap-js-3.3.5.min.js"></script>
 
         <!--Javascript file for all pages-->
         <script src="./view/javascript/main.js"></script>
