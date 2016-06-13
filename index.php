@@ -131,8 +131,10 @@ if ($pseudo !== null && $password !== null) {
                                     <li><a href="?page=manage_groups">Groups </a></li>
                                 </ul>
                             </li>
+                            <!--Items for the administrator-->
                             <?php if ($_COOKIE["user_role"]== 3) : ?>
                             <li id="what_is_it"><a href="?page=forms_administration">Forms Administration</a></li>
+                            <li id="what_is_it"><a href="?page=logs">Logs</a></li>
                             <?php endif; ?>
                             <li>
                                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $_COOKIE["user_name"]; ?> <span class="caret"></span></a>
