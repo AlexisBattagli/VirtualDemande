@@ -6,14 +6,10 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/UtilisateurDAL.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/GroupeDAL.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Utilisateur_has_GroupeDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Table_logDAL.php');
 
 //Définition d'un objet Table_log pour faire des insert de log
 $newLog = new Table_log();
-$validIdUser = $_COOKIE["user_id"];
-$user=  UtilisateurDAL::findById($validIdUser);
-$nomUser=$user->getLogin();
-//echo "OK pour Id User : ".$nomUser;
-$newLog->setLoginUtilisateur($nomUser);
 
 //Définition du message renvoyé
 $message="error";
@@ -24,18 +20,14 @@ $validPage = filter_input(INPUT_POST, 'page', FILTER_SANITIZE_STRING);
 
 if($validPage == "manage_groups.php")
 {
-    $newLog->setLevel("INFO");
-    $newLog->setMsg("Initialisation de la création d'un groupe.");
-    $newLog->setDateTime(date('Y/m/d G:i:s'));
-    $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-    
+        
     //Création d'un Utilisateur par défaut
     $newGroupe=new Groupe();
 
     //=====Vérification de ce qui est renvoyé par le formulaire
     $validNom = filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_STRING);
 
-    if ($validNom != null)
+    if (!is_null($validNom))
     {
         $newGroupe->setNom($validNom);
         //echo "OK pour Nom : ".$newGroupe->getNom();
@@ -43,7 +35,7 @@ if($validPage == "manage_groups.php")
 
     $validDescription = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
 
-    if ($validDescription != null)
+    if (!is_null($validDescription))
     {
         $newGroupe->setDescription($validDescription);
         //echo "OK pour Description : ".$newGroupe->getDescription();
@@ -53,7 +45,18 @@ if($validPage == "manage_groups.php")
     $newGroupe->setDateCreation($newDateCreation);
     //echo "OK pour DateCréation:".$newGroupe->getDateCreation();
     
-    if (GroupeDAL::findByNom($validNom) == null)
+    $validIdUser = $_COOKIE["user_id"];
+    //echo "OK pour Id User : ".$validIdUser;
+    
+    //$user=  UtilisateurDAL::findById($validUser);
+    $newLog->setLoginUtilisateur(UtilisateurDAL::findById($validIdUser)->getLogin());
+    
+    $newLog->setLevel("INFO");
+    $newLog->setMsg("Initialisation de la création d'un groupe.");
+    $newLog->setDateTime(date('Y/m/d G:i:s'));
+    $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
+    
+    if (is_null(GroupeDAL::findByNom($validNom)))
     {
     //=====Insertion=====/ - OK
         $validInsertGroupe = GroupeDAL::insertOnDuplicate($newGroupe);
@@ -70,7 +73,7 @@ if($validPage == "manage_groups.php")
             $newUtilisateurHasGroupe->setGroupe($validInsertGroupe);
             $newUtilisateurHasGroupe->setUtilisateur($validIdUser);
             $validInsert=  Utilisateur_has_GroupeDAL::insertOnDuplicate($newUtilisateurHasGroupe);
-            if(is_null($validInsert != null))
+            if(!is_null($validInsert))
             {
                 $newLog->setLevel("INFO");
                 $newLog->setMsg("Ajout reussi de l'utilisateur dans le groupe (id:$validInsertGroupe).");
