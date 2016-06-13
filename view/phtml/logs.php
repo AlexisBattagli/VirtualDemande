@@ -32,7 +32,7 @@ $all_logs = Table_logDAL::findAll();
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($logs as $all_log) : ?>
+                    <?php foreach ($all_logs as $log) : ?>
                     <tr>
                         <td><?= $log->getDateTime() ?></td>
                         <td><?= $log->getLevel() ?></td>
