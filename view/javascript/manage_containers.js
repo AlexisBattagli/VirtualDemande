@@ -3,6 +3,7 @@ $(document).ready(function () {
     $('#container-to-share').change(function () {
         console.log('change');
         var idMachine = $('#container-to-share').val();
+        console.log(idMachine);
 
         $.ajax({
             method: 'POST',
@@ -18,6 +19,7 @@ $(document).ready(function () {
                     $.each(data, function () {
                         // ici, this est "un group"
                         groupsSelect.append($("<option />").val(this.id).text(this.nom).attr('name','idGroupe'));
+//                        console.log(this.id);
                     });
                 });
 

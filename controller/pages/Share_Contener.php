@@ -61,7 +61,7 @@ if($validPage == "manage_containers.php")
         $newLog->setDateTime(date('Y/m/d G:i:s'));
         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
         
-        $message=true;
+        $message="ok";
 
     }
     else
