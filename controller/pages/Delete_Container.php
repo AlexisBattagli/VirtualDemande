@@ -68,17 +68,9 @@ if($validPage == "manage_containers.php")
             $newLog->setMsg("Erreur SOAP: ".$f);
             $newLog->setDateTime(date('Y/m/d G:i:s'));
             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-            //Renvoie à la page précédante
                     echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
         }
 
-	 $newLog->setLevel("INFO");
-         $newLog->setLoginUtilisateur($loginUtilisateur);
-         $newLog->setMsg("Result SdA: ".$result);
-         $newLog->setDateTime(date('Y/m/d G:i:s'));
-         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-            
-      //  $result=0;
         if ($result == '0')
         { 
             //Vérification s'il y a eu une insertion dans la base de données guacamole
@@ -94,7 +86,6 @@ if($validPage == "manage_containers.php")
                 $newLog->setMsg("Début de la suppression de la connection n°".$connectionId);
                 $newLog->setDateTime(date('Y/m/d G:i:s'));
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                //echo "Début de la suppression de la connection n°$connectionId";
 
                 //Supprimer les élements connection_parameter
                 $validDeletePermission=Guacamole_Connection_ParameterDAL::deleteConnection($connectionId);
@@ -106,7 +97,6 @@ if($validPage == "manage_containers.php")
                     $newLog->setMsg("L'ensemble des parametres de connection pour la connection n° $connectionId ont bien été supprimés.");
                     $newLog->setDateTime(date('Y/m/d G:i:s'));
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
-                    //echo "L'ensemble des parametres de connection pour la connection n° $connectionId ont bien été supprimés."; 
                 }
                 else
                 {
@@ -114,8 +104,7 @@ if($validPage == "manage_containers.php")
                     $newLog->setLoginUtilisateur($loginUtilisateur);
                     $newLog->setMsg("L'ensemble des parametres de connection pour la connection n° $connectionId n'ont pas bien été supprimés.");
                     $newLog->setDateTime(date('Y/m/d G:i:s'));
-                    $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
-                    //echo "L'ensemble des parametres de connection pour la connection n° $connectionId ont bien été supprimés."; 
+                    $validTableLog = Table_logDAL::insertOnDuplicate($newLog);      
                     //Renvoie à la page précédante
                         echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
                 }
@@ -129,8 +118,7 @@ if($validPage == "manage_containers.php")
                     $newLog->setLoginUtilisateur($loginUtilisateur);
                     $newLog->setMsg("L'ensemble des permissions de connection pour la connection n° $connectionId ont bien été supprimés.");
                     $newLog->setDateTime(date('Y/m/d G:i:s'));
-                    $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
-                    //echo "L'ensemble des permissions de connection pour la connection n° $connectionId ont bien été supprimés.";      
+                    $validTableLog = Table_logDAL::insertOnDuplicate($newLog);          
                 }
                 else
                 {
@@ -138,8 +126,7 @@ if($validPage == "manage_containers.php")
                     $newLog->setLoginUtilisateur($loginUtilisateur);
                     $newLog->setMsg("L'ensemble des permissions de connection pour la connection n° $connectionId n'ont pas bien été supprimés.");
                     $newLog->setDateTime(date('Y/m/d G:i:s'));
-                    $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
-                    //echo "L'ensemble des permissions de connection pour la connection n° $connectionId ont bien été supprimés.";   
+                    $validTableLog = Table_logDAL::insertOnDuplicate($newLog);       
                     //Renvoie à la page précédante
                         echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
                 }
@@ -152,8 +139,7 @@ if($validPage == "manage_containers.php")
                     $newLog->setLoginUtilisateur($loginUtilisateur);
                     $newLog->setMsg("La connection n°$connectionId a bien été supprimé.");
                     $newLog->setDateTime(date('Y/m/d G:i:s'));
-                    $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
-                    //echo "La connection n°$connectionId a bien été supprimé."; 
+                    $validTableLog = Table_logDAL::insertOnDuplicate($newLog);  
                 }
                 else
                 {
@@ -161,8 +147,7 @@ if($validPage == "manage_containers.php")
                     $newLog->setLoginUtilisateur($loginUtilisateur);
                     $newLog->setMsg("La connection n°$connectionId n'a pas bien été supprimé.");
                     $newLog->setDateTime(date('Y/m/d G:i:s'));
-                    $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
-                    //echo "La connection n°$connectionId a bien été supprimé."; 
+                    $validTableLog = Table_logDAL::insertOnDuplicate($newLog);  
                     //Renvoie à la page précédante
                         echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
                 }
@@ -209,7 +194,6 @@ if($validPage == "manage_containers.php")
             $newLog->setMsg("Le quota de l'utilisateur ". $owner->getLogin() ." est maintenant à ". $owner->getNbVm());
             $newLog->setDateTime(date('Y/m/d G:i:s'));
             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
-            //echo "Le quota de l'utilisateur $owner->getPseudo() est maintenant à $owner->getNbVm()";
             
             //Supprimer le container dans la base DBVirtDemand
             $validDeleteMachine=MachineDAL::delete($validIdMachine);
@@ -220,7 +204,6 @@ if($validPage == "manage_containers.php")
                 $newLog->setMsg("La machine $nomMachine d'id $validIdMachine appartenant à l'utilisateur $owner->getPseudo() a bien été supprimée !");
                 $newLog->setDateTime(date('Y/m/d G:i:s'));
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
-                //echo "La machine $nomMachine d'id $validIdMachine appartenant à l'utilisateur $owner->getPseudo() a bien été supprimée !";
             }
             else
             {
@@ -229,7 +212,6 @@ if($validPage == "manage_containers.php")
                 $newLog->setMsg("La machine $nomMachine d'id $validIdMachine appartenant à l'utilisateur $owner->getPseudo() n'a pas bien été supprimée !");
                 $newLog->setDateTime(date('Y/m/d G:i:s'));
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
-                //echo "La machine $nomMachine d'id $validIdMachine appartenant à l'utilisateur $owner->getPseudo() a bien été supprimée !";
                 //Renvoie à la page précédante
                     echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
             }
@@ -240,10 +222,15 @@ if($validPage == "manage_containers.php")
         {
             $newLog->setLevel("ERROR");
             $newLog->setLoginUtilisateur($loginUtilisateur);
-            $newLog->setMsg("Erreur lors de la suppression du container nommé $nomMachine");
+            $newLog->setMsg("Erreur lors de la suppression du container nommé". $nomMachine);
             $newLog->setDateTime(date('Y/m/d G:i:s'));
             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
-            //echo "Erreur lors de la suppression du container nommé ". $nomMachine; //TODO log
+            
+            $newLog->setLevel("ERROR");
+            $newLog->setLoginUtilisateur($loginUtilisateur);
+            $newLog->setMsg("Message renvoyer par virt-server:". $result);
+            $newLog->setDateTime(date('Y/m/d G:i:s'));
+            $validTableLog = Table_logDAL::insertOnDuplicate($newLog);   
             //Renvoie à la page précédante
                     echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
         }
