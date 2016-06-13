@@ -264,7 +264,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                         if (!is_null(Guacamole_Connection_ParameterDAL::findByCP($paramConnectContainer->getConnection()->getConnectionId(),$paramConnectContainer->getParameterName()))) {
                             $newLog->setLevel("INFO");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
-                            $newLog->setMsg("Paramètre 'font-size' = 11 de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée.");
+                            $newLog->setMsg("Paramètre 'font-size' = 11 de la connection (connection n°" . $idConnectContainer . ") correctement ajoutée.");
                             $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                            // echo "Paramètre password de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée."; //TODO log
@@ -274,11 +274,47 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                             $newLog->setMsg("Paramètre 'font-size' = 11 de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
                             $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            //Renvoie à la page précédante
                                 echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
-                           // echo "Paramètre password de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur..."; //TODO log
+                        }
+                        
+                        //set le paramètre username
+                        $paramConnectContainer->setParameterName("username");
+                        $paramConnectContainer->setParameterValue("root");
+                        $validInsertParamHostname = Guacamole_Connection_ParameterDAL::insertOnDuplicate($paramConnectContainer);
+                        if (!is_null(Guacamole_Connection_ParameterDAL::findByCP($paramConnectContainer->getConnection()->getConnectionId(),$paramConnectContainer->getParameterName()))) {
+                            $newLog->setLevel("INFO");
+                            $newLog->setLoginUtilisateur($loginUtilisateur);
+                            $newLog->setMsg("Paramètre 'username' = 'root' de la connection (connection n°" . $idConnectContainer . ") correctement ajoutée.");
+                            $newLog->setDateTime(date('Y/m/d G:i:s'));
+                            $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
+                        } else {
+                            $newLog->setLevel("ERROR");
+                            $newLog->setLoginUtilisateur($loginUtilisateur);
+                            $newLog->setMsg("Paramètre 'username' = 'root' de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
+                            $newLog->setDateTime(date('Y/m/d G:i:s'));
+                            $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
+                                echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
                         }
 
+                        //set le paramètre password
+                        $paramConnectContainer->setParameterName("password");
+                        $paramConnectContainer->setParameterValue($passwdRoot);
+                        $validInsertParamHostname = Guacamole_Connection_ParameterDAL::insertOnDuplicate($paramConnectContainer);
+                        if (!is_null(Guacamole_Connection_ParameterDAL::findByCP($paramConnectContainer->getConnection()->getConnectionId(),$paramConnectContainer->getParameterName()))) {
+                            $newLog->setLevel("INFO");
+                            $newLog->setLoginUtilisateur($loginUtilisateur);
+                            $newLog->setMsg("Paramètre 'password' de la connection (connection n°" . $idConnectContainer . ") correctement ajoutée.");
+                            $newLog->setDateTime(date('Y/m/d G:i:s'));
+                            $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
+                        } else {
+                            $newLog->setLevel("ERROR");
+                            $newLog->setLoginUtilisateur($loginUtilisateur);
+                            $newLog->setMsg("Paramètre 'password' de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
+                            $newLog->setDateTime(date('Y/m/d G:i:s'));
+                            $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
+                                echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                        }
+                        
                         //set le paramètre hostname
                         $paramConnectContainer->setParameterName("hostname");
                         $paramConnectContainer->setParameterValue($addrIpContainer);
@@ -289,16 +325,13 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                             $newLog->setMsg("Paramètre hostname = " . $addrIpContainer . " de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée.");
                             $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            //echo "Paramètre hostname = " . $addrIpContainer . " de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée."; //TODO log
                         } else {
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Paramètre hostname = " . $addrIpContainer . " de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
                             $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            //Renvoie à la page précédante
                                 echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
-                           // echo "Paramètre hostname = " . $addrIpContainer . " de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur..."; //TODO log
                         }
 
                         //set le paramètre port
