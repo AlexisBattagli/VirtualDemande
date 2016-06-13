@@ -1,14 +1,15 @@
 $(document).ready(function () {
 
     $('#container-to-share').change(function () {
-        console.log('change')
+        console.log('change');
+        var idMachine = $('#container-to-share').val();
 
         $.ajax({
             method: 'POST',
             url: "./controller/ajax/Return_Groups.php",
             dataType : 'json',
             data: {
-                idMachine: '1'
+                idMachine: idMachine
             },
         })
                 .done(function (data) {

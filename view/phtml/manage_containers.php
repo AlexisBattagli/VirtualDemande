@@ -24,7 +24,7 @@ $HDDisplayed = StockageDAL::findByVisible();
 ?>
 <html>
     <!--Javascript file for dynamic select-->
-        <script src="./view/javascript/share_groups.js"></script>
+        <script src="./view/javascript/manage_containers.js"></script>
     <body>
         <!--List of the containers that are fonctionnals-->
         <div>
