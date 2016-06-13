@@ -39,3 +39,8 @@ button.dropdown-signout {
     float: left;
     min-width: 25%;
 }
+
+.not-active {
+   pointer-events: none;
+   cursor: default;
+}
