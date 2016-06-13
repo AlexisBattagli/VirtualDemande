@@ -27,7 +27,7 @@ if($validPage == "manage_groups.php")
     //=====Vérification de ce qui est renvoyé par le formulaire
     $validIdUser = $_COOKIE["user_id"]; 
     //echo "OK pour Id User : ".$validIdUser;
-    $newLog->setLevel($validIdUser);
+    $newLog->setLoginUtilisateur(UtilisateurDAL::findById($validIdUser)->getLogin());
 
     $validIdGroupe = filter_input(INPUT_POST, 'idGroupe', FILTER_SANITIZE_STRING);
     //echo "OK pour Id Groupe : ".$validIdGroupe;
