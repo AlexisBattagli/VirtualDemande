@@ -31,6 +31,7 @@ if($validPage == "register.php")
     {
         $newLog->setLevel("INFO");
         $newLog->setMsg("Initialisation de la création d'un utilisateur.");
+        $newLog->setDateTime(date('Y/m/d G:i:s'));
         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
         //Création d'un Utilisateur par défaut
         $newUtilisateur=new Utilisateur();
@@ -103,6 +104,7 @@ if($validPage == "register.php")
             {
                 $newLog->setLevel("INFO");
                 $newLog->setMsg("Ajout de l'utilisateur reussi dans la base DBVirtDemande ! (id:" . $validInsertUtilisateur .").");
+                $newLog->setDateTime(date('Y/m/d G:i:s'));
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                 //echo "Ajout de l'utilisateur reussi dans la base DBVirtDemande ! (id:" . $validInsertUtilisateur . ")";
                 //Création d'un guacamole_user
@@ -116,6 +118,7 @@ if($validPage == "register.php")
                     $newUserGuacamole->setUserName($validUserName);
                     $newLog->setLevel("INFO");
                     $newLog->setMsg("OK pour Username : ".$newUserGuacamole->getUsername());
+                    $newLog->setDateTime(date('Y/m/d G:i:s'));
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                     //echo "OK pour Username : ".$newUserGuacamole->getUsername();
                 }
@@ -127,6 +130,7 @@ if($validPage == "register.php")
                     $newUserGuacamole->setPasswordHash($validPassword);
                     $newLog->setLevel("INFO");
                     $newLog->setMsg("OK pour PasswdHash:".$newUserGuacamole->getPasswordHash());
+                    $newLog->setDateTime(date('Y/m/d G:i:s'));
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                     //echo "OK pour PasswdHash:".$newUserGuacamole->getPasswordHash();
                 }
@@ -136,6 +140,7 @@ if($validPage == "register.php")
                     $newUserGuacamole->setDisabled(0);
                     $newLog->setLevel("INFO");
                     $newLog->setMsg("OK pour Disabled:".$newUserGuacamole->getDisabled());
+                    $newLog->setDateTime(date('Y/m/d G:i:s'));
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                     //echo "OK pour Disabled:".$newUserGuacamole->getDisabled();
 
@@ -158,6 +163,7 @@ if($validPage == "register.php")
                     {
                         $newLog->setLevel("INFO");
                         $newLog->setMsg("Ajout de l'utilisateur reussi dans la base guacamole_db! (id:" . $validInsertUser . ")");
+                        $newLog->setDateTime(date('Y/m/d G:i:s'));
                         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                         //echo "Ajout de l'utilisateur reussi dans la base guacamole_db! (id:" . $validInsertUser . ")";
                         //Paramètres des permissions de l'utilisateur
@@ -174,6 +180,7 @@ if($validPage == "register.php")
                         $valid=Guacamole_User_PermissionDAL::insertOnDuplicate($guacamoleUserPermission);
                         $newLog->setLevel("INFO");
                         $newLog->setMsg("Ajout des permissions réussis pour l'utilisateur avec l'id:" . $validInsertUser . ")");
+                        $newLog->setDateTime(date('Y/m/d G:i:s'));
                         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                         $message="ok";
                     }
@@ -181,6 +188,7 @@ if($validPage == "register.php")
                     {
                         $newLog->setLevel("ERROR");
                         $newLog->setMsg("Insert echec dans la base de données guacamole_db...");
+                        $newLog->setDateTime(date('Y/m/d G:i:s'));
                         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                         //echo "insert echec...";
                         //Renvoie à la page précédante
@@ -191,6 +199,7 @@ if($validPage == "register.php")
                 {
                     $newLog->setLevel("ERROR");
                     $newLog->setMsg("Erreur, l'utilisateur que vous voulez ajouter existe déjà...");
+                    $newLog->setDateTime(date('Y/m/d G:i:s'));
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                     //echo "Erreur, l'utilisateur que vous voulez ajouter existe déjà...";
                     //Renvoie à la page précédante
@@ -201,6 +210,7 @@ if($validPage == "register.php")
             {
                 $newLog->setLevel("ERROR");
                 $newLog->setMsg("Insert echec de l'utilisateur dans la base de données DBVirtDemande...");
+                $newLog->setDateTime(date('Y/m/d G:i:s'));
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                 //echo "insert echec...";
                 //Renvoie à la page précédante
@@ -211,6 +221,7 @@ if($validPage == "register.php")
         {
             $newLog->setLevel("ERROR");
             $newLog->setMsg("Erreur, l'utilisateur que vous voulez ajouter existe...");
+            $newLog->setDateTime(date('Y/m/d G:i:s'));
             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
             //echo "Erreur, l'utilisateur que vous voulez ajouter existe...";
             //Renvoie à la page précédante
@@ -221,6 +232,7 @@ if($validPage == "register.php")
     {
         $newLog->setLevel("ERROR");
         $newLog->setMsg("L'utilisateur ne peut pas s'enregistrer car il n'y a plus de place pour un autre utilisateur.");
+        $newLog->setDateTime(date('Y/m/d G:i:s'));
         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
         //Renvoie à la page précédante
             echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";

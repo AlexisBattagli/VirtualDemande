@@ -43,6 +43,7 @@ if($validPage == "manage_containers.php")
         $newLog->setLevel("INFO");
         $newLog->setLoginUtilisateur($loginUtilisateur);
         $newLog->setMsg("Le nom de la machine à supprimer est".$nomMachine);
+        $newLog->setDateTime(date('Y/m/d G:i:s'));
         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
                
         //=====Appel Web Service pour remove le container sur le serveur de virt=====/
@@ -65,6 +66,7 @@ if($validPage == "manage_containers.php")
             $newLog->setLevel("ERROR");
             $newLog->setLoginUtilisateur($loginUtilisateur);
             $newLog->setMsg("Erreur SOAP: ".$f);
+            $newLog->setDateTime(date('Y/m/d G:i:s'));
             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
             //Renvoie à la page précédante
                     echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
@@ -84,6 +86,7 @@ if($validPage == "manage_containers.php")
                 $newLog->setLevel("INFO");
                 $newLog->setLoginUtilisateur($loginUtilisateur);
                 $newLog->setMsg("Début de la suppression de la connection n°".$connectionId);
+                $newLog->setDateTime(date('Y/m/d G:i:s'));
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                 //echo "Début de la suppression de la connection n°$connectionId";
 
@@ -95,6 +98,7 @@ if($validPage == "manage_containers.php")
                     $newLog->setLevel("INFO");
                     $newLog->setLoginUtilisateur($loginUtilisateur);
                     $newLog->setMsg("L'ensemble des parametres de connection pour la connection n° $connectionId ont bien été supprimés.");
+                    $newLog->setDateTime(date('Y/m/d G:i:s'));
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
                     //echo "L'ensemble des parametres de connection pour la connection n° $connectionId ont bien été supprimés."; 
                 }
@@ -103,6 +107,7 @@ if($validPage == "manage_containers.php")
                     $newLog->setLevel("ERROR");
                     $newLog->setLoginUtilisateur($loginUtilisateur);
                     $newLog->setMsg("L'ensemble des parametres de connection pour la connection n° $connectionId n'ont pas bien été supprimés.");
+                    $newLog->setDateTime(date('Y/m/d G:i:s'));
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
                     //echo "L'ensemble des parametres de connection pour la connection n° $connectionId ont bien été supprimés."; 
                     //Renvoie à la page précédante
@@ -117,6 +122,7 @@ if($validPage == "manage_containers.php")
                     $newLog->setLevel("INFO");
                     $newLog->setLoginUtilisateur($loginUtilisateur);
                     $newLog->setMsg("L'ensemble des permissions de connection pour la connection n° $connectionId ont bien été supprimés.");
+                    $newLog->setDateTime(date('Y/m/d G:i:s'));
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
                     //echo "L'ensemble des permissions de connection pour la connection n° $connectionId ont bien été supprimés.";      
                 }
@@ -125,6 +131,7 @@ if($validPage == "manage_containers.php")
                     $newLog->setLevel("ERROR");
                     $newLog->setLoginUtilisateur($loginUtilisateur);
                     $newLog->setMsg("L'ensemble des permissions de connection pour la connection n° $connectionId n'ont pas bien été supprimés.");
+                    $newLog->setDateTime(date('Y/m/d G:i:s'));
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
                     //echo "L'ensemble des permissions de connection pour la connection n° $connectionId ont bien été supprimés.";   
                     //Renvoie à la page précédante
@@ -138,6 +145,7 @@ if($validPage == "manage_containers.php")
                     $newLog->setLevel("INFO");
                     $newLog->setLoginUtilisateur($loginUtilisateur);
                     $newLog->setMsg("La connection n°$connectionId a bien été supprimé.");
+                    $newLog->setDateTime(date('Y/m/d G:i:s'));
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
                     //echo "La connection n°$connectionId a bien été supprimé."; 
                 }
@@ -146,6 +154,7 @@ if($validPage == "manage_containers.php")
                     $newLog->setLevel("ERROR");
                     $newLog->setLoginUtilisateur($loginUtilisateur);
                     $newLog->setMsg("La connection n°$connectionId n'a pas bien été supprimé.");
+                    $newLog->setDateTime(date('Y/m/d G:i:s'));
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
                     //echo "La connection n°$connectionId a bien été supprimé."; 
                     //Renvoie à la page précédante
@@ -157,6 +166,7 @@ if($validPage == "manage_containers.php")
                 $newLog->setLevel("WARN");
                 $newLog->setLoginUtilisateur($loginUtilisateur);
                 $newLog->setMsg("La machine $nomMachine n'avait pas de connexion dans guacamole.");
+                $newLog->setDateTime(date('Y/m/d G:i:s'));
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);                    
             }
             
@@ -168,6 +178,7 @@ if($validPage == "manage_containers.php")
                 $newLog->setLevel("INFO");
                 $newLog->setLoginUtilisateur($loginUtilisateur);
                 $newLog->setMsg("La machine $nomMachine a bien été enlever des groupe dans le(s)quel(s) elle était partagée.");
+                $newLog->setDateTime(date('Y/m/d G:i:s'));
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
                 //echo "La machine $nomMachine a bien été enlever des groupe dans le(s)quel(s) elle était partagée."; 
             }
@@ -176,6 +187,7 @@ if($validPage == "manage_containers.php")
                 $newLog->setLevel("ERROR");
                 $newLog->setLoginUtilisateur($loginUtilisateur);
                 $newLog->setMsg("La machine $nomMachine n'a pas bien été enlever des groupe dans le(s)quel(s) elle était partagée.");
+                $newLog->setDateTime(date('Y/m/d G:i:s'));
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
                 //echo "La machine $nomMachine a bien été enlever des groupe dans le(s)quel(s) elle était partagée."; 
                 //Renvoie à la page précédante
@@ -189,6 +201,7 @@ if($validPage == "manage_containers.php")
             $newLog->setLevel("INFO");
             $newLog->setLoginUtilisateur($loginUtilisateur);
             $newLog->setMsg("Le quota de l'utilisateur $owner->getPseudo() est maintenant à $owner->getNbVm()");
+            $newLog->setDateTime(date('Y/m/d G:i:s'));
             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
             //echo "Le quota de l'utilisateur $owner->getPseudo() est maintenant à $owner->getNbVm()";
             
@@ -199,6 +212,7 @@ if($validPage == "manage_containers.php")
                 $newLog->setLevel("INFO");
                 $newLog->setLoginUtilisateur($loginUtilisateur);
                 $newLog->setMsg("La machine $nomMachine d'id $validIdMachine appartenant à l'utilisateur $owner->getPseudo() a bien été supprimée !");
+                $newLog->setDateTime(date('Y/m/d G:i:s'));
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
                 //echo "La machine $nomMachine d'id $validIdMachine appartenant à l'utilisateur $owner->getPseudo() a bien été supprimée !";
             }
@@ -207,6 +221,7 @@ if($validPage == "manage_containers.php")
                 $newLog->setLevel("ERROR");
                 $newLog->setLoginUtilisateur($loginUtilisateur);
                 $newLog->setMsg("La machine $nomMachine d'id $validIdMachine appartenant à l'utilisateur $owner->getPseudo() n'a pas bien été supprimée !");
+                $newLog->setDateTime(date('Y/m/d G:i:s'));
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
                 //echo "La machine $nomMachine d'id $validIdMachine appartenant à l'utilisateur $owner->getPseudo() a bien été supprimée !";
                 //Renvoie à la page précédante
@@ -220,6 +235,7 @@ if($validPage == "manage_containers.php")
             $newLog->setLevel("ERROR");
             $newLog->setLoginUtilisateur($loginUtilisateur);
             $newLog->setMsg("Erreur lors de la suppression du container nommé $nomMachine");
+            $newLog->setDateTime(date('Y/m/d G:i:s'));
             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
             //echo "Erreur lors de la suppression du container nommé ". $nomMachine; //TODO log
             //Renvoie à la page précédante

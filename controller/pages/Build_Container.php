@@ -95,6 +95,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                 $newLog->setLevel("INFO");
                 $newLog->setLoginUtilisateur($loginUtilisateur);
                 $newLog->setMsg("Machine correctement ajoutée en base, d'id: " . $validInsertMachine);
+                $newLog->setDateTime(date('Y/m/d G:i:s'));
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                // echo "</br>Machine correctement ajouter en base, d'id: " . $validInsertMachine; // TODO log
                 
@@ -106,12 +107,14 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                     $newLog->setLevel("INFO");
                     $newLog->setLoginUtilisateur($loginUtilisateur);
                     $newLog->setMsg("Mise a jour du quota, passe à ".$variable);
+                    $newLog->setDateTime(date('Y/m/d G:i:s'));
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                 }
                 else {
                     $newLog->setLevel("ERROR");
                     $newLog->setLoginUtilisateur($loginUtilisateur);
                     $newLog->setMsg("Echec de la mise a jour du quota");
+                    $newLog->setDateTime(date('Y/m/d G:i:s'));
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                     //Renvoie à la page précédante
                         echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
@@ -143,6 +146,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                     $newLog->setLevel("ERROR");
                     $newLog->setLoginUtilisateur($loginUtilisateur);
                     $newLog->setMsg("Erreur SOAP: ".$f);
+                    $newLog->setDateTime(date('Y/m/d G:i:s'));
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                     //Renvoie à la page précédante
                         echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
@@ -153,6 +157,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                 $newLog->setLevel("INFO");
                 $newLog->setLoginUtilisateur($loginUtilisateur);
                 $newLog->setMsg("Le code de retour de ws vaut : " . $code);
+                $newLog->setDateTime(date('Y/m/d G:i:s'));
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                 
                // echo "</br>Le code de retour vaut : " . $code; //TODO log
@@ -162,6 +167,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                     $newLog->setLevel("INFO");
                     $newLog->setLoginUtilisateur($loginUtilisateur);
                     $newLog->setMsg("Conteneur " . $validName . " créé avec succès sur le serveur de Virt");
+                    $newLog->setDateTime(date('Y/m/d G:i:s'));
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                   //  echo "</br>Conteneur créer avec succès sur le serveur de Virt"; //TODO log
                     
@@ -170,6 +176,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                     $newLog->setLevel("INFO");
                     $newLog->setLoginUtilisateur($loginUtilisateur);
                     $newLog->setMsg("L'adresse IP du conteneur " . $validName . " est: ".$addrIpContainer);
+                    $newLog->setDateTime(date('Y/m/d G:i:s'));
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                    // echo "</br>L'adresse IP du conteneur " . $validName . " est: ".$addrIpContainer;
                     
@@ -181,11 +188,13 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                         $newLog->setLevel("INFO");
                         $newLog->setLoginUtilisateur($loginUtilisateur);
                         $newLog->setMsg("Mise à jour de la description du container ".$container->getNom()." en ajoutant le mot de passe root.");
+                        $newLog->setDateTime(date('Y/m/d G:i:s'));
                         $validTableLog = Table_logDAL::insertOnDuplicate($newLog); 
                     } else {
                         $newLog->setLevel("ERROR");
                         $newLog->setLoginUtilisateur($loginUtilisateur);
                         $newLog->setMsg("Echec de la mise à jour de la description du container ".$container->getNom()." pour ajouter le mot de passe root.");
+                        $newLog->setDateTime(date('Y/m/d G:i:s'));
                         $validTableLog = Table_logDAL::insertOnDuplicate($newLog); 
                         //Renvoie à la page précédante
                             echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
@@ -201,18 +210,21 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                         $newLog->setLevel("INFO");
                         $newLog->setLoginUtilisateur($loginUtilisateur);
                         $newLog->setMsg("Connexion vnc pour le contener " . $validName . ".");
+                        $newLog->setDateTime(date('Y/m/d G:i:s'));
                         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                         $connectionContainer->setProtocol('vnc');
                     } else if ($ihm == 'no') {
                         $newLog->setLevel("INFO");
                         $newLog->setLoginUtilisateur($loginUtilisateur);
                         $newLog->setMsg("Connexion vnc pour le contener " . $validName . ".");
+                        $newLog->setDateTime(date('Y/m/d G:i:s'));
                         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                         $connectionContainer->setProtocol('ssh');
                     } else {
                         $newLog->setLevel("ERROR");
                         $newLog->setLoginUtilisateur($loginUtilisateur);
                         $newLog->setMsg("Type d'IHM inconnu...");
+                        $newLog->setDateTime(date('Y/m/d G:i:s'));
                         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                         //Renvoie à la page précédante
                             echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
@@ -231,12 +243,15 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                             $newLog->setLevel("INFO");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Paramètre username = root de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée.");
+                            $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                             //echo "Paramètre username = root de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée."; //TODO log
                         } else {
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Paramètre username = root de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
+                            $newLog->setDateTime(date('Y/m/d G:i:s'));
+                            $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                             //Renvoie à la page précédante
                                 echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
@@ -251,12 +266,14 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                             $newLog->setLevel("INFO");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Paramètre password de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée.");
+                            $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                            // echo "Paramètre password de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée."; //TODO log
                         } else {
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Paramètre password de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
+                            $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                             //Renvoie à la page précédante
                                 echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
@@ -271,12 +288,14 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                             $newLog->setLevel("INFO");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Paramètre hostname = " . $addrIpContainer . " de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée.");
+                            $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                             //echo "Paramètre hostname = " . $addrIpContainer . " de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée."; //TODO log
                         } else {
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Paramètre hostname = " . $addrIpContainer . " de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
+                            $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                             //Renvoie à la page précédante
                                 echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
@@ -290,6 +309,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                             $newLog->setLevel("INFO");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Port de connection vnc 5900, pour la connection n°" . $idConnectContainer);
+                            $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                            // echo "Port de connection 5900, pour la connection n°" . $idConnectContainer; //TODO log
                         } else if ($ihm == 'no') {
@@ -297,12 +317,14 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                             $newLog->setLevel("INFO");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Port de connection 22, pour la connection n°" . $idConnectContainer);
+                            $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                             //echo "Port de connection 22, pour la connection n°" . $idConnectContainer; //TODO log
                         } else {
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Erreur, type d'ihm inconnu... Sérieux, comment ça a pu arriver ?!!");
+                            $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                             //Renvoie à la page précédante
                                 echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
@@ -313,12 +335,14 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                             $newLog->setLevel("INFO");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Paramètre port de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée.");
+                            $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                            // echo "Paramètre port de la connection (connection n°" . $idConnectContainer . ") correctmeent ajoutée."; //TODO log
                         } else {
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Paramètre port de la connection (connection n°" . $idConnectContainer . ") non ajoutée.");
+                            $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                             //Renvoie à la page précédante
                                 echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
@@ -338,12 +362,14 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                             $newLog->setLevel("INFO");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission READ pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !");
+                            $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                             //echo "La permission READ pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !"; //TODO log
                         } else {
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission READ pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !");
+                            $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                             //Renvoie à la page précédante
                                 echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
@@ -357,12 +383,14 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                             $newLog->setLevel("INFO");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission UPDATE pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !");
+                            $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                             //echo "La permission UPDATE pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !"; //TODO log
                         } else {
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission UPDATE pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !");
+                            $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                             //Renvoie à la page précédante
                                 echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
@@ -376,12 +404,14 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                             $newLog->setLevel("INFO");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission DELETE pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !");
+                            $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                             //echo "La permission DELETE pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !"; //TODO log
                         } else {
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission DELETE pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !");
+                            $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                             //Renvoie à la page précédante
                                 echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
@@ -395,12 +425,14 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                             $newLog->setLevel("INFO");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission ADMINISTER pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !");
+                            $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                             //echo "La permission ADMINISTER pour la conneciton n°" . $idConnectContainer . " a bien été ajoutée !"; //TODO log
                         } else {
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("La permission ADMINISTER pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !");
+                            $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                             //Renvoie à la page précédante
                                 echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
@@ -412,6 +444,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                         $newLog->setLevel("ERROR");
                         $newLog->setLoginUtilisateur($loginUtilisateur);
                         $newLog->setMsg("Erreur, la connection n'a pas bien était ajouter dans la DB de guaca...");
+                        $newLog->setDateTime(date('Y/m/d G:i:s'));
                         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                         //Renvoie à la page précédante
                             echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
@@ -421,6 +454,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                     $newLog->setLevel("WARN");
                     $newLog->setLoginUtilisateur($loginUtilisateur);
                     $newLog->setMsg("Echec de création du conteneur... Contactez le support EVOLVE.");
+                    $newLog->setDateTime(date('Y/m/d G:i:s'));
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                     echo "</br>Echec de création du conteneur... Contactez le support EVOLVE.";
                     $container = MachineDAL::findById($validInsertMachine);
@@ -429,6 +463,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                     $newLog->setLevel("WARN");
                     $newLog->setLoginUtilisateur($loginUtilisateur);
                     $newLog->setMsg("Code retour inconnu, problème ... Contactez le support EVOLVE !");
+                    $newLog->setDateTime(date('Y/m/d G:i:s'));
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                     echo "</br>Code retour inconnu, problème ... Contactez le support EVOLVE !";
                     $container = MachineDAL::findById($validInsertMachine);
@@ -438,6 +473,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                 $newLog->setLevel("ERROR");
                 $newLog->setLoginUtilisateur($loginUtilisateur);
                 $newLog->setMsg("Echec de l'insertion en base de la Machine");
+                $newLog->setDateTime(date('Y/m/d G:i:s'));
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                 //Renvoie à la page précédante
                     echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
@@ -447,6 +483,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
             $newLog->setLevel("ERROR");
             $newLog->setLoginUtilisateur($loginUtilisateur);
             $newLog->setMsg("Un container existe déjà avec ce nom (" . $validName . ").");
+            $newLog->setDateTime(date('Y/m/d G:i:s'));
             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
             //Renvoie à la page précédante
                     echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
@@ -456,6 +493,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
         $newLog->setLevel("WARN");
         $newLog->setLoginUtilisateur($loginUtilisateur);
         $newLog->setMsg("L'user " . $user->getLogin() . " a atteint son quota de Contenair");
+        $newLog->setDateTime(date('Y/m/d G:i:s'));
         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
       //  echo "L'user " . $user->getLogin() . " a atteint son quota de Contenair."; // TODO log
     }
