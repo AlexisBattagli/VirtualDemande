@@ -117,7 +117,7 @@ class GroupeDAL
             
             if($statut==false)
             {
-                $groupe = new Groupe();
+                $groupe = self::findById($groupeId);
                 $mesGroupesLessMachine[] = $groupe;
             }
         }
