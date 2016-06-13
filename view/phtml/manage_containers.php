@@ -5,6 +5,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Distrib_Alia
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/CpuDAL.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/RamDAL.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/StockageDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/UtilisateurDAL.php');
 
 $userId = $_COOKIE["user_id"];
 $rowsFonctionnal = MachineDAL::findSuccessByUser($_COOKIE["user_id"]);
@@ -13,6 +14,7 @@ $OSDisplayed = Distrib_AliasDAL::findByVisible();
 $CPUDisplayed = CpuDAL::findByVisible();
 $RAMDisplayed = RamDAL::findByVisible();
 $HDDisplayed = StockageDAL::findByVisible();
+$canCreate = UtilisateurDAL::isFull($_COOKIE["user_id"])
 
 
 //$groups = GroupeDAL::findByUser($_COOKIE["user_id"]);
@@ -140,7 +142,7 @@ $HDDisplayed = StockageDAL::findByVisible();
         </div>
         <!--Container creation panel-->
         <div class="panel panel-info autocollapse">
-            <div class="panel-heading clickable">
+            <div class="panel-heading <?php if ($canCreate == false) :?> clickable<?php endif; ?>">
                 <h2 class="panel-title">
                     Create container
                 </h2>
