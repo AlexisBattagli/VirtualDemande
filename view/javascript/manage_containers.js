@@ -17,7 +17,7 @@ $(document).ready(function () {
                     groupsSelect.html('');
                     $.each(data, function () {
                         // ici, this est "un group"
-                        groupsSelect.append($("<option />").val(this.id).text(this.nom));
+                        groupsSelect.append($("<option />").val(this.id).text(this.nom).attr('name','idGroupe'));
                     });
                 });
 

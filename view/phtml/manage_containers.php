@@ -235,6 +235,9 @@ $HDDisplayed = StockageDAL::findByVisible();
                 <form action="./controller/pages/Share_Contener.php" method="post" >  <!--action a mettre-->
                     <!--Container selector-->
                     <div class="form-group">
+                        <input name="page" type="hidden" class="form-control" value ="manage_containers.php">
+                    </div>
+                    <div class="form-group">
                         <h4><label>Container to share</label></h4>
                         <select class="form-control" id="container-to-share">
                             <option selected="selected" disabled> --Select a container to share-- </option>  <!-- rajouter disabled -->
@@ -247,6 +250,10 @@ $HDDisplayed = StockageDAL::findByVisible();
                     <div class="form-group">
                         <h4><label>Group</label></h4>
                         <select class="form-control" id="shareable-groups"></select>
+                    </div>
+                    <div>
+                        <h4><label>Commentary</label></h4>
+                        <textarea name="comment" class="form-control" rows="3" placeholder="You can enter a commentary here "></textarea>
                     </div>
                     <div>
                         <button type="submit" class="btn btn-default">Share</button>
