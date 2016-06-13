@@ -209,14 +209,14 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                     if ($ihm == 'yes') {
                         $newLog->setLevel("INFO");
                         $newLog->setLoginUtilisateur($loginUtilisateur);
-                        $newLog->setMsg("Connexion vnc pour le contener " . $validName . ".");
+                        $newLog->setMsg("Connexion vnc pour le container " . $validName . ".");
                         $newLog->setDateTime(date('Y/m/d G:i:s'));
                         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                         $connectionContainer->setProtocol('vnc');
                     } else if ($ihm == 'no') {
                         $newLog->setLevel("INFO");
                         $newLog->setLoginUtilisateur($loginUtilisateur);
-                        $newLog->setMsg("Connexion vnc pour le contener " . $validName . ".");
+                        $newLog->setMsg("Connexion ssh pour le container " . $validName . ".");
                         $newLog->setDateTime(date('Y/m/d G:i:s'));
                         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                         $connectionContainer->setProtocol('ssh');
@@ -250,7 +250,6 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Paramètre username = root de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
-                            $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                             //Renvoie à la page précédante
@@ -305,32 +304,30 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                         //set le paramètre port
                         $paramConnectContainer->setParameterName("port");
                         if ($ihm == 'yes') {
-                            $paramConnectContainer->setParameterValue(5900);
+                            $paramConnectContainer->setParameterValue("5900");
+                            $validInsertParamHostname = Guacamole_Connection_ParameterDAL::insertOnDuplicate($paramConnectContainer);
                             $newLog->setLevel("INFO");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Port de connection vnc 5900, pour la connection n°" . $idConnectContainer);
                             $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                           // echo "Port de connection 5900, pour la connection n°" . $idConnectContainer; //TODO log
                         } else if ($ihm == 'no') {
-                            $paramConnectContainer->setParameterValue(22);
+                            $paramConnectContainer->setParameterValue("22");
+                            $validInsertParamHostname = Guacamole_Connection_ParameterDAL::insertOnDuplicate($paramConnectContainer);
                             $newLog->setLevel("INFO");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
-                            $newLog->setMsg("Port de connection 22, pour la connection n°" . $idConnectContainer);
+                            $newLog->setMsg("Port de connection ssh 22, pour la connection n°" . $idConnectContainer);
                             $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            //echo "Port de connection 22, pour la connection n°" . $idConnectContainer; //TODO log
                         } else {
                             $newLog->setLevel("ERROR");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
                             $newLog->setMsg("Erreur, type d'ihm inconnu... Sérieux, comment ça a pu arriver ?!!");
                             $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                            //Renvoie à la page précédante
                                 echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
-                          //  echo "Erreur, type d'ihm inconnu... Sérieux, comment ça a pu arriver ?!!"; //TODO log
                         }
-                        $validInsertParamPort = Guacamole_Connection_ParameterDAL::insertOnDuplicate($paramConnectContainer);
+                       // $validInsertParamPort = Guacamole_Connection_ParameterDAL::insertOnDuplicate($paramConnectContainer);
                         if (!is_null(Guacamole_Connection_ParameterDAL::findByCP($paramConnectContainer->getConnection()->getConnectionId(),$paramConnectContainer->getParameterName()))) {
                             $newLog->setLevel("INFO");
                             $newLog->setLoginUtilisateur($loginUtilisateur);
