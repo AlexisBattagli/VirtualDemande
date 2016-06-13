@@ -72,7 +72,7 @@ if($validPage == "manage_containers.php")
                     echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
         }
 
-        $result=0;
+      //  $result=0;
         if ($result == "0")
         { 
             //Vérification s'il y a eu une insertion dans la base de données guacamole
