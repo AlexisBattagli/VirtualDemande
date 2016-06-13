@@ -1,3 +1,13 @@
+<?php
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/UtilisateurDAL.php');
+
+$accountNumber = UtilisateurDAL::GetNumberAvailableUsers();
+if($accountNumber == 0) {
+    header('Location: ?page=home');
+}
+
+?>
+
 <html>
     <body>
         <div>
