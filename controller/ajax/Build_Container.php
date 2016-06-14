@@ -18,7 +18,7 @@ $newLog = new Table_log();
     $newMachine = new Machine();
 
     //=====Vérification de ce qui est renvoyé par le formulaire
-    $validName = filter_input(INPUT_POST, 'nameContainer', FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"#^[a-zA-Z]"))); //sera utile pour insert et ws, nameContainer
+    $validName = filter_input(INPUT_POST, 'nameContainer', FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"[a-zA-Z]*"))); //sera utile pour insert et ws, nameContainer
     if (!is_null($validName)) {
         $newMachine->setNom($validName);
     }
