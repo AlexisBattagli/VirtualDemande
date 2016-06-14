@@ -58,7 +58,7 @@ if (!(isset($_SESSION['user_id']) && !empty($_SESSION['user_id']) && $_SESSION['
                                 <div class="panel panel-info autocollapse">
                                     <div class="panel-heading clickable">
                                         <h2 class="panel-title">
-                                            Containers list
+                                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Show Associated Containers List
                                         </h2>
                                     </div>
                                     <div class="panel-body">
@@ -235,7 +235,7 @@ if (!(isset($_SESSION['user_id']) && !empty($_SESSION['user_id']) && $_SESSION['
         <div class="panel panel-info autocollapse">
             <div class="panel-heading clickable">
                 <h2 class="panel-title">
-                    Create group
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Show Create Group Form
                 </h2>
             </div>
             <div class="panel-body">

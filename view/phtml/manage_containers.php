@@ -140,7 +140,7 @@ if (!(isset($_SESSION['user_id']) && !empty($_SESSION['user_id']) && $_SESSION['
         <div class="panel panel-info autocollapse">
             <div class="panel-heading <?php if ($canCreate == false) : ?> clickable<?php endif; ?>">
                 <h2 class="panel-title">
-                    Create container
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Show Create Container Form
                 </h2>
             </div>
             <div class="panel-body">
@@ -241,7 +241,7 @@ if (!(isset($_SESSION['user_id']) && !empty($_SESSION['user_id']) && $_SESSION['
         <div class="panel panel-info autocollapse">
             <div class="panel-heading clickable">
                 <h2 class="panel-title">
-                    Share container
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Show Share Container Form
                 </h2>
             </div>
             <div class="panel-body">
