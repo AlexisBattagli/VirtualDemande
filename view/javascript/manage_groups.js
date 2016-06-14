@@ -9,6 +9,7 @@ $(document).ready(function () {
             method: 'POST',
             url: "./controller/ajax/Clone_Container.php",
             dataType: 'json',
+            timeout: '5000',
             data: {
                 idMachine: idMachine,
                 nomMachineClone: cloneName       //rendre dynamique
