@@ -139,7 +139,7 @@ $accountNumber = UtilisateurDAL::GetNumberAvailableUsers();
                             <li id="what_is_it"><a href="?page=logs">Logs</a></li>
                             <?php endif; ?>
                             <li>
-                                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $_COOKIE["user_name"]; ?> <span class="caret"></span></a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION["name"]; ?> <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="?page=profile">Profile</a></li>
                                     <li role="separator" class="divider"></li>
