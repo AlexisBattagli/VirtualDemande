@@ -126,8 +126,8 @@ $accountNumber = UtilisateurDAL::GetNumberAvailableUsers();
                             </li>
                             <!--Items for the administrator-->
                             <?php if ($_SESSION["role_id"]== 3) : ?>
-                            <li id="what_is_it"><a href="?page=forms_administration">Forms Administration</a></li>
-                            <li id="what_is_it"><a href="?page=logs">Logs</a></li>
+                            <li id="forms_administration"><a href="?page=forms_administration">Forms Administration</a></li>
+                            <li id="logs"><a href="?page=logs">Logs</a></li>
                             <?php endif; ?>
                             <li>
                                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION["name"]; ?> <span class="caret"></span></a>
