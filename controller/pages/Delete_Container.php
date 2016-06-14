@@ -14,6 +14,11 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Guacamole_Co
 
 //Script pour supprimer le container voulu
 
+//Définition de l'url
+  $urlCourante=$_SERVER["HTTP_REFERER"];
+  $urlGet = explode("&",$urlCourante);
+  $url=$urlGet[0];
+
 //Définition d'un objet Table_log pour faire des insert de log
 $newLog = new Table_log();
 
@@ -68,7 +73,7 @@ if($validPage == "manage_containers.php")
             $newLog->setMsg("Erreur SOAP: ".$f);
             $newLog->setDateTime(date('Y/m/d G:i:s'));
             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                    echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
         }
 
         if ($result == '0')
@@ -106,7 +111,7 @@ if($validPage == "manage_containers.php")
                     $newLog->setDateTime(date('Y/m/d G:i:s'));
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);      
                     //Renvoie à la page précédante
-                        echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                        echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
                 }
 
                 //Supprimer les élements connection_permission
@@ -128,7 +133,7 @@ if($validPage == "manage_containers.php")
                     $newLog->setDateTime(date('Y/m/d G:i:s'));
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);       
                     //Renvoie à la page précédante
-                        echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                        echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
                 }
 
                 //Supprimer le container dans la base guacamole
@@ -149,7 +154,7 @@ if($validPage == "manage_containers.php")
                     $newLog->setDateTime(date('Y/m/d G:i:s'));
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);  
                     //Renvoie à la page précédante
-                        echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                        echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
                 }
             }
             else
@@ -182,7 +187,7 @@ if($validPage == "manage_containers.php")
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
                 //echo "La machine $nomMachine a bien été enlever des groupe dans le(s)quel(s) elle était partagée."; 
                 //Renvoie à la page précédante
-                    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                    echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
             }
             
             //Trouve l'user de la machine et décrémente de 1 son nombre de Container
@@ -213,7 +218,7 @@ if($validPage == "manage_containers.php")
                 $newLog->setDateTime(date('Y/m/d G:i:s'));
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
                 //Renvoie à la page précédante
-                    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                    echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
             }
         
             $message="ok";
@@ -232,10 +237,10 @@ if($validPage == "manage_containers.php")
             $newLog->setDateTime(date('Y/m/d G:i:s'));
             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);   
             //Renvoie à la page précédante
-                    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                    echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
         }
     }
 }
 
 //Renvoie à la page précédante
-    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+    echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";

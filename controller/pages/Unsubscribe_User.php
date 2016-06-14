@@ -6,6 +6,11 @@
  * (=> suppression de toute ces VM partagé dans ce groupe)
  */
 
+//Définition de l'url
+  $urlCourante=$_SERVER["HTTP_REFERER"];
+  $urlGet = explode("&",$urlCourante);
+  $url=$urlGet[0];
+
 //import
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Utilisateur_has_GroupeDAL.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Groupe_has_MachineDAL.php');
@@ -25,7 +30,7 @@ $validPage = filter_input(INPUT_POST, 'page', FILTER_SANITIZE_STRING);
 if($validPage == "manage_groups.php")
 {  
     //=====Vérification de ce qui est renvoyé par le formulaire
-    $validIdUser = $_COOKIE["user_id"]; 
+    $validIdUser = $_SESSION["user_id"]; 
     //echo "OK pour Id User : ".$validIdUser;
     $newLog->setLoginUtilisateur(UtilisateurDAL::findById($validIdUser)->getLogin());
 
@@ -94,4 +99,4 @@ if($validPage == "manage_groups.php")
 }
 
 //Renvoie à la page précédante
-    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+    echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";

@@ -4,6 +4,11 @@
  * Envoie l’id d’une VM e tl’id d’un groupe pour l’enlever du groupe 
  */
 
+//Définition de l'url
+  $urlCourante=$_SERVER["HTTP_REFERER"];
+  $urlGet = explode("&",$urlCourante);
+  $url=$urlGet[0];
+
 //import
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Groupe_has_MachineDAL.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Table_logDAL.php');
@@ -27,7 +32,7 @@ if($validPage == "manage_groups.php")
     $validIdGroupe = filter_input(INPUT_POST, 'idGroupe', FILTER_SANITIZE_STRING);
     //echo "OK pour Id Groupe : ".$validIdGroupe;
     
-    $validIdUser = $_COOKIE["user_id"];
+    $validIdUser = $_SESSION["user_id"];
     //echo "OK pour Id User : ".$validIdUser;
     $newLog->setLoginUtilisateur(UtilisateurDAL::findById($validIdUser)->getLogin());
     
@@ -63,11 +68,11 @@ if($validPage == "manage_groups.php")
         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
         //echo "Machine n'est pas dans le groupe";
         //Renvoie à la page précédante
-            echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+            echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
     }
 }
 
 //Renvoie à la page précédante
-    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+    echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
     
 

@@ -4,6 +4,11 @@
  * Envoie l’id d’une VM et l’id d’un groupe pour l’ajouter au groupe 
  */
 
+//Définition de l'url
+  $urlCourante=$_SERVER["HTTP_REFERER"];
+  $urlGet = explode("&",$urlCourante);
+  $url=$urlGet[0];
+
 //import
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Groupe_has_MachineDAL.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Table_logDAL.php');
@@ -35,7 +40,7 @@ if($validPage == "manage_containers.php")
     $newGroupeHasMachine->setCommentaire($validIdComment);
     //echo "OK pour Commentaire : ".$newGroupeHasMachine->getCommentaire;
 
-    $validIdUser = $_COOKIE["user_id"];
+    $validIdUser = $_SESSION["user_id"];
     //echo "OK pour Id User : ".$validIdUser;
     $newLog->setLoginUtilisateur(UtilisateurDAL::findById($validIdUser)->getLogin());
     
@@ -75,5 +80,5 @@ if($validPage == "manage_containers.php")
 }
 
 //Renvoie à la page précédante
-    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+    echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
 

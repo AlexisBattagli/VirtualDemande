@@ -11,6 +11,11 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Table_logDAL
 //Définition d'un objet Table_log pour faire des insert de log
 $newLog = new Table_log();
 
+//Définition de l'url
+  $urlCourante=$_SERVER["HTTP_REFERER"];
+  $urlGet = explode("&",$urlCourante);
+  $url=$urlGet[0];
+
 //Définition du message renvoyé
 $message="error";
 
@@ -45,7 +50,7 @@ if($validPage == "manage_groups.php")
     $newGroupe->setDateCreation($newDateCreation);
     //echo "OK pour DateCréation:".$newGroupe->getDateCreation();
     
-    $validIdUser = $_COOKIE["user_id"];
+    $validIdUser = $_SESSION["user_id"];
     //echo "OK pour Id User : ".$validIdUser;
     $newLog->setLoginUtilisateur(UtilisateurDAL::findById($validIdUser)->getLogin());
     
@@ -86,7 +91,7 @@ if($validPage == "manage_groups.php")
                 $newLog->setDateTime(date('Y/m/d G:i:s'));
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                 //Renvoie à la page précédante
-                    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                    echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
             }
         }
         else
@@ -97,7 +102,7 @@ if($validPage == "manage_groups.php")
             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
             //echo "insert echec...";
             //Renvoie à la page précédante
-                echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
         }
     }
     else
@@ -108,9 +113,9 @@ if($validPage == "manage_groups.php")
         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
         //echo "Erreur, le groupe que vous voulez ajouter existe...";
         //Renvoie à la page précédante
-            echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+            echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
     }
 }
 
 //Renvoie à la page précédante
-    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+    echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";

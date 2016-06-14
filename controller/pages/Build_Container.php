@@ -12,6 +12,11 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Guacamole_Co
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Guacamole_Connection_ParameterDAL.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Guacamole_Connection_PermissionDAL.php');
 
+//Définition de l'url
+  $urlCourante=$_SERVER["HTTP_REFERER"];
+  $urlGet = explode("&",$urlCourante);
+  $url=$urlGet[0];
+
 //Définition d'un objet Table_log pour faire des insert de log
 $newLog = new Table_log();
 
@@ -117,7 +122,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                     $newLog->setDateTime(date('Y/m/d G:i:s'));
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                     //Renvoie à la page précédante
-                        echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                        echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
                 }
 
                //=====Appel Web Service pour build le container sur le serveur de virt=====/
@@ -149,7 +154,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                     $newLog->setDateTime(date('Y/m/d G:i:s'));
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                     //Renvoie à la page précédante
-                        echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                        echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
                 }
 
                 //=====Analyse de ce qui est renvoyer par le ws (renvoyer par le SdA plus exactement)=====/
@@ -197,7 +202,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                         $newLog->setDateTime(date('Y/m/d G:i:s'));
                         $validTableLog = Table_logDAL::insertOnDuplicate($newLog); 
                         //Renvoie à la page précédante
-                            echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                            echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
                     }
                     
                     //====Création de la connection======//
@@ -226,7 +231,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                         $newLog->setMsg("Type d'IHM inconnu...");
                         $newLog->setDateTime(date('Y/m/d G:i:s'));
                         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                        echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                        echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
                     }
                     $idConnectContainer = Guacamole_ConnectionDAL::insertOnDuplicate($connectionContainer);
                     if (!is_null($idConnectContainer)) {//Si création de connection guaca ok
@@ -253,7 +258,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                                 $newLog->setMsg("Paramètre 'color-scheme' = 'green-black' de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
                                 $newLog->setDateTime(date('Y/m/d G:i:s'));
                                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                                echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                                echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
                             }
 
                             //set le paramètre font-size
@@ -272,7 +277,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                                 $newLog->setMsg("Paramètre 'font-size' = 11 de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
                                 $newLog->setDateTime(date('Y/m/d G:i:s'));
                                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                                echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                                echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
                             }
                         }
                         
@@ -292,7 +297,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                             $newLog->setMsg("Paramètre 'username' = 'root' de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
                             $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                                echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                                echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
                         }
 
                         //set le paramètre password
@@ -311,7 +316,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                             $newLog->setMsg("Paramètre 'password' de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
                             $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                                echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                                echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
                         }
                         
                         //set le paramètre hostname
@@ -330,7 +335,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                             $newLog->setMsg("Paramètre hostname = " . $addrIpContainer . " de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur...");
                             $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                                echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                                echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
                         }
 
                         //set le paramètre port
@@ -357,7 +362,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                             $newLog->setMsg("Erreur, type d'ihm inconnu... Sérieux, comment ça a pu arriver ?!!");
                             $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                                echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                                echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
                         }
                        // $validInsertParamPort = Guacamole_Connection_ParameterDAL::insertOnDuplicate($paramConnectContainer);
                         if (!is_null(Guacamole_Connection_ParameterDAL::findByCP($paramConnectContainer->getConnection()->getConnectionId(),$paramConnectContainer->getParameterName()))) {
@@ -374,7 +379,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                             $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                             //Renvoie à la page précédante
-                                echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                                echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
                            // echo "Paramètre port de la connection (connection n°" . $idConnectContainer . ") non ajoutée, erreur..."; //TODO log
                         }
 
@@ -401,7 +406,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                             $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                             //Renvoie à la page précédante
-                                echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                                echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
                             //echo "La permission READ pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
                         }
 
@@ -422,7 +427,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                             $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                             //Renvoie à la page précédante
-                                echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                                echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
                             //echo "La permission UPDATE pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
                         }
 
@@ -443,7 +448,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                             $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                             //Renvoie à la page précédante
-                                echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                                echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
                             //echo "La permission DELETE pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
                         }
 
@@ -464,7 +469,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                             $newLog->setDateTime(date('Y/m/d G:i:s'));
                             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                             //Renvoie à la page précédante
-                                echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                                echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
                             //echo " FINAL : La permission ADMINISTER pour la conneciton n°" . $idConnectContainer . " n'a pas bien été ajoutée !"; //TODO log
                         }
 
@@ -476,7 +481,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                         $newLog->setDateTime(date('Y/m/d G:i:s'));
                         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                         //Renvoie à la page précédante
-                            echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                            echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
                         //echo "Erreur, la connection n'a pas bien était ajouter dans la DB de guaca..."; //TODO log
                     }
                 } else if ($code == "1") { //If failure pending create of contener
@@ -505,7 +510,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
                 $newLog->setDateTime(date('Y/m/d G:i:s'));
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                 //Renvoie à la page précédante
-                    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                    echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
                // echo "Echec de l'insertion en base de la Machine"; // TODO log
             }
         } else {
@@ -515,7 +520,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
             $newLog->setDateTime(date('Y/m/d G:i:s'));
             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
             //Renvoie à la page précédante
-                    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                    echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
             //echo "Un container existe déjà avec ce nom..."; // TODO log
         }
     } else {
@@ -529,4 +534,4 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
 }
 
 //Renvoie à la page précédante
-    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+    echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";

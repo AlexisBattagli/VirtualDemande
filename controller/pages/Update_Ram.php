@@ -3,6 +3,11 @@
 //import
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/RamDAL.php');
 
+//Définition de l'url
+  $urlCourante=$_SERVER["HTTP_REFERER"];
+  $urlGet = explode("&",$urlCourante);
+  $url=$urlGet[0];
+
 //Définition du message renvoyé
 $message="error";
 
@@ -41,4 +46,4 @@ if($validPage == "forms_administration.php")
 }
 
 //Renvoie à la page précédante
-   echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+   echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
