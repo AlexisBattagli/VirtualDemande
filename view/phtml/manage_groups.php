@@ -6,6 +6,10 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/UtilisateurD
 $groupUser = GroupeDAL::findByUser($_SESSION['user_id']);
 $sharedContainers = UtilisateurDAL::findShareContener($_SESSION['user_id']);
 $unsubscribedGroupList = GroupeDAL::findLessUser($_SESSION['user_id']);
+
+if (!(isset($_SESSION['user_id']) && !empty($_SESSION['user_id']) && $_SESSION['user_id'] !== false)){
+    header('Location: ?page=home');
+}
 ?>
 
 <html>

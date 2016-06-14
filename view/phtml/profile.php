@@ -3,9 +3,9 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/UtilisateurD
 
 $userInformations = UtilisateurDAL::findById($_SESSION["user_id"]);
 
-//echo "<pre>";
-//var_dump($userInformations);
-//echo "</pre>";
+if (!(isset($_SESSION['user_id']) && !empty($_SESSION['user_id']) && $_SESSION['user_id'] !== false)){
+    header('Location: ?page=home');
+}
 ?>
 
 <html>

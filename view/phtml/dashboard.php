@@ -3,6 +3,10 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/MachineDAL.p
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/GroupeDAL.php');
 $rows = MachineDAL::findByUser($_SESSION["user_id"]);
 $groups = GroupeDAL::findByUser($_SESSION["user_id"]);
+
+if (!(isset($_SESSION['user_id']) && !empty($_SESSION['user_id']) && $_SESSION['user_id'] !== false)){
+    header('Location: ?page=home');
+}
 ?>
 <html>
     <body>

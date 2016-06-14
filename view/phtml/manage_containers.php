@@ -14,7 +14,11 @@ $OSDisplayed = Distrib_AliasDAL::findByVisible();
 $CPUDisplayed = CpuDAL::findByVisible();
 $RAMDisplayed = RamDAL::findByVisible();
 $HDDisplayed = StockageDAL::findByVisible();
-$canCreate = UtilisateurDAL::isFull($_SESSION["user_id"])
+$canCreate = UtilisateurDAL::isFull($_SESSION["user_id"]);
+        
+if (!(isset($_SESSION['user_id']) && !empty($_SESSION['user_id']) && $_SESSION['user_id'] !== false)){
+    header('Location: ?page=home');
+}        
 ?>
 <html>
     <!--Javascript file for dynamic select-->
