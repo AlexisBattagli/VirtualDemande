@@ -68,7 +68,7 @@ $message = filter_input(INPUT_GET, 'message', FILTER_SANITIZE_STRING);
                 <div class="form-group">
                     <label for="birthDateRegister">Birth date</label>
                     <div class="input-group">
-                      <input class="form-control date" name="date" id="date" type="date" value="" readonly>
+                      <input class="form-control date" name="date" id="date" type="date" value="">
                       <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                     </div>
                   </div>
