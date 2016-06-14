@@ -3,13 +3,9 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/GroupeDAL.ph
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Groupe_has_MachineDAL.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/UtilisateurDAL.php');
 
-$groupUser = GroupeDAL::findByUser($_COOKIE["user_id"]);
-$sharedContainers = UtilisateurDAL::findShareContener($_COOKIE["user_id"]);
-$unsubscribedGroupList = GroupeDAL::findLessUser($_COOKIE["user_id"]);
-
-//echo "<pre>";
-//var_dump($unsubscribedGroupList);
-//echo "</pre>";
+$groupUser = GroupeDAL::findByUser($_SESSION['user_id']);
+$sharedContainers = UtilisateurDAL::findShareContener($_SESSION['user_id']);
+$unsubscribedGroupList = GroupeDAL::findLessUser($_SESSION['user_id']);
 ?>
 
 <html>
@@ -139,7 +135,7 @@ $unsubscribedGroupList = GroupeDAL::findLessUser($_COOKIE["user_id"]);
                     </div>
                 </div>
             </div>
-        </div>l
+        </div>
 
 
         <!--Shared containers list-->
@@ -218,7 +214,7 @@ $unsubscribedGroupList = GroupeDAL::findLessUser($_COOKIE["user_id"]);
                                         <input name = "page" type = "hidden" class = "form-control" value = "manage_groups.php">
                                     </div>
                                     <div class = "form-group">
-                                        <input name = "idUser" type = "hidden" class = "form-control" value="<?php echo $_COOKIE["user_id"]; ?>">
+                                        <input name = "idUser" type = "hidden" class = "form-control" value="<?php echo $_SESSION["user_id"]; ?>">
                                     </div>
                                     <div class = "form-group">
                                         <input name = "idGroupe" type = "hidden" class = "form-control" value="<?= $unsubscribedGroup->getId() ?>">
@@ -259,7 +255,7 @@ $unsubscribedGroupList = GroupeDAL::findLessUser($_COOKIE["user_id"]);
                         <textarea name="description" class="form-control" rows="3" placeholder="Enter a personnal description for your group."></textarea>
                     </div>
                     <div>
-                        <button type="submit" class="btn btn-default">Create container</button>
+                        <button type="submit" class="btn btn-default">Create group</button>
                     </div>
                 </form>
             </div>

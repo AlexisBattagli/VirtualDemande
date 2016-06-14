@@ -1,8 +1,8 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/MachineDAL.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/GroupeDAL.php');
-$rows = MachineDAL::findByUser($_COOKIE["user_id"]);
-$groups = GroupeDAL::findByUser($_COOKIE["user_id"]);
+$rows = MachineDAL::findByUser($_SESSION["user_id"]);
+$groups = GroupeDAL::findByUser($_SESSION["user_id"]);
 ?>
 <html>
     <body>

@@ -1,7 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/UtilisateurDAL.php');
 
-$userInformations = UtilisateurDAL::findById($_COOKIE["user_id"]);
+$userInformations = UtilisateurDAL::findById($_SESSION["user_id"]);
 
 //echo "<pre>";
 //var_dump($userInformations);

@@ -13,21 +13,12 @@ if ($pseudo !== null && $password !== null) {
         $_SESSION['user_id'] = $user->getId();
         $_SESSION['role_id'] = $user->getRole()->getId();
         $_SESSION['name'] = $user->getNom();
-
-        setcookie("user_id", $_SESSION['user_id']);
-        setcookie("user_role", $_SESSION['role_id']);
-        setcookie("user_name", $_SESSION['name']);
     } else {
         $_SESSION['user'] = false;
     }
 }
 
 $accountNumber = UtilisateurDAL::GetNumberAvailableUsers();
-
-//echo "<pre>";
-//var_dump($_COOKIE);
-//echo "</pre>";
-
 ?>
 
 <html>
@@ -134,12 +125,12 @@ $accountNumber = UtilisateurDAL::GetNumberAvailableUsers();
                                 </ul>
                             </li>
                             <!--Items for the administrator-->
-                            <?php if ($_COOKIE["user_role"]== 3) : ?>
+                            <?php if ($_SESSION["role_id"]== 3) : ?>
                             <li id="what_is_it"><a href="?page=forms_administration">Forms Administration</a></li>
                             <li id="what_is_it"><a href="?page=logs">Logs</a></li>
                             <?php endif; ?>
                             <li>
-                                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $_COOKIE["user_name"]; ?> <span class="caret"></span></a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION["name"]; ?> <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="?page=profile">Profile</a></li>
                                     <li role="separator" class="divider"></li>

@@ -7,22 +7,14 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/RamDAL.php')
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/StockageDAL.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/UtilisateurDAL.php');
 
-$userId = $_COOKIE["user_id"];
-$rowsFonctionnal = MachineDAL::findSuccessByUser($_COOKIE["user_id"]);
-$rowsCreated = MachineDAL::findNotCreatByUser($_COOKIE["user_id"]);
+$userId = $_SESSION["user_id"];
+$rowsFonctionnal = MachineDAL::findSuccessByUser($_SESSION["user_id"]);
+$rowsCreated = MachineDAL::findNotCreatByUser($_SESSION["user_id"]);
 $OSDisplayed = Distrib_AliasDAL::findByVisible();
 $CPUDisplayed = CpuDAL::findByVisible();
 $RAMDisplayed = RamDAL::findByVisible();
 $HDDisplayed = StockageDAL::findByVisible();
-$canCreate = UtilisateurDAL::isFull($_COOKIE["user_id"])
-
-
-//$groups = GroupeDAL::findByUser($_COOKIE["user_id"]);
-
-//echo "<pre>";
-//var_dump($rowsCreated);
-//echo "</pre>";
-
+$canCreate = UtilisateurDAL::isFull($_SESSION["user_id"])
 ?>
 <html>
     <!--Javascript file for dynamic select-->
