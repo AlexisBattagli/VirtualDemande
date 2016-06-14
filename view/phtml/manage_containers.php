@@ -69,7 +69,7 @@ if (!(isset($_SESSION['user_id']) && !empty($_SESSION['user_id']) && $_SESSION['
                                 <input name = \"idMachine\" type = \"hidden\" class = \"form-control\" value = \"" . $containers["id"] . "\">
                             </div>
                             <div>
-                                <button type=\"submit\" class=\"btn btn-default\"><span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span></button>
+                                <a href= \"?page=manage_containers\" title= \"Delete this container\"><button type=\"submit\" class=\"btn btn-default\"><span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span></button></a>
                             </div>
                         </form>";
 
@@ -126,7 +126,7 @@ if (!(isset($_SESSION['user_id']) && !empty($_SESSION['user_id']) && $_SESSION['
                                 <input name = \"idMachine\" type = \"hidden\" class = \"form-control\" value = \"" . $containers["id"] . "\">
                             </div>
                             <div>
-                                <button type=\"submit\" class=\"btn btn-default\"><span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span></button>
+                                <a href= \"?page=manage_containers\" title= \"Delete this container\"><button type=\"submit\" class=\"btn btn-default\"><span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span></button></a>
                             </div>
                         </form>";
 
@@ -214,7 +214,7 @@ if (!(isset($_SESSION['user_id']) && !empty($_SESSION['user_id']) && $_SESSION['
                     </div>
                 </form>
                 <div>
-                    <button id="submit-build-container" class="btn btn-default" data-toggle="modal" data-target="#buildContainer">Create container</button>
+                    <a href="?page=manage_containers" title="Send the form to create the container"><button id="submit-build-container" class="btn btn-default" data-toggle="modal" data-target="#buildContainer">Create container</button></a>
                 </div>
             </div>
         </div>
@@ -269,7 +269,7 @@ if (!(isset($_SESSION['user_id']) && !empty($_SESSION['user_id']) && $_SESSION['
                         <textarea name="comment" class="form-control" rows="3" placeholder="You can enter a commentary here "></textarea>
                     </div>
                     <div>
-                        <button type="submit" class="btn btn-default">Share</button>
+                        <a href="?page=manage_containers" title="Share this container at this group"><button type="submit" class="btn btn-default">Share</button></a>
                     </div>
                 </form>
             </div>
