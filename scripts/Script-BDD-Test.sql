@@ -224,53 +224,53 @@ VALUE (9, 'Debian Jessie Console 32bits', 'Debian', 'Distrib Debian with release
 -- INSERT INTO distrib_alias (distrib_id,nom_complet,pseudo,commentaire,visible)
 -- VALUE (17, 'CentOS 7 Console 32bits', 'CentOS', 'Distrib CentOS with release 7 in 32 bits and console version.', true);
 
--- Ubuntu_wily_amd64
+-- Ubuntu_trusty_amd64
 INSERT INTO distrib (id,nom,archi,version, ihm, visible)
-VALUE (18, 'ubuntu', 'amd64', 'wily', 'yes', true);
+VALUE (18, 'ubuntu', 'amd64', 'trusty', 'yes', true);
 INSERT INTO distrib_alias (distrib_id,nom_complet,pseudo,commentaire,visible)
-VALUE (18, 'Ubuntu Wily (15.10) Graphical 64bits', 'Ubuntu', 'Distrib Ubuntu with release Wily (version 15.10) in 64 bits and graphical version.', true);
+VALUE (18, 'Ubuntu Trusty (14.04.4 LTS) Graphical 64bits', 'Ubuntu', 'Distrib Ubuntu with release Trusty (version 14.04.4 LTS) in 64 bits and graphical version.', true);
 
--- Ubuntu_wily_i386
+-- Ubuntu_trusty_i386
 INSERT INTO distrib (id,nom,archi,version, ihm, visible)
-VALUE (19, 'ubuntu', 'i386', 'wily', 'yes', true);
+VALUE (19, 'ubuntu', 'i386', 'trusty', 'yes', true);
 INSERT INTO distrib_alias (distrib_id,nom_complet,pseudo,commentaire,visible)
-VALUE (19, 'Ubuntu Wily (15.10) Graphical 32bits', 'Ubuntu', 'Distrib Ubuntu with release Wily (version 15.10) in 32 bits and graphical version.', true);
+VALUE (19, 'Ubuntu Trusty (14.04.4 LTS) Graphical 32bits', 'Ubuntu', 'Distrib Ubuntu with release Trusty (version 14.04.4 LTS) in 32 bits and graphical version.', true);
 
 -- Ubuntu_xenial_amd64
 INSERT INTO distrib (id,nom,archi,version, ihm, visible)
 VALUE (20, 'ubuntu', 'amd64', 'xenial', 'yes', true);
 INSERT INTO distrib_alias (distrib_id,nom_complet,pseudo,commentaire,visible)
-VALUE (20, 'Ubuntu Xenial (16.04 LTS) Graphical 64bits', 'Ubuntu', 'Distrib Ubuntu with release Wily (version 16.04 LTS) in 64 bits and graphical version.', true);
+VALUE (20, 'Ubuntu Xenial (16.04 LTS) Graphical 64bits', 'Ubuntu', 'Distrib Ubuntu with release Trusty (version 16.04 LTS) in 64 bits and graphical version.', true);
 
 -- Ubuntu_xenial_i386
 INSERT INTO distrib (id,nom,archi,version, ihm, visible)
 VALUE (21, 'ubuntu', 'i386', 'xenial', 'yes', true);
 INSERT INTO distrib_alias (distrib_id,nom_complet,pseudo,commentaire,visible)
-VALUE (21, 'Ubuntu Xenial (16.04 LTS) Graphical 32bits', 'Ubuntu', 'Distrib Ubuntu with release Wily (version 16.04 LTS) in 32 bits and graphical version.', true);
+VALUE (21, 'Ubuntu Xenial (16.04 LTS) Graphical 32bits', 'Ubuntu', 'Distrib Ubuntu with release Trusty (version 16.04 LTS) in 32 bits and graphical version.', true);
 
--- Ubuntu_wily_amd64
+-- Ubuntu_trusty_amd64
 INSERT INTO distrib (id,nom,archi,version, ihm, visible)
-VALUE (22, 'ubuntu', 'amd64', 'wily', 'no', true);
+VALUE (22, 'ubuntu', 'amd64', 'trusty', 'no', true);
 INSERT INTO distrib_alias (distrib_id,nom_complet,pseudo,commentaire,visible)
-VALUE (22, 'Ubuntu Wily (15.10) Console 64bits', 'Ubuntu', 'Distrib Ubuntu with release Wily (version 15.10) in 64 bits and console version.', true);
+VALUE (22, 'Ubuntu Trusty (14.04.4 LTS) Console 64bits', 'Ubuntu', 'Distrib Ubuntu with release Trusty (version 14.04.4 LTS) in 64 bits and console version.', true);
 
--- Ubuntu_wily_i386
+-- Ubuntu_trusty_i386
 INSERT INTO distrib (id,nom,archi,version, ihm, visible)
-VALUE (23, 'ubuntu', 'i386', 'wily', 'no', true);
+VALUE (23, 'ubuntu', 'i386', 'trusty', 'no', true);
 INSERT INTO distrib_alias (distrib_id,nom_complet,pseudo,commentaire,visible)
-VALUE (23, 'Ubuntu Wily (15.10) Console 32bits', 'Ubuntu', 'Distrib Ubuntu with release Wily (version 15.10) in 32 bits and console version.', true);
+VALUE (23, 'Ubuntu Trusty (14.04.4 LTS) Console 32bits', 'Ubuntu', 'Distrib Ubuntu with release Trusty (version 14.04.4 LTS) in 32 bits and console version.', true);
 
 -- Ubuntu_xenial_amd64
 INSERT INTO distrib (id,nom,archi,version, ihm, visible)
 VALUE (24, 'ubuntu', 'amd64', 'xenial', 'no', true);
 INSERT INTO distrib_alias (distrib_id,nom_complet,pseudo,commentaire,visible)
-VALUE (24, 'Ubuntu Xenial (16.04 LTS) Console 64bits', 'Ubuntu', 'Distrib Ubuntu with release Wily (version 16.04 LTS) in 64 bits and console version.', true);
+VALUE (24, 'Ubuntu Xenial (16.04 LTS) Console 64bits', 'Ubuntu', 'Distrib Ubuntu with release Trusty (version 16.04 LTS) in 64 bits and console version.', true);
 
 -- Ubuntu_xenial_i386
 INSERT INTO distrib (id,nom,archi,version, ihm, visible)
 VALUE (25, 'ubuntu', 'i386', 'xenial', 'no', true);
 INSERT INTO distrib_alias (distrib_id,nom_complet,pseudo,commentaire,visible)
-VALUE (25, 'Ubuntu Xenial (16.04 LTS) Console 32bits', 'Ubuntu', 'Distrib Ubuntu with release Wily (version 16.04 LTS) in 32 bits and console version.', true);
+VALUE (25, 'Ubuntu Xenial (16.04 LTS) Console 32bits', 'Ubuntu', 'Distrib Ubuntu with release Trusty (version 16.04 LTS) in 32 bits and console version.', true);
 
 -- Remplissage de la table RAM
 INSERT INTO ram (valeur,visible)
@@ -338,15 +338,19 @@ VALUE ('root', 'Root account of EVOLVE Web site.');
 
 -- Remplissage de la table Utilisateur
 INSERT INTO `DBVirtDemande`.`utilisateur` (`role_id` ,`nom` ,`prenom` ,`login` ,`passwd` ,`mail` ,`date_creation` ,`date_naissance` ,`nb_vm`)
-VALUES ('2', 'Bourouiba', 'Amine', 'bourouibaa', 'amine', 'Amine.Bourouiba@mines-ales.og', '2016-06-13', '1989-10-09', '0');
+VALUES ('2', 'Bourouiba', 'Amine', 'bourouibaa', 'amine', 'Amine.Bourouiba@mines-ales.og', '2016-06-13', '1989-12-17', '0');
 INSERT INTO `DBVirtDemande`.`utilisateur` (`role_id` ,`nom` ,`prenom` ,`login` ,`passwd` ,`mail` ,`date_creation` ,`date_naissance` ,`nb_vm`)
 VALUES ('3', 'Aurelie', 'GUY', 'aurelie34', 'P@ss', 'aurelie.guy@mines-ales.Fr', '2016-06-11', '1994-04-25', '1');
 INSERT INTO `DBVirtDemande`.`utilisateur` (`role_id` ,`nom` ,`prenom` ,`login` ,`passwd` ,`mail` ,`date_creation` ,`date_naissance` ,`nb_vm`)
-VALUES ('2', 'Battagli', 'Alexis', 'battaglia', 'alexis', 'alexis.battagli@mines-ales.Fr', '2016-06-12', '1994-03-08', '0');
+VALUES ('2', 'Battagli', 'Alexis', 'ksys', 'alexis', 'alexis.battagli@mines-ales.fr', '2016-06-12', '1994-03-08', '0');
 INSERT INTO `DBVirtDemande`.`utilisateur` (`role_id` ,`nom` ,`prenom` ,`login` ,`passwd` ,`mail` ,`date_creation` ,`date_naissance` ,`nb_vm`)
-VALUES ('2', 'Valette', 'Tommy', 'valettet', 'tommy', 'Tommy.Valette@mines-ales.og', '2016-06-13', '1994-10-09', '0');
+VALUES ('2', 'Valette', 'Tommy', 'valettet', 'tommy', 'Tommy.Valette@mines-ales.og', '2016-06-13', '1994-08-09', '0');
 INSERT INTO `DBVirtDemande`.`utilisateur` (`role_id` ,`nom` ,`prenom` ,`login` ,`passwd` ,`mail` ,`date_creation` ,`date_naissance` ,`nb_vm`)
 VALUES ('3', 'Martinez', 'Vincent', 'vincent', 'vincent', 'v.m@live.fr', '2015-02-13', '1990-10-09', '0');
+INSERT INTO `DBVirtDemande`.`utilisateur` (`role_id` ,`nom` ,`prenom` ,`login` ,`passwd` ,`mail` ,`date_creation` ,`date_naissance` ,`nb_vm`)
+VALUES ('3', 'admin', 'evolve', 'evolveadmin', 'evolveadmin', 'admin.evolve@evolve', '2016-06-08', '2015-09-16', '0');
+
+
 
 -- Remplissage de la table Groupe
 INSERT INTO `DBVirtDemande`.`groupe` (`nom` ,`date_creation` ,`description`)
@@ -355,6 +359,9 @@ INSERT INTO `DBVirtDemande`.`groupe` (`nom` ,`date_creation` ,`description`)
 VALUES ('GroupeA+', '2016-06-10', 'Concerne le groupe A+');
 INSERT INTO `DBVirtDemande`.`groupe` (`nom` ,`date_creation` ,`description`)
 VALUES ('Infres7', '2016-09-08', 'Description : Groupe');
+INSERT INTO `DBVirtDemande`.`groupe` (`nom` ,`date_creation` ,`description`)
+VALUES ('ema', '2016-06-12', 'Groupe des containers de lecole des mines ales');
+
 
 -- Remplissage de la table Machine
 INSERT INTO `DBVirtDemande`.`machine` (`distrib_alias_id` ,`utilisateur_id` ,`cpu_id` ,`ram_id` ,`stockage_id` ,`nom` ,`description` ,`date_creation` ,`date_expiration` ,`etat`)
