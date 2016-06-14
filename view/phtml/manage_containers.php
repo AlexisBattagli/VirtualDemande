@@ -18,7 +18,7 @@ $canCreate = UtilisateurDAL::isFull($_SESSION["user_id"])
 ?>
 <html>
     <!--Javascript file for dynamic select-->
-        <script src="./view/javascript/manage_containers.js"></script>
+    <script src="./view/javascript/manage_containers.js"></script>
     <body>
         <!--List of the containers that are fonctionnals-->
         <div>
@@ -62,13 +62,13 @@ $canCreate = UtilisateurDAL::isFull($_SESSION["user_id"])
                                 <input name = \"page\" type = \"hidden\" class = \"form-control\" value = \"manage_containers.php\">
                             </div>
                             <div class = \"form-group\">
-                                <input name = \"idMachine\" type = \"hidden\" class = \"form-control\" value = \"" . $containers["id"] ."\">
+                                <input name = \"idMachine\" type = \"hidden\" class = \"form-control\" value = \"" . $containers["id"] . "\">
                             </div>
                             <div>
                                 <button type=\"submit\" class=\"btn btn-default\"><span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span></button>
                             </div>
                         </form>";
-                        
+
                         echo "</td></tr>";
                     }
                     ?>
@@ -119,13 +119,13 @@ $canCreate = UtilisateurDAL::isFull($_SESSION["user_id"])
                                 <input name = \"page\" type = \"hidden\" class = \"form-control\" value = \"manage_containers.php\">
                             </div>
                             <div class = \"form-group\">
-                                <input name = \"idMachine\" type = \"hidden\" class = \"form-control\" value = \"" . $containers["id"] ."\">
+                                <input name = \"idMachine\" type = \"hidden\" class = \"form-control\" value = \"" . $containers["id"] . "\">
                             </div>
                             <div>
                                 <button type=\"submit\" class=\"btn btn-default\"><span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span></button>
                             </div>
                         </form>";
-                        
+
                         echo "</td></tr>";
                     }
                     ?>
@@ -134,7 +134,7 @@ $canCreate = UtilisateurDAL::isFull($_SESSION["user_id"])
         </div>
         <!--Container creation panel-->
         <div class="panel panel-info autocollapse">
-            <div class="panel-heading <?php if ($canCreate == false) :?> clickable<?php endif; ?>">
+            <div class="panel-heading <?php if ($canCreate == false) : ?> clickable<?php endif; ?>">
                 <h2 class="panel-title">
                     Create container
                 </h2>
@@ -143,9 +143,9 @@ $canCreate = UtilisateurDAL::isFull($_SESSION["user_id"])
                 <!--Container creation form-->
                 <form action="./controller/pages/Build_Container.php" method="post" >
                     <!--Hidden input for return on page-->
-                    <div class="form-group">
+<!--                    <div class="form-group">
                         <input name="page" type="hidden" class="form-control" value ="manage_containers.php">
-                    </div>
+                    </div>-->
                     <!--Name input-->
                     <div class="form-group">
                         <h4><label for="nameContainer">Name</label></h4>
@@ -154,7 +154,7 @@ $canCreate = UtilisateurDAL::isFull($_SESSION["user_id"])
                     <!--OS selector-->
                     <div class="form-group">
                         <h4><label>OS</label></h4>
-                        <select name="dist" class="form-control">
+                        <select name="dist" id="dist" class="form-control">
                             <?php
                             foreach ($OSDisplayed as $OS) {
                                 echo "<option value=" . $OS->getId() . ">";
@@ -167,7 +167,7 @@ $canCreate = UtilisateurDAL::isFull($_SESSION["user_id"])
                     <!--CPU selector-->
                     <div class="form-group">
                         <h4><label>Number of processors</label></h4>
-                        <select name="cpu" class="form-control">
+                        <select name="cpu" id="cpu" class="form-control">
                             <?php
                             foreach ($CPUDisplayed as $CPU) {
                                 echo "<option value=" . $CPU->getId() . ">";
@@ -180,7 +180,7 @@ $canCreate = UtilisateurDAL::isFull($_SESSION["user_id"])
                     <!--RAM selector-->
                     <div class="form-group">
                         <h4><label>RAM quantity</label></h4>
-                        <select name="ram" class="form-control">
+                        <select name="ram" id="ram" class="form-control">
                             <?php
                             foreach ($RAMDisplayed as $RAM) {
                                 echo "<option value=" . $RAM->getId() . ">";
@@ -193,7 +193,7 @@ $canCreate = UtilisateurDAL::isFull($_SESSION["user_id"])
                     <!--Hard drive space selector-->
                     <div class="form-group">
                         <h4><label>Hard drive space</label></h4>
-                        <select name="stock" class="form-control">
+                        <select name="stock" id="stock" class="form-control">
                             <?php
                             foreach ($HDDisplayed as $HDD) {
                                 echo "<option value=" . $HDD->getId() . ">";
@@ -206,14 +206,33 @@ $canCreate = UtilisateurDAL::isFull($_SESSION["user_id"])
                     <!--Personnal description input-->
                     <div>
                         <h4><label>Personnal description</label></h4>
-                        <textarea name="descriptionContainer" class="form-control" rows="3" placeholder="Enter a personnal description for your container."></textarea>
-                    </div>
-                    <div>
-                        <button type="submit" class="btn btn-default">Create container</button>
+                        <textarea name="descriptionContainer" id="descriptionContainer" class="form-control" rows="3" placeholder="Enter a personnal description for your container."></textarea>
                     </div>
                 </form>
+                <div>
+                    <button id="submit-build-container" class="btn btn-default" data-toggle="modal" data-target="#buildContainer">Create container</button>
+                </div>
             </div>
         </div>
+
+        <!--Create container pop up-->
+        <div class="modal fade" id="buildContainer" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Request sent</b> list</h4>
+                    </div>
+                    <div class="modal-body">
+                        <span>Your container is in the creation process. You can see it's status in your <b>Containers beeing created</b> list</span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!--Container sharing panel-->
         <div class="panel panel-info autocollapse">
             <div class="panel-heading clickable">
@@ -231,8 +250,8 @@ $canCreate = UtilisateurDAL::isFull($_SESSION["user_id"])
                         <h4><label>Container to share</label></h4>
                         <select name="idMachine" class="form-control" id="container-to-share">
                             <option selected="selected" disabled> --Select a container to share-- </option>  <!-- rajouter disabled -->
-                            <?php foreach($rowsFonctionnal as $containerList) : ?>
-                            <option value="<?= $containerList["id"]?>"> <?= $containerList["nom"]?> </option>
+                            <?php foreach ($rowsFonctionnal as $containerList) : ?>
+                                <option value="<?= $containerList["id"] ?>"> <?= $containerList["nom"] ?> </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
