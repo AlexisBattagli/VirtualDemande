@@ -5,6 +5,11 @@
  * Script (controller) pour ajouter l’utilisateur d’un groupe
  */
 
+//Définition de l'url
+  $urlCourante=$_SERVER["HTTP_REFERER"];
+  $urlGet = explode("&",$urlCourante);
+  $url=$urlGet[0];
+
 //import
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Utilisateur_has_GroupeDAL.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Table_logDAL.php');
@@ -68,4 +73,4 @@ if($validPage == "manage_groups.php")
 }
 
 //Renvoie à la page précédante
-    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+    echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";

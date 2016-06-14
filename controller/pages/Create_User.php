@@ -13,6 +13,11 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Utilisateur_
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/LimitantDAL.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Table_logDAL.php');
 
+//Définition de l'url
+  $urlCourante=$_SERVER["HTTP_REFERER"];
+  $urlGet = explode("&",$urlCourante);
+  $url=$urlGet[0];
+
 //Définition d'un objet Table_log pour faire des insert de log
 $newLog = new Table_log();
 $newLog->setLoginUtilisateur("anonyme");
@@ -192,7 +197,7 @@ if($validPage == "register.php")
                         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                         //echo "insert echec...";
                         //Renvoie à la page précédante
-                            echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                            echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
                     }
                 }
                 else
@@ -203,7 +208,7 @@ if($validPage == "register.php")
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                     //echo "Erreur, l'utilisateur que vous voulez ajouter existe déjà...";
                     //Renvoie à la page précédante
-                        echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                        echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
                 }    
             }
             else
@@ -214,7 +219,7 @@ if($validPage == "register.php")
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
                 //echo "insert echec...";
                 //Renvoie à la page précédante
-                    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                    echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
             }
         }
         else
@@ -225,7 +230,7 @@ if($validPage == "register.php")
             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
             //echo "Erreur, l'utilisateur que vous voulez ajouter existe...";
             //Renvoie à la page précédante
-                echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+                echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
         }
     }
     else
@@ -235,9 +240,9 @@ if($validPage == "register.php")
         $newLog->setDateTime(date('Y/m/d G:i:s'));
         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
         //Renvoie à la page précédante
-            echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+            echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
     }
 }
 
 //Renvoie à la page précédante
-    echo "<meta http-equiv='refresh' content='1; url=".$_SERVER["HTTP_REFERER"].'&message='.$message. "' />";
+    echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
