@@ -72,7 +72,7 @@ $accountNumber = UtilisateurDAL::GetNumberAvailableUsers();
                         </ul>
 
                         <!--A implémenter correctement-->
-                        <p class="navbar-text">Il reste <?php echo $accountNumber; ?> comptes disponibles</p>    
+                        <p class="navbar-text">There are <?php echo $accountNumber; ?> available accounts</p>    
 
                         <ul class="nav navbar-nav navbar-right">
                             <li>
