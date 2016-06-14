@@ -44,3 +44,7 @@ button.dropdown-signout {
    pointer-events: none;
    cursor: default;
 }
+
+.regex-input {
+    width: 100%;
+}

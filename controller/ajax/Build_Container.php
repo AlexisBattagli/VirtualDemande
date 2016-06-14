@@ -18,9 +18,16 @@ $newLog = new Table_log();
     $newMachine = new Machine();
 
     //=====Vérification de ce qui est renvoyé par le formulaire
-    $validName = filter_input(INPUT_POST, 'nameContainer', FILTER_SANITIZE_STRING); //sera utile pour insert et ws, nameContainer
+    $validName = filter_input(INPUT_POST, 'nameContainer', FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"[a-zA-Z]*"))); //sera utile pour insert et ws, nameContainer
     if (!is_null($validName)) {
         $newMachine->setNom($validName);
+    }
+    else{
+        $newLog->setLevel("INFO");
+        $newLog->setLoginUtilisateur($loginUtilisateur);
+        $newLog->setMsg("Mise a jour du quota, passe à ".$variable);
+        $newLog->setDateTime(date('Y/m/d G:i:s'));
+        $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
     }
 
     $validDesc = filter_input(INPUT_POST, 'descriptionContainer', FILTER_SANITIZE_STRING); //utile pour insert
