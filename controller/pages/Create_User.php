@@ -258,10 +258,10 @@ if($validPage == "register.php")
         else 
         {
             $newLog->setLevel("WARN");
-            $newLog->setMsg("Un des deux mots de passe rentré est vide.");
+            $newLog->setMsg("Un des deux mots de passe rentrés est vide.");
             $newLog->setDateTime(date('Y/m/d G:i:s'));
             $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-            $message="errorPassword";
+            $message="errorNullPassword";
             //Renvoie à la page précédante
                 echo "<meta http-equiv='refresh' content='1; url=".$url.'&message='.$message. "' />";
         }
