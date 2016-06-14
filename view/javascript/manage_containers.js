@@ -35,7 +35,7 @@ $(document).ready(function () {
 
         $.ajax({
             method: 'POST',
-            url: "./controller/ajax/Clone_Container.php",
+            url: "./controller/ajax/Build_Container.php",
             dataType: 'json',
             timeout: '5000',
             data: {
