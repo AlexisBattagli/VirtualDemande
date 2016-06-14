@@ -8,6 +8,11 @@ $message = filter_input(INPUT_GET, 'message', FILTER_SANITIZE_STRING);
 
 <html>
     <body>
+        <head>
+            <link rel="stylesheet" href="./view/library/bootstrap/css/bootstrap-datetimepicker.css">
+            <script type="text/javascript" src="./view/library/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+            <script type="text/javascript" src="../view/library/bootstrap/js/bootstrap-datetimepicker.fr.js"></script>
+        </head>
         <div>
             <?php if ($message === 'ok'): ?> 
                 <div class="alert alert-success" role="alert">
@@ -60,13 +65,25 @@ $message = filter_input(INPUT_GET, 'message', FILTER_SANITIZE_STRING);
                     <input name="password2" type="password" class="form-control" id="passwordRegister" placeholder="Confirm your password">
                 </div>
 
-                <!--Date naiss a mettre avec name="date"-->
-
                 <div class="form-group">
-                    <label for="birthDateRegister">Birth date </label>
-                    <input name="date" type="date" class="form-control" id="birthDateRegister" placeholder="Birth date DD/MM/YYYY">
-                </div>
+                    <label for="birthDateRegister">Birth date</label>
+                    <div class="input-group">
+                      <input class="form-control date" name="date" id="date" type="date" value="" readonly>
+                      <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                  </div>
 
+                <script type="text/javascript">
+                  $('#date').datetimepicker({
+                  todayBtn:"true",
+                  format:"dd/mm/yyyy", 
+                  autoclose:"true",
+                  pickerPosition:"bottom-left",
+                  minView:"month",
+                  language:"fr"
+                  });
+                </script>
+                
                 <button type="submit" class="btn btn-default">Register</button>
             </form>
             <?php else : ?>
