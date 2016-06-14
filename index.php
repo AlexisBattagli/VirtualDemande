@@ -68,7 +68,7 @@ $accountNumber = UtilisateurDAL::GetNumberAvailableUsers();
                         <ul class="nav navbar-nav">
                             <li id="what_is_it"><a href="?page=what_is_it">What is it ? </a></li>
                             <li id="how_does_it_work"><a href="?page=how_does_it_work">How does it work ?</a></li>
-                            <li id="register"><a href="?page=register" <?php if ($accountNumber == 0) :?>class="not-active"<?php endif; ?>>Register</a></li>
+                            <li id="register"><a href="?page=register">Register</a></li>
                         </ul>
 
                         <!--A implémenter correctement-->
