@@ -30,7 +30,7 @@ $validPage = filter_input(INPUT_POST, 'page', FILTER_SANITIZE_STRING);
 if($validPage == "manage_groups.php")
 {  
     //=====Vérification de ce qui est renvoyé par le formulaire
-    $validIdUser = $_COOKIE["user_id"]; 
+    $validIdUser = $_SESSION["user_id"]; 
     //echo "OK pour Id User : ".$validIdUser;
     $newLog->setLoginUtilisateur(UtilisateurDAL::findById($validIdUser)->getLogin());
 

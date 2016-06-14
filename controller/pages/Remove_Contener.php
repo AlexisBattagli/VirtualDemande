@@ -32,7 +32,7 @@ if($validPage == "manage_groups.php")
     $validIdGroupe = filter_input(INPUT_POST, 'idGroupe', FILTER_SANITIZE_STRING);
     //echo "OK pour Id Groupe : ".$validIdGroupe;
     
-    $validIdUser = $_COOKIE["user_id"];
+    $validIdUser = $_SESSION["user_id"];
     //echo "OK pour Id User : ".$validIdUser;
     $newLog->setLoginUtilisateur(UtilisateurDAL::findById($validIdUser)->getLogin());
     

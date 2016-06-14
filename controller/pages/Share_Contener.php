@@ -40,7 +40,7 @@ if($validPage == "manage_containers.php")
     $newGroupeHasMachine->setCommentaire($validIdComment);
     //echo "OK pour Commentaire : ".$newGroupeHasMachine->getCommentaire;
 
-    $validIdUser = $_COOKIE["user_id"];
+    $validIdUser = $_SESSION["user_id"];
     //echo "OK pour Id User : ".$validIdUser;
     $newLog->setLoginUtilisateur(UtilisateurDAL::findById($validIdUser)->getLogin());
     
