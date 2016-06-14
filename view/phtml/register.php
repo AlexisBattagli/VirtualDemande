@@ -37,12 +37,11 @@ if($accountNumber == 0) {
                     <label for="passwordRegister">Password</label>
                     <input name="password" type="password" class="form-control" id="passwordRegister" placeholder="Password">
                 </div>
-
-                <!--                Verif a implementer
-                                <div class="form-group">
-                                    <label for="confirmPasswordRegister">Confirm password</label>
-                                    <input type="password" class="form-control" id="confirmPasswordRegister" placeholder="Password">
-                                </div>-->
+                
+                <div class="form-group">
+                    <label for="passwordRegister">Confirm password</label>
+                    <input name="password2" type="password" class="form-control" id="passwordRegister" placeholder="Password2">
+                </div>
 
                 <!--Date naiss a mettre avec name="date"-->
 
