@@ -153,7 +153,7 @@ if (!(isset($_SESSION['user_id']) && !empty($_SESSION['user_id']) && $_SESSION['
                     <!--Name input-->
                     <div class="form-group">
                         <h4><label for="nameContainer">Name</label></h4>
-                        <input name="nameContainer" type="name" class="form-control" id="nameContainer" placeholder="Container name">
+                        <input name="nameContainer" type="text" pattern=".*[A-Za-z]" class="regex-input" id="nameContainer" placeholder="Container name">
                     </div>
                     <!--OS selector-->
                     <div class="form-group">
