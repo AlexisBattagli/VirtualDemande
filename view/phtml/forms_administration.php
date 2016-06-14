@@ -33,7 +33,7 @@ $HDDList = StockageDAL::findAll();
                 <div class="clearfix"></div>
             </div>
             <div class="os-button">
-                <button type="submit" class="btn btn-default">Update</button>
+                <a href= "?page=forms_administration" title= "Update the selection of DistribAlias"><button type="submit" class="btn btn-default">Update</button></a>
             </div>
         </form>
         <!--CPU settings-->
@@ -55,7 +55,7 @@ $HDDList = StockageDAL::findAll();
                 <div class="clearfix"></div>
             </div>
             <div class="os-button">
-                <button type="submit" class="btn btn-default">Update</button>
+                <a href= "?page=forms_administration" title= "Update the selection of Cpu"><button type="submit" class="btn btn-default">Update</button></a>
             </div>
         </form>
         <!--RAM settings-->
@@ -77,7 +77,7 @@ $HDDList = StockageDAL::findAll();
                 <div class="clearfix"></div>
             </div>
             <div class="os-button">
-                <button type="submit" class="btn btn-default">Update</button>
+                <a href= "?page=forms_administration" title= "Update the selection of Ram"><button type="submit" class="btn btn-default">Update</button></a>
             </div>
         </form>
         <!--Hard drive settings-->
@@ -99,7 +99,7 @@ $HDDList = StockageDAL::findAll();
                 <div class="clearfix"></div>
             </div>
             <div class="os-button">
-                <button type="submit" class="btn btn-default">Update</button>
+                <a href= "?page=forms_administration" title= "Update the selection of Stockage"><button type="submit" class="btn btn-default">Update</button></a>
             </div>
         </form>
         <?php else: ?>
