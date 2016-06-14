@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 /*
  * Envoie de l’id d'un utilisateur et de l'id du groupe 
  * Script (controller) pour ajouter l’utilisateur d’un groupe
@@ -29,7 +29,7 @@ if($validPage == "manage_groups.php")
     $newUtilisateurHasGroupe=new Utilisateur_has_Groupe();
 
     //=====Vérification de ce qui est renvoyé par le formulaire
-    $validIdUser = filter_input(INPUT_POST, 'idUser', FILTER_SANITIZE_STRING);
+    $validIdUser = $_SESSION["user_id"];
     $newUtilisateurHasGroupe->setUtilisateur($validIdUser);
     // echo "OK pour Id User : ".$newUtilisateurHasGroupe->getUtilisateur()->getId();
     $newLog->setLoginUtilisateur(UtilisateurDAL::findById($validIdUser)->getLogin());

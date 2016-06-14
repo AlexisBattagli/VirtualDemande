@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 //Script de création d'un Container pour un User donné
 //import
 // web
@@ -40,7 +40,7 @@ $message = "error";
             exit();
     }
 
-    $validIdUser = $_COOKIE["user_id"];
+    $validIdUser = $_SESSION["user_id"];
     if (!is_null($validIdUser)) {
         $user = UtilisateurDAL::findById($validIdUser);
         $loginUtilisateur = $user->getLogin(); //création du champ login pour les logs

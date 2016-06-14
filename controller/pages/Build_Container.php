@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 //Script de création d'un Container pour un User donné
 //import
 // web
@@ -73,7 +73,7 @@ if (($validPage == "manage_containers.php") || ($validPage == "rebuilt_container
         $valueCpu = $cpu->getNbCoeur(); //sera utile pour le ws, cpu
     }
 
-    $validUserId = filter_input(INPUT_POST, 'user', FILTER_SANITIZE_STRING); //sera utile pour l'insert
+    $validUserId = $_SESSION["user_id"]; //sera utile pour l'insert
     if (!is_null($validUserId)) {
         $user = UtilisateurDAL::findById($validUserId); //sert à l'insert
         $newMachine->setUtilisateur($user);
