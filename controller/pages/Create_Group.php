@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 //Script de création d'un groupe
 
 //import

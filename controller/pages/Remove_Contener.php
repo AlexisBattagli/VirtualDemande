@@ -1,5 +1,5 @@
 <?php 
-
+session_start();
 /*
  * Envoie l’id d’une VM e tl’id d’un groupe pour l’enlever du groupe 
  */
