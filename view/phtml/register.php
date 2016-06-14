@@ -11,7 +11,6 @@ $message = filter_input(INPUT_GET, 'message', FILTER_SANITIZE_STRING);
         <script src="./view/javascript/register.js"></script>
         <link rel="stylesheet" href="./view/library/bootstrap/css/bootstrap-datetimepicker.css">
         <script type="text/javascript" src="./view/library/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
-        <script type="text/javascript" src="./view/library/bootstrap/js/bootstrap-datetimepicker.fr.js"></script>
         <div>
             <?php if ($message === 'ok'): ?> 
                 <div class="alert alert-success" role="alert">
