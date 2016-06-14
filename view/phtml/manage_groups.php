@@ -214,9 +214,6 @@ $unsubscribedGroupList = GroupeDAL::findLessUser($_SESSION['user_id']);
                                         <input name = "page" type = "hidden" class = "form-control" value = "manage_groups.php">
                                     </div>
                                     <div class = "form-group">
-                                        <input name = "idUser" type = "hidden" class = "form-control" value="<?php echo $_SESSION["user_id"]; ?>">
-                                    </div>
-                                    <div class = "form-group">
                                         <input name = "idGroupe" type = "hidden" class = "form-control" value="<?= $unsubscribedGroup->getId() ?>">
                                     </div>
                                     <div>

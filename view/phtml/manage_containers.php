@@ -146,10 +146,6 @@ $canCreate = UtilisateurDAL::isFull($_SESSION["user_id"])
                     <div class="form-group">
                         <input name="page" type="hidden" class="form-control" value ="manage_containers.php">
                     </div>
-                    <!--                    Hidden input that return user ID A RECUP PAR CONTROLLER-->
-                    <div class="form-group">
-                        <input name="user" type="hidden" class="form-control" value="<?php echo $userId; ?>" >
-                    </div>
                     <!--Name input-->
                     <div class="form-group">
                         <h4><label for="nameContainer">Name</label></h4>
