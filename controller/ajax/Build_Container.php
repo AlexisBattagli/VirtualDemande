@@ -19,8 +19,15 @@ $newLog = new Table_log();
 
     //=====Vérification de ce qui est renvoyé par le formulaire
     $validName = filter_input(INPUT_POST, 'nameContainer', FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"#^[a-zA-Z]+$#"))); //sera utile pour insert et ws, nameContainer
-    if (!is_null($validName) || $validName!=0) {
+    if (!is_null($validName) && $validName!=false) {
         $newMachine->setNom($validName);	
+    }else {
+        $newLog->setLevel("ERROR");
+        $newLog->setLoginUtilisateur($loginUtilisateur);
+        $newLog->setMsg("Le nom rentrer n'est pas correct, echec de création");
+        $newLog->setDateTime(date('Y/m/d G:i:s'));
+        $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
+        exit();
     }
 
     $validDesc = filter_input(INPUT_POST, 'descriptionContainer', FILTER_SANITIZE_STRING); //utile pour insert
