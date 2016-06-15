@@ -43,7 +43,7 @@ $accountNumber = UtilisateurDAL::GetNumberAvailableUsers();
         <!--Stylesheet for all pages-->
         <link rel="stylesheet" href="./view/css/main.css">
 
-        <!-- <link rel="icon" type="image/png" href="./view/document/picture/favicon.png" />   -->
+         <link rel="icon" type="image/png" href="./view/document/picture/favicon.png" />   
     </head>
     <body>
 
