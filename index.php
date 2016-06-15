@@ -67,7 +67,7 @@ $accountNumber = UtilisateurDAL::GetNumberAvailableUsers();
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                         <ul class="nav navbar-nav">
-                            <p class="navbar-text">There are <?php echo $accountNumber; ?> available accounts</p>  
+                            <p class="navbar-text">There is <?php echo $accountNumber; ?> available accounts</p>  
                         </ul>
 
                         <ul class="nav navbar-nav navbar-right">
