@@ -11,6 +11,8 @@ session_start();
 
 //import
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Groupe_has_MachineDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/UtilisateurDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/MachineDAL.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Table_logDAL.php');
 
 //Définition d'un objet Table_log pour faire des insert de log
@@ -29,10 +31,12 @@ if($validPage == "manage_containers.php")
 
     //=====Vérification de ce qui est renvoyé par le formulaire
     $validIdMachine = filter_input(INPUT_POST, 'idMachine', FILTER_SANITIZE_STRING);
+    $nameMachine = MachineDAL::findById($validIdMachine)->getNom();
     $newGroupeHasMachine->setMachine($validIdMachine);
     //echo "OK pour Id Machine : ".$newGroupeHasMachine->getMachine()->getId();
 
     $validIdGroupe = filter_input(INPUT_POST, 'idGroupe', FILTER_SANITIZE_STRING);
+    $nameGroupe = GroupeDAL::findById($validIdGroupe)->getNom();
     $newGroupeHasMachine->setGroupe($validIdGroupe);
     //echo "OK pour Id Groupe : ".$newGroupeHasMachine->getGroupe()->getId();
 
@@ -41,11 +45,12 @@ if($validPage == "manage_containers.php")
     //echo "OK pour Commentaire : ".$newGroupeHasMachine->getCommentaire;
 
     $validIdUser = $_SESSION["user_id"];
+    $sharer = UtilisateurDAL::findById($validIdUser)->getLogin();
     //echo "OK pour Id User : ".$validIdUser;
-    $newLog->setLoginUtilisateur(UtilisateurDAL::findById($validIdUser)->getLogin());
+    $newLog->setLoginUtilisateur($sharer);
     
     $newLog->setLevel("INFO");
-    $newLog->setMsg("Initialisation du partage de la machine (id:$validIdMachine) au groupe (id:$validIdGroupe).");
+    $newLog->setMsg("Initialisation du partage de la machine $nameMachine (id:$validIdMachine) au groupe $nameGroupe (id:$validIdGroupe) par l'utilisateur $sharer.");
     $newLog->setDateTime(date('Y/m/d G:i:s'));
     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
     
@@ -53,7 +58,7 @@ if($validPage == "manage_containers.php")
     if(is_null(Groupe_has_MachineDAL::findByGM($validIdGroupe,$validIdMachine)))
     {
         $newLog->setLevel("INFO");
-        $newLog->setMsg("La machine (id:$validIdMachine) n'est pas dans le groupe (id:$validIdGroupe).");
+        $newLog->setMsg("La machine $nameMachine (id:$validIdMachine) de l'utilisateur $sharer n'est pas dans le groupe $nameGroupe (id:$validIdGroupe).");
         $newLog->setDateTime(date('Y/m/d G:i:s'));
         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
         //echo "Machine n'est pas dans le groupe";
@@ -62,7 +67,7 @@ if($validPage == "manage_containers.php")
         $validInsert=Groupe_has_MachineDAL::insertOnDuplicate($newGroupeHasMachine);
         
         $newLog->setLevel("INFO");
-        $newLog->setMsg("Ajout réussi du partage de la machine (id:$validIdMachine) à un groupe (id:$validIdGroupe).");
+        $newLog->setMsg("Ajout réussi du partage de la machine $nameMachine (id:$validIdMachine) au groupe $nameGroupe (id:$validIdGroupe) par l'utilisateur $sharer .");
         $newLog->setDateTime(date('Y/m/d G:i:s'));
         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
         
@@ -72,7 +77,7 @@ if($validPage == "manage_containers.php")
     else
     {
         $newLog->setLevel("WARN");
-        $newLog->setMsg("La machine (id:$validIdMachine) est déjà dans le groupe (id:$validIdGroupe).");
+        $newLog->setMsg("La machine $nameMachine (id:$validIdMachine) de l'utilisateur $sharer est déjà dans le groupe $nameGroupe (id:$validIdGroupe).");
         $newLog->setDateTime(date('Y/m/d G:i:s'));
         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
         //echo "Machine est deja dans le groupe";
