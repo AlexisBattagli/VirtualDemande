@@ -19,7 +19,7 @@ $newLog = new Table_log();
 
     //=====Vérification de ce qui est renvoyé par le formulaire
     $validName = filter_input(INPUT_POST, 'nameContainer', FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"#^[a-zA-Z]+$#"))); //sera utile pour insert et ws, nameContainer
-    if (!is_null($validName) || $validName==0) {
+    if (!is_null($validName) || $validName!=0) {
         $newMachine->setNom($validName);	
     }
 
@@ -79,7 +79,7 @@ $newLog = new Table_log();
     $newMachine->setEtat(2);
 
     if (UtilisateurDAL::isFull($validUserId) == false) { //vérifie que l'user n'a pas atteint son quota
-        if (is_null(MachineDAL::findByName($validName))) {
+        if (is_null(MachineDAL::findByName($validName)) && !is_null($validName)) {
             //=====Insertion de la Machine en base=====/ - OK
             $validInsertMachine = MachineDAL::insertOnDuplicate($newMachine);
             if (!is_null($validInsertMachine)) {
