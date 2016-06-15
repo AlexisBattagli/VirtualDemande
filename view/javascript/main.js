@@ -22,5 +22,9 @@ $(document).ready(function () {
     var $found = $($classy);
     $found.find('.panel-body').hide();
     $found.removeClass($classy);
+    
+    $('#register-button-link').on('click', function () {
+        window.location='?page=register';
+    });
 
 });

@@ -81,7 +81,9 @@ $accountNumber = UtilisateurDAL::GetNumberAvailableUsers();
                                     <button type="submit" class="btn btn-default">Sign In</button>
                                 </form>
                             </li>
-                            <li id="register"><a href="?page=register">Register</a></li>
+                            <li>
+                                <button type="button" id="register-button-link" class="btn btn-default navbar-btn">Register</button>
+                            </li>
                         </ul>
                     </div>
                 </div>
