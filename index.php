@@ -71,7 +71,6 @@ $accountNumber = UtilisateurDAL::GetNumberAvailableUsers();
                         </ul>
 
                         <ul class="nav navbar-nav navbar-right">
-                            <li id="how_does_it_work"><a href="?page=how_does_it_work">How does it work ?</a></li>
                             <li>
                                 <form class="navbar-form" action="index.php" method="post">
                                     <div class="form-group">
@@ -127,7 +126,6 @@ $accountNumber = UtilisateurDAL::GetNumberAvailableUsers();
                         </ul>
 
                         <ul class="nav navbar-nav navbar-right">
-                            <li id="how_does_it_work"><a href="?page=how_does_it_work">How does it work ?</a></li>
                             <li>
                                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION["name"]; ?> <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
