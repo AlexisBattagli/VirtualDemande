@@ -41,25 +41,32 @@ $message = "error";
     }
 
     $validIdUser = $_SESSION["user_id"];
-    if (!is_null($validIdUser)) {
+    if (!is_null($validIdUser) && $validIdUser!=false) {
         $user = UtilisateurDAL::findById($validIdUser);
         $loginUtilisateur = $user->getLogin(); //création du champ login pour les logs
         $machineClone->setUtilisateur($user); //modifie l'utilisateur de la machine clone
     }
     else {
        //echo "L'id de l'utilisateur n'a pas bien été récupéré.";
-       //Arret
-            exit();
+       $newLog->setLevel("ERROR");
+       $newLog->setLoginUtilisateur($loginUtilisateur);
+       $newLog->setMsg("L'id de l'utilisateur n'a pas bien été récupéré.");
+       $newLog->setDateTime(date('Y/m/d G:i:s'));
+       $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
+       exit();
     }
-
-    $validNomMachineClone = filter_input(INPUT_POST, 'nomMachineClone', FILTER_SANITIZE_STRING);
-    if (!is_null($validNomMachineClone)) {
+                            
+    $validNomMachineClone = filter_input(INPUT_POST, 'nomMachineClone', FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"#^[a-zA-Z]+$#")));
+    if (!is_null($validNomMachineClone) && $validNomMachineClone!=false) {
         $machineClone->setNom($validNomMachineClone); //modifie le noml de la machine clone
     }
     else {
-       //echo "Le nom de la machine clone n'a pas bien été récuèré.";
-       //Arret
-            exit();
+        $newLog->setLevel("ERROR");
+        $newLog->setLoginUtilisateur($loginUtilisateur);
+        $newLog->setMsg("Le nom rentrer n'est pas correct, echec de clonage");
+        $newLog->setDateTime(date('Y/m/d G:i:s'));
+        $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
+        exit();
     }
         
     //Modification de la date de création et d'expiration de la machine clonée
