@@ -43,7 +43,7 @@ $accountNumber = UtilisateurDAL::GetNumberAvailableUsers();
         <!--Stylesheet for all pages-->
         <link rel="stylesheet" href="./view/css/main.css">
 
-        <!-- <link rel="icon" type="image/png" href="./view/document/picture/favicon.png" />   -->
+        <link rel="icon" type="image/png" href="./view/document/picture/favicon.png" />   
     </head>
     <body>
 
@@ -60,23 +60,18 @@ $accountNumber = UtilisateurDAL::GetNumberAvailableUsers();
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="?page=home">EVOLVE unplug</a>
+                        <a class="navbar-brand" href="?page=home">EVOLVE</a>
                     </div>
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
-
                         <ul class="nav navbar-nav">
-                            <li id="what_is_it"><a href="?page=what_is_it">What is it ? </a></li>
-                            <li id="how_does_it_work"><a href="?page=how_does_it_work">How does it work ?</a></li>
-                            <li id="register"><a href="?page=register">Register</a></li>
+                            <p class="navbar-text">There are <?php echo $accountNumber; ?> available accounts</p>  
                         </ul>
 
-                        <!--A implémenter correctement-->
-                        <p class="navbar-text">There are <?php echo $accountNumber; ?> available accounts</p>    
-
                         <ul class="nav navbar-nav navbar-right">
+                            <li id="how_does_it_work"><a href="?page=how_does_it_work">How does it work ?</a></li>
                             <li>
                                 <form class="navbar-form" action="index.php" method="post">
                                     <div class="form-group">
@@ -86,6 +81,7 @@ $accountNumber = UtilisateurDAL::GetNumberAvailableUsers();
                                     <button type="submit" class="btn btn-default">Sign In</button>
                                 </form>
                             </li>
+                            <li id="register"><a href="?page=register">Register</a></li>
                         </ul>
                     </div>
                 </div>
@@ -111,11 +107,6 @@ $accountNumber = UtilisateurDAL::GetNumberAvailableUsers();
 
 
                         <ul class="nav navbar-nav">
-                            <li id="what_is_it"><a href="?page=what_is_it">What is it ? <span class="sr-only">(current)</span></a></li>
-                            <li id="how_does_it_work"><a href="?page=how_does_it_work">How does it work ?</a></li>
-                        </ul>
-
-                        <ul class="nav navbar-nav navbar-right">
                             <li id="what_is_it"><a href="?page=dashboard">Dashboard</a></li>
                             <li id="how_does_it_work"><a target="_blank" href="http://web-server:8080/guacamole-0.9.9/#/">Connect to your containers</a></li>  <!--ouvrir dans un nouvel onglet-->
                             <li>
@@ -127,10 +118,14 @@ $accountNumber = UtilisateurDAL::GetNumberAvailableUsers();
                                 </ul>
                             </li>
                             <!--Items for the administrator-->
-                            <?php if ($_SESSION["role_id"]== 3) : ?>
-                            <li id="forms_administration"><a href="?page=forms_administration">Forms Administration</a></li>
-                            <li id="logs"><a href="?page=logs">Logs</a></li>
+                            <?php if ($_SESSION["role_id"] == 3) : ?>
+                                <li id="forms_administration"><a href="?page=forms_administration">Forms Administration</a></li>
+                                <li id="logs"><a href="?page=logs">Logs</a></li>
                             <?php endif; ?>
+                        </ul>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li id="how_does_it_work"><a href="?page=how_does_it_work">How does it work ?</a></li>
                             <li>
                                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION["name"]; ?> <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
