@@ -12,6 +12,8 @@ session_start();
 
 //import
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Utilisateur_has_GroupeDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/GroupeDAL.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/UtilisateurDAL.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/VirtualDemande/model/DAL/Table_logDAL.php');
 
 //Définition d'un objet Table_log pour faire des insert de log
@@ -32,14 +34,16 @@ if($validPage == "manage_groups.php")
     $validIdUser = $_SESSION["user_id"];
     $newUtilisateurHasGroupe->setUtilisateur($validIdUser);
     // echo "OK pour Id User : ".$newUtilisateurHasGroupe->getUtilisateur()->getId();
-    $newLog->setLoginUtilisateur(UtilisateurDAL::findById($validIdUser)->getLogin());
+    $login = UtilisateurDAL::findById($validIdUser)->getLogin();
+    $newLog->setLoginUtilisateur($login);
     
     $validIdGroupe = filter_input(INPUT_POST, 'idGroupe', FILTER_SANITIZE_STRING);
+    $nameGroupe = GroupeDAL::findById($validIdGroupe);
     $newUtilisateurHasGroupe->setGroupe($validIdGroupe);
     //echo "OK pour Id Groupe : ".$newUtilisateurHasGroupe->getGroupe()->getId();
 
     $newLog->setLevel("INFO");
-    $newLog->setMsg("Initialisation de l'inscription de l'utilisateur (id:$validIdUser) au groupe (id:$validIdGroupe).");
+    $newLog->setMsg("Initialisation de l'inscription de l'utilisateur $login (id:$validIdUser) au groupe $nameGroupe (id:$validIdGroupe).");
     $newLog->setDateTime(date('Y/m/d G:i:s'));
     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
     
@@ -47,7 +51,7 @@ if($validPage == "manage_groups.php")
     if(is_null(Utilisateur_has_GroupeDAL::findByGU($validIdGroupe,$validIdUser)))
     {
         $newLog->setLevel("INFO");
-        $newLog->setMsg("Utilisateur (id:$validIdUser) n'est pas dans le groupe (id:$validIdGroupe).");
+        $newLog->setMsg("Utilisateur $login (id:$validIdUser) n'est pas dans le groupe $nameGroupe (id:$validIdGroupe).");
         $newLog->setDateTime(date('Y/m/d G:i:s'));
         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
         //echo "Utilisateur n'est pas dans le groupe";
@@ -56,7 +60,7 @@ if($validPage == "manage_groups.php")
         $validInsert=Utilisateur_has_GroupeDAL::insertOnDuplicate($newUtilisateurHasGroupe);
         
         $newLog->setLevel("INFO");
-        $newLog->setMsg("Ajout réussi de l'utilisateur (id:$validIdUser) au groupe (id:$validIdGroupe).");
+        $newLog->setMsg("Ajout réussi de l'utilisateur $login (id:$validIdUser) au groupe $nameGroupe (id:$validIdGroupe).");
         $newLog->setDateTime(date('Y/m/d G:i:s'));
         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
         
@@ -65,7 +69,7 @@ if($validPage == "manage_groups.php")
     else
     {
         $newLog->setLevel("WARN");
-        $newLog->setMsg("Utilisateur (id:$validIdUser) est deja dans le groupe (id:$validIdGroupe).");
+        $newLog->setMsg("Utilisateur $login (id:$validIdUser) est deja dans le groupe $nameGroupe (id:$validIdGroupe).");
         $newLog->setDateTime(date('Y/m/d G:i:s'));
         $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
         //echo "Utilisateur est deja dans le groupe";
