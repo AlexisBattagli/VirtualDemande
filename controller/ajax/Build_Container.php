@@ -463,16 +463,18 @@ $newLog = new Table_log();
                     $newLog->setMsg("Echec de création du conteneur... Contactez le support EVOLVE.");
                     $newLog->setDateTime(date('Y/m/d G:i:s'));
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                    $container = MachineDAL::findById($validInsertMachine);
-                    $container->setEtat(1);
+                    $machineEchec = MachineDAL::findById($validInsertMachine);
+                    $machineEchec->setEtat(1);
+                    MachineDAL::insertOnDuplicate($machineEchec);
                 } else { //If fatal error unknow...
                     $newLog->setLevel("WARN");
                     $newLog->setLoginUtilisateur($loginUtilisateur);
                     $newLog->setMsg("Code retour inconnu, problème ... Contactez le support EVOLVE !");
                     $newLog->setDateTime(date('Y/m/d G:i:s'));
                     $validTableLog = Table_logDAL::insertOnDuplicate($newLog);
-                    $container = MachineDAL::findById($validInsertMachine);
-                    $container->setEtat(1);
+                    $machineEchec = MachineDAL::findById($validInsertMachine);
+                    $machineEchec->setEtat(1);
+                    MachineDAL::insertOnDuplicate($machineEchec);
                 }
             } else {
                 $newLog->setLevel("ERROR");
