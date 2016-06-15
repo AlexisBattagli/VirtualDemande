@@ -38,7 +38,7 @@ if($validPage == "manage_groups.php")
     $newLog->setLoginUtilisateur($login);
     
     $validIdGroupe = filter_input(INPUT_POST, 'idGroupe', FILTER_SANITIZE_STRING);
-    $nameGroupe = GroupeDAL::findById($validIdGroupe);
+    $nameGroupe = GroupeDAL::findById($validIdGroupe)->getNom();
     $newUtilisateurHasGroupe->setGroupe($validIdGroupe);
     //echo "OK pour Id Groupe : ".$newUtilisateurHasGroupe->getGroupe()->getId();
 
