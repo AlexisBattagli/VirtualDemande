@@ -18,13 +18,15 @@ if ($pseudo !== null && $password !== null) {
     }
 }
 
+$page_to_require = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_URL);
+
 $accountNumber = UtilisateurDAL::GetNumberAvailableUsers();
 ?>
 
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Le titre</title>
+        <title>EVOLVE - <?php echo $page_to_require; ?></title>
         <!--jQuery library-->
         <script src="./view/library/jQuery/jquery-2.1.4.min.js"></script>
         <!-- Latest compiled and minified CSS -->
@@ -151,7 +153,6 @@ $accountNumber = UtilisateurDAL::GetNumberAvailableUsers();
         <!-- Page to show -->
         <div id="content" class="col-lg-12">
             <?php
-            $page_to_require = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_URL);
             if ($page_to_require !== null) {
                 require_once './view/phtml/' . $page_to_require . '.php';
             } else {
