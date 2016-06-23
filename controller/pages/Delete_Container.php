@@ -138,7 +138,7 @@ if($validPage == "manage_containers.php")
 
                 //Supprimer le container dans la base guacamole
                 $validDeleteConnection=Guacamole_ConnectionDAL::delete($connectionId);
-                if(is_null(Guacamole_ConnectionDAL::findById($id)))
+                if(is_null(Guacamole_ConnectionDAL::findById($connectionId)))
                 {
                     $newLog->setLevel("INFO");
                     $newLog->setLoginUtilisateur($loginUtilisateur);
@@ -202,7 +202,7 @@ if($validPage == "manage_containers.php")
             
             //Supprimer le container dans la base DBVirtDemand
             $validDeleteMachine=MachineDAL::delete($validIdMachine);
-            if(is_null(MachineDAL::findById($id)))
+            if(is_null(MachineDAL::findById($validIdMachine)))
             {
                 $newLog->setLevel("INFO");
                 $newLog->setLoginUtilisateur($loginUtilisateur);
