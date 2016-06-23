@@ -206,7 +206,7 @@ if($validPage == "manage_containers.php")
             {
                 $newLog->setLevel("INFO");
                 $newLog->setLoginUtilisateur($loginUtilisateur);
-                $newLog->setMsg("La machine $nomMachine d'id $validIdMachine appartenant à l'utilisateur $owner->getPseudo() a bien été supprimée !");
+                $newLog->setMsg("La machine $nomMachine d'id $validIdMachine appartenant à l'utilisateur ".$owner->getLogin()." a bien été supprimée !");
                 $newLog->setDateTime(date('Y/m/d G:i:s'));
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
             }
@@ -214,7 +214,7 @@ if($validPage == "manage_containers.php")
             {
                 $newLog->setLevel("ERROR");
                 $newLog->setLoginUtilisateur($loginUtilisateur);
-                $newLog->setMsg("La machine $nomMachine d'id $validIdMachine appartenant à l'utilisateur $owner->getPseudo() n'a pas bien été supprimée !");
+                $newLog->setMsg("La machine $nomMachine d'id $validIdMachine appartenant à l'utilisateur ".$owner->getLogin()." n'a pas bien été supprimée !");
                 $newLog->setDateTime(date('Y/m/d G:i:s'));
                 $validTableLog = Table_logDAL::insertOnDuplicate($newLog);     
                 //Renvoie à la page précédante
