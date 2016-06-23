@@ -48,7 +48,7 @@ if (!(isset($_SESSION['user_id']) && !empty($_SESSION['user_id']) && $_SESSION['
                                         <input name="idGroupe" type="hidden" class="form-control" value="<?= $groupList->getId() ?>">
                                     </div>
                                     <div>
-                                        <a href="?page=manage_groups" title="Unsubscribe at this group"><button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-export" aria-hidden="true"></span></button></a>
+                                        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-export" aria-hidden="true"></span></button>
                                     </div>
                                 </form>
                             </td>
@@ -58,7 +58,7 @@ if (!(isset($_SESSION['user_id']) && !empty($_SESSION['user_id']) && $_SESSION['
                                 <div class="panel panel-info autocollapse">
                                     <div class="panel-heading clickable">
                                         <h2 class="panel-title">
-                                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Show Associated Containers List
+                                            Containers list
                                         </h2>
                                     </div>
                                     <div class="panel-body">
@@ -98,7 +98,7 @@ if (!(isset($_SESSION['user_id']) && !empty($_SESSION['user_id']) && $_SESSION['
                                                         </td>
                                                         <td>
                                                             <div>
-                                                                <a href="?page=manage_groups" title="Get this container"><button  class="btn btn-default" data-toggle="modal" data-target="#cloneContainer"><span class="glyphicon glyphicon-copy" aria-hidden="true"></span></button></a>
+                                                                <button  class="btn btn-default" data-toggle="modal" data-target="#cloneContainer"><span class="glyphicon glyphicon-copy" aria-hidden="true"></span></button>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -182,7 +182,7 @@ if (!(isset($_SESSION['user_id']) && !empty($_SESSION['user_id']) && $_SESSION['
                                         <input name = "idGroupe" type = "hidden" class = "form-control" value="<?= $shared["groupe_id"] ?>">
                                     </div>
                                     <div>
-                                        <a href="?page=manage_groups" title="Remove this container at this group"><button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span></button></a>
+                                        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span></button>
                                     </div>
                                 </form>
                             </td>
@@ -221,7 +221,7 @@ if (!(isset($_SESSION['user_id']) && !empty($_SESSION['user_id']) && $_SESSION['
                                         <input name = "idGroupe" type = "hidden" class = "form-control" value="<?= $unsubscribedGroup->getId() ?>">
                                     </div>
                                     <div>
-                                        <a href="?page=manage_groups" title="Subscribe at this group"><button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-import" aria-hidden="true"></span></button></a>
+                                        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-import" aria-hidden="true"></span></button>
                                     </div>
                                 </form>
                             </td>
@@ -235,7 +235,7 @@ if (!(isset($_SESSION['user_id']) && !empty($_SESSION['user_id']) && $_SESSION['
         <div class="panel panel-info autocollapse">
             <div class="panel-heading clickable">
                 <h2 class="panel-title">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Show Create Group Form
+                    Create group
                 </h2>
             </div>
             <div class="panel-body">
@@ -256,7 +256,7 @@ if (!(isset($_SESSION['user_id']) && !empty($_SESSION['user_id']) && $_SESSION['
                         <textarea name="description" class="form-control" rows="3" placeholder="Enter a personnal description for your group."></textarea>
                     </div>
                     <div>
-                        <a href="?page=manage_groups" title="Create a new group"><button type="submit" class="btn btn-default">Create group</button></a>
+                        <button type="submit" class="btn btn-default">Create group</button>
                     </div>
                 </form>
             </div>
